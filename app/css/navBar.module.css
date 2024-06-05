@@ -1,0 +1,7 @@
+.nav_container {
+  display: flex;
+  flex-flow: row wrap;
+  gap: 10px;
+  padding: 1rem;
+  background-color: rgba(63, 63, 63);
+}
