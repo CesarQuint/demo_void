@@ -1,3 +1,5 @@
+//! This Component use only swup
+
 "use client";
 import { useEffect } from "react";
 import Swup from "swup";
