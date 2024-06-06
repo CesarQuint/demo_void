@@ -10,6 +10,8 @@ const NavBar = (props: Props) => {
       <section className={styles.nav_container}>
         <Link href={"/"}>Home</Link>
         <Link href={"/first_project"}>Fist Demo</Link>
+        <Link href={"/swup_project"}>Swup Page 1</Link>
+        <Link href={"/swup_project_2"}>Swup Page 1</Link>
       </section>
     </div>
   );

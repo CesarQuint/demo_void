@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import styles from "../css/gsapExample.module.css";
+import styles from "../../css/gsapExample.module.css";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 

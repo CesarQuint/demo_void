@@ -2,7 +2,7 @@
 import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import styles from "../css/gsapExample.module.css";
+import styles from "../../css/gsapExample.module.css";
 
 type Props = {};
 
