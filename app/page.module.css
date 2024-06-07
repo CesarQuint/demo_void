@@ -50,7 +50,7 @@
   padding: 1rem 1.2rem;
   border-radius: var(--border-radius);
   background: rgba(var(--card-rgb), 0);
-  border: 1px solid rgba(var(--card-border-rgb), 0);
+  border: 1px solid #eaeaea70;
   transition: background 200ms, border 200ms;
 }
 
@@ -227,4 +227,11 @@
   to {
     transform: rotate(0deg);
   }
+}
+
+.cards_container {
+  padding: 1rem;
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 1rem;
 }
