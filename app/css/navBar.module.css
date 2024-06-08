@@ -4,4 +4,5 @@
   gap: 10px;
   padding: 1rem;
   background-color: rgba(63, 63, 63);
+  z-index: 800;
 }

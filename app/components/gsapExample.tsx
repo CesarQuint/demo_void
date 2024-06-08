@@ -5,7 +5,7 @@ import styles from "../css/gsapExample.module.css";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
-export default function GsapExample() {
+export default function () {
   const container = useRef<HTMLDivElement>(null);
   const circle = useRef<HTMLDivElement>(null);
 

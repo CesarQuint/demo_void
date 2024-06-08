@@ -8,8 +8,8 @@ const NavBar = (props: Props) => {
   return (
     <div className={styles.main}>
       <section className={styles.nav_container}>
-        <Link href={"/"}>Home</Link>
-        <Link href={"/first_project"}>Fist Demo</Link>
+        <Link href={"/frammer_main"}>Home</Link>
+        <Link href={"/frammer_2"}>Second</Link>
       </section>
     </div>
   );
