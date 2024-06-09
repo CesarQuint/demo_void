@@ -4,6 +4,8 @@ import { useEffect, useRef } from "react";
 import { motion, usePresence, useAnimate, Spring } from "framer-motion";
 import styles from "../page.module.css";
 import { usePathname } from "next/navigation";
+import { useNavigation } from "../utils/navigationContext";
+import { useRouter } from "next/navigation";
 
 const transitionSpringPhysics: Spring = {
   type: "spring",
@@ -19,6 +21,8 @@ function SecondPage() {
   const reference = useRef(null);
   const [scope, animate] = useAnimate();
   const pathname = usePathname();
+  const { navigationEvent } = useNavigation();
+  const router = useRouter();
 
   useEffect(() => {
     animate(reference.current, { height: "0vh", transition: { delay: 0.2 } });
@@ -28,7 +32,20 @@ function SecondPage() {
         safeToRemove();
       }
     };
-  }, [animate, isPresent, safeToRemove]);
+  }, []);
+
+  useEffect(() => {
+    if (navigationEvent.href !== pathname) {
+      // On navigation event, perform animation with red background
+      animate(reference.current, {
+        height: "100vh",
+        backgroundColor: "red",
+        transition: { delay: 0.2 },
+      }).then(() => {
+        router.push(navigationEvent.href);
+      });
+    }
+  }, [navigationEvent]);
 
   return (
     <motion.div

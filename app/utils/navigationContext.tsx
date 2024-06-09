@@ -1,6 +1,7 @@
 // NavigationContext.tsx
 "use client";
 import React, { createContext, useState, useContext, useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 interface NavigationContextProps {
   navigationEvent: { state: boolean; href: string };
@@ -16,9 +17,10 @@ export const NavigationProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
+  const pathname = usePathname();
   const [navigationEvent, setNavigationEvent] = useState({
     state: true,
-    href: "",
+    href: pathname,
   });
 
   useEffect(() => {
