@@ -42,6 +42,15 @@ const NavBar = () => {
         >
           Third
         </Link>
+        <Link
+          href={"/third_page"}
+          onClick={(e) => {
+            e.preventDefault();
+            setNavigationEvent({ state: true, href: "/playground" });
+          }}
+        >
+          Playground
+        </Link>
       </section>
     </header>
   );
