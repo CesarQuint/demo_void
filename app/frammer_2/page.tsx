@@ -1,8 +1,9 @@
-// app/first-project/page.tsx
 "use client";
-import { useEffect } from "react";
-import { motion, Spring, usePresence } from "framer-motion";
+
+import { useEffect, useRef } from "react";
+import { motion, usePresence, useAnimate, Spring } from "framer-motion";
 import styles from "../page.module.css";
+import { usePathname } from "next/navigation";
 
 const transitionSpringPhysics: Spring = {
   type: "spring",
@@ -13,19 +14,32 @@ const transitionSpringPhysics: Spring = {
 
 const transitionColor = "deepskyblue";
 
-const SecondPage = () => {
+function SecondPage() {
   const [isPresent, safeToRemove] = usePresence();
+  const reference = useRef(null);
+  const [scope, animate] = useAnimate();
+  const pathname = usePathname();
+
   useEffect(() => {
-    console.log(isPresent);
+    animate(reference.current, { height: "0vh", transition: { delay: 0.2 } });
+
     return () => {
       if (!isPresent) {
         safeToRemove();
       }
     };
-  }, []);
+  }, [animate, isPresent, safeToRemove]);
+
   return (
-    <div className={styles.main}>
+    <motion.div
+      key={pathname}
+      initial={{ opacity: 1 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className={styles.main}
+    >
       <motion.div
+        ref={reference}
         style={{
           backgroundColor: transitionColor,
           position: "fixed",
@@ -33,29 +47,16 @@ const SecondPage = () => {
           zIndex: 0,
           bottom: 0,
         }}
-        transition={transitionSpringPhysics}
+        initial={{ height: "120vh" }}
         animate={{ height: "0vh" }}
+        transition={transitionSpringPhysics}
         exit={{ height: "120vh" }}
       />
-
-      <motion.div
-        style={{
-          backgroundColor: transitionColor,
-          position: "fixed",
-          width: "200vw",
-          zIndex: 0,
-          top: 0,
-        }}
-        transition={transitionSpringPhysics}
-        initial={{ height: "120vh" }}
-        animate={{ height: "0vh", transition: { delay: 0.2 } }}
-      />
-
       <div className={styles.content}>
         <h1>Second Project</h1>
       </div>
-    </div>
+    </motion.div>
   );
-};
+}
 
 export default SecondPage;
