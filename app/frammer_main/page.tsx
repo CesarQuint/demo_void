@@ -1,21 +1,60 @@
-// app/page.tsx
+// app/first-project/page.tsx
 "use client";
-import { motion } from "framer-motion";
+import { useEffect } from "react";
+import { motion, Spring, usePresence } from "framer-motion";
 import styles from "../page.module.css";
 
-const HomePage = () => {
+const transitionSpringPhysics: Spring = {
+  type: "spring",
+  mass: 0.5,
+  stiffness: 20,
+  damping: 2,
+};
+
+const transitionColor = "deepskyblue";
+
+const SecondPage = () => {
+  const [isPresent, safeToRemove] = usePresence();
+  useEffect(() => {
+    return () => {
+      if (!isPresent) {
+        safeToRemove();
+      }
+    };
+  }, []);
   return (
-    <motion.div
-      className={styles.main}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 1 }}
-    >
-      <div>
-        <h1>Home Page</h1>
+    <div className={styles.main}>
+      <motion.div
+        style={{
+          backgroundColor: transitionColor,
+          position: "fixed",
+          width: "200vw",
+          zIndex: 0,
+          bottom: 0,
+        }}
+        transition={transitionSpringPhysics}
+        animate={{ height: "0vh" }}
+        exit={{ opacity: 0 }}
+      />
+
+      <motion.div
+        style={{
+          backgroundColor: transitionColor,
+          position: "fixed",
+          width: "200vw",
+          zIndex: 0,
+          top: 0,
+        }}
+        transition={transitionSpringPhysics}
+        initial={{ height: "120vh" }}
+        animate={{ height: "0vh", transition: { delay: 0.5 } }}
+      />
+
+      <div className={styles.content}>
+        <h1>Main Project</h1>
       </div>
-    </motion.div>
+    </div>
   );
 };
 
-export default HomePage;
+export default SecondPage;

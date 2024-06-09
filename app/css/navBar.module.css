@@ -1,8 +1,12 @@
 .nav_container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
   display: flex;
   flex-flow: row wrap;
   gap: 10px;
   padding: 1rem;
   background-color: rgba(63, 63, 63);
-  z-index: 800;
+  z-index: 10;
 }

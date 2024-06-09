@@ -6,12 +6,13 @@ type Props = {};
 
 const NavBar = (props: Props) => {
   return (
-    <div className={styles.main}>
+    <header>
       <section className={styles.nav_container}>
         <Link href={"/frammer_main"}>Home</Link>
         <Link href={"/frammer_2"}>Second</Link>
+        <Link href={"/third_page"}>Third</Link>
       </section>
-    </div>
+    </header>
   );
 };
 

@@ -1,12 +1,8 @@
 .main {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  padding: 6rem;
-  min-height: 100vh;
-  width: max-content;
+  width: 100%;
+  height: -webkit-fill-available;
   background-color: #1c1c1c;
+  z-index: 10;
 }
 
 .description {
@@ -229,4 +225,7 @@
   to {
     transform: rotate(0deg);
   }
+}
+.content {
+  padding: 5rem 1rem;
 }
