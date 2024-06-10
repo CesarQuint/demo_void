@@ -58,7 +58,7 @@ function SecondPage() {
       <motion.div
         ref={reference}
         style={{
-          backgroundColor: transitionColor,
+          backgroundColor: "black",
           position: "fixed",
           width: "200vw",
           zIndex: 0,

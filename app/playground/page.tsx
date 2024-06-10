@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 import { useNavigation } from "../utils/navigationContext";
 import { useRouter } from "next/navigation";
 import CourtainsEasy from "../components/courtainsEasy";
+import CourtainsGsap from "../components/courtainGsap";
 
 const transitionSpringPhysics: Spring = {
   type: "spring",
@@ -46,7 +47,7 @@ function SecondPage() {
       if (scope.current) {
         animate(scope.current, {
           height: "100vh",
-          backgroundColor: "red",
+          backgroundColor: "black",
           transition: { delay: 0.2 },
         }).then(() => {
           router.push(navigationEvent.href);
@@ -83,6 +84,7 @@ function SecondPage() {
         }}
       />
       <CourtainsEasy />
+      <CourtainsGsap />
     </motion.div>
   );
 }
