@@ -1,11 +1,12 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, usePresence, useAnimate, Spring } from "framer-motion";
 import styles from "../page.module.css";
 import { usePathname } from "next/navigation";
 import { useNavigation } from "../utils/navigationContext";
 import { useRouter } from "next/navigation";
+import CourtainsEasy from "../components/courtainsEasy";
 
 const transitionSpringPhysics: Spring = {
   type: "spring",
@@ -18,34 +19,41 @@ const transitionColor = "deepskyblue";
 
 function SecondPage() {
   const [isPresent, safeToRemove] = usePresence();
-  const reference = useRef(null);
   const [scope, animate] = useAnimate();
+
+  const animationRef = useRef<HTMLDivElement>(null); // Corrected ref type
   const pathname = usePathname();
   const { navigationEvent } = useNavigation();
   const router = useRouter();
 
   useEffect(() => {
-    animate(reference.current, { height: "0vh", transition: { delay: 0.2 } });
+    if (scope.current) {
+      animate(scope.current, {
+        height: "0vh",
+        transition: { type: "spring", delay: 0.2 },
+      });
+    }
 
     return () => {
       if (!isPresent) {
         safeToRemove();
       }
     };
-  }, []);
+  }, [animate, isPresent, safeToRemove]);
 
   useEffect(() => {
     if (navigationEvent.href !== pathname) {
-      // On navigation event, perform animation with red background
-      animate(reference.current, {
-        height: "100vh",
-        backgroundColor: "red",
-        transition: { delay: 0.2 },
-      }).then(() => {
-        router.push(navigationEvent.href);
-      });
+      if (scope.current) {
+        animate(scope.current, {
+          height: "100vh",
+          backgroundColor: "red",
+          transition: { delay: 0.2 },
+        }).then(() => {
+          router.push(navigationEvent.href);
+        });
+      }
     }
-  }, [navigationEvent]);
+  }, [navigationEvent, pathname, router, animate]);
 
   return (
     <motion.div
@@ -56,12 +64,12 @@ function SecondPage() {
       className={styles.main}
     >
       <motion.div
-        ref={reference}
+        ref={scope}
         style={{
           backgroundColor: transitionColor,
           position: "fixed",
           width: "200vw",
-          zIndex: 0,
+          zIndex: 20,
           bottom: 0,
         }}
         initial={{ height: "120vh" }}
@@ -74,21 +82,7 @@ function SecondPage() {
           backgroundColor: "red",
         }}
       />
-      <div className={styles.content}>
-        <h1>Playground Area</h1>
-        <h2>Courtains transition</h2>
-        <section className={`${styles.cards_container}`}>
-          <div className={styles.flex_cards}>
-            <div className={`${styles.card} ${styles._1}`}>card 1</div>
-            <div id="2" className={`${styles.card} ${styles._2}`}>
-              card 2
-            </div>
-            <div id="3" className={`${styles.card} ${styles._3}`}>
-              card 3
-            </div>
-          </div>
-        </section>
-      </div>
+      <CourtainsEasy />
     </motion.div>
   );
 }

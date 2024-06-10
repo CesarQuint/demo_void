@@ -26,11 +26,14 @@
   height: 15rem;
   padding: 1rem;
   color: #1c1c1c;
+  position: relative;
 }
 
 ._1 {
   background-color: rgb(161, 255, 255);
   border: 1px solid wheat;
+  position: relative;
+  z-index: 0;
 }
 
 ._2 {
@@ -38,7 +41,16 @@
   border: 1px solid wheat;
 }
 
+._2 iframe {
+  width: 90%;
+  overflow: hidden;
+}
+
 ._3 {
   background-color: rgb(195, 158, 255);
   border: 1px solid wheat;
+}
+
+.iframe {
+  display: block;
 }
