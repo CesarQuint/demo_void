@@ -2,10 +2,13 @@
 
 import { useEffect, useRef } from "react";
 import { motion, usePresence, useAnimate, Spring } from "framer-motion";
-import styles from "../page.module.css";
+import styles from "../pageImage.module.css";
 import { usePathname } from "next/navigation";
 import { useNavigation } from "../utils/navigationContext";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
+import mainImage from "../../public/images/large_image.jpeg";
+import RepeatTextScrollFx from "../components/gsapComponents";
 
 const transitionSpringPhysics: Spring = {
   type: "spring",
@@ -74,9 +77,23 @@ function SecondPage() {
           backgroundColor: "red",
         }}
       />
-      <div className={styles.content}>
+      <motion.div className={`${styles.main}`}>
         <h1>Main Project</h1>
-      </div>
+        <motion.section>
+          <Image
+            className={`${styles.main_image}`}
+            src={mainImage}
+            alt="NO content"
+          />
+          <h2>Gsap Tests</h2>
+          <div>
+            <RepeatTextScrollFx />
+          </div>
+          <div>
+            <RepeatTextScrollFx />
+          </div>
+        </motion.section>
+      </motion.div>
     </motion.div>
   );
 }
