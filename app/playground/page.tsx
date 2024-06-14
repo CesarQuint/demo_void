@@ -8,6 +8,7 @@ import { useNavigation } from "../utils/navigationContext";
 import { useRouter } from "next/navigation";
 import CourtainsEasy from "../components/courtainsEasy";
 import CourtainsGsap from "../components/courtainGsap";
+import Timeline from "../components/timeline";
 
 const transitionSpringPhysics: Spring = {
   type: "spring",
@@ -84,6 +85,7 @@ function SecondPage() {
         }}
       />
       <CourtainsEasy />
+      <Timeline />
       <CourtainsGsap />
     </motion.div>
   );
