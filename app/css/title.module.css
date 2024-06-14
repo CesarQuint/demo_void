@@ -1,0 +1,83 @@
+/* Include your CSS styling here */
+/* Example CSS based on the provided styles */
+.body {
+  margin: 0;
+  --color-text: #fff;
+  --color-bg: #000;
+  --font-size-xl: 26vw;
+  --font-family: "Arial", sans-serif;
+  --font-weight: 900;
+  --content-offset: 20vh;
+  --color-rep-text: var(--color-text);
+  --color-rep-bg: var(--color-bg);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  overflow: hidden;
+  overflow-y: scroll;
+}
+
+.content {
+  margin: 2rem 0;
+  display: flex;
+  justify-content: center;
+  height: 50vh;
+  flex-direction: column;
+  align-items: center;
+}
+
+.content__title {
+  font-size: var(--font-size-xl);
+  margin: 0;
+  display: grid;
+  font-family: var(--font-family);
+  font-weight: var(--font-weight);
+  color: var(--color-rep-text);
+  cursor: default;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.text_rep {
+  display: grid;
+  color: var(--color-rep-text);
+}
+
+.text_rep span {
+  grid-area: 1 / 1 / 2 / 2;
+  background-color: var(--color-rep-bg);
+  font-size: 96px;
+  will-change: transform;
+  line-height: 76px;
+}
+
+.text {
+  padding: 5rem 0;
+  width: 70%;
+  margin: auto;
+}
+.test {
+  color: inherit;
+}
+
+.board {
+  height: 22rem;
+  width: 100%;
+  background-color: beige;
+}
+.square {
+  height: 5rem;
+  width: 5rem;
+  background-color: aqua;
+}
+._1 {
+  background-color: rgb(84, 233, 119);
+}
+._2 {
+  background-color: rgb(233, 102, 84);
+}
+
+.text_float {
+  color: #fff;
+}
