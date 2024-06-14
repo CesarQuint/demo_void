@@ -64,7 +64,7 @@ function SecondPage() {
           backgroundColor: transitionColor,
           position: "fixed",
           width: "200vw",
-          zIndex: 0,
+          zIndex: 20,
           bottom: 0,
         }}
         initial={{ height: "120vh" }}
@@ -87,10 +87,7 @@ function SecondPage() {
           />
           <h2>Gsap Tests</h2>
           <div>
-            <RepeatTextScrollFx />
-          </div>
-          <div>
-            <RepeatTextScrollFx />
+            <RepeatTextScrollFx text="BOCA" words={12} />
           </div>
         </motion.section>
       </motion.div>
