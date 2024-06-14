@@ -1,0 +1,35 @@
+.figure {
+  display: inline-block;
+}
+
+.wrapper {
+  position: relative;
+  object-position: bottom;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: auto;
+  aspect-ratio: var(--img-ratio, 1.5);
+
+  & img {
+    width: 100%;
+    height: 100%;
+    background-position: 50%;
+    background-size: cover;
+    position: relative;
+  }
+}
+
+.caption {
+  position: absolute;
+	display: flex;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 1em;
+}
+.title {
+  font-size: 1.25em;
+}
