@@ -51,6 +51,16 @@ const NavBar = () => {
         >
           Playground
         </Link>
+        <Link
+          href="/scroll_gallery"
+          onClick={(e) => {
+            e.preventDefault()
+            setNavigationEvent({ state: true, href: '/scroll_gallery' })
+            router.push('/scroll_gallery')
+          }}
+        >
+          Scroll Gallery
+        </Link>
       </section>
     </header>
   );

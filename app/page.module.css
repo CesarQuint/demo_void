@@ -54,3 +54,19 @@
 .iframe {
   display: block;
 }
+
+.scrollView {
+  display: flex;
+  flex-flow: column;
+  max-width: 900px;
+  margin: auto;
+
+  & > * {
+    &:nth-child(odd) {
+      margin-right: auto;
+    }
+    &:nth-child(even) {
+      margin-left: auto;
+    }
+  }
+}
