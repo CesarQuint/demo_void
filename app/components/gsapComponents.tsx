@@ -5,6 +5,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import styles from "../css/title.module.css";
 import Title from "./title";
+import VideoHover from "./videoHover";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -42,7 +43,7 @@ const GsapComponent = ({
     <div ref={containerRef}>
       <div className={`${styles.body}`}>{content}</div>
 
-      <Title text="BOCA" words={16} />
+      <Title text="VOIDXR" words={16} />
 
       <p ref={textRef} className={`${styles.text} ${styles.test}`}>
         Suspendisse dapibus ipsum erat, quis blandit mi condimentum eget. Aenean
@@ -71,6 +72,8 @@ const GsapComponent = ({
         laoreet ex nec, tincidunt orci. Nam rutrum velit ante, nec consequat
         erat finibus vitae. Nulla pretium malesuada dolor ac pretium.
       </p>
+
+      <VideoHover />
     </div>
   );
 };
