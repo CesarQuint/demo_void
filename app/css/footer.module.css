@@ -7,8 +7,30 @@
   background-color: #101010;
   display: flex;
   flex-flow: column nowrap;
-  gap: 3vh;
+  gap: 6vh;
   border-start-start-radius: 40px;
   border-start-end-radius: 40px;
   align-items: center;
+  padding-top: 8vh;
+}
+
+.questions {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 2vh;
+  align-items: center;
+}
+
+.questions button {
+  width: 100%;
+  padding: 1vh;
+  border-radius: 40px;
+  background-color: #fff;
+  color: #101010;
+}
+
+.social {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 3vh;
 }

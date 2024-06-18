@@ -126,7 +126,7 @@ const VideoHover: React.FC = () => {
   }, []);
 
   return (
-    <motion.div>
+    <motion.div className={`${styles.video_container}`}>
       <motion.div
         className={styles.video_wrapper}
         ref={containerRef}>

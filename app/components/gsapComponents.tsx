@@ -93,8 +93,6 @@ const GsapComponent = ({
         laoreet ex nec, tincidunt orci. Nam rutrum velit ante, nec consequat
         erat finibus vitae. Nulla pretium malesuada dolor ac pretium.
       </p>
-
-      <VideoHover />
     </div>
   );
 };

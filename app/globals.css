@@ -37,6 +37,7 @@
   --callout-border-rgb: 172, 175, 176;
   --card-rgb: 180, 185, 188;
   --card-border-rgb: 131, 134, 135;
+  transition: all 1s;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -79,10 +80,10 @@
 }
 
 html {
-  background-color: #1c1c1c;
+  background-color: black;
 }
 body {
-  background-color: #1c1c1c;
+  background-color: black;
   width: -webkit-fill-available;
   overflow-x: hidden;
   height: -webkit-fill-available;

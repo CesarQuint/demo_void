@@ -22,12 +22,13 @@ export default function () {
 
   return (
     <div className={styles.main}>
-      <div ref={container} className={`${styles.container}`}>
+      <div
+        ref={container}
+        className={`${styles.container}`}>
         <div className={`${styles.box} ${styles.gradientBlue}`}>selector</div>
         <div
           className={`${styles.circle} ${styles.gradientGreen}`}
-          ref={circle}
-        >
+          ref={circle}>
           Ref
         </div>
       </div>

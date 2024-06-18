@@ -10,8 +10,12 @@ import { AnimationSequence } from "framer-motion";
 import { animate as animation } from "framer-motion";
 import Tags from "../components/tags";
 import Footer from "../components/footer";
+import HeroContainer from "../components/Home/HeroContainer";
+import VideoHover from "../components/videoHover";
 
 import RepeatTextScrollFx from "../components/gsapComponents";
+import ProjectImages from "../components/Home/ProjectImages";
+import ScrollImg from "../components/ScrollImg/ScrollImg";
 
 const transitionSpringPhysics: Spring = {
   type: "spring",
@@ -80,13 +84,13 @@ function SecondPage() {
       initial={{ opacity: 1 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 1 }}
-      className={styles.main}>
+      className={`${styles.main}`}>
       <motion.div
         ref={scope2}
         style={{
           width: "100%",
-          height: "50%",
-          position: "absolute",
+          height: "52%",
+          position: "fixed",
           zIndex: 50,
           left: 0,
           top: 0,
@@ -98,30 +102,31 @@ function SecondPage() {
         ref={scope3}
         style={{
           width: "100%",
-          height: "50%",
+          height: "52%",
           zIndex: 50,
-          position: "absolute",
+          position: "fixed",
           left: 0,
           bottom: 0,
         }}
         transition={transitionSpringPhysics}
         className="courtain"
       />
-      <motion.div className={`${styles.main}`}>
-        <h1>Main Project</h1>
-        <motion.section>
+      <HeroContainer />
+      <VideoHover />
+      <ProjectImages />
+      <Tags />
+      <Footer />
+      {/* <motion.div>
+        <motion.section id="#second">
           <div>
             <RepeatTextScrollFx
               text="BOCA"
               words={12}
             />
           </div>
-          <section>
-            <Tags />
-          </section>
-          <Footer />
+          <section></section>
         </motion.section>
-      </motion.div>
+      </motion.div> */}
     </motion.div>
   );
 }

@@ -15,13 +15,14 @@ const Footer = (props: Props) => {
           words={12}
         />
       </motion.section> */}
+        <h2>VOIDXR</h2>
 
-        <motion.section>
+        <motion.section className={`${styles.questions}`}>
           <h4>¿Tienes una idea?</h4>
           <p>Cuentanos</p>
           <button>Let's Talk</button>
         </motion.section>
-        <motion.section>
+        <motion.section className={`${styles.social}`}>
           <p>Instagram</p>
           <p>Facebook</p>
           <p>Vimoe</p>
