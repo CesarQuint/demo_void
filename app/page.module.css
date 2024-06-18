@@ -60,7 +60,7 @@
   max-width: 100%;
   grid-template-columns: 1fr 1fr;
   overflow: hidden;
-  margin: 1.25rem;
+  margin: 2rem;
   gap: 2.5rem;
 
   & > * {
