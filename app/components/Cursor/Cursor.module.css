@@ -1,0 +1,42 @@
+.cursor {
+  display: none;
+
+  --cursor-stroke: #fff;
+  --cursor-stroke-width: 1px;
+}
+
+@media (any-pointer: fine) {
+  .cursor {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 1001;
+  }
+
+  .line {
+    position: fixed;
+    display: block;
+    opacity: 0;
+
+    &.horizontal {
+      top: -10px;
+      left: -10%;
+      width: 120%;
+      height: 20px;
+    }
+    &.vertical {
+      top: -10%;
+      left: -10px;
+      height: 120%;
+      width: 20px;
+    }
+
+    & .stroke {
+      fill: none;
+      stroke: var(--cursor-stroke);
+      stroke-width: var(--cursor-stroke-width);
+    }
+  }
+}
