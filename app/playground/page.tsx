@@ -8,6 +8,7 @@ import { useNavigation } from "../utils/navigationContext";
 import { useRouter } from "next/navigation";
 import CourtainsEasy from "../components/courtainsEasy";
 import CourtainsGsap from "../components/courtainGsap";
+import Timeline from "../components/timeline";
 
 const transitionSpringPhysics: Spring = {
   type: "spring",
@@ -62,12 +63,11 @@ function SecondPage() {
       initial={{ opacity: 1 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 1 }}
-      className={styles.main}
-    >
+      className={styles.main}>
       <motion.div
         ref={scope}
         style={{
-          backgroundColor: transitionColor,
+          backgroundColor: "black",
           position: "fixed",
           width: "200vw",
           zIndex: 20,
@@ -84,6 +84,7 @@ function SecondPage() {
         }}
       />
       <CourtainsEasy />
+      <Timeline />
       <CourtainsGsap />
     </motion.div>
   );
