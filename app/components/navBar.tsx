@@ -1,6 +1,6 @@
 // NavBar.tsx
 "use client";
-import React, { useEffect, useRef } from "react";
+import React, { MouseEvent, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useNavigation } from "../utils/navigationContext";
 import styles from "../css/navBar.module.css";
@@ -11,8 +11,9 @@ import { gsap } from "gsap";
 
 const NavBar = () => {
   const container = useRef<HTMLElement>(null);
-  const foo = useRef(false);
-  const toggleTl = useRef<any>(null);
+  const isMenuOpen = useRef(false);
+  const linkRedirect = useRef('');
+  const toggleTl = useRef<gsap.core.Timeline | null>(null);
   const { setNavigationEvent } = useNavigation();
   const router = useRouter();
 
@@ -25,6 +26,13 @@ const NavBar = () => {
             duration: 0.3,
             ease: "expo",
           },
+          onReverseComplete() {
+            if (linkRedirect.current)  setNavigationEvent({ state: true, href: linkRedirect.current })
+            isMenuOpen.current = false
+          },
+          onComplete() {
+            isMenuOpen.current = true
+          }
         })
         .to(`.${styles.nav_container}`, { height: "90vh" }, 0)
         .to(`.${styles.line1}`, { rotate: "8.5deg" }, 0)
@@ -45,14 +53,15 @@ const NavBar = () => {
   );
 
   const toggleMenu = contextSafe(() => {
-    if (foo.current) {
-      toggleTl.current.reverse(0.2);
-    } else {
-      toggleTl.current.play();
-    }
-
-    foo.current = !foo.current;
+    if (isMenuOpen.current) toggleTl.current!.reverse(0.2);
+    else toggleTl.current!.play();
   });
+
+  function goTo(e: MouseEvent) {
+    e.preventDefault()
+    linkRedirect.current = (e.target as HTMLElement).getAttribute('href') || '';
+    toggleTl.current!.reverse(0.2)
+  }
 
   return (
     <header ref={container}>
@@ -76,18 +85,12 @@ const NavBar = () => {
         <div className={styles.links}>
           <Link
             href="/frammer_main"
-            onClick={(e) => {
-              e.preventDefault();
-              setNavigationEvent({ state: true, href: "/frammer_main" });
-            }}>
+            onClick={goTo}>
             Home
           </Link>
           <Link
             href="/playground"
-            onClick={(e) => {
-              e.preventDefault();
-              setNavigationEvent({ state: true, href: "/playground" });
-            }}>
+            onClick={goTo}>
             Proyectos
           </Link>
           <Link href="/">El Estudio</Link>
