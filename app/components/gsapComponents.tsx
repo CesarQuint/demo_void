@@ -43,9 +43,30 @@ const GsapComponent = ({
     <div ref={containerRef}>
       <div className={`${styles.body}`}>{content}</div>
 
-      <Title text="VOIDXR" words={16} />
+      <p
+        ref={textRef}
+        className={`${styles.text} ${styles.test}`}>
+        Suspendisse dapibus ipsum erat, quis blandit mi condimentum eget. Aenean
+        sodales id nunc eu sodales. Pellentesque at urna dapibus, volutpat nisi
+        nec, suscipit libero. Morbi non eleifend ante. Donec orci ipsum, dapibus
+        at justo a, facilisis commodo lectus. Vestibulum eget odio nulla.
+        Integer ut lorem iaculis, ullamcorper quam in, semper urna. Sed enim
+        augue, hendrerit eu elit nec, iaculis faucibus urna. Nam lectus sem,
+        pellentesque eget arcu et, vestibulum efficitur ante. Donec accumsan
+        gravida risus, non accumsan tellus accumsan at. Quisque id dolor mattis,
+        efficitur massa sit amet, sodales lacus. Ut dapibus quam gravida,
+        laoreet ex nec, tincidunt orci. Nam rutrum velit ante, nec consequat
+        erat finibus vitae. Nulla pretium malesuada dolor ac pretium.
+      </p>
 
-      <p ref={textRef} className={`${styles.text} ${styles.test}`}>
+      <Title
+        text="VOIDXR"
+        words={16}
+      />
+
+      <p
+        ref={textRef}
+        className={`${styles.text} ${styles.test}`}>
         Suspendisse dapibus ipsum erat, quis blandit mi condimentum eget. Aenean
         sodales id nunc eu sodales. Pellentesque at urna dapibus, volutpat nisi
         nec, suscipit libero. Morbi non eleifend ante. Donec orci ipsum, dapibus

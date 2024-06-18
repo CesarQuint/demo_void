@@ -12,6 +12,7 @@ const Title = ({ text, words = 6 }: { text: string; words: number }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
   const timelineRef = useRef<GSAPTimeline | null>(null);
+  const timelineRef2 = useRef<GSAPTimeline | null>(null);
   const [content, setContent] = useState<React.JSX.Element>();
   const midWords = Math.floor(words / 2);
   const wordsArr = new Array(midWords).fill(text);
@@ -19,13 +20,17 @@ const Title = ({ text, words = 6 }: { text: string; words: number }) => {
   //* Generate component content
   const createTitle = (text: string, words: number) => {
     let wordsUpSpans = wordsArr.map((word: string, _i: number) => (
-      <span className={`${styles.text_float}`} key={_i}>
+      <span
+        className={`${styles.text_float}`}
+        key={_i}>
         {word}
       </span>
     ));
 
     const wordsDowsSpans = wordsArr.map((word: string, _i: number) => (
-      <span className={`${styles.text_float}`} key={_i + wordsArr.length}>
+      <span
+        className={`${styles.text_float}`}
+        key={_i + wordsArr.length}>
         {word}
       </span>
     ));
@@ -34,7 +39,9 @@ const Title = ({ text, words = 6 }: { text: string; words: number }) => {
 
     return (
       <div className={`${styles.content}`}>
-        <h1 ref={containerRef} className={`${styles.text_rep}`}>
+        <h1
+          ref={containerRef}
+          className={`${styles.text_rep}`}>
           {wordsUpSpans}
         </h1>
       </div>
@@ -134,19 +141,26 @@ const Title = ({ text, words = 6 }: { text: string; words: number }) => {
       });
 
       timelineRef.current = tl;
+      timelineRef2.current = tl2;
     }
 
     return () => {
       timelineRef.current?.kill(); // Clean up the timeline on component unmount
+      timelineRef2.current?.kill(); // Clean up the timeline on component unmount
     };
   }, []);
 
   return (
     <div className={`${styles.body}`}>
-      <div ref={containerRef} className={`${styles.content}`}>
+      <div
+        ref={containerRef}
+        className={`${styles.content}`}>
         <h1 className={`${styles.text_rep}`}>
           {wordsArr.map((word: string, _i: number) => (
-            <span id={`${_i}`} className={`${styles.text_float}`} key={_i}>
+            <span
+              id={`${_i}`}
+              className={`${styles.text_float}`}
+              key={_i}>
               {word}
             </span>
           ))}

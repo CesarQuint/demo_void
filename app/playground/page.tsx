@@ -63,12 +63,11 @@ function SecondPage() {
       initial={{ opacity: 1 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 1 }}
-      className={styles.main}
-    >
+      className={styles.main}>
       <motion.div
         ref={scope}
         style={{
-          backgroundColor: transitionColor,
+          backgroundColor: "black",
           position: "fixed",
           width: "200vw",
           zIndex: 20,

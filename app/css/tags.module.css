@@ -1,0 +1,34 @@
+.main {
+  padding: 3vh 4vh;
+}
+
+.tags_container {
+  padding: 3vh;
+  position: relative;
+  height: 95vh;
+  flex-direction: column;
+  display: flex;
+}
+
+.tag {
+  width: 70%;
+  margin: auto;
+  margin-bottom: 1vh;
+  background-color: aliceblue;
+  padding: 5vh;
+  color: black;
+  border-radius: 15px;
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 3vh;
+  box-shadow: -1px 9px 9px 4px black;
+  position: relative;
+}
+
+.know_more {
+  width: 30%;
+  padding: 1vh;
+  border-radius: 25px;
+  text-align: center;
+  margin: auto;
+}
