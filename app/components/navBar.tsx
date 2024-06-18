@@ -31,6 +31,7 @@ const NavBar = () => {
         .to(`.${styles.line2}`, { rotate: '-8.5deg' }, 0)
         .to([`.${styles.links}`, `.${styles.langs}`], { height: 'auto' }, 0)
         .to([`.${styles.links}`, `.${styles.langs}`], { opacity: 1, duration: 0.5 }, 0.3)
+        .set([`.${styles.links}`, `.${styles.langs}`], { pointerEvents: 'all' }, 0.3)
     },
     { scope: container },
   )
