@@ -21,6 +21,10 @@ export default function ScrollImg({ title, caption, isLeftSide, ...props }: Prop
 
   useGSAP(
     () => {
+      const height = document.documentElement.scrollHeight;
+      const bottom = container.current!.offsetTop + container.current!.offsetHeight;
+      const bottomPercentage = (bottom / height) * 100
+
       gsap
         .timeline({
           defaults: {
@@ -28,7 +32,7 @@ export default function ScrollImg({ title, caption, isLeftSide, ...props }: Prop
           },
           scrollTrigger: {
             trigger: container.current,
-            start: 'top bottom-=15%',
+            start: `top bottom${bottomPercentage >= 90 ? '+=25%' : '-=15%'}`,
             end: '+=50%',
             scrub: true,
           },
@@ -70,6 +74,8 @@ export default function ScrollImg({ title, caption, isLeftSide, ...props }: Prop
           },
           0,
         )
+
+      gsap.to('img', { opacity: 1 })
     },
     { scope: container, dependencies: [isLeftSide], revertOnUpdate: true },
   )

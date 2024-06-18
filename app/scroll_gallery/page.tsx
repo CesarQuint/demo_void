@@ -26,8 +26,8 @@ export default function ScrollGallery() {
           <ScrollImg
             key={i}
             src={src}
-            width={450}
-            height={300}
+            width={150}
+            height={150}
             isLeftSide={!(i % 2)}
             alt="example"
             title="Raíces lumínicas"

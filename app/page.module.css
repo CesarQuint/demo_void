@@ -56,17 +56,23 @@
 }
 
 .scrollView {
-  display: flex;
-  flex-flow: column;
-  max-width: 900px;
-  margin: auto;
+  display: grid;
+  max-width: 100%;
+  grid-template-columns: 1fr 1fr;
+  overflow: hidden;
+  margin: 1.25rem;
+  gap: 2.5rem;
 
   & > * {
     &:nth-child(odd) {
-      margin-right: auto;
+      grid-column: 1 / -1;
+      justify-self: flex-start;
+      justify-items: flex-start;
     }
     &:nth-child(even) {
-      margin-left: auto;
+      grid-column: 2 / -1;
+      justify-self: flex-end;
+      justify-items: flex-end;
     }
   }
 }
