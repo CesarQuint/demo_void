@@ -28,7 +28,6 @@ const Tags = (props: Props) => {
           start: "top center",
           end: "center center",
           scrub: 1, // Adjust as needed
-          markers: true, // Optional: for debugging, shows start/end markers in the viewport
         },
         defaults: {
           ease: "sine.inOut", // Use a smoother ease

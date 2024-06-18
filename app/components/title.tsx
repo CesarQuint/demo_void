@@ -96,7 +96,6 @@ const Title = ({ text, words = 6 }: { text: string; words: number }) => {
           start: "top center",
           end: "center center",
           scrub: 1, // Adjust as needed
-          markers: true, // Optional: for debugging, shows start/end markers in the viewport
         },
         defaults: {
           ease: "sine.inOut", // Use a smoother ease
@@ -110,7 +109,6 @@ const Title = ({ text, words = 6 }: { text: string; words: number }) => {
           start: "center center",
           end: "bottom center",
           scrub: 1, // Adjust as needed
-          markers: true, // Optional: for debugging, shows start/end markers in the viewport
         },
         defaults: {
           ease: "sine.inOut", // Use a smoother ease

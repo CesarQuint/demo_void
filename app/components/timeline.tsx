@@ -23,7 +23,6 @@ const Timeline = () => {
           start: "top center",
           end: "bottom center",
           scrub: true, // Adjust as needed
-          markers: true, // Optional: for debugging, shows start/end markers in the viewport
         },
       });
 
@@ -47,7 +46,9 @@ const Timeline = () => {
   }, []); // Empty dependency array ensures effect runs once
 
   return (
-    <div ref={containerRef} className={`${styles.board}`}>
+    <div
+      ref={containerRef}
+      className={`${styles.board}`}>
       <div className={`${styles.square} ${styles._1}`}>a</div>
       <div className={`${styles.square} ${styles._2}`}>b</div>
       {/* Add more elements here */}
