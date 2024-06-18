@@ -1,0 +1,14 @@
+.footer {
+  width: 100%;
+  background-color: #fff;
+}
+
+.footer_flex {
+  background-color: #101010;
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 3vh;
+  border-start-start-radius: 40px;
+  border-start-end-radius: 40px;
+  align-items: center;
+}

@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import styles from "../css/video.hover.module.css";
 import gsap from "gsap";
 import eyeIcon from "../../public/images/EyeIcon.png";
+import { log } from "console";
 
 //TODO : Work in the restart of the animation at out
 //TODO: Kill Propertly the animations
@@ -13,6 +14,8 @@ const VideoHover: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const playButtonRef = useRef<HTMLDivElement>(null);
   const [playTriggered, setPlayTtriggered] = useState<boolean>(false);
+  const [isScrolling, setIsScrolling] = useState<boolean>(false);
+  const scrollTimeout = useRef<NodeJS.Timeout | null>(null);
 
   const handlePlay = () => {
     if (videoRef.current) {
@@ -26,7 +29,7 @@ const VideoHover: React.FC = () => {
   const handlePause = () => {};
 
   useEffect(() => {
-    if (playTriggered === false) {
+    if (containerRef.current !== null && !playTriggered) {
       let xTo: any, yTo: any;
 
       const tlHalo = gsap.timeline({
@@ -53,32 +56,34 @@ const VideoHover: React.FC = () => {
 
       let a: any = null;
       const handleMouseEnter = () => {
-        a = gsap.to(playButtonRef.current, {
-          opacity: 1,
-          duration: 1,
-          left: "0",
-        });
-
-        tlHalo.play();
-
         // Create quickTo functions for x and y properties
         xTo = gsap.quickTo(playButtonRef.current, "x", {
           duration: 0.4,
           ease: "power3",
         });
+
         yTo = gsap.quickTo(playButtonRef.current, "y", {
           duration: 0.4,
           ease: "power3",
         });
+
+        if (isScrolling === false)
+          a = gsap.to(playButtonRef.current, {
+            opacity: 1,
+            duration: 1,
+          });
+
+        tlHalo.play();
+
         containerRef.current?.addEventListener("mousemove", handleMouseMove);
       };
 
       const handleMouseLeave = () => {
         tlHalo.pause();
         gsap.to(playButtonRef.current, { opacity: 0 });
+        a?.kill();
+        tlHalo?.kill();
         containerRef.current?.removeEventListener("mousemove", handleMouseMove);
-        a.kill();
-        tlHalo.kill();
       };
 
       containerRef.current?.addEventListener("mouseenter", handleMouseEnter);
@@ -99,6 +104,27 @@ const VideoHover: React.FC = () => {
     }
   }, [playTriggered]);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolling(true);
+      if (scrollTimeout.current) {
+        clearTimeout(scrollTimeout.current);
+      }
+      scrollTimeout.current = setTimeout(() => {
+        setIsScrolling(false);
+      }, 200); // Adjust the timeout duration as needed
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (scrollTimeout.current) {
+        clearTimeout(scrollTimeout.current);
+      }
+    };
+  }, []);
+
   return (
     <motion.div>
       <motion.div
@@ -108,17 +134,16 @@ const VideoHover: React.FC = () => {
           className={styles.play_button}
           ref={playButtonRef}
           onClick={handlePlay}
-          style={{ cursor: "pointer", position: "absolute" }}>
+          style={{ cursor: "pointer" }}>
           <Image
+            className={`${styles.eye_video}`}
             src={eyeIcon}
             alt="Eye"
           />
           <span className={`${styles.halo}`}></span>
         </motion.div>
         <video
-          onPause={() => {
-            handlePause();
-          }}
+          onPause={handlePause}
           className={`${styles.video}`}
           ref={videoRef}
           controls={playTriggered}

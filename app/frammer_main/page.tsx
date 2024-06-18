@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import { AnimationSequence } from "framer-motion";
 import { animate as animation } from "framer-motion";
 import Tags from "../components/tags";
+import Footer from "../components/footer";
 
 import RepeatTextScrollFx from "../components/gsapComponents";
 
@@ -118,6 +119,7 @@ function SecondPage() {
           <section>
             <Tags />
           </section>
+          <Footer />
         </motion.section>
       </motion.div>
     </motion.div>
