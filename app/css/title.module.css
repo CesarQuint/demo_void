@@ -17,10 +17,11 @@
 }
 
 .content {
+  overflow: hidden;
   margin: 2rem 0;
   display: flex;
   justify-content: center;
-  height: 70vh;
+  height: 50vh;
   flex-direction: column;
   align-items: center;
 }

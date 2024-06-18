@@ -95,11 +95,11 @@ const Title = ({ text, words = 6 }: { text: string; words: number }) => {
           trigger: containerRef.current,
           start: "top center",
           end: "center center",
-          scrub: 1, // Adjust as needed
+          scrub: 2, // Adjust as needed
         },
         defaults: {
           ease: "sine.inOut", // Use a smoother ease
-          duration: 2,
+          duration: 1,
         },
       });
 
@@ -108,11 +108,11 @@ const Title = ({ text, words = 6 }: { text: string; words: number }) => {
           trigger: containerRef.current,
           start: "center center",
           end: "bottom center",
-          scrub: 1, // Adjust as needed
+          scrub: 2, // Adjust as needed
         },
         defaults: {
           ease: "sine.inOut", // Use a smoother ease
-          duration: 2,
+          duration: 1,
         },
       });
 
@@ -128,7 +128,7 @@ const Title = ({ text, words = 6 }: { text: string; words: number }) => {
       });
 
       firstHalf.reverse().forEach((span, index) => {
-        tl2.to(
+        tl.to(
           span,
           {
             yPercent: Number(targetXPositions[index].y),

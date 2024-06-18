@@ -1,12 +1,12 @@
 .main {
   width: 100%;
   height: -webkit-fill-available;
-  background-color: #1c1c1c;
   z-index: 10;
 }
 
 .content {
-  padding: 5rem 2rem 0rem;
+  padding: 15rem 2rem 0rem;
+  color: white;
 }
 
 .cards_container {

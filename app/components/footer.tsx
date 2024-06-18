@@ -9,13 +9,12 @@ const Footer = (props: Props) => {
   return (
     <motion.div className={`${styles.footer}`}>
       <motion.section className={`${styles.footer_flex}`}>
-        {/* <motion.section>
-        <Title
-          text="VOIDXR"
-          words={12}
-        />
-      </motion.section> */}
-        <h2>VOIDXR</h2>
+        <motion.section>
+          <Title
+            text="VOIDXR"
+            words={12}
+          />
+        </motion.section>
 
         <motion.section className={`${styles.questions}`}>
           <h4>¿Tienes una idea?</h4>

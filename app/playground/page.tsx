@@ -83,9 +83,12 @@ function SecondPage() {
           backgroundColor: "red",
         }}
       />
-      <CourtainsEasy />
+      {/* <CourtainsEasy />
       <Timeline />
-      <CourtainsGsap />
+      <CourtainsGsap /> */}
+      <motion.div className={`${styles.content}`}>
+        <h2>Redirect!!</h2>
+      </motion.div>
     </motion.div>
   );
 }
