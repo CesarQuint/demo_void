@@ -26,9 +26,9 @@
 .presentation_text {
   position: absolute;
   top: 30%;
-  width: 60%;
+  width: 70%;
   margin: auto;
-  font-size: 1.6vmax;
+  font-size: 1.3rem;
   display: flex;
   flex-flow: column nowrap;
 }
