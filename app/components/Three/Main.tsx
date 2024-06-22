@@ -3,6 +3,7 @@ import { Canvas } from "@react-three/fiber";
 import Floor from "./Floor";
 import Box from "./Box";
 import LightBulb from "./Bulb";
+import Controls from "./Controls";
 import css from "../../css/home.module.css";
 
 export default function Main() {
@@ -19,8 +20,12 @@ export default function Main() {
           intensity={0.2}
         />
         <LightBulb position={[0, 3, 0]} />
-        <Box />
-        <Floor />
+        <Box
+          rotateX={3}
+          rotateY={0.2}
+        />
+        <Controls />
+        <Floor position={[0, -1, 0]} />
       </Canvas>
     </div>
   );

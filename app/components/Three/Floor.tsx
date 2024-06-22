@@ -1,10 +1,11 @@
 import React from "react";
-import { BoxGeometry, MeshPhysicalMaterial } from "three";
-import { extend, useThree, useFrame } from "@react-three/fiber";
+import { MeshProps } from "@react-three/fiber";
 
-extend({ BoxGeometry });
+interface FloorProps extends MeshProps {
+  position?: [number, number, number];
+}
 
-function Floor(props: {}) {
+function Floor(props: FloorProps) {
   return (
     <mesh
       {...props}

@@ -12,6 +12,7 @@ import Tags from "../components/tags";
 import Footer from "../components/footer";
 import HeroContainer from "../components/Home/HeroContainer";
 import VideoHover from "../components/videoHover";
+import Video from "../components/Three/Video";
 
 import RepeatTextScrollFx from "../components/gsapComponents";
 import ProjectImages from "../components/Home/ProjectImages";
@@ -114,7 +115,7 @@ function SecondPage() {
       />
       <HeroContainer />
       <VideoHover />
-      <Main />
+      <Video />
       <ProjectImages />
       <Tags />
       <Footer />
