@@ -57,11 +57,10 @@ const Title = ({ text, words = 6 }: { text: string; words: number }) => {
           trigger: containerRef.current,
           start: "top center",
           end: "center center",
-          scrub: 2, // Adjust as needed
+          scrub: 0, // Adjust as needed
         },
         defaults: {
-          ease: "sine.inOut", // Use a smoother ease
-          duration: 1,
+          ease: "power1", // Use a smoother ease
         },
       });
 
@@ -70,11 +69,10 @@ const Title = ({ text, words = 6 }: { text: string; words: number }) => {
           trigger: containerRef.current,
           start: "center center",
           end: "bottom center",
-          scrub: 2, // Adjust as needed
+          scrub: 0, // Adjust as needed
         },
         defaults: {
-          ease: "sine.inOut", // Use a smoother ease
-          duration: 1,
+          ease: "power1", // Use a smoother ease
         },
       });
 
@@ -83,7 +81,7 @@ const Title = ({ text, words = 6 }: { text: string; words: number }) => {
           span,
           {
             yPercent: Number(targetXPositions[firstHalf.length + index].y),
-            delay: Number(targetXPositions[firstHalf.length + index].delay),
+            // delay: Number(targetXPositions[firstHalf.length + index].delay),
           },
           0
         );
@@ -94,7 +92,7 @@ const Title = ({ text, words = 6 }: { text: string; words: number }) => {
           span,
           {
             yPercent: Number(targetXPositions[index].y),
-            delay: Number(targetXPositions[index].delay),
+            // delay: Number(targetXPositions[index].delay),
           },
           0
         );
