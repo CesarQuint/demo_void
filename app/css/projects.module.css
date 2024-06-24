@@ -20,8 +20,11 @@
   margin: 2rem;
   gap: 2.5rem;
   color: #101010;
+  position: relative;
 
   & > * {
+    width: calc((100vw - 2.5rem - 2rem ) / 2);
+
     &:nth-child(odd) {
       grid-column: 1 / -1;
       justify-self: flex-start;

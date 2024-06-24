@@ -32,8 +32,8 @@ const ProjectImages = (props: Props) => {
             <ScrollImg
               key={i}
               src={src}
-              width={150}
-              height={150}
+              fill
+              sizes="50%"
               isLeftSide={!(i % 2)}
               alt="example"
               title="Raíces lumínicas"
