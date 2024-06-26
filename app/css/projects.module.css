@@ -4,6 +4,7 @@
   border-start-start-radius: 40px;
   border-start-end-radius: 40px;
   position: relative;
+  overflow: hidden;
 }
 
 .scrollView {
