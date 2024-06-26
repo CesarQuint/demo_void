@@ -12,7 +12,6 @@
   --color-rep-bg: var(--color-bg);
   color: var(--color-text);
   background-color: var(--color-bg);
-  overflow: hidden;
 
   width: 100%;
 }
