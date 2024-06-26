@@ -11,12 +11,14 @@ import Image from 'next/image'
 gsap.registerPlugin(useGSAP, ScrollTrigger)
 
 interface Props extends React.ComponentProps<typeof Image> {
-  title?: string
-  caption?: string
+  date: string
+  title: string
+  caption: string
+  tag: string
   isLeftSide?: boolean
 }
 
-export default function ScrollImg({ title, caption, isLeftSide, ...props }: Props) {
+export default function ScrollImg({ title, caption, isLeftSide, date, tag, ...props }: Props) {
   const container = useRef<HTMLElement>(null)
 
   useGSAP(
@@ -82,10 +84,12 @@ export default function ScrollImg({ title, caption, isLeftSide, ...props }: Prop
 
   return (
     <figure ref={container} className={s.figure}>
+      <span>{date}</span>
       <div className={s.wrapper}>
         <Image {...props} />
       </div>
       <figcaption className={s.caption}>
+        <div className={s.tag}>{tag}</div>
         <div className={s.title}>{title}</div>
         <div>{caption}</div>
       </figcaption>

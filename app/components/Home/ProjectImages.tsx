@@ -1,49 +1,77 @@
-import React from "react";
-import { motion } from "framer-motion";
-import styles from "../../css/projects.module.css";
-import CardImg from "../CardImg/CardImg";
-import ScrollImg from "../ScrollImg/ScrollImg";
+import React, { useRef } from 'react'
+import { motion } from 'framer-motion'
+import styles from '../../css/projects.module.css'
+import ScrollImg from '../ScrollImg/ScrollImg'
+import { useGSAP } from '@gsap/react'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/all'
 
-type Props = {};
+gsap.registerPlugin(useGSAP, ScrollTrigger)
+
+type Props = {}
 
 const ProjectImages = (props: Props) => {
+  const container = useRef<HTMLDivElement>(null)
+  const scrollContainer = useRef<HTMLDivElement>(null)
+
+  useGSAP(
+    () => {
+      const boxes = scrollContainer.current!.children
+
+      gsap.to(boxes, {
+        xPercent: -85 * boxes.length - 1,
+        ease: 'none',
+        scrollTrigger: {
+          pin: true,
+          scrub: 0.1,
+          trigger: container.current,
+          start: 'top top+=15%',
+          end: 'bottom top+=15%',
+        },
+      })
+    },
+    { scope: scrollContainer },
+  )
+
   const images = [
-    "https://tympanus.net/Development/ConnectedGrid/img/14.jpg",
-    "https://tympanus.net/Development/ConnectedGrid/img/15.jpg",
-    "https://tympanus.net/Development/ConnectedGrid/img/16.jpg",
-    "https://tympanus.net/Development/ConnectedGrid/img/17.jpg",
-    "https://tympanus.net/Development/ConnectedGrid/img/18.jpg",
-    "https://tympanus.net/Development/ConnectedGrid/img/19.jpg",
-    "https://tympanus.net/Development/ConnectedGrid/img/20.jpg",
-    "https://tympanus.net/Development/ConnectedGrid/img/21.jpg",
-    "https://tympanus.net/Development/ConnectedGrid/img/22.jpg",
-    "https://tympanus.net/Development/ConnectedGrid/img/23.jpg",
-    "https://tympanus.net/Development/ConnectedGrid/img/24.jpg",
-    "https://tympanus.net/Development/ConnectedGrid/img/25.jpg",
-    "https://tympanus.net/Development/ConnectedGrid/img/26.jpg",
-  ];
+    'https://tympanus.net/Development/ConnectedGrid/img/14.jpg',
+    'https://tympanus.net/Development/ConnectedGrid/img/15.jpg',
+    'https://tympanus.net/Development/ConnectedGrid/img/16.jpg',
+    'https://tympanus.net/Development/ConnectedGrid/img/17.jpg',
+    'https://tympanus.net/Development/ConnectedGrid/img/18.jpg',
+  ]
 
   return (
-    <motion.div className={`${styles.project_container}`}>
+    <motion.div className={`${styles.project_container}`} ref={container}>
       <motion.section className={`${styles.project_wrapper}`}>
-        <h3 className={`${styles.title}`}>PROYECTOS DESTACADOS</h3>
-        <div className={styles.scrollView}>
+        <div className={styles.scrollView} ref={scrollContainer}>
+          <h3 className={`${styles.title}`}>
+            PROYECTOS
+            <br />
+            DESTACADOS
+          </h3>
           {images.map((src, i) => (
-            <ScrollImg
-              key={i}
-              src={src}
-              fill
-              sizes="50%"
-              isLeftSide={!(i % 2)}
-              alt="example"
-              title="Raíces lumínicas"
-              caption="Instalación visual en el bosque"
-            />
+            <div className={styles.imgBox} key={i} style={{ '--column': i + 2 } as React.CSSProperties}>
+              <ScrollImg
+                date="2024-jun-07"
+                title="Raíces lumínicas"
+                caption="Instalación visual en el bosque"
+                tag="EN VIVO"
+                isLeftSide={!(i % 2)}
+                src={src}
+                fill
+                sizes="50%"
+                alt="example"
+              />
+            </div>
           ))}
+          <div className={styles.viewAll}>
+            <button>VER TODOS</button>
+          </div>
         </div>
       </motion.section>
     </motion.div>
-  );
-};
+  )
+}
 
-export default ProjectImages;
+export default ProjectImages
