@@ -39,17 +39,16 @@ function SecondPage() {
     const sequence: AnimationSequence = [
       [
         scope2.current,
-        { height: "0%", top: "50%", backgroundColor: "black" },
-        { duration: 0.6 },
+        { height: "0%", top: "50%", backgroundColor: "red" },
+        { duration: 1.0 },
       ],
       [
         scope3.current,
-        { height: "0%", bottom: "50%", backgroundColor: "black" },
-        { at: "<", duration: 0.6 },
+        { height: "0%", bottom: "50%", backgroundColor: "red" },
+        { at: "<", duration: 1.0 },
       ],
     ];
-    // animate(scope2.current, {height: "0%",top:"50%",backgroundColor:"black"},);
-    // animate(scope3.current, { height: "0%",bottom:"50%",backgroundColor:"black"});
+
     animation(sequence);
     return () => {
       if (!isPresent) {
@@ -65,12 +64,12 @@ function SecondPage() {
         animate(scope2.current, {
           height: "50%",
           top: "0",
-          backgroundColor: "black",
+          backgroundColor: "red",
         }),
         animate(scope3.current, {
           height: "50%",
           bottom: "0",
-          backgroundColor: "black",
+          backgroundColor: "red",
         }),
       ]).then(() => {
         router.push(navigationEvent.href);
@@ -113,8 +112,8 @@ function SecondPage() {
       />
       <HeroContainer />
       <VideoHover />
-      <ProjectImages />
-      <Tags />
+      {/* <ProjectImages />
+      <Tags /> */}
       <Footer />
       {/* <motion.div>
         <motion.section id="#second">

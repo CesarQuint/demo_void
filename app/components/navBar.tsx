@@ -1,6 +1,6 @@
 // NavBar.tsx
-"use client"
-import React, { MouseEvent, useRef } from "react"
+"use client";
+import React, { MouseEvent, useRef } from "react";
 import Link from "next/link";
 import { useNavigation } from "../utils/navigationContext";
 import styles from "../css/navBar.module.css";
@@ -10,7 +10,7 @@ import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import Splitting from "splitting";
 
-gsap.registerPlugin(useGSAP)
+gsap.registerPlugin(useGSAP);
 
 // prettier-ignore
 const CHARS = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '!', '@', '#', '$', '%', '^', '&', '*', '-', '_', '+', '=', ';', ':', '<', '>', ','];
@@ -18,14 +18,16 @@ const CHARS = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 
 const NavBar = () => {
   const container = useRef<HTMLElement>(null);
   const isMenuOpen = useRef(false);
-  const linkRedirect = useRef('');
+  const linkRedirect = useRef("");
   const toggleTl = useRef<gsap.core.Timeline | null>(null);
   const { setNavigationEvent } = useNavigation();
   const router = useRouter();
 
   const { contextSafe } = useGSAP(
     () => {
-      Splitting({ target: container.current?.querySelectorAll(`.${styles.links} a`) })
+      Splitting({
+        target: container.current?.querySelectorAll(`.${styles.links} a`),
+      });
 
       toggleTl.current = gsap
         .timeline({
@@ -35,18 +37,23 @@ const NavBar = () => {
             ease: "expo",
           },
           onReverseComplete() {
-            if (linkRedirect.current)  setNavigationEvent({ state: true, href: linkRedirect.current })
-            isMenuOpen.current = false
+            if (linkRedirect.current)
+              setNavigationEvent({ state: true, href: linkRedirect.current });
+            isMenuOpen.current = false;
           },
           onComplete() {
-            isMenuOpen.current = true
-          }
+            isMenuOpen.current = true;
+          },
         })
         .to(`.${styles.nav_container}`, { height: "90vh" }, 0)
         .to(`.${styles.line1}`, { rotate: "8.5deg" }, 0)
         .to(`.${styles.line2}`, { rotate: "-8.5deg" }, 0)
         .to([`.${styles.links}`, `.${styles.langs}`], { height: "auto" }, 0)
-        .to([`.${styles.links}`, `.${styles.langs}`], { opacity: 1, duration: 0.5 }, 0.3)
+        .to(
+          [`.${styles.links}`, `.${styles.langs}`],
+          { opacity: 1, duration: 0.5 },
+          0.3
+        )
         .to(
           [`.${styles.links} .char`],
           {
@@ -60,10 +67,10 @@ const NavBar = () => {
               gsap.set([`.${styles.links} .char`], {
                 innerHTML: (_: any, el: HTMLElement) => el.dataset.char,
                 delay: 0.03,
-              })
+              });
             },
           },
-          0.3,
+          0.3
         )
         .set(
           [`.${styles.links}`, `.${styles.langs}`],
@@ -79,10 +86,10 @@ const NavBar = () => {
     else toggleTl.current!.play();
   });
 
-  function goTo(e: MouseEvent) {
-    e.preventDefault()
-    linkRedirect.current = (e.target as HTMLElement).getAttribute('href') || '';
-    toggleTl.current!.reverse(0.2)
+  function goTo(e: MouseEvent, href: string) {
+    e.preventDefault();
+    toggleTl.current!.reverse(0.2);
+    setNavigationEvent({ state: true, href });
   }
 
   return (
@@ -107,12 +114,16 @@ const NavBar = () => {
         <div className={styles.links}>
           <Link
             href="/frammer_main"
-            onClick={goTo}>
+            onClick={(e) => {
+              goTo(e, "/frammer_main");
+            }}>
             Home
           </Link>
           <Link
             href="/playground"
-            onClick={goTo}>
+            onClick={(e) => {
+              goTo(e, "/playground");
+            }}>
             Proyectos
           </Link>
           <Link href="/">El Estudio</Link>
