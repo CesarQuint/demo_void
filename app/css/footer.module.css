@@ -8,8 +8,6 @@
   display: flex;
   flex-flow: column nowrap;
   gap: 6vh;
-  border-start-start-radius: 40px;
-  border-start-end-radius: 40px;
   align-items: center;
   padding-top: 8vh;
 }
