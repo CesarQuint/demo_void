@@ -19,9 +19,9 @@
 
 .content {
   overflow: hidden;
-  margin: 2rem 0;
+
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   height: 50vh;
   flex-direction: column;
   align-items: center;
@@ -43,7 +43,9 @@
 
 .text_rep {
   display: grid;
+  width: 100%;
   color: var(--color-rep-text);
+  padding: 0;
 }
 
 .text_rep span {
@@ -83,13 +85,15 @@
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
-  height: 9vh;
+  height: 19vw;
   transition: all 1s;
+  width: 100%;
 }
 .image_logo {
-  height: 8vh;
+  height: 18vw;
   padding: 0;
   transition: all 1s;
+  width: 100%;
 }
 
 @media screen and (min-width: 53em) {
@@ -98,10 +102,12 @@
     display: flex;
     flex-flow: column nowrap;
     justify-content: center;
-    height: 20vh;
+    height: 20vw;
+    width: 100%;
   }
   .image_logo {
-    height: 19vh;
+    height: 19vw;
     padding: 0;
+    width: 100%;
   }
 }

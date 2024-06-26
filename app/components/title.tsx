@@ -16,7 +16,6 @@ const Title = ({ text, words = 6 }: { text: string; words: number }) => {
   const timelineRef2 = useRef<GSAPTimeline | null>(null);
   const midWords = Math.ceil(words / 2);
   const wordsArr = new Array(words + 1).fill(text);
-  console.log(wordsArr, "sdasd");
 
   useEffect(() => {
     if (containerRef.current) {
@@ -29,8 +28,6 @@ const Title = ({ text, words = 6 }: { text: string; words: number }) => {
       const half = midWords;
       const firstHalf = innerArr.slice(0, half);
       const secondHalf = innerArr.slice(half);
-
-      console.log(firstHalf, secondHalf);
 
       interface docBuild {
         y: number;
@@ -53,12 +50,6 @@ const Title = ({ text, words = 6 }: { text: string; words: number }) => {
         .concat(negativeCopy.slice(0, midWords));
 
       const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top center",
-          end: "center center",
-          scrub: 0, // Adjust as needed
-        },
         defaults: {
           ease: "power1", // Use a smoother ease
         },
@@ -67,9 +58,10 @@ const Title = ({ text, words = 6 }: { text: string; words: number }) => {
       const tl2 = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
-          start: "center center",
-          end: "bottom center",
+          start: "top center",
+          end: "center center",
           scrub: 0, // Adjust as needed
+          markers: true,
         },
         defaults: {
           ease: "power1", // Use a smoother ease
@@ -81,21 +73,18 @@ const Title = ({ text, words = 6 }: { text: string; words: number }) => {
           span,
           {
             yPercent: Number(targetXPositions[firstHalf.length + index].y),
-            // delay: Number(targetXPositions[firstHalf.length + index].delay),
           },
           0
         );
       });
 
-      firstHalf.reverse().forEach((span, index) => {
-        tl.to(
-          span,
-          {
-            yPercent: Number(targetXPositions[index].y),
-            // delay: Number(targetXPositions[index].delay),
-          },
-          0
-        );
+      secondHalf.reverse().forEach((span, index) => {
+        tl2.to(span, {
+          yPercent: `-${Number(targetXPositions[firstHalf.length + index].y)}`,
+        });
+        tl2.to(containerRef.current, {
+          height: `+=${Number(targetXPositions[firstHalf.length + index].y)}`,
+        });
       });
 
       timelineRef.current = tl;
