@@ -110,18 +110,6 @@ a {
 
 /* app/styles/globals.css */
 
-nav {
-  display: flex;
-  justify-content: space-around;
-  background-color: #333;
-  color: white;
-  padding: 1rem;
-}
-
-nav a {
-  color: white;
-  text-decoration: none;
-}
 /*
 :root {
   font-size: 15px;

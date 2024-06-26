@@ -36,7 +36,7 @@ const Title = ({ text, words = 6 }: { text: string; words: number }) => {
 
       const generateDelayAndYPercent: docBuild[] = innerArr.map((_, index) => {
         return {
-          y: 10 + index * 0.9 * (10 - index),
+          y: 17 * index,
           delay: 0.1 + 0.1 * index,
         };
       });
@@ -61,7 +61,6 @@ const Title = ({ text, words = 6 }: { text: string; words: number }) => {
           start: "top center",
           end: "center center",
           scrub: 0, // Adjust as needed
-          markers: true,
         },
         defaults: {
           ease: "power1", // Use a smoother ease
@@ -82,9 +81,9 @@ const Title = ({ text, words = 6 }: { text: string; words: number }) => {
         tl2.to(span, {
           yPercent: `-${Number(targetXPositions[firstHalf.length + index].y)}`,
         });
-        tl2.to(containerRef.current, {
-          height: `+=${Number(targetXPositions[firstHalf.length + index].y)}`,
-        });
+        // tl2.to(containerRef.current, {
+        //   height: `+=${Number(targetXPositions[firstHalf.length + index].y)}`,
+        // });
       });
 
       timelineRef.current = tl;
