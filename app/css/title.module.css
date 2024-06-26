@@ -19,6 +19,7 @@
 
 .content {
   overflow: hidden;
+
   display: flex;
   justify-content: flex-end;
   height: 50vh;
@@ -40,11 +41,11 @@
   user-select: none;
 }
 
-h1.text_rep {
+.text_rep {
   display: grid;
   width: 100%;
   color: var(--color-rep-text);
-  padding: 1vh 0 3vh;
+  padding: 0;
 }
 
 .text_rep span {
