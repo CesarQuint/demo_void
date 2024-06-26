@@ -14,6 +14,7 @@
   background-color: var(--color-bg);
   overflow: hidden;
   overflow-y: scroll;
+  width: 100%;
 }
 
 .content {
@@ -48,9 +49,7 @@
 .text_rep span {
   grid-area: 1 / 1 / 2 / 2;
   background-color: var(--color-rep-bg);
-  font-size: 96px;
   will-change: transform;
-  line-height: 76px;
 }
 
 .text {
@@ -81,4 +80,28 @@
 
 .text_float {
   color: #fff;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  height: 9vh;
+  transition: all 1s;
+}
+.image_logo {
+  height: 8vh;
+  padding: 0;
+  transition: all 1s;
+}
+
+@media screen and (min-width: 53em) {
+  .text_float {
+    color: #fff;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    height: 20vh;
+  }
+  .image_logo {
+    height: 19vh;
+    padding: 0;
+  }
 }

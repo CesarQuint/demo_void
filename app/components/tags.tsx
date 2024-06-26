@@ -72,7 +72,7 @@ const Tags = (props: Props) => {
   return (
     <>
       <motion.div className={`${styles.main}`}>
-        <div className={`${styles.tags_wrapper}`}>
+        {/* <div className={`${styles.tags_wrapper}`}>
           <section className={`${styles.text_introduction}`}>
             <h3 className={`${styles.title_process}`}>NUESTRO PROCESO</h3>
             <Image
@@ -139,7 +139,7 @@ const Tags = (props: Props) => {
               Ver Todos
             </motion.button>
           </section>
-        </div>
+        </div> */}
       </motion.div>
     </>
   );
