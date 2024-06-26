@@ -1,17 +1,16 @@
 .footer {
   width: 100%;
-  background-color: #fff;
+  height: 100vh;
 }
 
 .footer_flex {
   background-color: #101010;
   display: flex;
+  height: 100%;
   flex-flow: column nowrap;
   gap: 6vh;
-  border-start-start-radius: 40px;
-  border-start-end-radius: 40px;
   align-items: center;
-  padding-top: 8vh;
+  justify-content: center;
 }
 
 .questions {
