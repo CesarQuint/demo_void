@@ -4,76 +4,39 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import styles from "../css/title.module.css";
 gsap.registerPlugin(ScrollTrigger);
+import Image from "next/image";
+import logo from "../../public/void_Nb.svg";
 
 type Props = {};
 
 const Title = ({ text, words = 6 }: { text: string; words: number }) => {
-  //* Const
   const containerRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
   const timelineRef = useRef<GSAPTimeline | null>(null);
   const timelineRef2 = useRef<GSAPTimeline | null>(null);
-  const [content, setContent] = useState<React.JSX.Element>();
-  const midWords = Math.floor(words / 2);
-  const wordsArr = new Array(midWords).fill(text);
-
-  //* Generate component content
-  const createTitle = (text: string, words: number) => {
-    let wordsUpSpans = wordsArr.map((word: string, _i: number) => (
-      <span
-        className={`${styles.text_float}`}
-        key={_i}>
-        {word}
-      </span>
-    ));
-
-    const wordsDowsSpans = wordsArr.map((word: string, _i: number) => (
-      <span
-        className={`${styles.text_float}`}
-        key={_i + wordsArr.length}>
-        {word}
-      </span>
-    ));
-
-    wordsUpSpans = wordsUpSpans.concat(wordsDowsSpans);
-
-    return (
-      <div className={`${styles.content}`}>
-        <h1
-          ref={containerRef}
-          className={`${styles.text_rep}`}>
-          {wordsUpSpans}
-        </h1>
-      </div>
-    );
-  };
+  const midWords = Math.ceil(words / 2);
+  const wordsArr = new Array(words + 1).fill(text);
 
   useEffect(() => {
-    setContent(createTitle(text, words));
-
     if (containerRef.current) {
       const spanWords = Array.from(
         containerRef.current.getElementsByClassName(styles.text_float)
       );
 
-      spanWords.pop();
-
-      const half = Math.ceil(spanWords.length / 2);
-      const firstHalf = spanWords.slice(0, half);
-      const secondHalf = spanWords.slice(half);
-
-      const posCopy = spanWords.map((_, index) => {
-        return (index + 1) * 8 - (index * spanWords.length) / 2;
-      }); // Adjust positions based on index
+      const innerArr = spanWords;
+      innerArr.pop();
+      const half = midWords;
+      const firstHalf = innerArr.slice(0, half);
+      const secondHalf = innerArr.slice(half);
 
       interface docBuild {
         y: number;
         delay: number;
       }
 
-      const generateDelayAndYPercent: docBuild[] = spanWords.map((_, index) => {
+      const generateDelayAndYPercent: docBuild[] = innerArr.map((_, index) => {
         return {
-          y: 10 + index * (10 - index),
+          y: 17 * index,
           delay: 0.1 + 0.1 * index,
         };
       });
@@ -83,36 +46,24 @@ const Title = ({ text, words = 6 }: { text: string; words: number }) => {
       });
 
       const targetXPositions = generateDelayAndYPercent
-        .slice(0, Math.floor(midWords / 2))
-        .concat(negativeCopy.slice(0, Math.floor(midWords / 2)));
-
-      //   console.log(targetXPositions);
-
-      //   const targetXPositions = spanWords.map((_, index) => (index + 1) * 10);
+        .slice(0, midWords)
+        .concat(negativeCopy.slice(0, midWords));
 
       const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top center",
-          end: "center center",
-          scrub: 2, // Adjust as needed
-        },
         defaults: {
-          ease: "sine.inOut", // Use a smoother ease
-          duration: 1,
+          ease: "power1", // Use a smoother ease
         },
       });
 
       const tl2 = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
-          start: "center center",
-          end: "bottom center",
-          scrub: 2, // Adjust as needed
+          start: "top center",
+          end: "center center",
+          scrub: 0, // Adjust as needed
         },
         defaults: {
-          ease: "sine.inOut", // Use a smoother ease
-          duration: 1,
+          ease: "power1", // Use a smoother ease
         },
       });
 
@@ -120,22 +71,19 @@ const Title = ({ text, words = 6 }: { text: string; words: number }) => {
         tl.to(
           span,
           {
-            y: Number(targetXPositions[firstHalf.length + index].y),
-            delay: Number(targetXPositions[firstHalf.length + index].delay),
+            yPercent: Number(targetXPositions[firstHalf.length + index].y),
           },
           0
         );
       });
 
-      firstHalf.reverse().forEach((span, index) => {
-        tl.to(
-          span,
-          {
-            yPercent: Number(targetXPositions[index].y),
-            delay: Number(targetXPositions[index].delay),
-          },
-          0
-        );
+      secondHalf.reverse().forEach((span, index) => {
+        tl2.to(span, {
+          yPercent: `-${Number(targetXPositions[firstHalf.length + index].y)}`,
+        });
+        // tl2.to(containerRef.current, {
+        //   height: `+=${Number(targetXPositions[firstHalf.length + index].y)}`,
+        // });
       });
 
       timelineRef.current = tl;
@@ -159,7 +107,11 @@ const Title = ({ text, words = 6 }: { text: string; words: number }) => {
               id={`${_i}`}
               className={`${styles.text_float}`}
               key={_i}>
-              {word}
+              <Image
+                className={`${styles.image_logo}`}
+                src={logo}
+                alt="logo"
+              />
             </span>
           ))}
         </h1>
