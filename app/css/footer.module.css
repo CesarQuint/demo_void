@@ -1,6 +1,6 @@
 .footer {
   width: 100%;
-  background-color: #fff;
+  height: 80vh;
 }
 
 .footer_flex {
@@ -9,7 +9,7 @@
   flex-flow: column nowrap;
   gap: 6vh;
   align-items: center;
-  padding-top: 8vh;
+  padding-top: 2vh;
 }
 
 .questions {

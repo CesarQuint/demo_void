@@ -21,7 +21,7 @@
   overflow: hidden;
   display: flex;
   justify-content: flex-end;
-  height: 35vh;
+  height: 50vh;
   flex-direction: column;
   align-items: center;
 }
@@ -40,11 +40,11 @@
   user-select: none;
 }
 
-.text_rep {
+h1.text_rep {
   display: grid;
   width: 100%;
   color: var(--color-rep-text);
-  padding: 0;
+  padding: 1vh 0 3vh;
 }
 
 .text_rep span {
