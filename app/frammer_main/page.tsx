@@ -112,20 +112,9 @@ function SecondPage() {
       />
       <HeroContainer />
       <VideoHover />
-      {/* <ProjectImages />
-      <Tags /> */}
+      <ProjectImages />
+      <Tags />
       <Footer />
-      {/* <motion.div>
-        <motion.section id="#second">
-          <div>
-            <RepeatTextScrollFx
-              text="BOCA"
-              words={12}
-            />
-          </div>
-          <section></section>
-        </motion.section>
-      </motion.div> */}
     </motion.div>
   );
 }
