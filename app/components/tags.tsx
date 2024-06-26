@@ -12,12 +12,19 @@ gsap.registerPlugin(useGSAP, ScrollTrigger)
 type Props = {}
 
 const Tags = (props: Props) => {
-  const container = useRef(null)
+  const container = useRef<HTMLElement>(null)
 
   useGSAP(
     () => {
-      gsap.set(`.${styles.tag}`, {
-        bottom: (i) => 90 - i * 10,
+      const GAP = 32
+      const cardMargin = 50
+
+      const btn = container.current!.querySelector(`.${styles.know_more}`)! as HTMLElement
+      const firstCardHeight = container.current!.firstElementChild!.getBoundingClientRect().height
+      const tags = gsap.utils.toArray(`.${styles.tag}`)
+
+      gsap.set(tags, {
+        bottom: (i, _, arr) => btn!.offsetHeight + GAP + cardMargin * (arr.length - i - 1),
         zIndex: (i, _, arr) => arr.length - i,
       })
 
@@ -27,30 +34,33 @@ const Tags = (props: Props) => {
             ease: 'none',
           },
           scrollTrigger: {
-            trigger: container.current,
-            start: 'top center+=10%',
-            end: '+=40%',
+            trigger: btn,
+            start: 'bottom bottom-=5%',
+            end: 'bottom bottom-=5%',
             scrub: true,
           },
         })
-        .fromTo(`.${styles.tag}`, { scale: (i) => 1 - i * 0.05 }, { scale: 1 }, 0)
+        .fromTo(btn, { marginTop: firstCardHeight + GAP + cardMargin * (tags.length - 1) }, { marginTop: 0 })
+        .fromTo(tags, { marginTop: (i) => cardMargin * i }, { marginTop: 0 })
 
-      const ob = new IntersectionObserver(
-        ([ev]) => {
-          if (ev.boundingClientRect.top < 0) return
-
-          gsap.set(`.${styles.tag}`, { marginTop: (i) => (ev.intersectionRatio < 0.4 && i > 0 ? 15 * i : 0) })
-          gsap.set(`.${styles.know_more}`, { marginTop: ev.intersectionRatio < 0.5 ? 240 : 0 })
-        },
-        {
-          threshold: [0.4, 0.5],
-        },
-      )
-
-      ob.observe(container.current!)
-      return () => {
-        ob.disconnect()
-      }
+      gsap
+        .timeline({
+          defaults: {
+            ease: 'none',
+          },
+          scrollTrigger: {
+            trigger: container.current,
+            start: 'top center+=10%',
+            end: `${firstCardHeight} center`,
+            scrub: true,
+          },
+        })
+        .fromTo(
+          tags,
+          { scale: (i) => 1 - i * 0.05 },
+          { scale: 1 },
+          0,
+        )
     },
     { scope: container },
   )

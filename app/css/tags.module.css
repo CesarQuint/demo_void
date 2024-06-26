@@ -16,19 +16,17 @@
   flex-direction: column;
   display: flex;
   margin-top: 4vh;
-  gap: 2vh;
+  gap: 2rem;
 }
 
 .tag {
-  margin-bottom: 1vh;
-  background-color: #101010;
-  padding: 5vh;
-  color: #fff;
+  padding: 3.5rem;
   border-radius: 15px;
   display: flex;
   flex-flow: column nowrap;
-  gap: 3vh;
-
+  color: #fff;
+  background: #101010;
+  border: 2px solid #fff;
   position: sticky;
   bottom: 0;
   transform-origin: bottom;
