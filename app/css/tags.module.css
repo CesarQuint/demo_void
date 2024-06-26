@@ -15,7 +15,7 @@
   height: fit-content;
   flex-direction: column;
   display: flex;
-  padding-top: 4vh;
+  margin-top: 4vh;
   gap: 2vh;
 }
 
@@ -29,7 +29,9 @@
   flex-flow: column nowrap;
   gap: 3vh;
 
-  position: relative;
+  position: sticky;
+  bottom: 0;
+  transform-origin: bottom;
 }
 
 .know_more {
@@ -40,6 +42,9 @@
   margin: auto;
   background-color: #101010;
   color: #fff;
+
+  position: sticky;
+  bottom: 10px;
 }
 .text_introduction {
   display: flex;

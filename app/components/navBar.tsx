@@ -1,6 +1,6 @@
 // NavBar.tsx
-"use client";
-import React, { MouseEvent, useEffect, useRef } from "react";
+"use client"
+import React, { MouseEvent, useRef } from "react"
 import Link from "next/link";
 import { useNavigation } from "../utils/navigationContext";
 import styles from "../css/navBar.module.css";
@@ -8,6 +8,12 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
+import Splitting from "splitting";
+
+gsap.registerPlugin(useGSAP)
+
+// prettier-ignore
+const CHARS = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '!', '@', '#', '$', '%', '^', '&', '*', '-', '_', '+', '=', ';', ':', '<', '>', ','];
 
 const NavBar = () => {
   const container = useRef<HTMLElement>(null);
@@ -19,6 +25,8 @@ const NavBar = () => {
 
   const { contextSafe } = useGSAP(
     () => {
+      Splitting({ target: container.current?.querySelectorAll(`.${styles.links} a`) })
+
       toggleTl.current = gsap
         .timeline({
           paused: true,
@@ -38,10 +46,24 @@ const NavBar = () => {
         .to(`.${styles.line1}`, { rotate: "8.5deg" }, 0)
         .to(`.${styles.line2}`, { rotate: "-8.5deg" }, 0)
         .to([`.${styles.links}`, `.${styles.langs}`], { height: "auto" }, 0)
+        .to([`.${styles.links}`, `.${styles.langs}`], { opacity: 1, duration: 0.5 }, 0.3)
         .to(
-          [`.${styles.links}`, `.${styles.langs}`],
-          { opacity: 1, duration: 0.5 },
-          0.3
+          [`.${styles.links} .char`],
+          {
+            duration: 0.03,
+            innerHTML: () => CHARS[Math.floor(Math.random() * CHARS.length)],
+            repeat: 3,
+            repeatRefresh: true,
+            opacity: 1,
+            repeatDelay: 0.05,
+            onComplete: () => {
+              gsap.set([`.${styles.links} .char`], {
+                innerHTML: (_: any, el: HTMLElement) => el.dataset.char,
+                delay: 0.03,
+              })
+            },
+          },
+          0.3,
         )
         .set(
           [`.${styles.links}`, `.${styles.langs}`],
