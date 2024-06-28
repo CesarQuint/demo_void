@@ -1,7 +1,7 @@
 .footer {
   width: 100%;
   height: 100vh;
-  padding-bottom: 10vh;
+  padding-bottom: 12vh;
 }
 
 .footer_flex {
@@ -11,7 +11,7 @@
   flex-flow: column nowrap;
   gap: 6vh;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
 }
 
 .text_container {
@@ -88,10 +88,9 @@
 
 /* Media Part */
 @media (min-width: 590px) {
-  .nav {
-    display: inline;
+  .footer {
+    height: 80vw;
   }
-
   .social {
     display: inline;
   }

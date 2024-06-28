@@ -35,8 +35,10 @@ const Title = ({ text, words = 6 }: { text: string; words: number }) => {
       }
 
       const generateDelayAndYPercent: docBuild[] = innerArr.map((_, index) => {
+        let calc = 30 * index;
+        let per = 1.0 - 0.03 * index;
         return {
-          y: 17 * index,
+          y: calc * per,
           delay: 0.1 + 0.1 * index,
         };
       });
@@ -63,18 +65,14 @@ const Title = ({ text, words = 6 }: { text: string; words: number }) => {
           scrub: 0, // Adjust as needed
         },
         defaults: {
-          ease: "power1", // Use a smoother ease
+          ease: "slow", // Use a smoother ease
         },
       });
 
       secondHalf.reverse().forEach((span, index) => {
-        tl.to(
-          span,
-          {
-            yPercent: Number(targetXPositions[firstHalf.length + index].y),
-          },
-          0
-        );
+        tl.to(span, {
+          yPercent: Number(targetXPositions[firstHalf.length + index].y),
+        });
       });
 
       secondHalf.reverse().forEach((span, index) => {

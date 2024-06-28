@@ -10,10 +10,10 @@ const Footer = (props: Props) => {
   return (
     <motion.div className={`${styles.footer}`}>
       <motion.section className={`${styles.footer_flex}`}>
-        <motion.section style={{ width: "100%", height: "100%" }}>
+        <motion.section style={{ width: "100%", height: "80%" }}>
           <Title
             text="VOIDXR"
-            words={12}
+            words={18}
           />
         </motion.section>
 
