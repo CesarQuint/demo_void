@@ -12,22 +12,33 @@
   grid-auto-flow: column;
   grid-auto-columns: 480px;
   grid-template-rows: 1fr 1fr;
+  gap: 1.875rem 0;
   margin-left: 2rem;
+  margin-left: 50vw;
 
   .title {
+    position: absolute;
+    letter-spacing: 10px;
+    margin-left: -50vw;
     color: #dedede;
-    grid-row: 1 / -1;
     align-self: center;
-    font-weight: 700;
-    font-size: 48px;
+    font-weight: 200;
+    font-size: min(40vw, 250px);
   }
 
-  .viewAll {
-    grid-row: 1 / -1;
-    align-self: center;
+  .line {
+    position: absolute;
+    inset: 50% -120% 50% 50%;
+    height: 1px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
 
-    & button {
-      margin-left: 40vw;
+    .viewAll {
+      position: absolute;
+      transform: translateX(140%);
+
       border-radius: 5rem;
       padding: 0.75rem 1rem;
       font-size: 20px;

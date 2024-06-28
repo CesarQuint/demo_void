@@ -16,9 +16,10 @@ interface Props extends React.ComponentProps<typeof Image> {
   caption: string
   tag: string
   isLeftSide?: boolean
+  scrollTl?: gsap.core.Timeline | null
 }
 
-export default function ScrollImg({ title, caption, isLeftSide, date, tag, ...props }: Props) {
+export default function ScrollImg({ title, caption, isLeftSide, date, tag, scrollTl, ...props }: Props) {
   const container = useRef<HTMLElement>(null)
 
   useGSAP(
@@ -27,12 +28,16 @@ export default function ScrollImg({ title, caption, isLeftSide, date, tag, ...pr
       const bottom = container.current!.offsetTop + container.current!.offsetHeight;
       const bottomPercentage = (bottom / height) * 100
 
+      if (!scrollTl) return
+      gsap.set('img', { opacity: 1 })
+
       gsap
         .timeline({
           defaults: {
             ease: 'none',
           },
           scrollTrigger: {
+            containerAnimation: scrollTl,
             trigger: container.current,
             start: `top bottom${bottomPercentage >= 90 ? '+=25%' : '-=15%'}`,
             end: '+=50%',
@@ -76,10 +81,8 @@ export default function ScrollImg({ title, caption, isLeftSide, date, tag, ...pr
           },
           0,
         )
-
-      gsap.to('img', { opacity: 1 })
     },
-    { scope: container, dependencies: [isLeftSide], revertOnUpdate: true },
+    { scope: container, dependencies: [isLeftSide, scrollTl], revertOnUpdate: true },
   )
 
   return (

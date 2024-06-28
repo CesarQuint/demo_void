@@ -23,44 +23,55 @@ const Tags = (props: Props) => {
       const firstCardHeight = container.current!.firstElementChild!.getBoundingClientRect().height
       const tags = gsap.utils.toArray(`.${styles.tag}`)
 
-      gsap.set(tags, {
-        bottom: (i, _, arr) => btn!.offsetHeight + GAP + cardMargin * (arr.length - i - 1),
-        zIndex: (i, _, arr) => arr.length - i,
-      })
-
-      gsap
-        .timeline({
-          defaults: {
-            ease: 'none',
-          },
-          scrollTrigger: {
-            trigger: btn,
-            start: 'bottom bottom-=5%',
-            end: 'bottom bottom-=5%',
-            scrub: true,
-          },
+      function startAnimation() {
+        gsap.set(tags, {
+          bottom: (i, _, arr) => btn!.offsetHeight + GAP + cardMargin * (arr.length - i - 1),
+          zIndex: (i, _, arr) => arr.length - i,
         })
-        .fromTo(btn, { marginTop: firstCardHeight + GAP + cardMargin * (tags.length - 1) }, { marginTop: 0 })
-        .fromTo(tags, { marginTop: (i) => cardMargin * i }, { marginTop: 0 })
 
-      gsap
-        .timeline({
-          defaults: {
-            ease: 'none',
-          },
-          scrollTrigger: {
-            trigger: container.current,
-            start: 'top center+=10%',
-            end: `${firstCardHeight} center`,
-            scrub: true,
-          },
-        })
-        .fromTo(
-          tags,
-          { scale: (i) => 1 - i * 0.05 },
-          { scale: 1 },
-          0,
-        )
+        gsap
+          .timeline({
+            defaults: {
+              ease: 'none',
+            },
+            scrollTrigger: {
+              trigger: btn,
+              start: 'bottom bottom-=5%',
+              end: 'bottom bottom-=5%',
+              scrub: true,
+              invalidateOnRefresh: true,
+            },
+          })
+          .fromTo(btn, { marginTop: firstCardHeight + GAP + cardMargin * (tags.length - 1) }, { marginTop: 0 })
+          .fromTo(tags, { marginTop: (i) => cardMargin * i }, { marginTop: 0 })
+
+        gsap
+          .timeline({
+            defaults: {
+              ease: 'none',
+            },
+            scrollTrigger: {
+              trigger: container.current,
+              start: 'top center+=10%',
+              end: `${firstCardHeight} center`,
+              scrub: true,
+            },
+          })
+          .fromTo(tags, { scale: (i) => 1 - i * 0.05 }, { scale: 1 }, 0)
+      }
+
+      const ob = new IntersectionObserver(
+        ([ev]) => {
+          if (ev.isIntersecting || ev.boundingClientRect.top < 0) {
+            startAnimation()
+            ob.disconnect()
+          }
+        },
+        { root: null, rootMargin: '0px', threshold: 0 },
+      )
+
+      ob.observe(container.current!)
+      return () => ob.disconnect()
     },
     { scope: container },
   )
