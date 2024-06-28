@@ -1,31 +1,33 @@
 // NavBar.tsx
-'use client'
-import React, { MouseEvent, useRef } from 'react'
-import Link from 'next/link'
-import { useNavigation } from '../utils/navigationContext'
-import styles from '../css/navBar.module.css'
-import { useRouter } from 'next/navigation'
-import Image from 'next/image'
-import { useGSAP } from '@gsap/react'
-import { gsap } from 'gsap'
-import Splitting from 'splitting'
+"use client";
+import React, { MouseEvent, useRef } from "react";
+import Link from "next/link";
+import { useNavigation } from "../utils/navigationContext";
+import styles from "../css/navBar.module.css";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
+import { useGSAP } from "@gsap/react";
+import { gsap } from "gsap";
+import Splitting from "splitting";
 
-gsap.registerPlugin(useGSAP)
+gsap.registerPlugin(useGSAP);
 
 // prettier-ignore
 const CHARS = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '!', '@', '#', '$', '%', '^', '&', '*', '-', '_', '+', '=', ';', ':', '<', '>', ','];
 
 const NavBar = () => {
-  const container = useRef<HTMLElement>(null)
-  const isMenuOpen = useRef(false)
-  const linkRedirect = useRef('')
-  const toggleTl = useRef<gsap.core.Timeline | null>(null)
-  const { setNavigationEvent } = useNavigation()
-  const router = useRouter()
+  const container = useRef<HTMLElement>(null);
+  const isMenuOpen = useRef(false);
+  const linkRedirect = useRef("");
+  const toggleTl = useRef<gsap.core.Timeline | null>(null);
+  const { setNavigationEvent } = useNavigation();
+  const router = useRouter();
 
   const { contextSafe } = useGSAP(
     () => {
-      Splitting({ target: container.current?.querySelectorAll(`.${styles.links} a`) })
+      Splitting({
+        target: container.current?.querySelectorAll(`.${styles.links} a`),
+      });
 
       gsap.matchMedia().add('(max-width: 700px)', () => {
         toggleTl.current = gsap
@@ -77,10 +79,10 @@ const NavBar = () => {
     else toggleTl.current?.play()
   })
 
-  function goTo(e: MouseEvent) {
-    e.preventDefault()
-    linkRedirect.current = (e.target as HTMLElement).getAttribute('href') || ''
-    toggleTl.current?.reverse(0.2)
+  function goTo(e: MouseEvent, href: string) {
+    e.preventDefault();
+    toggleTl.current!.reverse(0.2);
+    setNavigationEvent({ state: true, href });
   }
 
   return (
@@ -96,10 +98,18 @@ const NavBar = () => {
         </div>
 
         <div className={styles.links}>
-          <Link href="/frammer_main" onClick={goTo}>
+          <Link
+            href="/frammer_main"
+            onClick={(e) => {
+              goTo(e, "/frammer_main");
+            }}>
             Home
           </Link>
-          <Link href="/playground" onClick={goTo}>
+          <Link
+            href="/playground"
+            onClick={(e) => {
+              goTo(e, "/playground");
+            }}>
             Proyectos
           </Link>
           <Link href="/">El Estudio</Link>
