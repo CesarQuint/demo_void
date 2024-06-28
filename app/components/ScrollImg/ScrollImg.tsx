@@ -39,8 +39,8 @@ export default function ScrollImg({ title, caption, isLeftSide, date, tag, scrol
           scrollTrigger: {
             containerAnimation: scrollTl!,
             trigger: container.current,
-            start: `top bottom${bottomPercentage >= 90 ? "+=25%" : "-=15%"}`,
-            end: "+=50%",
+            start: `${scrollTl ? 'top center' : `top bottom${bottomPercentage >= 90 ? "+=25%" : "-=15%"}`}`,
+            end: `${scrollTl ? '+=50% center' : '+=50%'}`,
             scrub: true,
           },
         })
