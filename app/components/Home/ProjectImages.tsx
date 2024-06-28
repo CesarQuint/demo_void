@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import styles from '../../css/projects.module.css'
 import ScrollImg from '../ScrollImg/ScrollImg'
@@ -13,22 +13,37 @@ type Props = {}
 const ProjectImages = (props: Props) => {
   const container = useRef<HTMLDivElement>(null)
   const scrollContainer = useRef<HTMLDivElement>(null)
+  const [tl, setTl] = useState<gsap.core.Timeline | null>(null)
 
   useGSAP(
     () => {
-      const boxes = scrollContainer.current!.children
+      const [title, line, ...boxes] = scrollContainer.current!.children
 
-      gsap.to(boxes, {
-        xPercent: -85 * boxes.length - 1,
-        ease: 'none',
-        scrollTrigger: {
-          pin: true,
-          scrub: 0.1,
-          trigger: container.current,
-          start: 'top top+=15%',
-          end: 'bottom top+=15%',
-        },
-      })
+      gsap
+        .matchMedia()
+        .add('(min-width: 700px)', () => {
+          const tl = gsap
+            .timeline({
+              defaults: {
+                ease: 'none',
+              },
+              scrollTrigger: {
+                pin: true,
+                scrub: 0.1,
+                trigger: container.current,
+                start: 'top top+=15%',
+                end: 'bottom top+=15%',
+              },
+            })
+            .to(boxes, { xPercent: -100 * boxes.length - 1 }, 0)
+            .to(title, { xPercent: -200 }, 0)
+            .to(line, { xPercent: -100 }, 0)
+
+          setTl(tl)
+        })
+        .add('(max-width: 700px)', () => {
+          setTl(null)
+        })
     },
     { scope: scrollContainer },
   )
@@ -50,14 +65,18 @@ const ProjectImages = (props: Props) => {
             <br />
             DESTACADOS
           </h3>
+          <div className={styles.line}>
+            <button className={styles.viewAll}>VER TODOS</button>
+          </div>
           {images.map((src, i) => (
-            <div className={styles.imgBox} key={i} style={{ '--column': i + 2 } as React.CSSProperties}>
+            <div className={styles.imgBox} key={i} style={{ '--column': i + 1 } as React.CSSProperties}>
               <ScrollImg
                 date="2024-jun-07"
                 title="Raíces lumínicas"
                 caption="Instalación visual en el bosque"
                 tag="EN VIVO"
-                isLeftSide={!(i % 2)}
+                scrollTl={tl}
+                isLeftSide={tl ? false : !(i % 2)}
                 src={src}
                 fill
                 sizes="50%"
@@ -65,9 +84,6 @@ const ProjectImages = (props: Props) => {
               />
             </div>
           ))}
-          <div className={styles.viewAll}>
-            <button>VER TODOS</button>
-          </div>
         </div>
       </motion.section>
     </motion.div>
