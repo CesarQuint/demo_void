@@ -19,24 +19,31 @@ const ProjectImages = (props: Props) => {
     () => {
       const [title, line, ...boxes] = scrollContainer.current!.children
 
-      const tl = gsap
-        .timeline({
-          defaults: {
-            ease: 'none',
-          },
-          scrollTrigger: {
-            pin: true,
-            scrub: 0.1,
-            trigger: container.current,
-            start: 'top top+=15%',
-            end: 'bottom top+=15%',
-          },
-        })
-        .to(boxes, { xPercent: -100 * boxes.length - 1 }, 0)
-        .to(title, { xPercent: -200 }, 0)
-        .to(line, { xPercent: -100 }, 0)
+      gsap
+        .matchMedia()
+        .add('(min-width: 700px)', () => {
+          const tl = gsap
+            .timeline({
+              defaults: {
+                ease: 'none',
+              },
+              scrollTrigger: {
+                pin: true,
+                scrub: 0.1,
+                trigger: container.current,
+                start: 'top top+=15%',
+                end: 'bottom top+=15%',
+              },
+            })
+            .to(boxes, { xPercent: -100 * boxes.length - 1 }, 0)
+            .to(title, { xPercent: -200 }, 0)
+            .to(line, { xPercent: -100 }, 0)
 
-      setTl(tl)
+          setTl(tl)
+        })
+        .add('(max-width: 700px)', () => {
+          setTl(null)
+        })
     },
     { scope: scrollContainer },
   )
@@ -69,7 +76,7 @@ const ProjectImages = (props: Props) => {
                 caption="Instalación visual en el bosque"
                 tag="EN VIVO"
                 scrollTl={tl}
-                isLeftSide={!(i % 2)}
+                isLeftSide={tl ? false : !(i % 2)}
                 src={src}
                 fill
                 sizes="50%"
