@@ -6,6 +6,7 @@ import styles from "../css/title.module.css";
 gsap.registerPlugin(ScrollTrigger);
 import Image from "next/image";
 import logo from "../../public/void_Nb.svg";
+import CustomEase from "gsap/CustomEase";
 
 type Props = {};
 
@@ -53,7 +54,7 @@ const Title = ({ text, words = 6 }: { text: string; words: number }) => {
 
       const tl = gsap.timeline({
         defaults: {
-          ease: "power1", // Use a smoother ease
+          ease: CustomEase.create("custom", "M0,0 C0.705,0 0,1 1,1 "),
         },
       });
 
@@ -65,7 +66,7 @@ const Title = ({ text, words = 6 }: { text: string; words: number }) => {
           scrub: 0, // Adjust as needed
         },
         defaults: {
-          ease: "slow", // Use a smoother ease
+          ease: CustomEase.create("custom", "M0,0 C0.705,0 0,1 1,1 "),
         },
       });
 
