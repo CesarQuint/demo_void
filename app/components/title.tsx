@@ -35,8 +35,10 @@ const Title = ({ text, words = 6 }: { text: string; words: number }) => {
       }
 
       const generateDelayAndYPercent: docBuild[] = innerArr.map((_, index) => {
+        let calc = 30 * index;
+        let per = 1.0 - 0.03 * index;
         return {
-          y: 17 * index,
+          y: calc * per,
           delay: 0.1 + 0.1 * index,
         };
       });

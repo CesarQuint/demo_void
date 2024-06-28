@@ -1,41 +1,49 @@
 /* eslint-disable jsx-a11y/alt-text */
-'use client'
+"use client";
 
-import { useRef } from 'react'
-import { useGSAP } from '@gsap/react'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import s from './ScrollImg.module.css'
-import Image from 'next/image'
+import { useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import s from "./ScrollImg.module.css";
+import Image from "next/image";
 
-gsap.registerPlugin(useGSAP, ScrollTrigger)
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 interface Props extends React.ComponentProps<typeof Image> {
-  date: string
-  title: string
-  caption: string
-  tag: string
-  isLeftSide?: boolean
+  date: string;
+  title: string;
+  caption: string;
+  tag: string;
+  isLeftSide?: boolean;
 }
 
-export default function ScrollImg({ title, caption, isLeftSide, date, tag, ...props }: Props) {
-  const container = useRef<HTMLElement>(null)
+export default function ScrollImg({
+  title,
+  caption,
+  isLeftSide,
+  date,
+  tag,
+  ...props
+}: Props) {
+  const container = useRef<HTMLElement>(null);
 
   useGSAP(
     () => {
-      const height = document.documentElement.scrollHeight;
-      const bottom = container.current!.offsetTop + container.current!.offsetHeight;
-      const bottomPercentage = (bottom / height) * 100
+      const height = document?.documentElement.scrollHeight;
+      const bottom =
+        container.current!.offsetTop + container.current!.offsetHeight;
+      const bottomPercentage = (bottom / height) * 100;
 
       gsap
         .timeline({
           defaults: {
-            ease: 'none',
+            ease: "none",
           },
           scrollTrigger: {
             trigger: container.current,
-            start: `top bottom${bottomPercentage >= 90 ? '+=25%' : '-=15%'}`,
-            end: '+=50%',
+            start: `top bottom${bottomPercentage >= 90 ? "+=25%" : "-=15%"}`,
+            end: "+=50%",
             scrub: true,
           },
         })
@@ -48,10 +56,10 @@ export default function ScrollImg({ title, caption, isLeftSide, date, tag, ...pr
           {
             yPercent: 0,
             xPercent: 0,
-          },
+          }
         )
         .fromTo(
-          'img',
+          "img",
           {
             yPercent: 100,
             xPercent: isLeftSide ? -100 : 100,
@@ -60,7 +68,7 @@ export default function ScrollImg({ title, caption, isLeftSide, date, tag, ...pr
             yPercent: 0,
             xPercent: 0,
           },
-          0,
+          0
         )
         .fromTo(
           `.${s.caption}`,
@@ -74,16 +82,18 @@ export default function ScrollImg({ title, caption, isLeftSide, date, tag, ...pr
             xPercent: 0,
             opacity: 1,
           },
-          0,
-        )
+          0
+        );
 
-      gsap.to('img', { opacity: 1 })
+      gsap.to("img", { opacity: 1 });
     },
-    { scope: container, dependencies: [isLeftSide], revertOnUpdate: true },
-  )
+    { scope: container, dependencies: [isLeftSide], revertOnUpdate: true }
+  );
 
   return (
-    <figure ref={container} className={s.figure}>
+    <figure
+      ref={container}
+      className={s.figure}>
       <span>{date}</span>
       <div className={s.wrapper}>
         <Image {...props} />
@@ -94,5 +104,5 @@ export default function ScrollImg({ title, caption, isLeftSide, date, tag, ...pr
         <div>{caption}</div>
       </figcaption>
     </figure>
-  )
+  );
 }
