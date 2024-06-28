@@ -29,7 +29,6 @@ export default function ScrollImg({ title, caption, isLeftSide, date, tag, scrol
         container.current!.offsetTop + container.current!.offsetHeight;
       const bottomPercentage = (bottom / height) * 100;
 
-      if (!scrollTl) return
       gsap.set('img', { opacity: 1 })
 
       gsap
