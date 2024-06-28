@@ -48,7 +48,7 @@ function SecondPage() {
       if (scope.current) {
         animate(scope.current, {
           height: "100vh",
-          backgroundColor: "black",
+          backgroundColor: transitionColor,
           transition: { delay: 0.2 },
         }).then(() => {
           router.push(navigationEvent.href);
@@ -67,7 +67,7 @@ function SecondPage() {
       <motion.div
         ref={scope}
         style={{
-          backgroundColor: "black",
+          backgroundColor: transitionColor,
           position: "fixed",
           width: "200vw",
           zIndex: 20,

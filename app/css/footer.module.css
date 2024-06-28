@@ -1,6 +1,7 @@
 .footer {
   width: 100%;
   height: 100vh;
+  padding-bottom: 10vh;
 }
 
 .footer_flex {
@@ -15,11 +16,12 @@
 
 .text_container {
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: column nowrap;
   gap: 2vh;
   width: 80%;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
+  transform: all 1s;
 }
 
 .questions button {
@@ -74,4 +76,32 @@
   display: flex;
   flex-flow: column nowrap;
   gap: 1vh;
+}
+
+.nav {
+  display: none;
+}
+
+.social {
+  display: none;
+}
+
+/* Media Part */
+@media (min-width: 590px) {
+  .nav {
+    display: inline;
+  }
+
+  .social {
+    display: inline;
+  }
+
+  .text_container {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 2vh;
+    width: 80%;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
 }
