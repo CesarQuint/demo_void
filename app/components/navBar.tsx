@@ -39,36 +39,38 @@ const NavBar = () => {
             },
             onReverseComplete() {
               if (linkRedirect.current) setNavigationEvent({ state: true, href: linkRedirect.current })
-              isMenuOpen.current = false
-            },
-            onComplete() {
-              isMenuOpen.current = true
             },
           })
           .to(`.${styles.nav_container}`, { height: '90vh' }, 0)
           .to(`.${styles.line1}`, { rotate: '8.5deg' }, 0)
           .to(`.${styles.line2}`, { rotate: '-8.5deg' }, 0)
-          .to([`.${styles.links}`, `.${styles.langs}`], { height: 'auto' }, 0)
-          .to([`.${styles.links}`, `.${styles.langs}`], { opacity: 1, duration: 0.5 }, 0.3)
-          .to(
-            [`.${styles.links} .char`],
-            {
-              duration: 0.03,
-              innerHTML: () => CHARS[Math.floor(Math.random() * CHARS.length)],
-              repeat: 3,
-              repeatRefresh: true,
-              opacity: 1,
-              repeatDelay: 0.05,
-              onComplete: () => {
-                gsap.set([`.${styles.links} .char`], {
-                  innerHTML: (_: any, el: HTMLElement) => el.dataset.char,
-                  delay: 0.03,
-                })
+          .set([`.${styles.links}`, `.${styles.langs}`], { height: 'auto', pointerEvents: 'all', opacity: 1 }, 0)
+          .set(`.${styles.links} .char`, { opacity: 0 }, 0)
+
+        gsap.utils.toArray<HTMLElement>(`.${styles.links} .char`).forEach((el) => {
+          toggleTl
+            .current!.to(
+              el,
+              {
+                opacity: 1,
+                duration: 0.03,
+                delay: (_, el) => Number(gsap.getProperty(el, '--char-index')) * 0.05,
               },
-            },
-            0.3,
-          )
-          .set([`.${styles.links}`, `.${styles.langs}`], { pointerEvents: 'all' }, 0.3)
+              0.2,
+            )
+            .to(
+              el,
+              {
+                textContent: () => CHARS[Math.floor(Math.random() * CHARS.length)],
+                repeat: 3,
+                repeatDelay: 0.05,
+                repeatRefresh: true,
+                duration: 0.03,
+              },
+              '<',
+            )
+            .to(el, { textContent: (_: any, el: HTMLElement) => el.dataset.char }, '>')
+        })
       })
     },
     { scope: container },
@@ -77,6 +79,8 @@ const NavBar = () => {
   const toggleMenu = contextSafe(() => {
     if (isMenuOpen.current) toggleTl.current?.reverse(0.2)
     else toggleTl.current?.play()
+
+    isMenuOpen.current = !isMenuOpen.current;
   })
 
   function goTo(e: MouseEvent, href: string) {
