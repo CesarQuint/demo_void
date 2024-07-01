@@ -56,6 +56,7 @@
   display: flex;
   flex-flow: row nowrap;
   gap: 10px;
+  justify-content: center;
 }
 
 .about_buttons button {
@@ -92,6 +93,9 @@
     height: 80vw;
   }
   .social {
+    display: inline;
+  }
+  .nav {
     display: inline;
   }
 

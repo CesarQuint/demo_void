@@ -23,10 +23,7 @@ export const NavigationProvider = ({
     href: pathname,
   });
 
-  useEffect(() => {
-    console.log("Clicked");
-    console.log(navigationEvent);
-  }, [navigationEvent]);
+  useEffect(() => {}, [navigationEvent]);
 
   return (
     <NavigationContext.Provider value={{ navigationEvent, setNavigationEvent }}>
