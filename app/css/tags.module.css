@@ -61,5 +61,6 @@
 }
 .gif_info {
   width: inherit;
+  height: 60vh;
   border-radius: 40px;
 }
