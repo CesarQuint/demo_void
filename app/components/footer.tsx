@@ -3,17 +3,20 @@ import { motion } from "framer-motion";
 import styles from "../css/footer.module.css";
 import Title from "./title";
 import Link from "next/link";
+import useTime from "../utils/hooks/useTime";
 
 type Props = {};
 
 const Footer = (props: Props) => {
+  const time = useTime();
+
   return (
     <motion.div className={`${styles.footer}`}>
       <motion.section className={`${styles.footer_flex}`}>
         <motion.section style={{ width: "100%", height: "80%" }}>
           <Title
             text="VOIDXR"
-            words={15}
+            words={18}
           />
         </motion.section>
 
@@ -30,7 +33,7 @@ const Footer = (props: Props) => {
           </motion.div>
           <motion.div
             className={`${styles.flex_container}  ${styles.information}`}>
-            <p>17:31:51</p>
+            <p>{time}</p>
             <p>
               Watteau 35, 03700
               <br /> Ciudad de México,
