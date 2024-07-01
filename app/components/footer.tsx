@@ -13,7 +13,7 @@ const Footer = (props: Props) => {
         <motion.section style={{ width: "100%", height: "80%" }}>
           <Title
             text="VOIDXR"
-            words={18}
+            words={15}
           />
         </motion.section>
 

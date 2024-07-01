@@ -62,8 +62,9 @@ const Title = ({ text, words = 6 }: { text: string; words: number }) => {
         scrollTrigger: {
           trigger: containerRef.current,
           start: "top center",
-          end: "center center",
+          end: "70% center",
           scrub: 0, // Adjust as needed
+          markers: true,
         },
         defaults: {
           ease: CustomEase.create("custom", "M0,0 C0.705,0 0,1 1,1 "),
@@ -80,9 +81,6 @@ const Title = ({ text, words = 6 }: { text: string; words: number }) => {
         tl2.to(span, {
           yPercent: `-${Number(targetXPositions[firstHalf.length + index].y)}`,
         });
-        // tl2.to(containerRef.current, {
-        //   height: `+=${Number(targetXPositions[firstHalf.length + index].y)}`,
-        // });
       });
 
       timelineRef.current = tl;
