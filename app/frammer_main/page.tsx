@@ -39,13 +39,13 @@ function SecondPage() {
     const sequence: AnimationSequence = [
       [
         scope2.current,
-        { height: "0%", top: "50%", backgroundColor: "red" },
-        { duration: 1.0 },
+        { height: "0%", top: "50%", backgroundColor: "white" },
+        { duration: 0.8 },
       ],
       [
         scope3.current,
-        { height: "0%", bottom: "50%", backgroundColor: "red" },
-        { at: "<", duration: 1.0 },
+        { height: "0%", bottom: "50%", backgroundColor: "white" },
+        { at: "<", duration: 0.8 },
       ],
     ];
 
@@ -59,23 +59,24 @@ function SecondPage() {
 
   useEffect(() => {
     if (navigationEvent.href !== pathname) {
-      // On navigation event, perform animation with red background
-      Promise.all([
-        animate(scope2.current, {
-          height: "50%",
-          top: "0",
-          backgroundColor: "red",
-        }),
-        animate(scope3.current, {
-          height: "50%",
-          bottom: "0",
-          backgroundColor: "red",
-        }),
-      ]).then(() => {
+      const sequence: AnimationSequence = [
+        [
+          scope2.current,
+          { height: "50%", top: "0", backgroundColor: "white" },
+          { duration: 0.8 },
+        ],
+        [
+          scope3.current,
+          { height: "50%", bottom: "0", backgroundColor: "white" },
+          { at: "<", duration: 0.8 },
+        ],
+      ];
+
+      animation(sequence).then(() => {
         router.push(navigationEvent.href);
       });
     }
-  }, [navigationEvent]);
+  }, [navigationEvent, pathname]);
 
   return (
     <motion.div
