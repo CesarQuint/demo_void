@@ -1,5 +1,4 @@
 "use client";
-
 import { useEffect, useRef } from "react";
 import { motion, usePresence, useAnimate, Spring } from "framer-motion";
 import styles from "../pageImage.module.css";
@@ -28,7 +27,6 @@ const transitionColor = "deepskyblue";
 
 function SecondPage() {
   const [isPresent, safeToRemove] = usePresence();
-  const reference = useRef(null);
   const [scope2, animate] = useAnimate();
   const [scope3] = useAnimate();
   const pathname = usePathname();
@@ -62,12 +60,12 @@ function SecondPage() {
       const sequence: AnimationSequence = [
         [
           scope2.current,
-          { height: "50%", top: "0", backgroundColor: "white" },
+          { height: "51%", top: "0", backgroundColor: "white" },
           { duration: 0.8 },
         ],
         [
           scope3.current,
-          { height: "50%", bottom: "0", backgroundColor: "white" },
+          { height: "51%", bottom: "0", backgroundColor: "white" },
           { at: "<", duration: 0.8 },
         ],
       ];

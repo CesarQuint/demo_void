@@ -24,6 +24,9 @@ const NavBar = () => {
   const { setNavigationEvent } = useNavigation();
   const router = useRouter();
   const windowInfo = useWindow();
+
+  console.log(windowInfo);
+
   const { contextSafe } = useGSAP(
     () => {
       Splitting({
@@ -144,7 +147,13 @@ const NavBar = () => {
             }}>
             Proyectos
           </Link>
-          <Link href="/">El Estudio</Link>
+          <Link
+            href="/about"
+            onClick={(e) => {
+              goTo(e, "/about");
+            }}>
+            El Estudio
+          </Link>
           <Link href="/">Contacto</Link>
         </div>
         <div className={styles.linksMb}>
@@ -155,7 +164,13 @@ const NavBar = () => {
             }}>
             Proyectos
           </Link>
-          <Link href="#">El Estudio</Link>
+          <Link
+            href="/about"
+            onClick={(e) => {
+              goTo(e, "/about");
+            }}>
+            El Estudio
+          </Link>
           <Link
             href="#"
             className={styles.writeUs}>
