@@ -1,0 +1,18 @@
+.manifest_container {
+  padding: 4vh;
+  width: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 3vh;
+}
+
+.manifest_container h2 {
+  font-family: "Panchang";
+}
+
+.manifest_more_info {
+  line-height: 3vh;
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 3vh;
+}
