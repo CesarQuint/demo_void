@@ -60,8 +60,8 @@ const NavBar = () => {
   function goTo(e: MouseEvent, href: string) {
     e.preventDefault()
 
-    if (windowInfo.innerWidth > 0 && windowInfo.innerWidth < 700) {
-      toggleTl.current!.reverse(0.2);
+    if (windowInfo.innerWidth > 0 && windowInfo.innerWidth < 700 && isMenuOpen) {
+      toggleMenu()
     }
 
     setNavigationEvent({ state: true, href })
