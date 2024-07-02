@@ -13,11 +13,13 @@ const CHARS = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 
 interface Props extends React.ComponentProps<typeof Link> {
   hoverAnimate?: boolean;
   viewAnimate?: boolean;
+  delay?: number;
 }
 
 export default function TypedLink({
   hoverAnimate,
   viewAnimate = true,
+  delay = 0,
   ...props
 }: Props) {
   const container = useRef<HTMLAnchorElement>(null);
@@ -47,7 +49,7 @@ export default function TypedLink({
         .timeline({
           defaults: { duration: 0.03, repeatDelay: 0.03 },
         })
-        .fromTo(char, { opacity: 0 }, { opacity: 1, delay: (i + 1) * 0.04 })
+        .fromTo(char, { opacity: 0 }, { opacity: 1, delay: delay +( (i + 1) * 0.07) })
         .to(
           char,
           {

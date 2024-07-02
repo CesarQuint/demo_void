@@ -113,6 +113,7 @@ const NavBar = () => {
               <TypedLink
                 viewAnimate={true}
                 hoverAnimate={false}
+                delay={0.3}
                 href="/playground"
                 onClick={(e) => {
                   goTo(e, "/playground");
@@ -122,12 +123,14 @@ const NavBar = () => {
               <TypedLink
                 viewAnimate={true}
                 hoverAnimate={false}
+                delay={0.4}
                 href="/">
                 El Estudio
               </TypedLink>
               <TypedLink
                 viewAnimate={true}
                 hoverAnimate={false}
+                delay={0.5}
                 href="/">
                 Contacto
               </TypedLink>
