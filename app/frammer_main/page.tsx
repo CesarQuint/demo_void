@@ -11,10 +11,12 @@ import Tags from "../components/tags";
 import Footer from "../components/footer";
 import HeroContainer from "../components/Home/HeroContainer";
 import VideoHover from "../components/videoHover";
+import Video from "../components/Three/Video";
 
 import RepeatTextScrollFx from "../components/gsapComponents";
 import ProjectImages from "../components/Home/ProjectImages";
 import ScrollImg from "../components/ScrollImg/ScrollImg";
+import Main from "../components/Three/Main";
 
 const transitionSpringPhysics: Spring = {
   type: "spring",
@@ -111,6 +113,7 @@ function SecondPage() {
       />
       <HeroContainer />
       <VideoHover />
+      <Video />
       <ProjectImages />
       <Tags />
       <Footer />

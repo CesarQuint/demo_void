@@ -1,0 +1,8 @@
+.scene {
+  width: 100vw;
+  height: 90vh;
+}
+
+.canvas {
+  background: #000;
+}
