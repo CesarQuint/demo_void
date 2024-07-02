@@ -8,6 +8,7 @@ import Image from 'next/image'
 import { useGSAP } from '@gsap/react'
 import { gsap } from 'gsap'
 import TypedLink from './TypedLink/TypedLink'
+import useWindow from "../utils/hooks/useWindow";
 
 gsap.registerPlugin(useGSAP)
 
@@ -18,6 +19,9 @@ const NavBar = () => {
   const toggleTl = useRef<gsap.core.Timeline | null>(null)
   const { setNavigationEvent } = useNavigation()
   const router = useRouter()
+  const windowInfo = useWindow();
+
+  console.log(windowInfo);
 
   const { contextSafe } = useGSAP(
     () => {
@@ -45,17 +49,24 @@ const NavBar = () => {
   );
 
   const toggleMenu = contextSafe(() => {
-    setIsMenuOpen(!isMenuOpen)
+    if (windowInfo.innerWidth > 0 && windowInfo.innerWidth < 700) {
+      setIsMenuOpen(!isMenuOpen)
 
-    if (isMenuOpen) toggleTl.current?.reverse(0.2)
-    else toggleTl.current?.play()
+      if (isMenuOpen) toggleTl.current?.reverse(0.2)
+      else toggleTl.current?.play()
+    }
   })
 
   function goTo(e: MouseEvent, href: string) {
     e.preventDefault()
-    toggleTl.current!.reverse(0.2)
+
+    if (windowInfo.innerWidth > 0 && windowInfo.innerWidth < 700) {
+      toggleTl.current!.reverse(0.2);
+    }
+
     setNavigationEvent({ state: true, href })
   }
+
 
   return (
     <header ref={container}>

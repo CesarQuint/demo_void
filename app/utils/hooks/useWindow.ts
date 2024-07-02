@@ -12,16 +12,18 @@ interface Window {
 
 export default function useWindow(): Readonly<Window> {
   const windowForReference = useRef<Window>({
-    innerWidth: 0,
-    innerHeight: 0,
+    innerWidth: window.innerWidth,
+    innerHeight: window.innerHeight,
     navigator: {
-      language: "es",
-      userAgent: "",
-      platform: "",
+      language: window.navigator.language,
+      userAgent: window.navigator.userAgent,
+      platform: window.navigator.platform,
     },
   });
 
   useEffect(() => {
+    //First load
+
     const updateWindow = () => {
       windowForReference.current.innerHeight = window.innerHeight;
       windowForReference.current.innerWidth = window.innerHeight;
@@ -33,7 +35,7 @@ export default function useWindow(): Readonly<Window> {
     };
 
     window.addEventListener("resize", updateWindow);
-  });
+  }, []);
 
   return windowForReference.current;
 }
