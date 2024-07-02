@@ -15,21 +15,21 @@
   height: fit-content;
   flex-direction: column;
   display: flex;
-  padding-top: 4vh;
-  gap: 2vh;
+  margin-top: 4vh;
+  gap: 2rem;
 }
 
 .tag {
-  margin-bottom: 1vh;
-  background-color: #101010;
-  padding: 5vh;
-  color: #fff;
+  padding: 3.5rem;
   border-radius: 15px;
   display: flex;
   flex-flow: column nowrap;
-  gap: 3vh;
-
-  position: relative;
+  color: #fff;
+  background: #101010;
+  border: 2px solid #fff;
+  position: sticky;
+  bottom: 0;
+  transform-origin: bottom;
 }
 
 .know_more {
@@ -40,6 +40,9 @@
   margin: auto;
   background-color: #101010;
   color: #fff;
+
+  position: sticky;
+  bottom: 10px;
 }
 .text_introduction {
   display: flex;
@@ -58,5 +61,6 @@
 }
 .gif_info {
   width: inherit;
+  height: 60vh;
   border-radius: 40px;
 }

@@ -6,6 +6,7 @@ import styles from "../page.module.css";
 import { usePathname } from "next/navigation";
 import { useNavigation } from "../utils/navigationContext";
 import { useRouter } from "next/navigation";
+import useWindow from "../utils/hooks/useWindow";
 import CourtainsEasy from "../components/courtainsEasy";
 import CourtainsGsap from "../components/courtainGsap";
 import Timeline from "../components/timeline";
@@ -48,7 +49,7 @@ function SecondPage() {
       if (scope.current) {
         animate(scope.current, {
           height: "100vh",
-          backgroundColor: "black",
+          backgroundColor: transitionColor,
           transition: { delay: 0.2 },
         }).then(() => {
           router.push(navigationEvent.href);
@@ -56,6 +57,12 @@ function SecondPage() {
       }
     }
   }, [navigationEvent, pathname, router, animate]);
+
+  useEffect(() => {
+    console.log(window);
+  }, []);
+
+  const a = useWindow();
 
   return (
     <motion.div
@@ -67,7 +74,7 @@ function SecondPage() {
       <motion.div
         ref={scope}
         style={{
-          backgroundColor: "black",
+          backgroundColor: transitionColor,
           position: "fixed",
           width: "200vw",
           zIndex: 20,

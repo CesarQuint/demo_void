@@ -12,16 +12,16 @@
   --color-rep-bg: var(--color-bg);
   color: var(--color-text);
   background-color: var(--color-bg);
-  overflow: hidden;
-  overflow-y: scroll;
+  height: 100%;
+  width: 100%;
 }
 
 .content {
   overflow: hidden;
-  margin: 2rem 0;
+
   display: flex;
-  justify-content: center;
-  height: 50vh;
+  justify-content: flex-end;
+  height: 100%;
   flex-direction: column;
   align-items: center;
 }
@@ -42,15 +42,15 @@
 
 .text_rep {
   display: grid;
+  width: 100%;
   color: var(--color-rep-text);
+  padding: 0;
 }
 
 .text_rep span {
   grid-area: 1 / 1 / 2 / 2;
   background-color: var(--color-rep-bg);
-  font-size: 96px;
   will-change: transform;
-  line-height: 76px;
 }
 
 .text {
@@ -81,4 +81,32 @@
 
 .text_float {
   color: #fff;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  height: 19vw;
+  transition: all 1s;
+  width: 100%;
+}
+.image_logo {
+  height: 18vw;
+  padding: 0;
+  transition: all 1s;
+  width: 100%;
+}
+
+@media screen and (min-width: 53em) {
+  .text_float {
+    color: #fff;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    height: 20vw;
+    width: 100%;
+  }
+  .image_logo {
+    height: 19vw;
+    padding: 0;
+    width: 100%;
+  }
 }
