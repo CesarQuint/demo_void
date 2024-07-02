@@ -42,13 +42,13 @@ const About = (props: Props) => {
     const sequence: AnimationSequence = [
       [
         scope2.current,
-        { height: "0%", top: "50%", backgroundColor: "white" },
-        { duration: 0.6 },
+        { height: "0%", top: "50%", backgroundColor: "black" },
+        { duration: 0.4 },
       ],
       [
         scope3.current,
-        { height: "0%", bottom: "50%", backgroundColor: "white" },
-        { at: "<", duration: 0.6 },
+        { height: "0%", bottom: "50%", backgroundColor: "black" },
+        { at: "<", duration: 0.4 },
       ],
     ];
 
@@ -65,13 +65,13 @@ const About = (props: Props) => {
       const sequence: AnimationSequence = [
         [
           scope2.current,
-          { height: "51%", top: "0", backgroundColor: "white" },
-          { duration: 0.6 },
+          { height: "51%", top: "0", backgroundColor: "black" },
+          { duration: 0.4 },
         ],
         [
           scope3.current,
-          { height: "51%", bottom: "0", backgroundColor: "white" },
-          { at: "<", duration: 0.6 },
+          { height: "51%", bottom: "0", backgroundColor: "black" },
+          { at: "<", duration: 0.4 },
         ],
       ];
 
