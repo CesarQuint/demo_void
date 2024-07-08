@@ -3,7 +3,7 @@
 .body {
   margin: 0;
   --color-text: #fff;
-  --color-bg: #101010;
+  --color-bg: black;
   --font-size-xl: 26vw;
   --font-family: "Arial", sans-serif;
   --font-weight: 900;
@@ -14,16 +14,18 @@
   background-color: var(--color-bg);
   height: 100%;
   width: 100%;
+
+  scroll-behavior: smooth;
 }
 
 .content {
   overflow: hidden;
-
   display: flex;
   justify-content: flex-end;
   height: 100%;
   flex-direction: column;
   align-items: center;
+  scroll-behavior: smooth;
 }
 
 .content__title {
@@ -41,69 +43,23 @@
 }
 
 .text_rep {
-  display: grid;
   width: 100%;
   color: var(--color-rep-text);
   padding: 0;
-}
-
-.text_rep span {
-  grid-area: 1 / 1 / 2 / 2;
-  background-color: var(--color-rep-bg);
+  overflow: hidden;
   will-change: transform;
 }
 
-.text {
-  padding: 5rem 0;
-  width: 70%;
-  margin: auto;
-}
-.test {
-  color: inherit;
-}
-
-.board {
-  height: 22rem;
-  width: 100%;
-  background-color: beige;
-}
-.square {
-  height: 5rem;
-  width: 5rem;
-  background-color: aqua;
-}
-._1 {
-  background-color: rgb(84, 233, 119);
-}
-._2 {
-  background-color: rgb(233, 102, 84);
-}
-
-.text_float {
-  color: #fff;
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: center;
-  height: 19vw;
-  transition: all 1s;
-  width: 100%;
-}
 .image_logo {
   height: 18vw;
   padding: 0;
   transition: all 1s;
+  margin-top: 5px;
   width: 100%;
+  overflow: hidden;
 }
 
 @media screen and (min-width: 53em) {
-  .text_float {
-    color: #fff;
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: center;
-    height: 20vw;
-    width: 100%;
-  }
   .image_logo {
     height: 19vw;
     padding: 0;
