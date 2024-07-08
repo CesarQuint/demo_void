@@ -1,18 +1,35 @@
 .manifest_container {
-  padding: 4vh;
-  width: 100%;
+  padding: 10vh 6vh;
+  width: 70%;
   display: flex;
   flex-flow: column nowrap;
-  gap: 3vh;
+  gap: 6vh;
 }
 
 .manifest_container h2 {
   font-family: "Panchang";
+  font-size: 3rem;
 }
 
 .manifest_more_info {
   line-height: 3vh;
   display: flex;
   flex-flow: column nowrap;
-  gap: 3vh;
+  gap: 6vh;
+}
+
+.manifest_container p {
+  font-family: "graphie";
+}
+
+.manifest_container p:nth-child(1) {
+  font-size: 3rem;
+  font-weight: lighter;
+  line-height: 3.5rem;
+}
+.manifest_container p:nth-of-type(n + 2):nth-of-type(-n + 3) {
+  font-size: 1.5rem;
+  width: 70%;
+  font-weight: lighter;
+  line-height: 2rem;
 }

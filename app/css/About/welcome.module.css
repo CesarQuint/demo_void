@@ -1,11 +1,13 @@
 .welcome_container {
-  padding: 25vh 4vh 5vh;
+  padding: 25vh 6vh 5vh;
   width: 100%;
 }
 
 .welcome_h1 {
-  font-family: "Panchang";
-  width: 100%;
-  line-height: 4vh;
+  font-family: "graphie";
+  width: 65%;
+  font-size: 3rem;
+  font-weight: lighter;
+  line-height: 3.5rem;
   text-align: left;
 }
