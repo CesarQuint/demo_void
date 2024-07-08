@@ -7,7 +7,7 @@ import { useNavigation } from "../utils/navigationContext";
 import { useRouter } from "next/navigation";
 import { AnimationSequence } from "framer-motion";
 import { animate as animation } from "framer-motion";
-import Tags from "../components/tags";
+
 import Footer from "../components/footer";
 import HeroContainer from "../components/Home/HeroContainer";
 import VideoHover from "../components/videoHover";
@@ -15,10 +15,9 @@ import Video from "../components/Three/Video";
 
 import RepeatTextScrollFx from "../components/gsapComponents";
 import ProjectImages from "../components/Home/ProjectImages";
-import ScrollImg from "../components/ScrollImg/ScrollImg";
-import Main from "../components/Three/Main";
 import { VortexGeometry } from "../hero_demo/VortexGeometry";
 import { Canvas } from "@react-three/fiber";
+import ProcessHome from "../components/Home/ProcessHome";
 
 const transitionSpringPhysics: Spring = {
   type: "spring",
@@ -122,7 +121,7 @@ function SecondPage() {
       {/* <VideoHover /> */}
       <Video />
       <ProjectImages />
-      <Tags />
+      <ProcessHome />
       <Footer />
     </motion.div>
   );
