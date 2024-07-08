@@ -15,8 +15,11 @@ import styles from "../css/about.module.css";
 
 import Welcome from "../components/About/Welcome";
 import Manifest from "../components/About/Manifest";
-import Tags from "../components/tags";
+import Process from "../components/About/Process";
+import Services from "../components/About/Services";
 import Footer from "../components/footer";
+
+import { about_us_tags } from "../constants/tags_text";
 
 //! Temporal
 
@@ -121,7 +124,8 @@ const About = (props: Props) => {
         controls={true}
       />
       <Manifest />
-      <Tags />
+      <Process />
+      <Services />
       <Footer />
     </motion.div>
   );
