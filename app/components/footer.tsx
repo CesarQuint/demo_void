@@ -13,11 +13,8 @@ const Footer = (props: Props) => {
   return (
     <motion.div className={`${styles.footer}`}>
       <motion.section className={`${styles.footer_flex}`}>
-        <motion.section style={{ width: "100%", height: "80%" }}>
-          <Title
-            text="VOIDXR"
-            words={18}
-          />
+        <motion.section style={{ width: "100%" }}>
+          <Title />
         </motion.section>
 
         <motion.section className={` ${styles.text_container}`}>
@@ -29,6 +26,7 @@ const Footer = (props: Props) => {
                 <button className={`${styles.btn_2}`}>+</button>
               </section>
             </div>
+            <p>+52 55 3245 2323</p>
             <p>CONTACTO@VOIDXR.STUDIO</p>
           </motion.div>
           <motion.div
