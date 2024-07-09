@@ -21,8 +21,6 @@ const NavBar = () => {
   const router = useRouter();
   const windowInfo = useWindow();
 
-  console.log(windowInfo);
-
   const { contextSafe } = useGSAP(
     () => {
       gsap.matchMedia().add("(max-width: 700px)", () => {

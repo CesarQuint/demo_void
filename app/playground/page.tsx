@@ -6,9 +6,7 @@ import styles from "../page.module.css";
 import { usePathname } from "next/navigation";
 import { useNavigation } from "../utils/navigationContext";
 import { useRouter } from "next/navigation";
-import useWindow from "../utils/hooks/useWindow";
 import Title from "../components/title";
-
 const transitionSpringPhysics: Spring = {
   type: "spring",
   mass: 0.5,
@@ -59,8 +57,6 @@ function SecondPage() {
   useEffect(() => {
     console.log(window);
   }, []);
-
-  const a = useWindow();
 
   return (
     <motion.div

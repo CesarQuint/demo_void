@@ -18,8 +18,7 @@ import Manifest from "../components/About/Manifest";
 import Process from "../components/About/Process";
 import Services from "../components/About/Services";
 import Footer from "../components/footer";
-
-import { about_us_tags } from "../constants/tags_text";
+import { PreFooterLink } from "../components/PreFooterLink";
 
 //! Temporal
 
@@ -118,14 +117,18 @@ const About = (props: Props) => {
         className="courtain"
       />
       <Welcome />
-      <video
-        className={styles.video_about}
-        src="/videos/cdmx.mp4"
-        controls={true}
-      />
+      <motion.div className={styles.video_container}>
+        <video
+          className={styles.video}
+          src="/videos/cdmx.mp4"
+          controls={true}
+        />
+      </motion.div>
+
       <Manifest />
       <Process />
       <Services />
+      <PreFooterLink text="PROYECTOS" />
       <Footer />
     </motion.div>
   );
