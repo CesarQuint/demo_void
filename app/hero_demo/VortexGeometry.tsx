@@ -2,7 +2,7 @@
 
 import { useRef } from 'react'
 import { Vector3 } from 'three';
-import { RootState, useFrame, useThree } from '@react-three/fiber'
+import { Canvas, RootState, useFrame, useThree } from '@react-three/fiber'
 import { VortexMaterial } from './VortexMaterial';
 
 export function VortexGeometry() {

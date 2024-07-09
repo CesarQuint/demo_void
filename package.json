@@ -19,6 +19,7 @@
     "framer-motion": "^11.2.10",
     "gsap": "^3.12.5",
     "leva": "^0.9.35",
+    "lil-gui": "^0.19.2",
     "next": "14.2.3",
     "postprocessing": "^6.35.5",
     "react": "^18",
