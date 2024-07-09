@@ -19,11 +19,11 @@
     "framer-motion": "^11.2.10",
     "gsap": "^3.12.5",
     "leva": "^0.9.35",
+    "lil-gui": "^0.19.2",
     "next": "14.2.3",
     "postprocessing": "^6.35.5",
     "react": "^18",
     "react-dom": "^18",
-
     "three": "^0.165.0",
     "three-stdlib": "^2.30.3",
     "splitting": "^1.1.0"

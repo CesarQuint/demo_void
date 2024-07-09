@@ -3,8 +3,7 @@ import { Size, Viewport, useFrame, useThree } from '@react-three/fiber';
 import { useTexture } from "@react-three/drei";
 import { useMemo, useRef, useEffect } from "react";
 
-const TEXTURE_IMG =
-    'https://images.unsplash.com/photo-1618005198920-f0cb6201c115?q=80&w=3000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
+const TEXTURE_IMG = 'https://images.unsplash.com/photo-1620121692029-d088224ddc74?q=80&w=1920';
 
 type DisplacementMaterialProps = {
     size: number,
