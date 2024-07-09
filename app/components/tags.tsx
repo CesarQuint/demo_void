@@ -30,7 +30,7 @@ const Tags = (props: Props) => {
       tags.slice(1).forEach((el, i, arr) => {
         const iSpace = i === 0 ? space : 0
         const start = tags[i].offsetTop + tags[i].clientHeight + iSpace
-        const scrollStart = space * (arr.length - i)
+        const scrollStart = space * arr.length
 
         gsap.fromTo(
           el,
@@ -43,12 +43,14 @@ const Tags = (props: Props) => {
               start: `${start} bottom-=${scrollStart}`,
               end: `+=50 bottom-=${scrollStart}`,
               scrub: true,
-            },
-            onStart() {
-              gsap.set(el, { marginTop: 'auto' })
-            },
-            onReverseComplete() {
-              setMarginTop(el, i)
+              markers: true,
+              onUpdate(e) {
+                if (e.direction > 0) {
+                  gsap.set(el, { marginTop: 'auto' })
+                } else {
+                  setMarginTop(el, i)
+                }
+              },
             },
           },
         )
