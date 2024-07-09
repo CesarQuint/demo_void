@@ -18,6 +18,7 @@ import ProjectImages from "../components/Home/ProjectImages";
 import { VortexGeometry } from "../hero_demo/VortexGeometry";
 import { Canvas } from "@react-three/fiber";
 import ProcessHome from "../components/Home/ProcessHome";
+import { PreFooterLink } from "../components/PreFooterLink";
 
 const transitionSpringPhysics: Spring = {
   type: "spring",
@@ -122,6 +123,7 @@ function SecondPage() {
       <Video />
       <ProjectImages />
       <ProcessHome />
+      <PreFooterLink text="CONOCENOS" />
       <Footer />
     </motion.div>
   );
