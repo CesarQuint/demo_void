@@ -17,7 +17,7 @@
 }
 
 .tag {
-  padding: 2rem 3.5rem;
+  padding: 2rem;
   border-radius: 15px;
   display: flex;
   flex-flow: column nowrap;
@@ -42,7 +42,7 @@
 }
 
 .left_content {
-  width: 40%;
+  width: 100%;
 }
 
 .right_content {
@@ -54,7 +54,7 @@
 
 .left_content h4 {
   font-family: "Panchang";
-  font-size: 9rem;
+  font-size: 7rem;
   text-align: center;
 }
 
@@ -74,8 +74,19 @@
   font-size: 1rem;
 }
 /* Media Part */
-@media (min-width: 590px) {
+@media (min-width: 768px) {
   .tag {
+    padding: 2rem 3.5rem;
     flex-flow: row;
+  }
+
+  .left_content h4 {
+    font-family: "Panchang";
+    font-size: 9rem;
+    text-align: center;
+  }
+
+  .left_content {
+    width: 40%;
   }
 }

@@ -11,7 +11,7 @@ const Services = (props: Props) => {
         <h2 className={styles.title}>SERVICIOS</h2>
       </div>
       <div>
-        <h3>Carousel</h3>
+        <h3>Proyectos relacionados</h3>
       </div>
     </motion.section>
   );

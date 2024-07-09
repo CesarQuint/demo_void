@@ -5,9 +5,18 @@
 
 .welcome_h1 {
   font-family: "graphie";
-  width: 65%;
-  font-size: 3rem;
+  width: 100%;
   font-weight: lighter;
-  line-height: 3.5rem;
   text-align: left;
+  font-size: 1.7rem;
+  line-height: 2rem;
+}
+
+/* Media Part */
+@media (min-width: 768px) {
+  .welcome_h1 {
+    width: 65%;
+    font-size: 3rem;
+    line-height: 3.5rem;
+  }
 }
