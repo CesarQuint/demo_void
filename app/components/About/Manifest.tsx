@@ -20,11 +20,8 @@ const Manifest = (props: Props) => {
         <p>
           Trabajamos con metodologías perfeccionadas que aseguran procesos
           fluidos y transparentes, brindando certeza y tranquilidad en cada
-          etapa del proyecto.
-        </p>
-        <p>
-          Nuestra misión es materializar vivencias donde los sentidos y las
-          emociones se entrelazan.
+          etapa del proyecto. Nuestra misión es materializar vivencias donde los
+          sentidos y las emociones se entrelazan.
         </p>
       </div>
     </section>

@@ -2,6 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import styles from "../css/footer.module.css";
 import Title from "./title";
+import TypedLink from "./TypedLink/TypedLink";
 import Link from "next/link";
 import useTime from "../utils/hooks/useTime";
 
@@ -13,11 +14,8 @@ const Footer = (props: Props) => {
   return (
     <motion.div className={`${styles.footer}`}>
       <motion.section className={`${styles.footer_flex}`}>
-        <motion.section style={{ width: "100%", height: "80%" }}>
-          <Title
-            text="VOIDXR"
-            words={18}
-          />
+        <motion.section style={{ width: "100%" }}>
+          <Title />
         </motion.section>
 
         <motion.section className={` ${styles.text_container}`}>
@@ -29,6 +27,7 @@ const Footer = (props: Props) => {
                 <button className={`${styles.btn_2}`}>+</button>
               </section>
             </div>
+            <p>+52 55 3245 2323</p>
             <p>CONTACTO@VOIDXR.STUDIO</p>
           </motion.div>
           <motion.div
@@ -44,19 +43,83 @@ const Footer = (props: Props) => {
           <motion.div className={`${styles.flex_container}  ${styles.nav}`}>
             <p>NAVIGATION</p>
             <nav className={`${styles.links}`}>
-              <Link href={"/"}>HOME</Link>
-              <Link href={"/"}>PROJECT</Link>
-              <Link href={"/"}>STUDIO</Link>
-              <Link href={"/"}>CONTACT</Link>
+              <TypedLink
+                viewAnimate={true}
+                hoverAnimate={false}
+                href="/frammer_main"
+                onClick={(e) => {
+                  // goTo(e, "/frammer_main");
+                }}>
+                HOME
+              </TypedLink>
+              <TypedLink
+                viewAnimate={true}
+                hoverAnimate={false}
+                href="/frammer_main"
+                onClick={(e) => {
+                  // goTo(e, "/frammer_main");
+                }}>
+                PROJECTS
+              </TypedLink>
+              <TypedLink
+                viewAnimate={true}
+                hoverAnimate={false}
+                href="/frammer_main"
+                onClick={(e) => {
+                  // goTo(e, "/frammer_main");
+                }}>
+                STUDIO
+              </TypedLink>
+              <TypedLink
+                viewAnimate={true}
+                hoverAnimate={false}
+                href="/frammer_main"
+                onClick={(e) => {
+                  // goTo(e, "/frammer_main");
+                }}>
+                CONTACT
+              </TypedLink>
             </nav>
           </motion.div>
           <motion.div className={`${styles.flex_container}  ${styles.social}`}>
             <p>SOCIAL</p>
             <nav className={`${styles.links}`}>
-              <Link href={"/"}>INSTAGRAM</Link>
-              <Link href={"/"}>FACEBOOK</Link>
-              <Link href={"/"}>VIDEO</Link>
-              <Link href={"/"}>LINKEDIN</Link>
+              <TypedLink
+                viewAnimate={true}
+                hoverAnimate={false}
+                href="/frammer_main"
+                onClick={(e) => {
+                  // goTo(e, "/frammer_main");
+                }}>
+                INSTAGRAM
+              </TypedLink>
+              <TypedLink
+                viewAnimate={true}
+                hoverAnimate={false}
+                href="/frammer_main"
+                onClick={(e) => {
+                  // goTo(e, "/frammer_main");
+                }}>
+                FACEBOOK
+              </TypedLink>
+              <TypedLink
+                viewAnimate={true}
+                hoverAnimate={false}
+                href="/frammer_main"
+                onClick={(e) => {
+                  // goTo(e, "/frammer_main");
+                }}>
+                VIDEO
+              </TypedLink>
+              <TypedLink
+                viewAnimate={true}
+                hoverAnimate={false}
+                href="/frammer_main"
+                onClick={(e) => {
+                  // goTo(e, "/frammer_main");
+                }}>
+                LINKEDIN
+              </TypedLink>
             </nav>
           </motion.div>
         </motion.section>

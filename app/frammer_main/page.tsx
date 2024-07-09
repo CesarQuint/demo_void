@@ -7,7 +7,7 @@ import { useNavigation } from "../utils/navigationContext";
 import { useRouter } from "next/navigation";
 import { AnimationSequence } from "framer-motion";
 import { animate as animation } from "framer-motion";
-import Tags from "../components/tags";
+
 import Footer from "../components/footer";
 import HeroContainer from "../components/Home/HeroContainer";
 import VideoHover from "../components/videoHover";
@@ -15,8 +15,10 @@ import Video from "../components/Three/Video";
 
 import RepeatTextScrollFx from "../components/gsapComponents";
 import ProjectImages from "../components/Home/ProjectImages";
-import ScrollImg from "../components/ScrollImg/ScrollImg";
-import Main from "../components/Three/Main";
+import { VortexGeometry } from "../hero_demo/VortexGeometry";
+import { Canvas } from "@react-three/fiber";
+import ProcessHome from "../components/Home/ProcessHome";
+import { PreFooterLink } from "../components/PreFooterLink";
 
 const transitionSpringPhysics: Spring = {
   type: "spring",
@@ -39,13 +41,13 @@ function SecondPage() {
     const sequence: AnimationSequence = [
       [
         scope2.current,
-        { height: "0%", top: "50%", backgroundColor: "white" },
-        { duration: 0.8 },
+        { height: "0%", top: "50%", backgroundColor: "black" },
+        { duration: 0.4 },
       ],
       [
         scope3.current,
-        { height: "0%", bottom: "50%", backgroundColor: "white" },
-        { at: "<", duration: 0.8 },
+        { height: "0%", bottom: "50%", backgroundColor: "black" },
+        { at: "<", duration: 0.4 },
       ],
     ];
 
@@ -62,13 +64,13 @@ function SecondPage() {
       const sequence: AnimationSequence = [
         [
           scope2.current,
-          { height: "51%", top: "0", backgroundColor: "white" },
-          { duration: 0.8 },
+          { height: "51%", top: "0", backgroundColor: "black" },
+          { duration: 0.4 },
         ],
         [
           scope3.current,
-          { height: "51%", bottom: "0", backgroundColor: "white" },
-          { at: "<", duration: 0.8 },
+          { height: "51%", bottom: "0", backgroundColor: "black" },
+          { at: "<", duration: 0.4 },
         ],
       ];
 
@@ -111,11 +113,17 @@ function SecondPage() {
         transition={transitionSpringPhysics}
         className="courtain"
       />
-      <HeroContainer />
-      <VideoHover />
+      <section>
+        <Canvas style={{ height: "100vh" }}>
+          <VortexGeometry />
+        </Canvas>
+      </section>
+
+      {/* <VideoHover /> */}
       <Video />
       <ProjectImages />
-      <Tags />
+      <ProcessHome />
+      <PreFooterLink text="CONOCENOS" />
       <Footer />
     </motion.div>
   );

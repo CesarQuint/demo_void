@@ -1,13 +1,10 @@
 .main {
-  background-color: #dedede;
+  width: 100%;
 }
 
 .tags_wrapper {
   color: #101010;
-  background-color: #fff;
-  padding: 3vh 4vh;
-  border-start-start-radius: 40px;
-  border-start-end-radius: 40px;
+  padding: 3vh 6vh;
 }
 
 .tags_container {
@@ -17,50 +14,67 @@
   display: flex;
   margin-top: 4vh;
   gap: 2rem;
+  clip-path: inset(0 0 0 0);
 }
 
 .tag {
-  padding: 3.5rem;
+  padding: 2rem;
   border-radius: 15px;
   display: flex;
   flex-flow: column nowrap;
   color: #fff;
   background: #101010;
   border: 2px solid #fff;
-  position: sticky;
-  bottom: 0;
   transform-origin: bottom;
+  box-shadow: 0 -3rem 0px 2rem #101010;
 }
 
-.know_more {
+.left_content {
   width: 100%;
-  padding: 2vh;
-  border-radius: 25px;
-  text-align: center;
-  margin: auto;
-  background-color: #101010;
-  color: #fff;
-
-  position: sticky;
-  bottom: 10px;
 }
-.text_introduction {
+
+.right_content {
+  width: 60%;
   display: flex;
   flex-flow: column nowrap;
-  gap: 3vh;
+  gap: 4vh;
 }
 
-.title_process {
+.left_content h4 {
+  font-family: "Panchang";
+  font-size: 7rem;
   text-align: center;
-  font-size: 36px;
 }
 
-.tag_title {
-  padding-bottom: 1vh;
-  border-bottom: 1px solid #fff;
+.right_numeral {
+  font-family: "Panchang";
 }
-.gif_info {
-  width: inherit;
-  height: 60vh;
-  border-radius: 40px;
+
+.title {
+  font-family: "graphie";
+  font-size: 2rem;
+}
+
+.right_text_content {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 2vh;
+  font-size: 1rem;
+}
+/* Media Part */
+@media (min-width: 768px) {
+  .tag {
+    padding: 2rem 3.5rem;
+    flex-flow: row;
+  }
+
+  .left_content h4 {
+    font-family: "Panchang";
+    font-size: 9rem;
+    text-align: center;
+  }
+
+  .left_content {
+    width: 40%;
+  }
 }

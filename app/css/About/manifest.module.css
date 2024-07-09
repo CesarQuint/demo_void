@@ -1,18 +1,61 @@
 .manifest_container {
-  padding: 4vh;
+  padding: 10vh 6vh;
   width: 100%;
   display: flex;
   flex-flow: column nowrap;
-  gap: 3vh;
+  gap: 6vh;
+  transform: all 1s;
 }
 
 .manifest_container h2 {
   font-family: "Panchang";
+  font-size: 1.8rem;
 }
 
 .manifest_more_info {
   line-height: 3vh;
   display: flex;
   flex-flow: column nowrap;
-  gap: 3vh;
+  gap: 6vh;
+}
+
+.manifest_container p {
+  font-family: "graphie";
+}
+
+.manifest_container p:nth-child(1) {
+  font-size: 2rem;
+  font-weight: lighter;
+  line-height: 2.2rem;
+}
+.manifest_container p:nth-of-type(n + 2):nth-of-type(-n + 3) {
+  font-size: 1.3rem;
+  width: 100%;
+  font-weight: lighter;
+  line-height: 1.5rem;
+}
+
+/* Media Part */
+@media (min-width: 768px) {
+  .manifest_container {
+    width: 70%;
+  }
+  .manifest_container h2 {
+    font-size: 3rem;
+  }
+  .manifest_more_info {
+    line-height: 3vh;
+  }
+
+  .manifest_container p:nth-child(1) {
+    font-size: 3rem;
+    font-weight: lighter;
+    line-height: 3.5rem;
+  }
+  .manifest_container p:nth-of-type(n + 2):nth-of-type(-n + 3) {
+    font-size: 1.5rem;
+    width: 70%;
+    font-weight: lighter;
+    line-height: 2rem;
+  }
 }

@@ -73,13 +73,35 @@
   }
 }
 
+/* Define font-families */
+@font-face {
+  font-family: "input-mono";
+  font-weight: 200;
+  font-style: normal;
+  src: url("https://use.typekit.net/iqd6buu.css");
+}
+
+@font-face {
+  font-family: "graphie";
+  font-weight: 300;
+  font-style: normal;
+  src: url("https://use.typekit.net/iqd6buu.css");
+}
+
+@font-face {
+  font-family: "Panchang";
+  src: url("../public/fonts/Panchang-Variable.ttf") format("truetype");
+}
+
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  font-family: "input-mono";
 }
 
 html {
+  scroll-behavior: smooth;
   background-color: black;
 }
 body {
@@ -106,9 +128,4 @@ a {
   html {
     color-scheme: dark;
   }
-}
-
-@font-face {
-  font-family: "Panchang";
-  src: url("../public/fonts/Panchang-Variable.ttf") format("truetype");
 }

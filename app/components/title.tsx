@@ -1,118 +1,150 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import styles from "../css/title.module.css";
-gsap.registerPlugin(ScrollTrigger);
+import React, { useEffect, useRef, useState } from "react";
+import gsap from "gsap";
 import Image from "next/image";
+import styles from "../css/title.module.css";
+import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import logo from "../../public/void_Nb.svg";
 import CustomEase from "gsap/CustomEase";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(CustomEase);
 
 type Props = {};
 
-const Title = ({ text, words = 6 }: { text: string; words: number }) => {
+type TextLogoProps = {
+  position: number;
+  nameRef: string;
+  offset?: string;
+  margin?: number;
+};
+
+const TextLogo = (props: TextLogoProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const textRef = useRef<HTMLDivElement>(null);
+  const imageRef = useRef<HTMLDivElement>(null);
   const timelineRef = useRef<GSAPTimeline | null>(null);
-  const timelineRef2 = useRef<GSAPTimeline | null>(null);
-  const midWords = Math.ceil(words / 2);
-  const wordsArr = new Array(words + 1).fill(text);
 
   useEffect(() => {
-    if (containerRef.current) {
-      const spanWords = Array.from(
-        containerRef.current.getElementsByClassName(styles.text_float)
-      );
-
-      const innerArr = spanWords;
-      innerArr.pop();
-      const half = midWords;
-      const firstHalf = innerArr.slice(0, half);
-      const secondHalf = innerArr.slice(half);
-
-      interface docBuild {
-        y: number;
-        delay: number;
-      }
-
-      const generateDelayAndYPercent: docBuild[] = innerArr.map((_, index) => {
-        let calc = 30 * index;
-        let per = 1.0 - 0.03 * index;
-        return {
-          y: calc * per,
-          delay: 0.1 + 0.1 * index,
-        };
-      });
-
-      const negativeCopy = generateDelayAndYPercent.map((doc: docBuild) => {
-        return { y: -doc.y, delay: doc.delay };
-      });
-
-      const targetXPositions = generateDelayAndYPercent
-        .slice(0, midWords)
-        .concat(negativeCopy.slice(0, midWords));
-
+    if (containerRef.current !== null) {
       const tl = gsap.timeline({
-        defaults: {
-          ease: CustomEase.create("custom", "M0,0 C0.705,0 0,1 1,1 "),
-        },
-      });
-
-      const tl2 = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
-          start: "top center",
-          end: "70% center",
-          scrub: 0, // Adjust as needed
-        },
-        defaults: {
-          ease: CustomEase.create("custom", "M0,0 C0.705,0 0,1 1,1 "),
+          start: `${props.offset} center`,
+          end: "bottom center",
+          scrub: 0,
         },
       });
 
-      secondHalf.reverse().forEach((span, index) => {
-        tl.to(span, {
-          yPercent: Number(targetXPositions[firstHalf.length + index].y),
-        });
-      });
-
-      secondHalf.reverse().forEach((span, index) => {
-        tl2.to(span, {
-          yPercent: `-${Number(targetXPositions[firstHalf.length + index].y)}`,
-        });
+      tl.to(imageRef.current, {
+        marginTop: `+=${props.margin! + 1}px`,
+        ease: "none",
       });
 
       timelineRef.current = tl;
-      timelineRef2.current = tl2;
     }
-
     return () => {
-      timelineRef.current?.kill(); // Clean up the timeline on component unmount
-      timelineRef2.current?.kill(); // Clean up the timeline on component unmount
+      timelineRef.current?.kill();
     };
   }, []);
 
   return (
-    <div className={`${styles.body}`}>
-      <div
-        ref={containerRef}
-        className={`${styles.content}`}>
-        <h1 className={`${styles.text_rep}`}>
-          {wordsArr.map((word: string, _i: number) => (
-            <span
-              id={`${_i}`}
-              className={`${styles.text_float}`}
-              key={_i}>
-              <Image
-                className={`${styles.image_logo}`}
-                src={logo}
-                alt="logo"
-              />
-            </span>
-          ))}
-        </h1>
-      </div>
-    </div>
+    <motion.div
+      ref={containerRef}
+      style={{ height: `${props.position}px`, willChange: "transform" }}
+      className={`${styles.text_rep}`}>
+      <motion.div ref={imageRef}>
+        <Image
+          className={`${styles.image_logo} ${props.nameRef}`}
+          src={logo}
+          alt="logo"
+        />
+      </motion.div>
+    </motion.div>
+  );
+};
+
+const Title = (props: Props) => {
+  const logoRef = useRef<HTMLDivElement>(null);
+  const [positions, setPositions] = useState<number[]>([]);
+
+  useEffect(() => {
+    if (logoRef.current !== null) {
+      const height = logoRef.current.clientHeight;
+      const newPositions = [];
+      for (let index = 1; index < 8; index++) {
+        let prop = index * 0.08;
+        let percentage = height * (0.7 - prop);
+        newPositions.push(percentage);
+      }
+      setPositions(newPositions);
+    }
+  }, []);
+
+  useEffect(() => {
+    console.log(positions);
+  }, [positions]);
+
+  return (
+    <motion.div className={`${styles.body}`}>
+      <motion.div className={`${styles.content}`}>
+        {positions.length && (
+          <>
+            <TextLogo
+              nameRef="one"
+              position={positions[6]}
+              margin={positions[6]}
+              offset="top"
+            />
+            <TextLogo
+              nameRef="two"
+              position={positions[5]}
+              margin={positions[5]}
+              offset="-25%"
+            />
+            <TextLogo
+              nameRef="three"
+              position={positions[4]}
+              margin={positions[4]}
+              offset="-20%"
+            />
+            <TextLogo
+              nameRef="four"
+              position={positions[3]}
+              margin={positions[3]}
+              offset="-20%"
+            />
+            <TextLogo
+              nameRef="five"
+              position={positions[2]}
+              margin={positions[2]}
+              offset="-20%"
+            />
+            <TextLogo
+              nameRef="six"
+              position={positions[1]}
+              margin={positions[1]}
+              offset="-20%"
+            />
+            <TextLogo
+              nameRef="seven"
+              position={positions[0]}
+              margin={positions[0]}
+              offset="-20%"
+            />
+          </>
+        )}
+        <div
+          ref={logoRef}
+          className={`${styles.text_rep}`}>
+          <Image
+            className={`${styles.image_logo}`}
+            src={logo}
+            alt="logo"
+          />
+        </div>
+      </motion.div>
+    </motion.div>
   );
 };
 

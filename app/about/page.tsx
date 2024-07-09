@@ -15,8 +15,10 @@ import styles from "../css/about.module.css";
 
 import Welcome from "../components/About/Welcome";
 import Manifest from "../components/About/Manifest";
-import Tags from "../components/tags";
+import Process from "../components/About/Process";
+import Services from "../components/About/Services";
 import Footer from "../components/footer";
+import { PreFooterLink } from "../components/PreFooterLink";
 
 //! Temporal
 
@@ -42,13 +44,13 @@ const About = (props: Props) => {
     const sequence: AnimationSequence = [
       [
         scope2.current,
-        { height: "0%", top: "50%", backgroundColor: "white" },
-        { duration: 0.6 },
+        { height: "0%", top: "50%", backgroundColor: "black" },
+        { duration: 0.4 },
       ],
       [
         scope3.current,
-        { height: "0%", bottom: "50%", backgroundColor: "white" },
-        { at: "<", duration: 0.6 },
+        { height: "0%", bottom: "50%", backgroundColor: "black" },
+        { at: "<", duration: 0.4 },
       ],
     ];
 
@@ -65,13 +67,13 @@ const About = (props: Props) => {
       const sequence: AnimationSequence = [
         [
           scope2.current,
-          { height: "51%", top: "0", backgroundColor: "white" },
-          { duration: 0.6 },
+          { height: "51%", top: "0", backgroundColor: "black" },
+          { duration: 0.4 },
         ],
         [
           scope3.current,
-          { height: "51%", bottom: "0", backgroundColor: "white" },
-          { at: "<", duration: 0.6 },
+          { height: "51%", bottom: "0", backgroundColor: "black" },
+          { at: "<", duration: 0.4 },
         ],
       ];
 
@@ -115,13 +117,18 @@ const About = (props: Props) => {
         className="courtain"
       />
       <Welcome />
-      <video
-        className={styles.video_about}
-        src="/videos/cdmx.mp4"
-        controls={true}
-      />
+      <motion.div className={styles.video_container}>
+        <video
+          className={styles.video}
+          src="/videos/cdmx.mp4"
+          controls={true}
+        />
+      </motion.div>
+
       <Manifest />
-      <Tags />
+      <Process />
+      <Services />
+      <PreFooterLink text="PROYECTOS" />
       <Footer />
     </motion.div>
   );

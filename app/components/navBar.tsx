@@ -1,31 +1,29 @@
-'use client'
-import React, { MouseEvent, useRef, useState } from 'react'
-import Link from 'next/link'
-import { useNavigation } from '../utils/navigationContext'
-import styles from '../css/navBar.module.css'
-import { useRouter } from 'next/navigation'
-import Image from 'next/image'
-import { useGSAP } from '@gsap/react'
-import { gsap } from 'gsap'
-import TypedLink from './TypedLink/TypedLink'
+"use client";
+import React, { MouseEvent, useRef, useState } from "react";
+import Link from "next/link";
+import { useNavigation } from "../utils/navigationContext";
+import styles from "../css/navBar.module.css";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
+import { useGSAP } from "@gsap/react";
+import { gsap } from "gsap";
+import TypedLink from "./TypedLink/TypedLink";
 import useWindow from "../utils/hooks/useWindow";
 
-gsap.registerPlugin(useGSAP)
+gsap.registerPlugin(useGSAP);
 
 const NavBar = () => {
-  const container = useRef<HTMLElement>(null)
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const linkRedirect = useRef('')
-  const toggleTl = useRef<gsap.core.Timeline | null>(null)
-  const { setNavigationEvent } = useNavigation()
-  const router = useRouter()
+  const container = useRef<HTMLElement>(null);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const linkRedirect = useRef("");
+  const toggleTl = useRef<gsap.core.Timeline | null>(null);
+  const { setNavigationEvent } = useNavigation();
+  const router = useRouter();
   const windowInfo = useWindow();
-
-  console.log(windowInfo);
 
   const { contextSafe } = useGSAP(
     () => {
-      gsap.matchMedia().add('(max-width: 700px)', () => {
+      gsap.matchMedia().add("(max-width: 700px)", () => {
         toggleTl.current = gsap
           .timeline({
             paused: true,
@@ -38,35 +36,42 @@ const NavBar = () => {
                 setNavigationEvent({ state: true, href: linkRedirect.current });
             },
           })
-          .to(`.${styles.nav_container}`, { height: '90vh' }, 0)
-          .to(`.${styles.line1}`, { rotate: '8.5deg' }, 0)
-          .to(`.${styles.line2}`, { rotate: '-8.5deg' }, 0)
-          .set([`.${styles.links}`, `.${styles.langs}`], { height: 'auto', pointerEvents: 'all', opacity: 1 }, 0)
-          .set(`.${styles.links} .char`, { opacity: 0 }, 0)
-      })
+          .to(`.${styles.nav_container}`, { height: "90vh" }, 0)
+          .to(`.${styles.line1}`, { rotate: "8.5deg" }, 0)
+          .to(`.${styles.line2}`, { rotate: "-8.5deg" }, 0)
+          .set(
+            [`.${styles.links}`, `.${styles.langs}`],
+            { height: "auto", pointerEvents: "all", opacity: 1 },
+            0
+          )
+          .set(`.${styles.links} .char`, { opacity: 0 }, 0);
+      });
     },
     { scope: container }
   );
 
   const toggleMenu = contextSafe(() => {
     if (windowInfo.innerWidth > 0 && windowInfo.innerWidth < 700) {
-      setIsMenuOpen(!isMenuOpen)
+      setIsMenuOpen(!isMenuOpen);
 
-      if (isMenuOpen) toggleTl.current?.reverse(0.2)
-      else toggleTl.current?.play()
+      if (isMenuOpen) toggleTl.current?.reverse(0.2);
+      else toggleTl.current?.play();
     }
-  })
+  });
 
   function goTo(e: MouseEvent, href: string) {
-    e.preventDefault()
+    e.preventDefault();
 
-    if (windowInfo.innerWidth > 0 && windowInfo.innerWidth < 700 && isMenuOpen) {
-      toggleMenu()
+    if (
+      windowInfo.innerWidth > 0 &&
+      windowInfo.innerWidth < 700 &&
+      isMenuOpen
+    ) {
+      toggleMenu();
     }
 
-    setNavigationEvent({ state: true, href })
+    setNavigationEvent({ state: true, href });
   }
-
 
   return (
     <header ref={container}>
@@ -99,9 +104,8 @@ const NavBar = () => {
                 hoverAnimate={false}
                 href="/frammer_main"
                 onClick={(e) => {
-                  goTo(e, '/frammer_main')
-                }}
-              >
+                  goTo(e, "/frammer_main");
+                }}>
                 Home
               </TypedLink>
               <TypedLink
@@ -109,15 +113,20 @@ const NavBar = () => {
                 hoverAnimate={false}
                 href="/playground"
                 onClick={(e) => {
-                  goTo(e, '/playground')
-                }}
-              >
+                  goTo(e, "/playground");
+                }}>
                 Proyectos
               </TypedLink>
-              <TypedLink viewAnimate={true} hoverAnimate={false} href="/">
+              <TypedLink
+                viewAnimate={true}
+                hoverAnimate={false}
+                href="/">
                 El Estudio
               </TypedLink>
-              <TypedLink viewAnimate={true} hoverAnimate={false} href="/">
+              <TypedLink
+                viewAnimate={true}
+                hoverAnimate={false}
+                href="/">
                 Contacto
               </TypedLink>
             </>
@@ -125,8 +134,16 @@ const NavBar = () => {
         </div>
         <div className={styles.linksMb}>
           <TypedLink href="#">Proyectos</TypedLink>
-          <TypedLink href="#">El Estudio</TypedLink>
-          <Link href="#" className={styles.writeUs}>
+          <TypedLink
+            href="/about"
+            onClick={(e) => {
+              goTo(e, "/about");
+            }}>
+            El Estudio
+          </TypedLink>
+          <Link
+            href="#"
+            className={styles.writeUs}>
             <span className={styles.writeUsTxt}>Escribenos</span>
             <span className={styles.writeUsIcon}>+</span>
           </Link>

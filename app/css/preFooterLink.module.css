@@ -1,0 +1,90 @@
+.wrapper {
+  border-top: 3px solid #1b1b1b;
+  border-bottom: 3px solid #1b1b1b;
+  margin-bottom: 6vh;
+  margin-top: 6vh;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.wrapper h2 {
+  font-size: 2rem;
+  text-align: center;
+  font-family: "Panchang";
+  font-weight: 100;
+  display: inline;
+}
+
+.arrow_container {
+  position: relative;
+  width: 1.5rem;
+  height: 1.5rem;
+  overflow: hidden;
+}
+
+.arrow {
+  position: absolute;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-top: 2px solid white;
+  border-right: 2px solid white;
+  transition: all 1s;
+}
+
+.arrow_container:hover {
+  cursor: pointer;
+}
+
+.arrow::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 142%;
+  height: 2px;
+  background-color: white;
+  transform: rotate(316deg);
+  transform-origin: bottom left;
+}
+
+/* Media Part */
+@media (min-width: 768px) {
+  .wrapper {
+    gap: 30px;
+  }
+  .wrapper h2 {
+    font-size: 4rem;
+  }
+
+  .arrow_container {
+    position: relative;
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .arrow {
+    position: absolute;
+    width: 3rem;
+    height: 3rem;
+    transition: all 1s;
+  }
+
+  .arrow_container:hover {
+    cursor: pointer;
+  }
+
+  .arrow::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 142%;
+    height: 2px;
+    background-color: white;
+    transform: rotate(316deg);
+    transform-origin: bottom left;
+  }
+}

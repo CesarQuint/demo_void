@@ -6,11 +6,7 @@ import styles from "../page.module.css";
 import { usePathname } from "next/navigation";
 import { useNavigation } from "../utils/navigationContext";
 import { useRouter } from "next/navigation";
-import useWindow from "../utils/hooks/useWindow";
-import CourtainsEasy from "../components/courtainsEasy";
-import CourtainsGsap from "../components/courtainGsap";
-import Timeline from "../components/timeline";
-
+import Title from "../components/title";
 const transitionSpringPhysics: Spring = {
   type: "spring",
   mass: 0.5,
@@ -62,8 +58,6 @@ function SecondPage() {
     console.log(window);
   }, []);
 
-  const a = useWindow();
-
   return (
     <motion.div
       key={pathname}
@@ -90,12 +84,13 @@ function SecondPage() {
           backgroundColor: "red",
         }}
       />
-      {/* <CourtainsEasy />
-      <Timeline />
-      <CourtainsGsap /> */}
-      <motion.div className={`${styles.content}`}>
-        <h2>Redirect!!</h2>
+      <motion.div
+        style={{ backgroundColor: "orange", height: "100vh" }}></motion.div>
+      <motion.div>
+        <Title />
       </motion.div>
+      <motion.div
+        style={{ height: "30vh", backgroundColor: "yellow" }}></motion.div>
     </motion.div>
   );
 }
