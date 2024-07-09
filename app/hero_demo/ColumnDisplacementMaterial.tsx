@@ -149,66 +149,66 @@ const FRAG_SHADER = `
 `;
 
 interface DisplacementGeometryProps {
-    easingFactor: number;
-    columns: number;
-    glow: number;
+  easingFactor: number;
+  columns: number;
+  glow: number;
 }
 
 export const DisplacementGeometry: React.FC<DisplacementGeometryProps> = ({ columns, glow, easingFactor }) => {
-    const { viewport, size } = useThree();
+  const { viewport, size } = useThree();
 
-    const [currentMouse, setCurrentMouse] = useState(new Vector2());
-    const [targetMouse, setTargetMouse] = useState(new Vector2());
+  const [currentMouse, setCurrentMouse] = useState(new Vector2());
+  const [targetMouse, setTargetMouse] = useState(new Vector2());
 
-    //const displacementTexture = useMemo(() => ColumnGradientMaterial(viewport.width, viewport.height, columns), [viewport, columns]);
+  //const displacementTexture = useMemo(() => ColumnGradientMaterial(viewport.width, viewport.height, columns), [viewport, columns]);
 
-    const shaderMaterial = useMemo(() => new ShaderMaterial({
-        uniforms: {
-            u_time: { value: 0 },
-            u_mouse: { value: new Vector2() },
-            u_mouse_velocity: { value: new Vector2() },
-            u_resolution: { value: new Vector2(size.width * viewport.dpr, size.height * viewport.dpr) },
-            u_columns: { value: columns },
-            u_glow: { value: glow },
-        },
-        vertexShader: VRTX_SHADER,
-        fragmentShader: FRAG_SHADER,
-    }), [viewport, size, columns, glow]);
+  const shaderMaterial = useMemo(() => new ShaderMaterial({
+    uniforms: {
+      u_time: { value: 0 },
+      u_mouse: { value: new Vector2() },
+      u_mouse_velocity: { value: new Vector2() },
+      u_resolution: { value: new Vector2(size.width * viewport.dpr, size.height * viewport.dpr) },
+      u_columns: { value: columns },
+      u_glow: { value: glow },
+    },
+    vertexShader: VRTX_SHADER,
+    fragmentShader: FRAG_SHADER,
+  }), [viewport, size, columns, glow]);
 
-    const handlePointerMove = (event: ThreeEvent<PointerEvent>) => {
-        if (event.intersections.length > 0) {
-            const uv = event.intersections[0].uv;
+  const handlePointerMove = (event: ThreeEvent<PointerEvent>) => {
+    if (event.intersections.length > 0) {
+      const uv = event.intersections[0].uv;
 
-            if (uv) {
-                const normalizedMouseX = uv.x * 2 - 1;
-                const normalizedMouseY = uv.y * 2 - 1;
-                setTargetMouse(new Vector2(normalizedMouseX, normalizedMouseY));
-            }
-        }
-    };
+      if (uv) {
+        const normalizedMouseX = uv.x * 2 - 1;
+        const normalizedMouseY = uv.y * 2 - 1;
+        setTargetMouse(new Vector2(normalizedMouseX, normalizedMouseY));
+      }
+    }
+  };
 
-    useFrame((state) => {
-        //displacementTexture.uniforms.uMouse.value.set(state.pointer.x, state.pointer.y);
+  useFrame((state) => {
+    //displacementTexture.uniforms.uMouse.value.set(state.pointer.x, state.pointer.y);
 
-        // Smoothly update the current mouse position
-        const newMouseX = currentMouse.x + (targetMouse.x - currentMouse.x) * easingFactor;
-        const newMouseY = currentMouse.y + (targetMouse.y - currentMouse.y) * easingFactor;
-        const newMouse = new Vector2(newMouseX, newMouseY);
-        setCurrentMouse(newMouse);
+    // Smoothly update the current mouse position
+    const newMouseX = currentMouse.x + (targetMouse.x - currentMouse.x) * easingFactor;
+    const newMouseY = currentMouse.y + (targetMouse.y - currentMouse.y) * easingFactor;
+    const newMouse = new Vector2(newMouseX, newMouseY);
+    setCurrentMouse(newMouse);
 
-        //const velocity = newMouse.clone().sub(currentMouse).multiplyScalar(1 / state.clock.getElapsedTime());
+    //const velocity = newMouse.clone().sub(currentMouse).multiplyScalar(1 / state.clock.getElapsedTime());
 
-        //shaderMaterial.uniforms.u_mouse_velocity.value.set(velocity.x, velocity.y);
-        shaderMaterial.uniforms.u_mouse.value.set(currentMouse.x, currentMouse.y);
-        shaderMaterial.uniforms.u_time.value = state.clock.getElapsedTime();
+    //shaderMaterial.uniforms.u_mouse_velocity.value.set(velocity.x, velocity.y);
+    shaderMaterial.uniforms.u_mouse.value.set(currentMouse.x, currentMouse.y);
+    shaderMaterial.uniforms.u_time.value = state.clock.getElapsedTime();
 
-        //console.log(state.pointer)
-    });
+    //console.log(state.pointer)
+  });
 
-    return (
-        <mesh scale={[viewport.width, viewport.height, 1]} onPointerMove={handlePointerMove}>
-            <planeGeometry args={[1, 1, 1, 1]} />
-            <primitive object={shaderMaterial} />
-        </mesh>
-    );
+  return (
+    <mesh scale={[viewport.width, viewport.height, 1]} onPointerMove={handlePointerMove}>
+      <planeGeometry args={[1, 1, 1, 1]} />
+      <primitive object={shaderMaterial} />
+    </mesh>
+  );
 };
