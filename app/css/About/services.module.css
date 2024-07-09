@@ -4,6 +4,25 @@
 
 .title {
   font-family: "Panchang";
-  font-size: 3rem;
+  font-size: 2rem;
   text-align: center;
+}
+
+.related_projects {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 4vh;
+}
+
+.related_projects h3 {
+  text-align: center;
+  font-family: "Panchang";
+  font-weight: 100;
+}
+
+/* Media Part */
+@media (min-width: 768px) {
+  .title {
+    font-size: 3rem;
+  }
 }

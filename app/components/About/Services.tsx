@@ -11,10 +11,10 @@ const Services = (props: Props) => {
       <div>
         <h2 className={styles.title}>SERVICIOS</h2>
       </div>
-      <div>
+      <div className={styles.related_projects}>
         <h3>Proyectos relacionados</h3>
+        <RelatedProyectsCarrousel />
       </div>
-      {/* <RelatedProyectsCarrousel /> */}
     </motion.section>
   );
 };

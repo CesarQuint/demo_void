@@ -113,14 +113,9 @@ function SecondPage() {
         transition={transitionSpringPhysics}
         className="courtain"
       />
-      <section>
-        <Canvas style={{ height: "100vh" }}>
-          <DisplacementGeometry columns={10} glow={0.15} easingFactor={0.1} />
-        </Canvas>
-      </section>
+      <HeroContainer />
 
-      {/* <VideoHover /> */}
-      <Video />
+      {/* <Video /> */}
       <ProjectImages />
       <ProcessHome />
       <PreFooterLink text="CONOCENOS" />

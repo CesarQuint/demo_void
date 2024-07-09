@@ -7,12 +7,11 @@ import { useGSAP } from "@gsap/react";
 import { AboutUsTag } from "../constants/tags_text";
 import useWindow from "../utils/hooks/useWindow";
 
-
-gsap.registerPlugin(useGSAP, ScrollTrigger)
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 type Props = {
-  contentArr: AboutUsTag[]
-}
+  contentArr: AboutUsTag[];
+};
 
 type TagsContentProps = {
   i: number;
@@ -66,75 +65,76 @@ const TagsContent = (props: TagsContentProps) => {
 };
 
 const Tags = (props: Props) => {
-  const container = useRef<HTMLElement>(null)
+  const container = useRef<HTMLElement>(null);
 
   useGSAP(
     () => {
-      const tags = gsap.utils.toArray<HTMLElement>(`.${styles.tag}`)
-      const space = gsap.getProperty(container.current, 'gap') as number
+      const tags = gsap.utils.toArray<HTMLElement>(`.${styles.tag}`);
+      const space = gsap.getProperty(container.current, "gap") as number;
 
       function setMarginTop(el: HTMLElement, i: number) {
-        const iSpace = space * (i + 1)
-        const differenceHeight = tags[0].offsetHeight - el.offsetHeight
+        const iSpace = space * (i + 1);
+        const differenceHeight = tags[0].offsetHeight - el.offsetHeight;
 
-        gsap.set(el, { marginTop: differenceHeight + iSpace })
+        gsap.set(el, { marginTop: differenceHeight + iSpace });
       }
 
       tags.slice(1).forEach((el, i, arr) => {
-        const iSpace = i === 0 ? space : 0
-        const start = tags[i].offsetTop + tags[i].clientHeight + iSpace
-        const scrollStart = space * arr.length
+        const iSpace = i === 0 ? space : 0;
+        const start = tags[i].offsetTop + tags[i].clientHeight + iSpace;
+        const scrollStart = space * arr.length;
 
         gsap.fromTo(
           el,
           { scale: 0.95 - i * 0.02 },
           {
             scale: 1,
-            ease: 'none',
+            ease: "none",
             scrollTrigger: {
               trigger: container.current,
               start: `${start} bottom-=${scrollStart}`,
               end: `+=50 bottom-=${scrollStart}`,
               scrub: true,
-              markers: true,
               onUpdate(e) {
                 if (e.direction > 0) {
-                  gsap.set(el, { marginTop: 'auto' })
+                  gsap.set(el, { marginTop: "auto" });
                 } else {
-                  setMarginTop(el, i)
+                  setMarginTop(el, i);
                 }
               },
             },
-          },
-        )
-      })
+          }
+        );
+      });
 
       gsap.set(tags, {
         bottom: (i) => space * (tags.length - i),
         zIndex: (i) => tags.length - i,
-        position: 'sticky',
-      })
+        position: "sticky",
+      });
 
       const ob = new IntersectionObserver(([ev]) => {
-        if (!ev.isIntersecting) return
+        if (!ev.isIntersecting) return;
 
         if (ev.boundingClientRect.top >= 0) {
-          tags.slice(1).forEach((el, i) => setMarginTop(el, i))
+          tags.slice(1).forEach((el, i) => setMarginTop(el, i));
         }
 
-        ob.disconnect()
-      })
+        ob.disconnect();
+      });
 
-      ob.observe(container.current!)
-      return () => ob.disconnect()
+      ob.observe(container.current!);
+      return () => ob.disconnect();
     },
-    { scope: container },
-  )
+    { scope: container }
+  );
 
   return (
     <motion.div className={`${styles.main}`}>
       <div className={`${styles.tags_wrapper}`}>
-        <section className={`${styles.tags_container}`} ref={container}>
+        <section
+          className={`${styles.tags_container}`}
+          ref={container}>
           {props.contentArr.map((_, i) => (
             <TagsContent
               key={i}
@@ -147,7 +147,7 @@ const Tags = (props: Props) => {
         </section>
       </div>
     </motion.div>
-  )
-}
+  );
+};
 
-export default Tags
+export default Tags;

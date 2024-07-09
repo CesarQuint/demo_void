@@ -19,9 +19,7 @@ const RelatedProyectsCarrousel = (props: Props) => {
       <motion.div className={styles.image_container}>
         <motion.div className={styles.image_wrapper}>
           {images.map((_, i) => (
-            <Image
-              width={1000}
-              height={1000}
+            <img
               className={styles.image}
               key={i}
               alt=""

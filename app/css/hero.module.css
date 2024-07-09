@@ -5,9 +5,14 @@
   justify-content: center;
   background-color: black;
   height: 100vh;
+  position: relative;
 }
 
 .hero_wrapper {
+  position: absolute;
+  width: 100%;
+  top: 35%;
+  z-index: 10;
   display: flex;
   flex-flow: column;
   align-items: center;
@@ -26,7 +31,7 @@
 .presentation_text {
   position: absolute;
   top: 30%;
-  width: 70%;
+  width: 90%;
   margin: auto;
   font-size: 1.3rem;
   display: flex;
@@ -43,6 +48,7 @@
 
 .arrow {
   position: absolute;
+  z-index: 10;
   bottom: 30px;
   width: 5vh;
   height: 5vh;
@@ -60,5 +66,10 @@
   .hero_wrapper {
     width: 60%;
     transition: all 1s;
+    top: 45%;
+  }
+
+  .presentation_text {
+    width: 60%;
   }
 }
