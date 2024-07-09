@@ -76,7 +76,7 @@ const VortexMaterial = shaderMaterial(
 
         float dist = distance(uv, vec2(0.0));    
         uv = WARP ? uv * kale(uv, vec2(0.0), 2.0) : uv;
-        
+
         //vec2 mouse = 2.0 * u_mouse / u_resolution.xy - 1.0;
         //mouse.x *= u_resolution.x / u_resolution.y;
         //float dist = distance(uv, mouse);
