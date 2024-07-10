@@ -32,7 +32,7 @@ const ProjectImages = (props: Props) => {
                 pin: true,
                 scrub: 0.1,
                 trigger: container.current,
-                start: "top top+=15%",
+                start: "+10% top+=15%",
                 end: "bottom top+=15%",
               },
             })
