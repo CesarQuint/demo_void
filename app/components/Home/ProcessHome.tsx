@@ -14,6 +14,8 @@ const ProcessHome = (props: Props) => {
       <h2 className={styles.title}>NUESTRO PROCESO</h2>
       <motion.div className={styles.gif_wrapper}>
         <Image
+          width={1000}
+          height={1000}
           className={styles.image_gif}
           src={gift}
           alt="Gif"

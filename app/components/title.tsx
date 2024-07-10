@@ -33,6 +33,7 @@ const TextLogo = (props: TextLogoProps) => {
           start: `${props.offset} center`,
           end: "bottom center",
           scrub: 0,
+          markers: true,
         },
       });
 

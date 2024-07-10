@@ -1,7 +1,7 @@
-import { useMemo, useState } from 'react';
-import { ThreeEvent, useFrame, useThree } from '@react-three/fiber';
-import { ShaderMaterial, Vector2, WebGLRenderTarget } from 'three';
-import { ColumnGradientMaterial } from './ColumnGradientTexture';
+import { useMemo, useState } from "react";
+import { ThreeEvent, useFrame, useThree } from "@react-three/fiber";
+import { ShaderMaterial, Vector2, WebGLRenderTarget } from "three";
+import { ColumnGradientMaterial } from "./ColumnGradientTexture";
 
 const VRTX_SHADER = `
     varying vec2 vUv;
@@ -52,9 +52,9 @@ const FRAG_SHADER = `
 
     #define WARP false
     #define BALLS 12.
-    #define CONTRAST 1.8
+    #define CONTRAST 3.0
     #define GLOW 0.6
-    #define ORB_SIZE 0.6
+    #define ORB_SIZE 0.7
     #define PI 3.14159265359
 
     vec2 columnGradient(vec2 uv, vec2 mouse, float columns) {
@@ -92,8 +92,8 @@ const FRAG_SHADER = `
         //vec3 b = vec3(0.722, 0.945, 1.000); // cyan   (orange complementary)
         //vec3 c = vec3(0.753, 1.000, 0.620); // green  (violet complementary)
 
-        vec3 a = vec3(1.000, 1.000, 0.000);
-        vec3 b = vec3(0.522, 1.000, 1.000);
+        vec3 a = vec3(1.000, 1.000, 1.000);
+        vec3 b = vec3(0.000, 0.000, 0.000);
         vec3 c = vec3(0.753, 1.000, 0.720);
 
         //vec3 a = vec3(0.968,1.000,0.141); // yellow (blue complementary)
@@ -108,7 +108,7 @@ const FRAG_SHADER = `
         } else if (modValue == 2) {
             return b; // b color is chosen 25% of the time
         } else {
-            return c; // c color is chosen 25% of the time
+            return b; // c color is chosen 25% of the time
         }
     }
 
@@ -131,7 +131,8 @@ const FRAG_SHADER = `
         vec2 mouse = u_mouse * 2.0;
         mouse.x *= u_resolution.x / u_resolution.y;
 
-        float dist = distance(uv, mouse);
+        //float dist = distance(uv, mouse);
+        float dist = distance(uv, vec2(0.0, 0.0));
 
         //uv += fluidDistortion(uv, u_mouse, u_mouse_velocity, 1.0);
         uv += columnGradient(uv, u_mouse, u_columns);
@@ -154,7 +155,11 @@ interface DisplacementGeometryProps {
   glow: number;
 }
 
-export const DisplacementGeometry: React.FC<DisplacementGeometryProps> = ({ columns, glow, easingFactor }) => {
+export const DisplacementGeometry: React.FC<DisplacementGeometryProps> = ({
+  columns,
+  glow,
+  easingFactor,
+}) => {
   const { viewport, size } = useThree();
 
   const [currentMouse, setCurrentMouse] = useState(new Vector2());
@@ -162,18 +167,27 @@ export const DisplacementGeometry: React.FC<DisplacementGeometryProps> = ({ colu
 
   //const displacementTexture = useMemo(() => ColumnGradientMaterial(viewport.width, viewport.height, columns), [viewport, columns]);
 
-  const shaderMaterial = useMemo(() => new ShaderMaterial({
-    uniforms: {
-      u_time: { value: 0 },
-      u_mouse: { value: new Vector2() },
-      u_mouse_velocity: { value: new Vector2() },
-      u_resolution: { value: new Vector2(size.width * viewport.dpr, size.height * viewport.dpr) },
-      u_columns: { value: columns },
-      u_glow: { value: glow },
-    },
-    vertexShader: VRTX_SHADER,
-    fragmentShader: FRAG_SHADER,
-  }), [viewport, size, columns, glow]);
+  const shaderMaterial = useMemo(
+    () =>
+      new ShaderMaterial({
+        uniforms: {
+          u_time: { value: 0 },
+          u_mouse: { value: new Vector2() },
+          u_mouse_velocity: { value: new Vector2() },
+          u_resolution: {
+            value: new Vector2(
+              size.width * viewport.dpr,
+              size.height * viewport.dpr
+            ),
+          },
+          u_columns: { value: columns },
+          u_glow: { value: glow },
+        },
+        vertexShader: VRTX_SHADER,
+        fragmentShader: FRAG_SHADER,
+      }),
+    [viewport, size, columns, glow]
+  );
 
   const handlePointerMove = (event: ThreeEvent<PointerEvent>) => {
     if (event.intersections.length > 0) {
@@ -191,8 +205,10 @@ export const DisplacementGeometry: React.FC<DisplacementGeometryProps> = ({ colu
     //displacementTexture.uniforms.uMouse.value.set(state.pointer.x, state.pointer.y);
 
     // Smoothly update the current mouse position
-    const newMouseX = currentMouse.x + (targetMouse.x - currentMouse.x) * easingFactor;
-    const newMouseY = currentMouse.y + (targetMouse.y - currentMouse.y) * easingFactor;
+    const newMouseX =
+      currentMouse.x + (targetMouse.x - currentMouse.x) * easingFactor;
+    const newMouseY =
+      currentMouse.y + (targetMouse.y - currentMouse.y) * easingFactor;
     const newMouse = new Vector2(newMouseX, newMouseY);
     setCurrentMouse(newMouse);
 
@@ -206,7 +222,9 @@ export const DisplacementGeometry: React.FC<DisplacementGeometryProps> = ({ colu
   });
 
   return (
-    <mesh scale={[viewport.width, viewport.height, 1]} onPointerMove={handlePointerMove}>
+    <mesh
+      scale={[viewport.width, viewport.height, 1]}
+      onPointerMove={handlePointerMove}>
       <planeGeometry args={[1, 1, 1, 1]} />
       <primitive object={shaderMaterial} />
     </mesh>

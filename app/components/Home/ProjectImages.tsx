@@ -17,7 +17,8 @@ const ProjectImages = (props: Props) => {
 
   useGSAP(
     () => {
-      const [title, line, ...boxes] = scrollContainer.current!.children;
+      const [title, line, ...boxes] = scrollContainer.current!
+        .children as any as HTMLElement[];
 
       gsap
         .matchMedia()
@@ -36,7 +37,11 @@ const ProjectImages = (props: Props) => {
               },
             })
             .to(boxes, { xPercent: -100 * boxes.length - 1 }, 0)
-            .to(title, { xPercent: -200 }, 0)
+            .to(
+              title,
+              { x: () => -(title.offsetWidth - document.body.offsetWidth) },
+              0
+            )
             .to(line, { xPercent: -100 }, 0);
 
           setTl(tl);
@@ -57,9 +62,7 @@ const ProjectImages = (props: Props) => {
   ];
 
   return (
-    <motion.div
-      className={`${styles.project_container}`}
-      ref={container}>
+    <motion.div ref={container}>
       <motion.section className={`${styles.project_wrapper}`}>
         <div
           className={styles.scrollView}
