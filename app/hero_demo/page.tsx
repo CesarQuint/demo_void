@@ -20,7 +20,7 @@ export default function Hero() {
 
   useEffect(() => {
     const gui = new GUI();
-    gui.add(settings, 'orb_size', 0.0, 2.0, 0.1).onChange((value: number) => setSettings((s) => ({ ...s, orb_size: value })));
+    gui.add(settings, 'orb_size', 0.0, 5.0, 0.1).onChange((value: number) => setSettings((s) => ({ ...s, orb_size: value })));
     gui.add(settings, 'easing_factor', 0.01, 1.0, 0.01).onChange((value: number) => setSettings((s) => ({ ...s, easing_factor: value })));
     gui.add(settings, 'contrast', 0.0, 5.0, 0.2).onChange((value: number) => setSettings((s) => ({ ...s, contrast: value })));
     gui.add(settings, 'columns', 0, 32, 2).onChange((value: number) => setSettings((s) => ({ ...s, columns: value })));
