@@ -48,7 +48,10 @@ const FRAG_SHADER = `
     uniform float u_time;
     uniform float u_columns;
     uniform float u_glow;
+    uniform float u_orb_size;
     uniform float u_mouse_velocity;
+    uniform bool u_grid_toggle;
+    uniform float u_contrast;
 
     #define WARP false
     #define BALLS 12.
@@ -92,9 +95,9 @@ const FRAG_SHADER = `
         //vec3 b = vec3(0.722, 0.945, 1.000); // cyan   (orange complementary)
         //vec3 c = vec3(0.753, 1.000, 0.620); // green  (violet complementary)
 
-        vec3 a = vec3(1.000, 1.000, 0.000);
-        vec3 b = vec3(0.522, 1.000, 1.000);
-        vec3 c = vec3(0.753, 1.000, 0.720);
+        vec3 a = vec3(0.800, 0.800, 0.800);
+        vec3 b = vec3(0.000, 0.000, 0.000);
+        //vec3 c = vec3(0.753, 1.000, 0.720);
 
         //vec3 a = vec3(0.968,1.000,0.141); // yellow (blue complementary)
         //vec3 b = vec3(0.295,0.805,0.751); // cyan   (orange complementary)
@@ -108,7 +111,7 @@ const FRAG_SHADER = `
         } else if (modValue == 2) {
             return b; // b color is chosen 25% of the time
         } else {
-            return c; // c color is chosen 25% of the time
+            return b; // c color is chosen 25% of the time
         }
     }
 
@@ -131,30 +134,33 @@ const FRAG_SHADER = `
         vec2 mouse = u_mouse * 2.0;
         mouse.x *= u_resolution.x / u_resolution.y;
 
-        float dist = distance(uv, mouse);
+        float dist = distance(uv, vec2(0.0));
 
         //uv += fluidDistortion(uv, u_mouse, u_mouse_velocity, 1.0);
-        uv += columnGradient(uv, u_mouse, u_columns);
+        uv += u_grid_toggle ? columnGradient(uv, u_mouse, u_columns) : vec2(0.0);
         uv = uv - mouse;
 
         for (float i = 0.; i < BALLS; i++) {
             float t = u_time/2. - i * PI / BALLS * cos(u_time / max(i, 0.0001));
             vec2 p = vec2(cos(t), sin(t)) / sin(i / BALLS * PI / dist + u_time);
             vec3 c = cos(colorSw(i) * PI * 2.7 / PI + PI * (0.0 / (i + 1.) / 5.)) * (u_glow) + (u_glow);
-            color += vec3(dist * .35 / length(uv - p * ORB_SIZE) * c);
+            color += vec3(dist * .35 / length(uv - p * u_orb_size) * c);
         }
 
-        gl_FragColor = vec4(pow(color, vec3(CONTRAST)), 1.0);
+        gl_FragColor = vec4(pow(color, vec3(u_contrast)), 1.0);
     }
 `;
 
-interface DisplacementGeometryProps {
-  easingFactor: number;
+type DisplacementGeometrySettings = {
+  easing_factor: number;
+  orb_size: number;
+  contrast: number;
   columns: number;
   glow: number;
+  grid: boolean;
 }
 
-export const DisplacementGeometry: React.FC<DisplacementGeometryProps> = ({ columns, glow, easingFactor }) => {
+export const DisplacementGeometry: React.FC<{ settings: DisplacementGeometrySettings }> = ({ settings: { contrast, columns, glow, easing_factor, orb_size, grid } }) => {
   const { viewport, size } = useThree();
 
   const [currentMouse, setCurrentMouse] = useState(new Vector2());
@@ -168,12 +174,15 @@ export const DisplacementGeometry: React.FC<DisplacementGeometryProps> = ({ colu
       u_mouse: { value: new Vector2() },
       u_mouse_velocity: { value: new Vector2() },
       u_resolution: { value: new Vector2(size.width * viewport.dpr, size.height * viewport.dpr) },
+      u_orb_size: { value: orb_size },
+      u_contrast: { value: contrast },
       u_columns: { value: columns },
       u_glow: { value: glow },
+      u_grid_toggle: { value: grid }
     },
     vertexShader: VRTX_SHADER,
     fragmentShader: FRAG_SHADER,
-  }), [viewport, size, columns, glow]);
+  }), [viewport, size, columns, glow, orb_size, contrast, grid]);
 
   const handlePointerMove = (event: ThreeEvent<PointerEvent>) => {
     if (event.intersections.length > 0) {
@@ -191,8 +200,8 @@ export const DisplacementGeometry: React.FC<DisplacementGeometryProps> = ({ colu
     //displacementTexture.uniforms.uMouse.value.set(state.pointer.x, state.pointer.y);
 
     // Smoothly update the current mouse position
-    const newMouseX = currentMouse.x + (targetMouse.x - currentMouse.x) * easingFactor;
-    const newMouseY = currentMouse.y + (targetMouse.y - currentMouse.y) * easingFactor;
+    const newMouseX = currentMouse.x + (targetMouse.x - currentMouse.x) * easing_factor;
+    const newMouseY = currentMouse.y + (targetMouse.y - currentMouse.y) * easing_factor;
     const newMouse = new Vector2(newMouseX, newMouseY);
     setCurrentMouse(newMouse);
 
