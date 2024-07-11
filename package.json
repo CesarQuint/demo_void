@@ -24,16 +24,16 @@
     "postprocessing": "^6.35.5",
     "react": "^18",
     "react-dom": "^18",
+    "splitting": "^1.1.0",
     "three": "^0.165.0",
-    "three-stdlib": "^2.30.3",
-    "splitting": "^1.1.0"
+    "three-stdlib": "^2.30.3"
   },
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "@types/three": "^0.165.0",
     "@types/splitting": "^1.0.6",
+    "@types/three": "^0.165.0",
     "eslint": "^8",
     "eslint-config-next": "14.2.3",
     "typescript": "^5"
