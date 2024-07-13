@@ -130,10 +130,10 @@ export const DisplacementGeometry: React.FC<{ settings: DisplacementGeometrySett
 
   useFrame((state) => {
     // Smoothly update the current mouse position
-    const newMouseX = currentMouse.x + (targetMouse.x - currentMouse.x) * easing_factor;
-    const newMouseY = currentMouse.y + (targetMouse.y - currentMouse.y) * easing_factor;
-    const newMouse = new Vector2(newMouseX, newMouseY);
-    setCurrentMouse(newMouse);
+    setCurrentMouse(new Vector2(
+      currentMouse.x + (targetMouse.x - currentMouse.x) * easing_factor,
+      currentMouse.y + (targetMouse.y - currentMouse.y) * easing_factor
+    ));
 
     shaderMaterial.uniforms.u_mouse.value.set(currentMouse.x, currentMouse.y);
     shaderMaterial.uniforms.u_time.value = state.clock.getElapsedTime();
