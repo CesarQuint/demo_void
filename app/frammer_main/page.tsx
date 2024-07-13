@@ -125,9 +125,7 @@ function SecondPage() {
           }} />
         </Canvas>
       </section>
-
-      {/* <VideoHover /> */}
-      <Video />
+      {/* <Video /> */}
       <ProjectImages />
       <ProcessHome />
       <PreFooterLink text="CONOCENOS" />

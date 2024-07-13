@@ -30,9 +30,9 @@ const FRAG_SHADER = `
 
     #define WARP false
     #define BALLS 12.
-    #define CONTRAST 1.8
+    #define CONTRAST 3.0
     #define GLOW 0.6
-    #define ORB_SIZE 0.6
+    #define ORB_SIZE 0.7
     #define PI 3.14159265359
 
     vec2 columnGradient(vec2 uv, vec2 mouse, float columns) {
@@ -139,7 +139,9 @@ export const DisplacementGeometry: React.FC<{ settings: DisplacementGeometrySett
   });
 
   return (
-    <mesh scale={[viewport.width, viewport.height, 1]} onPointerMove={handlePointerMove}>
+    <mesh
+      scale={[viewport.width, viewport.height, 1]}
+      onPointerMove={handlePointerMove}>
       <planeGeometry args={[1, 1, 1, 1]} />
       <primitive object={shaderMaterial} />
     </mesh>

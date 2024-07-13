@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 import { useNavigation } from "../utils/navigationContext";
 import { useRouter } from "next/navigation";
 import Title from "../components/title";
+import Lenis from "lenis";
 const transitionSpringPhysics: Spring = {
   type: "spring",
   mass: 0.5,
@@ -53,10 +54,6 @@ function SecondPage() {
       }
     }
   }, [navigationEvent, pathname, router, animate]);
-
-  useEffect(() => {
-    console.log(window);
-  }, []);
 
   return (
     <motion.div

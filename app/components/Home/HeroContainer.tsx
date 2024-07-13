@@ -6,6 +6,9 @@ import hero from "../../../public/gifts/hero_temp.gif";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { useRouter } from "next/navigation";
+import { Canvas } from "@react-three/fiber";
+import { DisplacementGeometry } from "@/app/hero_demo/ColumnDisplacementMaterial";
+import { CustomCursor } from "../cursor";
 
 type Props = {};
 
@@ -37,12 +40,6 @@ const HeroContainer = (props: Props) => {
       ref={containerHeroRef}
       className={`${styles.hero_container}`}>
       <motion.div className={`${styles.hero_wrapper}`}>
-        <Image
-          className={`${styles.hero_image}`}
-          src={hero}
-          alt="hero"
-        />
-
         <motion.p className={`${styles.presentation_text}`}>
           <span className={`${styles.left_text}`}>Conceptualizamos,</span>
           <span className={`${styles.right_text}`}>dirigimos y producimos</span>
@@ -61,6 +58,14 @@ const HeroContainer = (props: Props) => {
         }}
         ref={arrowRef}
         className={`${styles.arrow}`}></motion.span>
+      <CustomCursor />
+      <Canvas style={{ height: "100vh" }}>
+        <DisplacementGeometry
+          columns={10}
+          glow={0.15}
+          easingFactor={0.1}
+        />
+      </Canvas>
     </motion.section>
   );
 };
