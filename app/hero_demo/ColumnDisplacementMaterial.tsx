@@ -14,30 +14,6 @@ const VRTX_SHADER = `
     }
 `;
 
-const DISP_FRAG_SAHDER = `
-    uniform vec2 uResolution;
-    uniform vec2 uMouse;
-    varying vec2 vUv;
-    uniform float columns;
-
-    void main() {
-        vec2 uv = vUv;
-        vec2 mouse = (uMouse + 1.0) / 2.0; // Normalizing mouse coordinates to range [0, 1]
-
-        // Calculate column width and position
-        float columnWidth = 1.0 / columns;
-        float columnPosition = mod(uv.x, columnWidth) / columnWidth;
-
-        // Calculate the distance from the mouse to each column position
-        float distToMouse = distance(vec2(columnPosition, uv.y), mouse);
-
-        // Use the distance to control the color gradient
-        vec3 color = vec3(columnPosition * distToMouse);
-
-        gl_FragColor = vec4(color, 1.0);
-    }
-`;
-
 const FRAG_SHADER = `
     #ifdef GL_ES
     precision mediump float;
@@ -166,8 +142,6 @@ export const DisplacementGeometry: React.FC<{ settings: DisplacementGeometrySett
   const [currentMouse, setCurrentMouse] = useState(new Vector2());
   const [targetMouse, setTargetMouse] = useState(new Vector2());
 
-  //const displacementTexture = useMemo(() => ColumnGradientMaterial(viewport.width, viewport.height, columns), [viewport, columns]);
-
   const shaderMaterial = useMemo(() => new ShaderMaterial({
     uniforms: {
       u_time: { value: 0 },
@@ -197,8 +171,6 @@ export const DisplacementGeometry: React.FC<{ settings: DisplacementGeometrySett
   };
 
   useFrame((state) => {
-    //displacementTexture.uniforms.uMouse.value.set(state.pointer.x, state.pointer.y);
-
     // Smoothly update the current mouse position
     const newMouseX = currentMouse.x + (targetMouse.x - currentMouse.x) * easing_factor;
     const newMouseY = currentMouse.y + (targetMouse.y - currentMouse.y) * easing_factor;
