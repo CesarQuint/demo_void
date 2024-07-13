@@ -73,15 +73,7 @@ const FRAG_SHADER = `
         } else {
             return b; // c color is chosen 25% of the time
         }
-    }
 
-    vec2 fluidDistortion(vec2 uv, vec2 mouse, vec2 velocity, float strength) {
-        float dist = distance(uv, mouse);
-        vec2 dir = normalize(velocity);
-        float wave = exp(-dist * 10.0) * strength;
-        uv += wave * dir;
-        uv -= wave * dir * 0.5;
-        return uv;
     }
 
     void main(){ 
@@ -96,7 +88,6 @@ const FRAG_SHADER = `
 
         float dist = distance(uv, vec2(0.0));
 
-        //uv += fluidDistortion(uv, u_mouse, u_mouse_velocity, 1.0);
         uv += u_grid_toggle ? columnGradient(uv, u_mouse, u_columns) : vec2(0.0);
         uv = uv - mouse;
 
@@ -161,9 +152,6 @@ export const DisplacementGeometry: React.FC<{ settings: DisplacementGeometrySett
     const newMouse = new Vector2(newMouseX, newMouseY);
     setCurrentMouse(newMouse);
 
-    //const velocity = newMouse.clone().sub(currentMouse).multiplyScalar(1 / state.clock.getElapsedTime());
-
-    //shaderMaterial.uniforms.u_mouse_velocity.value.set(velocity.x, velocity.y);
     shaderMaterial.uniforms.u_mouse.value.set(currentMouse.x, currentMouse.y);
     shaderMaterial.uniforms.u_time.value = state.clock.getElapsedTime();
 
