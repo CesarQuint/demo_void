@@ -118,9 +118,9 @@ function SecondPage() {
           <DisplacementGeometry settings={{
             grid: true,
             glow: 0.15,
-            columns: 8,
-            orb_size: 0.9,
-            contrast: 4.0,
+            columns: 10,
+            orb_size: 0.5,
+            contrast: 5.0,
             easing_factor: 0.05,
           }} />
         </Canvas>
