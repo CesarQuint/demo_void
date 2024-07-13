@@ -50,30 +50,14 @@ const FRAG_SHADER = `
         return vec2(columnPosition * distToMouse);
     }
 
-    vec3 colorSw(float num) {
-        //vec3 a = vec3(1.000, 1.000, 0.200); // yellow (blue complementary)
-        //vec3 b = vec3(0.722, 0.945, 1.000); // cyan   (orange complementary)
-        //vec3 c = vec3(0.753, 1.000, 0.620); // green  (violet complementary)
-
-        vec3 a = vec3(0.800, 0.800, 0.800);
-        vec3 b = vec3(0.000, 0.000, 0.000);
-        //vec3 c = vec3(0.753, 1.000, 0.720);
-
-        //vec3 a = vec3(0.968,1.000,0.141); // yellow (blue complementary)
-        //vec3 b = vec3(0.295,0.805,0.751); // cyan   (orange complementary)
-        //vec3 c = vec3(0.300,0.981,1.000); // blue  (orange complementary)
+    vec3 colorRand(float num) {
+        vec3 white = vec3(1.000, 1.000, 1.000);
+        vec3 black = vec3(0.000, 0.000, 0.000);
 
         // Use modulo operation to decide the color
-        int modValue = int(mod(num, 4.0));
+        int modValue = int(mod(num, 2.0));
 
-        if (modValue == 0 || modValue == 1) {
-            return a; // a color is chosen 50% of the time
-        } else if (modValue == 2) {
-            return b; // b color is chosen 25% of the time
-        } else {
-            return b; // c color is chosen 25% of the time
-        }
-
+        return modValue == 0 ? white : black;
     }
 
     void main(){ 
@@ -94,7 +78,7 @@ const FRAG_SHADER = `
         for (float i = 0.; i < BALLS; i++) {
             float t = u_time/2. - i * PI / BALLS * cos(u_time / max(i, 0.0001));
             vec2 p = vec2(cos(t), sin(t)) / sin(i / BALLS * PI / dist + u_time);
-            vec3 c = cos(colorSw(i) * PI * 2.7 / PI + PI * (0.0 / (i + 1.) / 5.)) * (u_glow) + (u_glow);
+            vec3 c = cos(colorRand(i) * PI * 2.7 / PI + PI * (0.0 / (i + 1.) / 5.)) * (u_glow) + (u_glow);
             color += vec3(dist * .35 / length(uv - p * u_orb_size) * c);
         }
 
