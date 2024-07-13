@@ -120,7 +120,7 @@ function SecondPage() {
             glow: 0.15,
             columns: 8,
             orb_size: 0.9,
-            contrast: 5.0,
+            contrast: 4.0,
             easing_factor: 0.05,
           }} />
         </Canvas>
