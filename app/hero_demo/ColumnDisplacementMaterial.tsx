@@ -1,7 +1,6 @@
 import { useMemo, useState } from 'react';
 import { ThreeEvent, useFrame, useThree } from '@react-three/fiber';
-import { ShaderMaterial, Vector2, WebGLRenderTarget } from 'three';
-import { ColumnGradientMaterial } from './ColumnGradientTexture';
+import { ShaderMaterial, Vector2 } from 'three';
 
 const VRTX_SHADER = `
     varying vec2 vUv;
