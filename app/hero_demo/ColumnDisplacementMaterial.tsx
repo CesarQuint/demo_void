@@ -48,12 +48,6 @@ const FRAG_SHADER = `
 
         // Use the distance to control the color gradient
         return vec2(columnPosition * distToMouse);
-
-        //vec2 n_mouse = (mouse + 1.0) / 2.0;
-        //float columnWidth = 1.0 / columns;
-        //float columnPosition = mod(uv.x, columnWidth) / columnWidth;
-        //float distToMouse = distance(uv, n_mouse);
-        //return vec2(columnPosition * distToMouse);
     }
 
     vec2 kale(vec2 uv, vec2 offset, float splits) {
