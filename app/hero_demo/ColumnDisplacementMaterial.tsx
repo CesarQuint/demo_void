@@ -62,7 +62,6 @@ const FRAG_SHADER = `
     void main(){ 
         vec2 uv = 2.0 * gl_FragCoord.xy / u_resolution.xy - 1.0;
         uv.x *= u_resolution.x / u_resolution.y;
-        uv *= 2.0;
 
         vec3 color = vec3(0.0);
 
