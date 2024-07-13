@@ -50,16 +50,6 @@ const FRAG_SHADER = `
         return vec2(columnPosition * distToMouse);
     }
 
-    vec2 kale(vec2 uv, vec2 offset, float splits) {
-        float angle = atan(uv.y, uv.x);
-        angle = ((angle / PI) + 1.0) * 0.5;
-        angle = mod(angle, 1.0 / splits) * splits;
-        angle = -abs(2.0 * angle - 1.0) + 1.0;
-        float y = length(uv);
-        angle = angle * (y);
-        return vec2(angle, y) - offset;
-    }
-
     vec3 colorSw(float num) {
         //vec3 a = vec3(1.000, 1.000, 0.200); // yellow (blue complementary)
         //vec3 b = vec3(0.722, 0.945, 1.000); // cyan   (orange complementary)
