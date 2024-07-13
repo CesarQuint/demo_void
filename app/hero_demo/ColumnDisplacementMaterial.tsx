@@ -137,8 +137,6 @@ export const DisplacementGeometry: React.FC<{ settings: DisplacementGeometrySett
 
     shaderMaterial.uniforms.u_mouse.value.set(currentMouse.x, currentMouse.y);
     shaderMaterial.uniforms.u_time.value = state.clock.getElapsedTime();
-
-    //console.log(state.pointer)
   });
 
   return (
