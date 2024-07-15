@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { useGSAP } from "@gsap/react";
 import Splitting from "splitting";
 import { gsap } from "gsap";
@@ -7,8 +7,51 @@ import s from "./TypedLink.module.css";
 
 gsap.registerPlugin(useGSAP);
 
-// prettier-ignore
-const CHARS = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '!', '@', '#', '$', '%', '^', '&', '*', '-', '_', '+', '=', ';', ':', '<', '>', ',']
+const CHARS = [
+  "a",
+  "b",
+  "c",
+  "d",
+  "e",
+  "f",
+  "g",
+  "h",
+  "i",
+  "j",
+  "k",
+  "l",
+  "m",
+  "n",
+  "o",
+  "p",
+  "q",
+  "r",
+  "s",
+  "t",
+  "u",
+  "v",
+  "w",
+  "x",
+  "y",
+  "z",
+  "!",
+  "@",
+  "#",
+  "$",
+  "%",
+  "^",
+  "&",
+  "*",
+  "-",
+  "_",
+  "+",
+  "=",
+  ";",
+  ":",
+  "<",
+  ">",
+  ",",
+];
 
 interface Props extends React.ComponentProps<typeof Link> {
   hoverAnimate?: boolean;
@@ -25,15 +68,19 @@ export default function TypedLink({
 
   const { contextSafe } = useGSAP(
     () => {
-      splitter.current = Splitting({
-        target: container.current!,
-        by: "chars",
-      })[0]!;
+      if (typeof window !== "undefined") {
+        splitter.current = Splitting({
+          target: container.current!,
+          by: "chars",
+        })[0]!;
+      }
     },
     { scope: container }
   );
 
   const animateLink = contextSafe(() => {
+    if (typeof window === "undefined") return;
+
     const chars = splitter.current?.chars;
     if (!chars) return;
 
@@ -68,20 +115,17 @@ export default function TypedLink({
     });
   });
 
-  useGSAP(
-    () => {
-      if (!viewAnimate) return;
+  useEffect(() => {
+    if (!viewAnimate || typeof window === "undefined") return;
 
-      const ob = new IntersectionObserver(() => {
-        animateLink();
-      });
+    const ob = new IntersectionObserver(() => {
+      animateLink();
+    });
 
-      ob.observe(container.current!);
+    ob.observe(container.current!);
 
-      return () => ob.disconnect();
-    },
-    { scope: container, dependencies: [viewAnimate] }
-  );
+    return () => ob.disconnect();
+  }, [viewAnimate, animateLink]);
 
   return (
     <Link

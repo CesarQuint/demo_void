@@ -7,9 +7,11 @@ import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import logo from "../../public/void_Nb.svg";
 import CustomEase from "gsap/CustomEase";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 
 gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(CustomEase);
+gsap.registerPlugin(useGSAP);
 
 type Props = {};
 
@@ -25,8 +27,8 @@ const TextLogo = (props: TextLogoProps) => {
   const imageRef = useRef<HTMLDivElement>(null);
   const timelineRef = useRef<GSAPTimeline | null>(null);
 
-  useEffect(() => {
-    if (containerRef.current !== null) {
+  useGSAP(
+    () => {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
@@ -43,11 +45,13 @@ const TextLogo = (props: TextLogoProps) => {
       });
 
       timelineRef.current = tl;
-    }
-    return () => {
-      timelineRef.current?.kill();
-    };
-  }, []);
+
+      return () => {
+        timelineRef.current?.kill();
+      };
+    },
+    { scope: containerRef }
+  );
 
   return (
     <motion.div
@@ -81,10 +85,6 @@ const Title = (props: Props) => {
       setPositions(newPositions);
     }
   }, []);
-
-  useEffect(() => {
-    console.log(positions);
-  }, [positions]);
 
   return (
     <motion.div className={`${styles.body}`}>
