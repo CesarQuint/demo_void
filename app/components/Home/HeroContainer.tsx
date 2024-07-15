@@ -10,6 +10,8 @@ import { Canvas } from "@react-three/fiber";
 import { DisplacementGeometry } from "@/app/hero_demo/ColumnDisplacementMaterial";
 import { CustomCursor } from "../cursor";
 
+gsap.registerPlugin(useGSAP);
+
 type Props = {};
 
 const HeroContainer = (props: Props) => {
