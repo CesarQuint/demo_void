@@ -1,11 +1,8 @@
 import React, { useRef } from "react";
 import { motion } from "framer-motion";
-import Image from "next/image";
 import styles from "../../css/hero.module.css";
-import hero from "../../../public/gifts/hero_temp.gif";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { useRouter } from "next/navigation";
 import { Canvas } from "@react-three/fiber";
 import { DisplacementGeometry } from "@/app/hero_demo/ColumnDisplacementMaterial";
 import { CustomCursor } from "../cursor";
@@ -60,7 +57,7 @@ const HeroContainer = (props: Props) => {
         }}
         ref={arrowRef}
         className={`${styles.arrow}`}></motion.span>
-      <CustomCursor />
+      <CustomCursor containerRef={containerHeroRef} />
       <Canvas style={{ height: "100vh" }}>
         <DisplacementGeometry
           columns={10}
