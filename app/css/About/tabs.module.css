@@ -16,6 +16,7 @@
   position: relative;
   margin: 2rem 0 5.5rem;
   padding-bottom: 0.5rem;
+  overflow-x: scroll;
 
   .title {
     font-family: Panchang;
@@ -46,6 +47,7 @@
   @media (min-width: 700px) {
     font-size: 1.25rem;
     gap: 3.75rem;
+    overflow: hidden;
 
     .title,
     .line {
