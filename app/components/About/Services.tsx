@@ -15,7 +15,7 @@ const Services = (props: Props) => {
       </div>
       <Tabs tabs={about_us_tabs} />
       <div className={styles.related_projects}>
-        <h3>Proyectos relacionados</h3>
+        <h2>Proyectos relacionados</h2>
         <RelatedProyectsCarrousel />
       </div>
     </motion.section>

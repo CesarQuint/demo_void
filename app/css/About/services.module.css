@@ -14,15 +14,20 @@
   gap: 4vh;
 }
 
-.related_projects h3 {
+.related_projects h2 {
   text-align: center;
   font-family: "Panchang";
   font-weight: 100;
+  font-size: 2rem;
 }
 
 /* Media Part */
 @media (min-width: 768px) {
   .title {
+    font-size: 3rem;
+  }
+
+  .related_projects h2 {
     font-size: 3rem;
   }
 }

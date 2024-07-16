@@ -85,7 +85,7 @@ const Footer = (props: Props) => {
               <TypedLink
                 viewAnimate={true}
                 hoverAnimate={false}
-                href="/frammer_main"
+                href="https://www.instagram.com/voidxr.studio?igsh=cDg5MzhmZ2V1ZGRq"
                 onClick={(e) => {
                   // goTo(e, "/frammer_main");
                 }}>

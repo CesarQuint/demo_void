@@ -98,7 +98,7 @@ const Tags = (props: Props) => {
                 trigger: container.current,
                 start: `${start} bottom-=${scrollStart}`,
                 end: `${end} bottom-=${scrollStart}`,
-                markers: true,
+                // markers: true,
                 scrub: true,
                 onUpdate(e) {
                   const iSpace = space * (i + 1);
