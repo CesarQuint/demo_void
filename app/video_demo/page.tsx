@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useRef, useEffect, useState } from 'react';
-import { TextureLoader, WebGLRenderTarget, Vector2, ShaderMaterial } from 'three';
+import React, { useRef, useEffect, useState, useMemo } from 'react';
+import { TextureLoader, WebGLRenderTarget, Vector2, ShaderMaterial, OrthographicCamera, Mesh, PlaneGeometry, Scene, RepeatWrapping } from 'three';
 import { Canvas, useThree, useFrame, useLoader, ThreeEvent } from '@react-three/fiber';
+import { GUI } from 'lil-gui';
 
 const VRTX_SHADER = `
     varying vec2 vUv;
