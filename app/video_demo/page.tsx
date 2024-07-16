@@ -4,6 +4,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import * as THREE from 'three';
 import { TextureLoader, WebGLRenderTarget, Vector2, ShaderMaterial, OrthographicCamera, Mesh, PlaneGeometry, Scene, RepeatWrapping } from 'three';
 import { Canvas, useThree, useFrame, useLoader, ThreeEvent } from '@react-three/fiber';
+import { GUI } from 'lil-gui';
 
 const VRTX_SHADER = `
     varying vec2 vUv;
