@@ -112,6 +112,7 @@ function SecondPage() {
         className="courtain"
       />
       <HeroContainer />
+      {/* <Video /> */}
       <ProjectImages />
       <ProcessHome />
       <PreFooterLink text="CONOCENOS" />
