@@ -10,13 +10,13 @@ import { animate as animation } from "framer-motion";
 
 import Footer from "../components/footer";
 import HeroContainer from "../components/Home/HeroContainer";
-import VideoHover from "../components/videoHover";
-import Video from "../components/Three/Video";
 
-import RepeatTextScrollFx from "../components/gsapComponents";
 import ProjectImages from "../components/Home/ProjectImages";
 import ProcessHome from "../components/Home/ProcessHome";
 import { PreFooterLink } from "../components/PreFooterLink";
+import Video from "../components/Three/Video";
+import Tags from "../components/tags";
+import { about_us_tags } from "../constants/tags_text";
 
 const transitionSpringPhysics: Spring = {
   type: "spring",

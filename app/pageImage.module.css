@@ -1,8 +1,5 @@
 .main {
   width: 100%;
-  height: -webkit-fill-available;
-  background-color: #101010;
-  z-index: 10;
 }
 
 .main h1 {

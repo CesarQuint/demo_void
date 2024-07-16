@@ -4,13 +4,11 @@ import styles from "../css/footer.module.css";
 import Title from "./title";
 import TypedLink from "./TypedLink/TypedLink";
 import Link from "next/link";
-import useTime from "../utils/hooks/useTime";
+import Timer from "./Timer";
 
 type Props = {};
 
 const Footer = (props: Props) => {
-  const time = useTime();
-
   return (
     <motion.div className={`${styles.footer}`}>
       <motion.section className={`${styles.footer_flex}`}>
@@ -32,7 +30,7 @@ const Footer = (props: Props) => {
           </motion.div>
           <motion.div
             className={`${styles.flex_container}  ${styles.information}`}>
-            <p>{time}</p>
+            <Timer />
             <p>
               Watteau 35, 03700
               <br /> Ciudad de México,

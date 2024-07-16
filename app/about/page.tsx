@@ -123,7 +123,6 @@ const About = (props: Props) => {
           controls={true}
         />
       </motion.div>
-
       <Manifest />
       <Process />
       <Services />

@@ -1,3 +1,4 @@
+"use client";
 import React, { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import styles from "../../css/projects.module.css";
@@ -50,7 +51,7 @@ const ProjectImages = (props: Props) => {
           setTl(null);
         });
     },
-    { scope: scrollContainer }
+    { scope: scrollContainer, dependencies: [container, scrollContainer] }
   );
 
   const images = [

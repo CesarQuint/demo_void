@@ -1,7 +1,9 @@
+"use client";
 import React, { useRef } from "react";
 import { motion } from "framer-motion";
 import gsap from "gsap";
 import styles from "../css/preFooterLink.module.css";
+import { useGSAP } from "@gsap/react";
 
 type Props = {
   text: string;
@@ -10,8 +12,11 @@ type Props = {
 export const PreFooterLink = (props: Props) => {
   const arrowOne = useRef<HTMLDivElement>(null);
   const arrowTwo = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  const hoverHandler = () => {
+  const { contextSafe } = useGSAP({ scope: containerRef });
+
+  const hoverHandler = contextSafe(() => {
     if (arrowOne.current !== null && arrowTwo.current !== null) {
       gsap.to(arrowOne.current, {
         top: "-4rem",
@@ -24,9 +29,9 @@ export const PreFooterLink = (props: Props) => {
         duration: 0.01,
       });
     }
-  };
+  });
 
-  const hoverOutHandler = () => {
+  const hoverOutHandler = contextSafe(() => {
     if (arrowOne.current !== null && arrowTwo.current !== null) {
       gsap.to(arrowOne.current, {
         top: "0",
@@ -39,10 +44,12 @@ export const PreFooterLink = (props: Props) => {
         duration: 0.01,
       });
     }
-  };
+  });
 
   return (
-    <motion.div className={styles.wrapper}>
+    <motion.section
+      ref={containerRef}
+      className={styles.wrapper}>
       <h2>{props.text}</h2>
       <div
         onMouseEnter={hoverHandler}
@@ -57,6 +64,6 @@ export const PreFooterLink = (props: Props) => {
           style={{ top: "4rem", right: "4rem" }}
           className={styles.arrow}></div>
       </div>
-    </motion.div>
+    </motion.section>
   );
 };

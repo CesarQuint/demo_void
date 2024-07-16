@@ -7,9 +7,11 @@ import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import logo from "../../public/void_Nb.svg";
 import CustomEase from "gsap/CustomEase";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 
 gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(CustomEase);
+gsap.registerPlugin(useGSAP);
 
 type Props = {};
 
@@ -24,16 +26,18 @@ const TextLogo = (props: TextLogoProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
   const timelineRef = useRef<GSAPTimeline | null>(null);
+  const [imgLoaded, setImgLoaded] = useState(false);
 
-  useEffect(() => {
-    if (containerRef.current !== null) {
+  useGSAP(
+    () => {
+      timelineRef.current?.kill();
+
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
           start: `${props.offset} center`,
           end: "bottom center",
           scrub: 0,
-          // markers: true,
         },
       });
 
@@ -43,11 +47,13 @@ const TextLogo = (props: TextLogoProps) => {
       });
 
       timelineRef.current = tl;
-    }
-    return () => {
-      timelineRef.current?.kill();
-    };
-  }, []);
+
+      return () => {
+        timelineRef.current?.kill();
+      };
+    },
+    { scope: containerRef, dependencies: [imgLoaded] }
+  );
 
   return (
     <motion.div
@@ -56,6 +62,9 @@ const TextLogo = (props: TextLogoProps) => {
       className={`${styles.text_rep}`}>
       <motion.div ref={imageRef}>
         <Image
+          onLoad={() => {
+            setImgLoaded(true);
+          }}
           className={`${styles.image_logo} ${props.nameRef}`}
           src={logo}
           alt="logo"
@@ -68,6 +77,7 @@ const TextLogo = (props: TextLogoProps) => {
 const Title = (props: Props) => {
   const logoRef = useRef<HTMLDivElement>(null);
   const [positions, setPositions] = useState<number[]>([]);
+  const [imgLoaded, setImgLoaded] = useState(false);
 
   useEffect(() => {
     if (logoRef.current !== null) {
@@ -81,10 +91,6 @@ const Title = (props: Props) => {
       setPositions(newPositions);
     }
   }, []);
-
-  useEffect(() => {
-    console.log(positions);
-  }, [positions]);
 
   return (
     <motion.div className={`${styles.body}`}>
@@ -139,6 +145,9 @@ const Title = (props: Props) => {
           ref={logoRef}
           className={`${styles.text_rep}`}>
           <Image
+            onLoad={() => {
+              setImgLoaded(true);
+            }}
             className={`${styles.image_logo}`}
             src={logo}
             alt="logo"

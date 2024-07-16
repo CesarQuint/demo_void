@@ -1,23 +1,27 @@
+"use client";
 import React, { useRef } from "react";
 import { motion } from "framer-motion";
-import Image from "next/image";
 import styles from "../../css/hero.module.css";
-import hero from "../../../public/gifts/hero_temp.gif";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { useRouter } from "next/navigation";
 import { Canvas } from "@react-three/fiber";
 import { DisplacementGeometry } from "@/app/hero_demo/ColumnDisplacementMaterial";
 import { CustomCursor } from "../cursor";
+import { useIntersectionObserver } from "../../utils/hooks/useIntersectionObserver";
+
+gsap.registerPlugin(useGSAP);
 
 type Props = {};
 
 const HeroContainer = (props: Props) => {
-  const containerHeroRef = useRef<HTMLDivElement>(null);
+  const { isIntersecting, ref: containerHeroRef } = useIntersectionObserver();
   const arrowRef = useRef<HTMLDivElement>(null);
 
   const { contextSafe } = useGSAP(
     () => {
+      if (containerHeroRef.current !== null)
+        gsap.to(containerHeroRef.current, { opacity: 1 });
+
       gsap.to(arrowRef.current, {
         bottom: "+=20",
         duration: 1,
@@ -25,7 +29,10 @@ const HeroContainer = (props: Props) => {
         repeat: -1,
       });
     },
-    { scope: containerHeroRef }
+    {
+      scope: containerHeroRef,
+      dependencies: [isIntersecting],
+    }
   );
 
   const handleScroll = () => {
@@ -34,6 +41,16 @@ const HeroContainer = (props: Props) => {
       behavior: "smooth",
     });
   };
+
+  if (!isIntersecting) {
+    return (
+      <motion.section
+        ref={containerHeroRef}
+        className={`${styles.hero_container}`}>
+        <h1>Loading...</h1>
+      </motion.section>
+    );
+  }
 
   return (
     <motion.section
@@ -57,8 +74,9 @@ const HeroContainer = (props: Props) => {
           handleScroll();
         }}
         ref={arrowRef}
-        className={`${styles.arrow}`}></motion.span>
-      <CustomCursor />
+        className={`${styles.arrow}`}>
+      </motion.span>
+      <CustomCursor containerRef={containerHeroRef} />
       <Canvas style={{ height: "100vh" }}>
         <DisplacementGeometry settings={{
           grid: true,
