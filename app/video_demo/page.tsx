@@ -33,23 +33,38 @@ const IMG_FRAG_SHADER = `
 `;
 
 const FRAG_SHADER = `
-    precision highp float;
+    #ifdef GL_ES
+    precision mediump float;
+    #endif
+
     uniform sampler2D tMap;
-    uniform float uFalloff;
     uniform float uAlpha;
+    uniform float uFalloff;
     uniform float uDissipation;
-    uniform float uAspect;
+    varying vec2 vUv;
     uniform vec2 uMouse;
     uniform vec2 uVelocity;
-    varying vec2 vUv;
+    uniform vec2 uResolution;
+
     void main() {
-      vec4 color = texture2D(tMap, vUv) * uDissipation;
-      vec2 cursor = vUv - uMouse;
-      cursor.x *= uAspect;
-      vec3 stamp = vec3(uVelocity * vec2(1, -1), 1.0 - pow(1.0 - min(1.0, length(uVelocity)), 3.0));
-      float falloff = smoothstep(uFalloff, 0.0, length(cursor)) * uAlpha;
-      color.rgb = mix(color.rgb, stamp, vec3(falloff));
-      gl_FragColor = color;
+        // normalize render space to [-1, 1] range
+        vec2 uv = 2.0 * gl_FragCoord.xy / uResolution.xy - 1.0;
+
+        // Sample the base texture color
+        vec4 color = texture2D(tMap, vUv) * uDissipation;
+
+        // Calculate the distance from the current fragment to the mouse position
+        vec2 cursor = uv - uMouse;
+        cursor.x *= uResolution.x / uResolution.y;
+
+        // Create a distortion effect based on the velocity and the cursor distance
+        vec3 stamp = vec3(uVelocity * vec2(1, -1), 1.0 - pow(1.0 - min(1.0, length(uVelocity)), 3.0));
+        float falloff = smoothstep(uFalloff, 0.0, length(cursor)) * uAlpha;
+
+        // Mix the base color with the distortion effect
+        color.rgb = mix(color.rgb, stamp, vec3(falloff));
+
+        gl_FragColor = color;
     }
 `;
 
