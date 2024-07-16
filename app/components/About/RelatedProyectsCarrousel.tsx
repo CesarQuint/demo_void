@@ -3,6 +3,9 @@ import { motion } from "framer-motion";
 import styles from "../../css/About/relatedProyectsCarousel.module.css";
 import Image from "next/image";
 import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(useGSAP);
 
 const images = [
   "https://tympanus.net/Development/ConnectedGrid/img/14.jpg",
@@ -17,11 +20,9 @@ const RelatedProyectsCarrousel = (props: Props) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const imageBandRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {}, []);
+  const { contextSafe } = useGSAP({ scope: containerRef });
 
-  const clickHandler = (number: number) => {
-    console.log(number, selectedStep);
-
+  const clickHandler = contextSafe((number: number) => {
     let movement = "";
     let percentage = 0;
 
@@ -55,10 +56,12 @@ const RelatedProyectsCarrousel = (props: Props) => {
         console.log("nothing");
         break;
     }
-  };
+  });
 
   return (
-    <motion.div className={styles.main}>
+    <motion.div
+      ref={containerRef}
+      className={styles.main}>
       <motion.div className={styles.image_container}>
         <motion.div
           ref={imageBandRef}
@@ -66,6 +69,7 @@ const RelatedProyectsCarrousel = (props: Props) => {
           {images.map((_, i) => (
             <span
               className={styles.single_image_container}
+              onClick={() => clickHandler(i + 1)}
               key={i + 1}>
               <img
                 style={{ scale: `${selectedStep !== i + 1 ? "0.8" : "1"}` }}
@@ -78,7 +82,7 @@ const RelatedProyectsCarrousel = (props: Props) => {
         </motion.div>
       </motion.div>
       <motion.div className={styles.steps_container}>
-        {new Array(3).fill("").map((_, i) => (
+        {new Array(images.length).fill("").map((_, i) => (
           <motion.div
             key={i + 1}
             onClick={() => clickHandler(i + 1)}

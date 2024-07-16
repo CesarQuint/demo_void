@@ -26,7 +26,7 @@
   background: #101010;
   border: 2px solid #fff;
   transform-origin: bottom;
-  box-shadow: 0 -3rem 0px 2rem #101010;
+  box-shadow: 0 -3rem 0px 2rem #000;
 }
 
 .left_content {
