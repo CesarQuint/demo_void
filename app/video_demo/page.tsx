@@ -21,6 +21,7 @@ const IMG_FRAG_SHADER = `
     uniform sampler2D tFlow;
     uniform float uTime;
     varying vec2 vUv;
+
     void main() {
       vec3 flow = texture2D(tFlow, vUv).rgb;
       vec2 uv = gl_FragCoord.xy / 600.0;
