@@ -7,10 +7,12 @@ import { Canvas, useThree, useFrame, useLoader, ThreeEvent } from '@react-three/
 const VRTX_SHADER = `
     varying vec2 vUv;
     void main() {
-      vUv = uv;
-      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        vec4 modelPosition = modelMatrix * vec4(position, 1.0);
+        vec4 viewPosition = viewMatrix * modelPosition;
+        vec4 projectionPosition = projectionMatrix * viewPosition;
+        gl_Position = projectionPosition;
+        vUv = uv;
     }
-
 `;
 
 const IMG_FRAG_SHADER = `
