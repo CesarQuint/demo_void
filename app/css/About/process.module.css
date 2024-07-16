@@ -1,4 +1,5 @@
 .main {
+  width: 100%;
 }
 
 .title {
@@ -16,33 +17,4 @@
   width: 100%;
   height: auto;
   border-radius: 40px;
-}
-
-.description {
-  padding: 6vh;
-  line-height: 3vh;
-  display: flex;
-  flex-flow: column nowrap;
-  gap: 6vh;
-}
-
-.description p {
-  font-family: "graphie";
-}
-
-.description p:nth-child(1) {
-  font-size: 2rem;
-  font-weight: 100;
-  line-height: 2.5rem;
-}
-
-@media (min-width: 700px) {
-  .description p {
-    width: 70%;
-  }
-
-  .description p:nth-child(1) {
-    font-size: 2.5rem;
-    line-height: 3rem;
-  }
 }

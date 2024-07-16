@@ -1,3 +1,4 @@
+"use client";
 import React, { useRef } from "react";
 import { motion } from "framer-motion";
 import gsap from "gsap";
@@ -46,7 +47,7 @@ export const PreFooterLink = (props: Props) => {
   });
 
   return (
-    <motion.div
+    <motion.section
       ref={containerRef}
       className={styles.wrapper}>
       <h2>{props.text}</h2>
@@ -63,6 +64,6 @@ export const PreFooterLink = (props: Props) => {
           style={{ top: "4rem", right: "4rem" }}
           className={styles.arrow}></div>
       </div>
-    </motion.div>
+    </motion.section>
   );
 };
