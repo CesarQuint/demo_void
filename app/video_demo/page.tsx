@@ -2,6 +2,7 @@
 
 import React, { useRef, useEffect, useState } from 'react';
 import * as THREE from 'three';
+import { TextureLoader, WebGLRenderTarget, Vector2, ShaderMaterial, OrthographicCamera, Mesh, PlaneGeometry, Scene, RepeatWrapping } from 'three';
 import { Canvas, useThree, useFrame, useLoader, ThreeEvent } from '@react-three/fiber';
 
 const VRTX_SHADER = `
@@ -173,20 +174,18 @@ const FlowmapGeometry = ({ imageURL, settings: { alpha, falloff, dissipation } }
 };
 
 function ImageFlowmap({ imageUrl }: { imageUrl: string }) {
-  const mesh = useRef();
   const { gl, viewport, size } = useThree();
-  const texture = useLoader(THREE.TextureLoader, imageUrl);
-  const flowmapTexture = useRef(new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight));
-  const [mouse, setMouse] = useState(new THREE.Vector2(-1));
-  const [velocity, setVelocity] = useState(new THREE.Vector2());
-  const [lastMouse, setLastMouse] = useState(new THREE.Vector2());
+  const texture = useLoader(TextureLoader, imageUrl);
+  const flowmapTexture = useRef(new WebGLRenderTarget(window.innerWidth, window.innerHeight));
+  const [mouse, setMouse] = useState(new Vector2(-1));
+  const [velocity, setVelocity] = useState(new Vector2());
+  const [lastMouse, setLastMouse] = useState(new Vector2());
   const [lastTime, setLastTime] = useState<number>(0);
-  const renderer = new Renderer({ dpr: 2 });
 
-  const shaderMaterial = new THREE.ShaderMaterial({
+  const shaderMaterial = new ShaderMaterial({
     uniforms: {
-      uResolution: { value: new THREE.Vector2(size.width * viewport.dpr, size.height * viewport.dpr) },
-      uMouse: { value: new THREE.Vector2() },
+      uResolution: { value: new Vector2(size.width * viewport.dpr, size.height * viewport.dpr) },
+      uMouse: { value: new Vector2() },
       tWater: { value: texture },
       tFlow: { value: null },
       uTime: { value: 0 },
@@ -207,11 +206,11 @@ function ImageFlowmap({ imageUrl }: { imageUrl: string }) {
     const x = e.pointer.x;
     const y = e.pointer.y;
 
-    setMouse(new THREE.Vector2(x / size.width, 1 - y / size.height));
+    setMouse(new Vector2(x / size.width, 1 - y / size.height));
 
     if (lastTime === null) {
       setLastTime(performance.now());
-      setLastMouse(new THREE.Vector2(x, y));
+      setLastMouse(new Vector2(x, y));
       return;
     }
 
@@ -220,8 +219,8 @@ function ImageFlowmap({ imageUrl }: { imageUrl: string }) {
     const time = performance.now();
     const delta = Math.max(14, time - lastTime);
 
-    setVelocity(new THREE.Vector2(deltaX / delta, deltaY / delta));
-    setLastMouse(new THREE.Vector2(x, y));
+    setVelocity(new Vector2(deltaX / delta, deltaY / delta));
+    setLastMouse(new Vector2(x, y));
     setLastTime(time);
   };
 
