@@ -60,11 +60,14 @@ const HeroContainer = (props: Props) => {
         className={`${styles.arrow}`}></motion.span>
       <CustomCursor />
       <Canvas style={{ height: "100vh" }}>
-        <DisplacementGeometry
-          columns={10}
-          glow={0.15}
-          easingFactor={0.1}
-        />
+        <DisplacementGeometry settings={{
+          grid: true,
+          glow: 0.15,
+          columns: 10,
+          orb_size: 0.5,
+          contrast: 5.0,
+          easing_factor: 0.05,
+        }} />
       </Canvas>
     </motion.section>
   );

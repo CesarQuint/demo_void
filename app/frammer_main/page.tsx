@@ -15,8 +15,6 @@ import Video from "../components/Three/Video";
 
 import RepeatTextScrollFx from "../components/gsapComponents";
 import ProjectImages from "../components/Home/ProjectImages";
-import { DisplacementGeometry } from "../hero_demo/ColumnDisplacementMaterial";
-import { Canvas } from "@react-three/fiber";
 import ProcessHome from "../components/Home/ProcessHome";
 import { PreFooterLink } from "../components/PreFooterLink";
 
@@ -113,18 +111,7 @@ function SecondPage() {
         transition={transitionSpringPhysics}
         className="courtain"
       />
-      <section>
-        <Canvas style={{ height: "100vh" }}>
-          <DisplacementGeometry settings={{
-            grid: true,
-            glow: 0.15,
-            columns: 10,
-            orb_size: 0.5,
-            contrast: 5.0,
-            easing_factor: 0.05,
-          }} />
-        </Canvas>
-      </section>
+      <HeroContainer />
       {/* <Video /> */}
       <ProjectImages />
       <ProcessHome />
