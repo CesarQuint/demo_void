@@ -54,10 +54,10 @@ const FRAG_SHADER = `
 `;
 
 type FlowmapGeometrySettings = {
-  size: 128; // default size of the render targets
-  falloff: 0.3; // size of the stamp, percentage of the size
-  alpha: 1; // opacity of the stamp
-  dissipation: 0.98; // affects the speed that the stamp fades. Closer to 1 is slower
+  size: number;
+  alpha: number;
+  falloff: number;
+  dissipation: number;
 };
 
 const FlowmapGeometry = ({ imageURL }: { settings: FlowmapGeometrySettings, imageURL: string }) => {
@@ -180,7 +180,12 @@ export default function ImageFlow() {
   return (
     <Canvas style={{ height: '100vh' }}>
       <FlowmapGeometry
-        settings={{}}
+        settings={{
+          size: 128,          // default size of the render targets
+          alpha: 1,           // opacity of the stamp
+          falloff: 0.3,       // size of the stamp, percentage of the size
+          dissipation: 0.98,  // affects the speed that the stamp fades. Closer to 1 is slower
+        }}
         imageURL="https://images.unsplash.com/photo-1620121692029-d088224ddc74?q=80&w=1920&auto=format" />
     </Canvas>
   );
