@@ -22,8 +22,6 @@ export default function useWindow(): Readonly<Window> {
   });
 
   useEffect(() => {
-    //First load
-
     const updateWindow = () => {
       windowForReference.current.innerHeight = window.innerHeight;
       windowForReference.current.innerWidth = window.innerHeight;
@@ -35,6 +33,8 @@ export default function useWindow(): Readonly<Window> {
     };
 
     window.addEventListener("resize", updateWindow);
+
+    return () => window.removeEventListener("resize", updateWindow);
   }, []);
 
   return windowForReference.current;
