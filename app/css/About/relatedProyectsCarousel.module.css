@@ -13,13 +13,14 @@
 
 .single_image_container {
   width: 68vw;
+  height: 40vh;
   display: inline-block;
   margin: 0 3px;
 }
 
 .image {
   width: 100%;
-  height: auto;
+  height: inherit;
   border-radius: 10px;
   transition: all 0.5s;
   &:hover {
