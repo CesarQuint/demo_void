@@ -168,7 +168,7 @@ const FlowmapGeometry = ({ imageURL, settings: { alpha, falloff, dissipation } }
 
   return (
     <mesh scale={[viewport.width, viewport.height, 1]}>
-      <planeGeometry args={[viewport.width, viewport.height]} />
+      <planeGeometry args={[1, 1, 1, 1]} />
       <primitive object={shaderMaterial} />
     </mesh>
   );
