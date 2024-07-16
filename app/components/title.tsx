@@ -26,16 +26,18 @@ const TextLogo = (props: TextLogoProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
   const timelineRef = useRef<GSAPTimeline | null>(null);
+  const [imgLoaded, setImgLoaded] = useState(false);
 
   useGSAP(
     () => {
+      timelineRef.current?.kill();
+
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
           start: `${props.offset} center`,
           end: "bottom center",
           scrub: 0,
-          // markers: true,
         },
       });
 
@@ -50,7 +52,7 @@ const TextLogo = (props: TextLogoProps) => {
         timelineRef.current?.kill();
       };
     },
-    { scope: containerRef }
+    { scope: containerRef, dependencies: [imgLoaded] }
   );
 
   return (
@@ -60,6 +62,9 @@ const TextLogo = (props: TextLogoProps) => {
       className={`${styles.text_rep}`}>
       <motion.div ref={imageRef}>
         <Image
+          onLoad={() => {
+            setImgLoaded(true);
+          }}
           className={`${styles.image_logo} ${props.nameRef}`}
           src={logo}
           alt="logo"
@@ -72,6 +77,7 @@ const TextLogo = (props: TextLogoProps) => {
 const Title = (props: Props) => {
   const logoRef = useRef<HTMLDivElement>(null);
   const [positions, setPositions] = useState<number[]>([]);
+  const [imgLoaded, setImgLoaded] = useState(false);
 
   useEffect(() => {
     if (logoRef.current !== null) {
@@ -139,6 +145,9 @@ const Title = (props: Props) => {
           ref={logoRef}
           className={`${styles.text_rep}`}>
           <Image
+            onLoad={() => {
+              setImgLoaded(true);
+            }}
             className={`${styles.image_logo}`}
             src={logo}
             alt="logo"
