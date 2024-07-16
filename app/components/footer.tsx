@@ -94,7 +94,7 @@ const Footer = (props: Props) => {
               <TypedLink
                 viewAnimate={true}
                 hoverAnimate={false}
-                href="/frammer_main"
+                href="https://www.facebook.com/voidxr.studio/"
                 onClick={(e) => {
                   // goTo(e, "/frammer_main");
                 }}>
@@ -103,16 +103,16 @@ const Footer = (props: Props) => {
               <TypedLink
                 viewAnimate={true}
                 hoverAnimate={false}
-                href="/frammer_main"
+                href="https://www.tiktok.com/@voidxr.studio?_t=8ny8X7FJlEj&_r=1"
                 onClick={(e) => {
                   // goTo(e, "/frammer_main");
                 }}>
-                VIDEO
+                TIKTOK
               </TypedLink>
               <TypedLink
                 viewAnimate={true}
                 hoverAnimate={false}
-                href="/frammer_main"
+                href="https://www.linkedin.com/company/voidxr/"
                 onClick={(e) => {
                   // goTo(e, "/frammer_main");
                 }}>
