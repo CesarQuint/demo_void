@@ -4,6 +4,7 @@ type Props = {};
 
 const Proyects = (props: Props) => {
   return (
+    {/*
     <motion.div
       key={pathname}
       initial={{ opacity: 1 }}
@@ -42,6 +43,7 @@ const Proyects = (props: Props) => {
       <Tags />
       <Footer />
     </motion.div>
+    */}
   );
 };
 
