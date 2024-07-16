@@ -54,7 +54,6 @@ const FRAG_SHADER = `
 `;
 
 type FlowmapGeometrySettings = {
-  size: number;
   alpha: number;
   falloff: number;
   dissipation: number;
