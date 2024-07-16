@@ -113,8 +113,11 @@ function SecondPage() {
       <ProjectImages />
       <ProcessHome />
       <TagsHome />
+      <div style={{ height: "10vh" }}></div>
       <PreFooterLink text="CONOCENOS" />
+      <div style={{ height: "5vh" }}></div>
       <Footer />
+      <div style={{ height: "10vh" }}></div>
     </motion.div>
   );
 }

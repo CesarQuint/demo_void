@@ -72,6 +72,21 @@ const RelatedProyectsCarrousel = (props: Props) => {
               className={styles.single_image_container}
               onClick={() => clickHandler(i + 1)}
               key={i + 1}>
+              {selectedStep == i + 1 && (
+                <div className={styles.text_information_of_project}>
+                  <p>{_.date}</p>
+                  <h3
+                    style={{
+                      fontFamily: "graphie",
+                      fontSize: "2rem",
+                      fontWeight: "100",
+                    }}>
+                    {_.title}
+                  </h3>
+                  <p style={{ textTransform: "uppercase" }}>{_.description}</p>
+                </div>
+              )}
+
               <img
                 style={{ scale: `${selectedStep !== i + 1 ? "0.8" : "1"}` }}
                 className={styles.image}
