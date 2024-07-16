@@ -51,12 +51,18 @@ const FRAG_SHADER = `
     }
 `;
 
-const FlowmapMesh = ({ imageURL }: { imageURL: string }) => {
   const { size, viewport } = useThree();
   const [mouse, setMouse] = useState(new THREE.Vector2(-1, -1));
   const [velocity, setVelocity] = useState(new THREE.Vector2(0, 0));
   const aspect = size.width / size.height;
   const texture = useLoader(THREE.TextureLoader, imageURL);
+type FlowmapGeometrySettings = {
+  alpha: number;
+  falloff: number;
+  dissipation: number;
+};
+
+const FlowmapGeometry = ({ imageURL, settings: { alpha, falloff, dissipation } }: { settings: FlowmapGeometrySettings, imageURL: string }) => {
 
   const shaderMaterial = new THREE.ShaderMaterial({
     uniforms: {
@@ -170,9 +176,24 @@ function ImageFlowmap({ imageUrl }: { imageUrl: string }) {
 }
 
 export default function ImageFlow() {
+  const [settings, setSettings] = useState({
+    alpha: 1,           // opacity of the stamp
+    falloff: 0.3,       // size of the stamp, percentage of the size
+    dissipation: 0.98,  // affects the speed that the stamp fades. Closer to 1 is slower
+  });
+
+  useEffect(() => {
+    const gui = new GUI();
+    gui.add(settings, 'alpha', 0.0, 1.0, 0.1).onChange((value: number) => setSettings((s) => ({ ...s, alpha: value })));
+    gui.add(settings, 'falloff', 0.0, 1.0, 0.1).onChange((value: number) => setSettings((s) => ({ ...s, falloff: value })));
+    gui.add(settings, 'dissipation', 0.0, 1.0, 0.001).onChange((value: number) => setSettings((s) => ({ ...s, dissipation: value })));
+  }, []);
+
   return (
     <Canvas style={{ height: '100vh' }}>
-      <FlowmapMesh imageURL="https://images.unsplash.com/photo-1620121692029-d088224ddc74?q=80&w=1920&auto=format" />
+      <FlowmapGeometry
+        settings={settings}
+        imageURL="https://images.unsplash.com/photo-1620121692029-d088224ddc74?q=80&w=1920&auto=format" />
     </Canvas>
   );
 }
