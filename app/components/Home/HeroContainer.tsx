@@ -74,14 +74,18 @@ const HeroContainer = (props: Props) => {
           handleScroll();
         }}
         ref={arrowRef}
-        className={`${styles.arrow}`}></motion.span>
+        className={`${styles.arrow}`}>
+      </motion.span>
       <CustomCursor containerRef={containerHeroRef} />
-      <Canvas style={{ height: "100%" }}>
-        <DisplacementGeometry
-          columns={10}
-          glow={0.15}
-          easingFactor={0.1}
-        />
+      <Canvas style={{ height: "100vh" }}>
+        <DisplacementGeometry settings={{
+          grid: true,
+          glow: 0.15,
+          columns: 10,
+          orb_size: 0.5,
+          contrast: 5.0,
+          easing_factor: 0.05,
+        }} />
       </Canvas>
     </motion.section>
   );
