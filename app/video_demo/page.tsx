@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useEffect, useState } from 'react';
-import * as THREE from 'three';
+import { TextureLoader, WebGLRenderTarget, Vector2, ShaderMaterial } from 'three';
 import { Canvas, useThree, useFrame, useLoader, ThreeEvent } from '@react-three/fiber';
 
 const VRTX_SHADER = `
@@ -10,7 +10,6 @@ const VRTX_SHADER = `
       vUv = uv;
       gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
     }
-
 `;
 
 const IMG_FRAG_SHADER = `
@@ -19,6 +18,7 @@ const IMG_FRAG_SHADER = `
     uniform sampler2D tFlow;
     uniform float uTime;
     varying vec2 vUv;
+
     void main() {
       vec3 flow = texture2D(tFlow, vUv).rgb;
       vec2 uv = gl_FragCoord.xy / 600.0;
@@ -40,6 +40,7 @@ const FRAG_SHADER = `
     uniform vec2 uMouse;
     uniform vec2 uVelocity;
     varying vec2 vUv;
+
     void main() {
       vec4 color = texture2D(tMap, vUv) * uDissipation;
       vec2 cursor = vUv - uMouse;
@@ -48,25 +49,33 @@ const FRAG_SHADER = `
       float falloff = smoothstep(uFalloff, 0.0, length(cursor)) * uAlpha;
       color.rgb = mix(color.rgb, stamp, vec3(falloff));
       gl_FragColor = color;
+      gl_FragColor = vec4(vec3(0.0), 1.0);
     }
 `;
 
-const FlowmapMesh = ({ imageURL }: { imageURL: string }) => {
-  const { size, viewport } = useThree();
-  const [mouse, setMouse] = useState(new THREE.Vector2(-1, -1));
-  const [velocity, setVelocity] = useState(new THREE.Vector2(0, 0));
-  const aspect = size.width / size.height;
-  const texture = useLoader(THREE.TextureLoader, imageURL);
+type FlowmapGeometrySettings = {
+  size: 128; // default size of the render targets
+  falloff: 0.3; // size of the stamp, percentage of the size
+  alpha: 1; // opacity of the stamp
+  dissipation: 0.98; // affects the speed that the stamp fades. Closer to 1 is slower
+};
 
-  const shaderMaterial = new THREE.ShaderMaterial({
+const FlowmapGeometry = ({ imageURL }: { settings: FlowmapGeometrySettings, imageURL: string }) => {
+  const { size, viewport } = useThree();
+  const [mouse, setMouse] = useState(new Vector2(-1, -1));
+  const [velocity, setVelocity] = useState(new Vector2(0, 0));
+  const aspect = size.width / size.height;
+  const texture = useLoader(TextureLoader, imageURL);
+
+  const shaderMaterial = new ShaderMaterial({
     uniforms: {
       tMap: { value: null },
-      uFalloff: { value: 0.5 },
       uAlpha: { value: 1.0 },
-      uDissipation: { value: 0.98 },
-      uMouse: { value: new THREE.Vector2(-1, -1) },
+      uMouse: { value: new Vector2(-1, -1) },
       uAspect: { value: 1.0 },
-      uVelocity: { value: new THREE.Vector2(0, 0) },
+      uFalloff: { value: 0.5 },
+      uVelocity: { value: new Vector2(0, 0) },
+      uDissipation: { value: 0.98 },
     },
     vertexShader: VRTX_SHADER,
     fragmentShader: FRAG_SHADER
@@ -74,7 +83,7 @@ const FlowmapMesh = ({ imageURL }: { imageURL: string }) => {
 
   useFrame(({ clock, pointer }) => {
     // Calculate velocity
-    const newVelocity = new THREE.Vector2(
+    const newVelocity = new Vector2(
       mouse.x - shaderMaterial.uniforms.uMouse.value.x,
       mouse.y - shaderMaterial.uniforms.uMouse.value.y
     );
@@ -97,20 +106,18 @@ const FlowmapMesh = ({ imageURL }: { imageURL: string }) => {
 };
 
 function ImageFlowmap({ imageUrl }: { imageUrl: string }) {
-  const mesh = useRef();
   const { gl, viewport, size } = useThree();
-  const texture = useLoader(THREE.TextureLoader, imageUrl);
-  const flowmapTexture = useRef(new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight));
-  const [mouse, setMouse] = useState(new THREE.Vector2(-1));
-  const [velocity, setVelocity] = useState(new THREE.Vector2());
-  const [lastMouse, setLastMouse] = useState(new THREE.Vector2());
+  const texture = useLoader(TextureLoader, imageUrl);
+  const flowmapTexture = useRef(new WebGLRenderTarget(window.innerWidth, window.innerHeight));
+  const [mouse, setMouse] = useState(new Vector2(-1));
+  const [velocity, setVelocity] = useState(new Vector2());
+  const [lastMouse, setLastMouse] = useState(new Vector2());
   const [lastTime, setLastTime] = useState<number>(0);
-  const renderer = new Renderer({ dpr: 2 });
 
-  const shaderMaterial = new THREE.ShaderMaterial({
+  const shaderMaterial = new ShaderMaterial({
     uniforms: {
-      uResolution: { value: new THREE.Vector2(size.width * viewport.dpr, size.height * viewport.dpr) },
-      uMouse: { value: new THREE.Vector2() },
+      uResolution: { value: new Vector2(size.width * viewport.dpr, size.height * viewport.dpr) },
+      uMouse: { value: new Vector2() },
       tWater: { value: texture },
       tFlow: { value: null },
       uTime: { value: 0 },
@@ -131,11 +138,11 @@ function ImageFlowmap({ imageUrl }: { imageUrl: string }) {
     const x = e.pointer.x;
     const y = e.pointer.y;
 
-    setMouse(new THREE.Vector2(x / size.width, 1 - y / size.height));
+    setMouse(new Vector2(x / size.width, 1 - y / size.height));
 
     if (lastTime === null) {
       setLastTime(performance.now());
-      setLastMouse(new THREE.Vector2(x, y));
+      setLastMouse(new Vector2(x, y));
       return;
     }
 
@@ -144,8 +151,8 @@ function ImageFlowmap({ imageUrl }: { imageUrl: string }) {
     const time = performance.now();
     const delta = Math.max(14, time - lastTime);
 
-    setVelocity(new THREE.Vector2(deltaX / delta, deltaY / delta));
-    setLastMouse(new THREE.Vector2(x, y));
+    setVelocity(new Vector2(deltaX / delta, deltaY / delta));
+    setLastMouse(new Vector2(x, y));
     setLastTime(time);
   };
 
@@ -172,7 +179,9 @@ function ImageFlowmap({ imageUrl }: { imageUrl: string }) {
 export default function ImageFlow() {
   return (
     <Canvas style={{ height: '100vh' }}>
-      <FlowmapMesh imageURL="https://images.unsplash.com/photo-1620121692029-d088224ddc74?q=80&w=1920&auto=format" />
+      <FlowmapGeometry
+        settings={{}}
+        imageURL="https://images.unsplash.com/photo-1620121692029-d088224ddc74?q=80&w=1920&auto=format" />
     </Canvas>
   );
 }
