@@ -6,6 +6,7 @@ import ScrollImg from "../ScrollImg/ScrollImg";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/all";
+import { stand_out_projects } from "@/app/constants/stand_out_projects";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -76,19 +77,19 @@ const ProjectImages = (props: Props) => {
           <div className={styles.line}>
             <button className={styles.viewAll}>VER TODOS</button>
           </div>
-          {images.map((src, i) => (
+          {stand_out_projects.map((_, i) => (
             <div
               className={styles.imgBox}
               key={i}
               style={{ "--column": i + 1 } as React.CSSProperties}>
               <ScrollImg
-                date="2024-jun-07"
-                title="Raíces lumínicas"
-                caption="Instalación visual en el bosque"
-                tag="EN VIVO"
+                date={_.date}
+                title={_.title}
+                caption={_.description}
+                tag={_.tag}
                 scrollTl={tl}
                 isLeftSide={tl ? false : !(i % 2)}
-                src={src}
+                src={_.image}
                 fill
                 sizes="50%"
                 alt="example"

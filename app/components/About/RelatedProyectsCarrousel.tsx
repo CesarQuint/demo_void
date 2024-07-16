@@ -4,6 +4,7 @@ import styles from "../../css/About/relatedProyectsCarousel.module.css";
 import Image from "next/image";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { stand_out_projects } from "@/app/constants/stand_out_projects";
 
 gsap.registerPlugin(useGSAP);
 
@@ -66,7 +67,7 @@ const RelatedProyectsCarrousel = (props: Props) => {
         <motion.div
           ref={imageBandRef}
           className={styles.image_wrapper}>
-          {images.map((_, i) => (
+          {stand_out_projects.slice(0, 3).map((_, i) => (
             <span
               className={styles.single_image_container}
               onClick={() => clickHandler(i + 1)}
@@ -75,7 +76,7 @@ const RelatedProyectsCarrousel = (props: Props) => {
                 style={{ scale: `${selectedStep !== i + 1 ? "0.8" : "1"}` }}
                 className={styles.image}
                 alt=""
-                src={_}
+                src={_.image}
               />
             </span>
           ))}

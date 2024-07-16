@@ -80,7 +80,7 @@ const NavBar = () => {
           <Image
             className={styles.image_logo}
             onClick={(e) => {
-              goTo(e, "/frammer_main");
+              goTo(e, "/");
             }}
             src="/void.svg"
             alt="void"
@@ -102,13 +102,13 @@ const NavBar = () => {
               <TypedLink
                 viewAnimate={true}
                 hoverAnimate={false}
-                href="/frammer_main"
+                href="/"
                 onClick={(e) => {
-                  goTo(e, "/frammer_main");
+                  goTo(e, "/");
                 }}>
                 Home
               </TypedLink>
-              <TypedLink
+              {/* <TypedLink
                 viewAnimate={true}
                 hoverAnimate={false}
                 href="/playground"
@@ -116,24 +116,24 @@ const NavBar = () => {
                   goTo(e, "/playground");
                 }}>
                 Proyectos
-              </TypedLink>
+              </TypedLink> */}
               <TypedLink
                 viewAnimate={true}
                 hoverAnimate={false}
-                href="/">
+                href="/about">
                 El Estudio
               </TypedLink>
-              <TypedLink
+              {/* <TypedLink
                 viewAnimate={true}
                 hoverAnimate={false}
                 href="/">
                 Contacto
-              </TypedLink>
+              </TypedLink> */}
             </>
           )}
         </div>
         <div className={styles.linksMb}>
-          <TypedLink href="#">Proyectos</TypedLink>
+          {/* <TypedLink href="#">Proyectos</TypedLink> */}
           <TypedLink
             href="/about"
             onClick={(e) => {
@@ -141,12 +141,12 @@ const NavBar = () => {
             }}>
             El Estudio
           </TypedLink>
-          <Link
+          {/* <Link
             href="#"
             className={styles.writeUs}>
             <span className={styles.writeUsTxt}>Escribenos</span>
             <span className={styles.writeUsIcon}>+</span>
-          </Link>
+          </Link> */}
         </div>
 
         <div className={styles.langs}>
