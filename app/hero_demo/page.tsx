@@ -27,7 +27,7 @@ export default function Hero() {
     gui.add(settings, 'glow', 0.05, 0.2, 0.01).onChange((value: number) => setSettings((s) => ({ ...s, glow: value })));
     gui.add(settings, 'grid').onChange((value: number) => setSettings((s) => ({ ...s, grid: Boolean(value) })));
     return () => gui.destroy();
-  }, []);
+  });
 
   return (
     <div className={css.canvas} style={{ backgroundColor: 'white' }}>
