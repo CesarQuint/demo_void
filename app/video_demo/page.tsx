@@ -60,41 +60,93 @@ type FlowmapGeometrySettings = {
   dissipation: number;
 };
 
-const FlowmapGeometry = ({ imageURL }: { settings: FlowmapGeometrySettings, imageURL: string }) => {
-  const { size, viewport } = useThree();
-  const [mouse, setMouse] = useState(new Vector2(-1, -1));
-  const [velocity, setVelocity] = useState(new Vector2(0, 0));
-  const aspect = size.width / size.height;
-  const texture = useLoader(TextureLoader, imageURL);
+const FlowmapGeometry = ({ imageURL, settings: { alpha, falloff, dissipation } }: { settings: FlowmapGeometrySettings, imageURL: string }) => {
+  const { gl, size, viewport } = useThree();
+  //const texture = useLoader(TextureLoader, imageURL);
+  const currentTarget = useRef(0);
+  const renderTargets = useRef([
+    new WebGLRenderTarget(size.width, size.height),
+    new WebGLRenderTarget(size.width, size.height)
+  ]);
 
-  const shaderMaterial = new ShaderMaterial({
+  const scene = useRef(new Scene());
+  const camera = useRef(new OrthographicCamera(
+    size.width / -2, size.width / 2,
+    size.height / 2, size.height / -2,
+    0.1, 10
+  ));
+  camera.current.position.z = 1;
+
+  const shaderMaterial = useMemo(() => new ShaderMaterial({
     uniforms: {
-      tMap: { value: null },
-      uAlpha: { value: 1.0 },
-      uMouse: { value: new Vector2(-1, -1) },
-      uAspect: { value: 1.0 },
-      uFalloff: { value: 0.5 },
-      uVelocity: { value: new Vector2(0, 0) },
-      uDissipation: { value: 0.98 },
+      tMap: { value: renderTargets.current[currentTarget.current].texture },
+      uAlpha: { value: alpha },
+      uMouse: { value: new Vector2() },
+      uFalloff: { value: falloff * 0.5 },
+      uVelocity: { value: new Vector2() },
+      uResolution: { value: new Vector2(size.width * viewport.dpr, size.height * viewport.dpr) },
+      uDissipation: { value: dissipation },
     },
     vertexShader: VRTX_SHADER,
     fragmentShader: FRAG_SHADER
-  })
+  }), [alpha, falloff, dissipation, size.width, size.height, viewport.dpr]);
 
-  useFrame(({ clock, pointer }) => {
-    // Calculate velocity
-    const newVelocity = new Vector2(
-      mouse.x - shaderMaterial.uniforms.uMouse.value.x,
-      mouse.y - shaderMaterial.uniforms.uMouse.value.y
-    );
+  useEffect(() => {
+    createFBOs();
+    initScene();
+  }, []);
+
+  const createFBOs = () => {
+    for (let i = 0; i < 2; i++) {
+      renderTargets.current[i] = new WebGLRenderTarget(size.width, size.height);
+    }
+
+    renderTargets.current[0].texture.wrapS = renderTargets.current[0].texture.wrapT = RepeatWrapping;
+    renderTargets.current[1].texture.wrapS = renderTargets.current[1].texture.wrapT = RepeatWrapping;
+  };
+
+  const initScene = () => {
+    const geometry = new PlaneGeometry(2, 2);
+    const plane = new Mesh(geometry, shaderMaterial);
+    scene.current.add(plane);
+  };
+
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      renderTargets.current.forEach(target => target.setSize(width, height));
+      camera.current.left = width / -2;
+      camera.current.right = width / 2;
+      camera.current.top = height / 2;
+      camera.current.bottom = height / -2;
+      camera.current.updateProjectionMatrix();
+      shaderMaterial.uniforms.uResolution.value.set(width * viewport.dpr, height * viewport.dpr);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [shaderMaterial, viewport.dpr]);
+
+  useFrame(({ pointer }) => {
+    const delta = new Vector2().subVectors(pointer, shaderMaterial.uniforms.uMouse.value).multiplyScalar(10);
 
     // Update shader uniforms
     shaderMaterial.uniforms.uMouse.value.set(pointer.x, pointer.y);
-    shaderMaterial.uniforms.uVelocity.value = newVelocity;
-    shaderMaterial.uniforms.uAspect.value = aspect;
+    shaderMaterial.uniforms.uVelocity.value.set(delta.x, delta.y);
 
-    // Optionally, you can smooth the velocity change
-    setVelocity(newVelocity);
+    // Swap render targets
+    const nextTarget = 1 - currentTarget.current;
+
+    // Update the shader material's texture with the current render target's texture
+    shaderMaterial.uniforms.tMap.value = renderTargets.current[currentTarget.current].texture;
+
+    // Render to the next render target
+    gl.setRenderTarget(renderTargets.current[nextTarget]);
+    gl.render(scene.current, camera.current);
+    gl.setRenderTarget(null);
+
+    // Update the current render target
+    currentTarget.current = nextTarget;
   });
 
   return (
