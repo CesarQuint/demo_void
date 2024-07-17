@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useRef, useEffect, useState, useMemo } from 'react';
-import { TextureLoader, WebGLRenderTarget, Vector2, ShaderMaterial, OrthographicCamera, Mesh, PlaneGeometry, Scene, RepeatWrapping } from 'three';
+import React, { useRef, useEffect, useState } from 'react';
+import { TextureLoader, WebGLRenderTarget, Vector2, ShaderMaterial, OrthographicCamera, Mesh, PlaneGeometry, Scene } from 'three';
 import { Canvas, useThree, useFrame, useLoader, ThreeEvent } from '@react-three/fiber';
 import { GUI } from 'lil-gui';
 
@@ -79,6 +79,7 @@ type FlowmapGeometrySettings = {
 const FlowmapGeometry = ({ imageURL, settings: { alpha, falloff, dissipation } }: { settings: FlowmapGeometrySettings, imageURL: string }) => {
   const { gl, size, viewport } = useThree();
   //const texture = useLoader(TextureLoader, imageURL);
+
   const currentTarget = useRef(0);
   const renderTargets = useRef([
     new WebGLRenderTarget(size.width, size.height),
@@ -93,7 +94,7 @@ const FlowmapGeometry = ({ imageURL, settings: { alpha, falloff, dissipation } }
   ));
   camera.current.position.z = 1;
 
-  const shaderMaterial = useMemo(() => new ShaderMaterial({
+  const shaderMaterial = useRef(new ShaderMaterial({
     uniforms: {
       tMap: { value: renderTargets.current[currentTarget.current].texture },
       uAlpha: { value: alpha },
@@ -105,56 +106,35 @@ const FlowmapGeometry = ({ imageURL, settings: { alpha, falloff, dissipation } }
     },
     vertexShader: VRTX_SHADER,
     fragmentShader: FRAG_SHADER
-  }), [alpha, falloff, dissipation, size.width, size.height, viewport.dpr]);
+  }));
 
   useEffect(() => {
-    createFBOs();
-    initScene();
-  }, []);
+    shaderMaterial.current.uniforms.uAlpha.value = alpha;
+    shaderMaterial.current.uniforms.uFalloff.value = falloff * 0.5;
+    shaderMaterial.current.uniforms.uDissipation.value = dissipation;
+    shaderMaterial.current.uniforms.uResolution.value.set(size.width * viewport.dpr, size.height * viewport.dpr);
 
-  const createFBOs = () => {
-    for (let i = 0; i < 2; i++) {
-      renderTargets.current[i] = new WebGLRenderTarget(size.width, size.height);
-    }
-
-    renderTargets.current[0].texture.wrapS = renderTargets.current[0].texture.wrapT = RepeatWrapping;
-    renderTargets.current[1].texture.wrapS = renderTargets.current[1].texture.wrapT = RepeatWrapping;
-  };
-
-  const initScene = () => {
-    const geometry = new PlaneGeometry(2, 2);
-    const plane = new Mesh(geometry, shaderMaterial);
+    const geometry = new PlaneGeometry(1, 1);
+    const plane = new Mesh(geometry, shaderMaterial.current);
     scene.current.add(plane);
-  };
 
-  useEffect(() => {
-    const handleResize = () => {
-      const width = window.innerWidth;
-      const height = window.innerHeight;
-      renderTargets.current.forEach(target => target.setSize(width, height));
-      camera.current.left = width / -2;
-      camera.current.right = width / 2;
-      camera.current.top = height / 2;
-      camera.current.bottom = height / -2;
-      camera.current.updateProjectionMatrix();
-      shaderMaterial.uniforms.uResolution.value.set(width * viewport.dpr, height * viewport.dpr);
+    return () => {
+      shaderMaterial.current.dispose();
     };
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, [shaderMaterial, viewport.dpr]);
+  }, [alpha, falloff, dissipation, size.width, size.height, viewport.dpr]);
 
   useFrame(({ pointer }) => {
-    const delta = new Vector2().subVectors(pointer, shaderMaterial.uniforms.uMouse.value).multiplyScalar(10);
+    const delta = new Vector2().subVectors(pointer, shaderMaterial.current.uniforms.uMouse.value).multiplyScalar(10);
 
     // Update shader uniforms
-    shaderMaterial.uniforms.uMouse.value.set(pointer.x, pointer.y);
-    shaderMaterial.uniforms.uVelocity.value.set(delta.x, delta.y);
+    shaderMaterial.current.uniforms.uMouse.value.set(pointer.x, pointer.y);
+    shaderMaterial.current.uniforms.uVelocity.value.set(delta.x, delta.y);
 
     // Swap render targets
     const nextTarget = 1 - currentTarget.current;
 
     // Update the shader material's texture with the current render target's texture
-    shaderMaterial.uniforms.tMap.value = renderTargets.current[currentTarget.current].texture;
+    shaderMaterial.current.uniforms.tMap.value = renderTargets.current[currentTarget.current].texture;
 
     // Render to the next render target
     gl.setRenderTarget(renderTargets.current[nextTarget]);
@@ -168,7 +148,7 @@ const FlowmapGeometry = ({ imageURL, settings: { alpha, falloff, dissipation } }
   return (
     <mesh scale={[viewport.width, viewport.height, 1]}>
       <planeGeometry args={[1, 1, 1, 1]} />
-      <primitive object={shaderMaterial} />
+      <primitive object={shaderMaterial.current} />
     </mesh>
   );
 };
