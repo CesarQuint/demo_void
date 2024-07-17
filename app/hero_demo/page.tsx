@@ -13,12 +13,12 @@ export default function Hero() {
   const { ref: containerHeroRef } = useIntersectionObserver();
 
   const [settings, setSettings] = useState({
-    easing_factor: 0.05,
-    orb_size: 0.6,
-    contrast: 1.8,
-    columns: 10,
-    glow: 0.15,
     grid: true,
+    glow: 0.15,
+    columns: 10,
+    orb_size: 0.5,
+    contrast: 5.0,
+    easing_factor: 0.05,
   });
 
   useEffect(() => {
