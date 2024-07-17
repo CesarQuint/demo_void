@@ -227,7 +227,7 @@ function ImageFlowmap({ imageUrl }: { imageUrl: string }) {
 export default function ImageFlow() {
   const [settings, setSettings] = useState({
     alpha: 1,           // opacity of the stamp
-    falloff: 0.3,       // size of the stamp, percentage of the size
+    falloff: 0.6,       // size of the stamp, percentage of the size
     dissipation: 0.98,  // affects the speed that the stamp fades. Closer to 1 is slower
   });
 
