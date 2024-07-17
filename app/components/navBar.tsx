@@ -112,6 +112,15 @@ const NavBar = () => {
                 }}>
                 Home
               </TypedLink>
+              <TypedLink
+                viewAnimate={true}
+                hoverAnimate={false}
+                href="/about"
+                onClick={(e) => {
+                  goTo(e, "/about");
+                }}>
+                El Estudio
+              </TypedLink>
               {/* <TypedLink
                 viewAnimate={true}
                 hoverAnimate={false}
@@ -121,12 +130,7 @@ const NavBar = () => {
                 }}>
                 Proyectos
               </TypedLink> */}
-              <TypedLink
-                viewAnimate={true}
-                hoverAnimate={false}
-                href="/about">
-                El Estudio
-              </TypedLink>
+
               {/* <TypedLink
                 viewAnimate={true}
                 hoverAnimate={false}
@@ -140,6 +144,8 @@ const NavBar = () => {
           {/* <TypedLink href="#">Proyectos</TypedLink> */}
           <TypedLink
             href="/about"
+            viewAnimate={true}
+            hoverAnimate={false}
             onClick={(e) => {
               goTo(e, "/about");
             }}>
@@ -154,8 +160,8 @@ const NavBar = () => {
         </div>
 
         <div className={styles.langs}>
-          <button>Español</button>
-          <button>English</button>
+          {/* <button>Español</button>
+          <button>English</button> */}
         </div>
       </section>
     </header>

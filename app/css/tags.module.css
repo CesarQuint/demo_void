@@ -4,7 +4,7 @@
 
 .tags_wrapper {
   color: #101010;
-  padding: 3vh 6vh;
+  padding: 3vh 2vh;
 }
 
 .tags_container {
@@ -63,6 +63,10 @@
 }
 /* Media Part */
 @media (min-width: 768px) {
+  .tags_wrapper {
+    color: #101010;
+    padding: 3vh 6vh;
+  }
   .tag {
     padding: 2rem 3.5rem;
     flex-flow: row;

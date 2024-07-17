@@ -67,7 +67,7 @@
   pointer-events: none;
 
   & a:last-child {
-    margin-top: 60px;
+    margin-top: 20px;
   }
 }
 

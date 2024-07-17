@@ -8,7 +8,6 @@ const TagsHome = () => {
     <motion.div
       style={{
         width: "100%",
-        padding: "0 6vh",
         boxSizing: "border-box",
         position: "relative",
       }}>
