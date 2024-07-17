@@ -75,7 +75,7 @@ const ProjectImages = (props: Props) => {
             DESTACADOS
           </h3>
           <div className={styles.line}>
-            <button className={styles.viewAll}>VER TODOS</button>
+            <button className={styles.viewAll}>PROXIMAMENTE</button>
           </div>
           {stand_out_projects.map((_, i) => (
             <div
