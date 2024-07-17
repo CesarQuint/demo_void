@@ -7,8 +7,12 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
-import TypedLink from "./TypedLink/TypedLink";
 import useWindow from "../utils/hooks/useWindow";
+import dynamic from "next/dynamic";
+
+const TypedLink = dynamic(() => import("./TypedLink/TypedLink"), {
+  ssr: false,
+});
 
 gsap.registerPlugin(useGSAP);
 
