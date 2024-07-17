@@ -7,8 +7,11 @@ import { GUI } from 'lil-gui';
 import { DisplacementGeometry } from './ColumnDisplacementMaterial';
 import { CustomCursor } from '../components/cursor';
 import css from '../css/canvas.module.css';
+import { useIntersectionObserver } from '../utils/hooks/useIntersectionObserver';
 
 export default function Hero() {
+  const { ref: containerHeroRef } = useIntersectionObserver();
+
   const [settings, setSettings] = useState({
     easing_factor: 0.05,
     orb_size: 0.6,
@@ -30,8 +33,8 @@ export default function Hero() {
   });
 
   return (
-    <div className={css.canvas} style={{ backgroundColor: 'white' }}>
-      <CustomCursor />
+    <div ref={containerHeroRef} className={css.canvas} style={{ backgroundColor: 'white' }}>
+      <CustomCursor containerRef={containerHeroRef} />
       <Canvas>
         <DisplacementGeometry settings={settings} />
       </Canvas>

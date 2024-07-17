@@ -59,10 +59,7 @@ const GsapComponent = ({
         erat finibus vitae. Nulla pretium malesuada dolor ac pretium.
       </p>
 
-      <Title
-        text="VOIDXR"
-        words={16}
-      />
+      <Title />
 
       <p
         ref={textRef}
