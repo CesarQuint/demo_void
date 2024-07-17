@@ -32,6 +32,8 @@ export default function ScrollGallery() {
             alt="example"
             title="Raíces lumínicas"
             caption="Instalación visual en el bosque"
+            date=''
+            tag=''
           />
         ))}
       </div>
