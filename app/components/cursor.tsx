@@ -1,9 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { gsap } from "gsap";
-import { useGSAP } from "@gsap/react";
 import css from "../css/cursor.module.css";
-
-gsap.registerPlugin(useGSAP);
 
 interface CustomCursorProps {
   containerRef: React.RefObject<HTMLDivElement>;
@@ -13,7 +10,6 @@ export const CustomCursor = ({ containerRef }: CustomCursorProps) => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const cursorRingRef = useRef<HTMLDivElement>(null);
   const cursorDotRef = useRef<HTMLDivElement>(null);
-  const { contextSafe } = useGSAP();
 
   const onMouseMove = (e: MouseEvent) => {
     if (containerRef.current) {
@@ -29,35 +25,32 @@ export const CustomCursor = ({ containerRef }: CustomCursorProps) => {
         y <= containerRect.height
       ) {
         setPosition({ x, y });
+
+        // Fade in the cursor on movement
+        gsap.to([cursorRingRef.current, cursorDotRef.current], {
+          opacity: 1,
+          duration: 0.3,
+        });
       }
     }
   };
 
-  const onMouseEnter = contextSafe(() => {
-    gsap.to([cursorRingRef.current, cursorDotRef.current], {
-      opacity: 1,
-      duration: 0.3,
-    });
-  });
-
-  const onMouseLeave = contextSafe(() => {
+  const onMouseLeave = () => {
     gsap.to([cursorRingRef.current, cursorDotRef.current], {
       opacity: 0,
       duration: 0.3,
     });
-  });
+  };
 
   useEffect(() => {
     if (containerRef.current) {
       containerRef.current.addEventListener("mousemove", onMouseMove);
-      containerRef.current.addEventListener("mouseenter", onMouseEnter);
       containerRef.current.addEventListener("mouseleave", onMouseLeave);
     }
 
     return () => {
       if (containerRef.current) {
         containerRef.current.removeEventListener("mousemove", onMouseMove);
-        containerRef.current.removeEventListener("mouseenter", onMouseEnter);
         containerRef.current.removeEventListener("mouseleave", onMouseLeave);
       }
     };

@@ -110,6 +110,13 @@ function SecondPage() {
         className="courtain"
       />
       <HeroContainer />
+      <motion.div className={styles.video_container}>
+        <video
+          className={styles.video}
+          src="https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/videos/voidxr-demo-eyecandy-home.mp4"
+          controls={true}
+        />
+      </motion.div>
       <ProjectImages />
       <ProcessHome />
       <TagsHome />

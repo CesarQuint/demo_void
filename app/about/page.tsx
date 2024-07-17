@@ -119,7 +119,7 @@ const About = (props: Props) => {
       <motion.div className={styles.video_container}>
         <video
           className={styles.video}
-          src="/videos/cdmx.mp4"
+          src="https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/videos/voidxr-demo-processes.mp4"
           controls={true}
         />
       </motion.div>
