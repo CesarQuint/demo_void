@@ -105,7 +105,7 @@ function ImageFlowmap({ imageUrl }: { imageUrl: string }) {
   const [velocity, setVelocity] = useState(new THREE.Vector2());
   const [lastMouse, setLastMouse] = useState(new THREE.Vector2());
   const [lastTime, setLastTime] = useState<number>(0);
-  const renderer = new Renderer({ dpr: 2 });
+  //const renderer = new Renderer({ dpr: 2 });
 
   const shaderMaterial = new THREE.ShaderMaterial({
     uniforms: {
