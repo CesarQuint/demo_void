@@ -18,7 +18,7 @@
   gap: 2vh;
   width: 80%;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   transform: all 1s;
 }
 
@@ -78,11 +78,11 @@
 }
 
 .nav {
-  display: none;
+  display: inline;
 }
 
 .social {
-  display: none;
+  display: inline;
 }
 
 /* Media Part */
