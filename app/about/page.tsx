@@ -59,7 +59,7 @@ const About = (props: Props) => {
         safeToRemove();
       }
     };
-  }, []);
+  });
 
   useEffect(() => {
     if (navigationEvent.href !== pathname) {
