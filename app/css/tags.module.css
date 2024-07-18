@@ -31,10 +31,16 @@
 
 .left_content {
   width: 100%;
+  text-align: center;
+}
+
+.image {
+  width: 50%;
+  height: auto;
 }
 
 .right_content {
-  width: 60%;
+  width: 100%;
   display: flex;
   flex-flow: column nowrap;
   gap: 4vh;
@@ -70,6 +76,10 @@
   .tag {
     padding: 2rem 3.5rem;
     flex-flow: row;
+  }
+
+  .right_content {
+    width: 60%;
   }
 
   .left_content h4 {

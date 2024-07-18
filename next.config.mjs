@@ -14,6 +14,12 @@ const nextConfig = {
         port: "",
         pathname: "/thumbnails/**",
       },
+      {
+        protocol: "https",
+        hostname: "voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com",
+        port: "",
+        pathname: "/icons/**",
+      },
     ],
   },
 };

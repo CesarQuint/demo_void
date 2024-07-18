@@ -1,5 +1,11 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+import React, {
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import styles from "../css/tags.module.css";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -7,6 +13,7 @@ import { motion } from "framer-motion";
 import { useGSAP } from "@gsap/react";
 import { AboutUsTag } from "../constants/tags_text";
 import useWindow from "../utils/hooks/useWindow";
+import Image from "next/image";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -16,9 +23,11 @@ type Props = {
 
 type TagsContentProps = {
   i: number;
+  img: string;
   number: string;
   title: string;
   content: string[];
+  setImageLoaded: Dispatch<SetStateAction<boolean>>;
 };
 
 const TagsContent = (props: TagsContentProps) => {
@@ -31,8 +40,17 @@ const TagsContent = (props: TagsContentProps) => {
           <p className={styles.right_numeral}>{props.number}</p>
           <h5 className={styles.title}>{props.title}</h5>
         </section>
-        <section className={styles.left_content}>
-          <h4>{props.number}</h4>
+        <section>
+          <Image
+            onLoad={() => {
+              props.setImageLoaded(true);
+            }}
+            width={1000}
+            height={1000}
+            className={styles.image}
+            src={props.img}
+            alt="image_card"
+          />
         </section>
         <div className={styles.right_text_content}>
           {props.content.map((text, i) => (
@@ -47,7 +65,16 @@ const TagsContent = (props: TagsContentProps) => {
     return (
       <>
         <section className={styles.left_content}>
-          <h4>{props.number}</h4>
+          <Image
+            onLoad={() => {
+              props.setImageLoaded(true);
+            }}
+            width={1000}
+            height={1000}
+            className={styles.image}
+            src={props.img}
+            alt="image_card"
+          />
         </section>
         <article className={styles.right_content}>
           <section>
@@ -68,6 +95,7 @@ const TagsContent = (props: TagsContentProps) => {
 const Tags = (props: Props) => {
   const container = useRef<HTMLDivElement>(null);
   const windowStatus = useWindow();
+  const [imgLoad, setImageLoad] = useState(false);
 
   useGSAP(
     () => {
@@ -130,7 +158,7 @@ const Tags = (props: Props) => {
           .forEach((el, i) => gsap.set(el, { marginTop: margins[i] }));
       }
     },
-    { scope: container, dependencies: [container] }
+    { scope: container, dependencies: [container, imgLoad] }
   );
 
   return (
@@ -145,9 +173,11 @@ const Tags = (props: Props) => {
               className={`${styles.tag}`}>
               <TagsContent
                 i={i}
+                img={_.img}
                 title={_.title}
                 number={_.number}
                 content={_.content}
+                setImageLoaded={setImageLoad}
               />
             </motion.div>
           ))}
