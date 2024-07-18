@@ -1,12 +1,17 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { motion } from "framer-motion";
 import styles from "../../css/projects.module.css";
-import ScrollImg from "../ScrollImg/ScrollImg";
+import s from "../ScrollImg/ScrollImg.module.css";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/all";
 import { stand_out_projects } from "@/app/constants/stand_out_projects";
+import Image from "next/image";
+import Splitting from "splitting";
+
+// prettier-ignore
+const CHARS = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '!', '@', '#', '$', '%', '^', '&', '*', '-', '_', '+', '=', ';', ':', '<', '>', ',']
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -15,12 +20,25 @@ type Props = {};
 const ProjectImages = (props: Props) => {
   const container = useRef<HTMLDivElement>(null);
   const scrollContainer = useRef<HTMLDivElement>(null);
-  const [tl, setTl] = useState<gsap.core.Timeline | null>(null);
+  const imgContainer = useRef<HTMLElement[]>([]);
 
   useGSAP(
     () => {
       const [title, line, ...boxes] = scrollContainer.current!
         .children as any as HTMLElement[];
+
+      const captions = gsap.utils.toArray<HTMLEmbedElement>(".word-animated");
+
+      const splitting = Splitting({
+        target: captions,
+        by: "chars",
+      });
+
+      gsap.set(captions, { opacity: 0 });
+
+      const containerHeight = container.current!.offsetHeight;
+      const availableSpace = window.innerHeight - containerHeight;
+      const minHeight = 200;
 
       gsap
         .matchMedia()
@@ -31,44 +49,265 @@ const ProjectImages = (props: Props) => {
                 ease: "none",
               },
               scrollTrigger: {
-                pin: true,
                 scrub: 0.1,
+                // markers: true,
                 trigger: container.current,
-                start: "+10% top+=15%",
-                end: "bottom top+=15%",
+                start: `+10% ${availableSpace < minHeight ? "center" : `bottom-=${containerHeight}`}`,
+                end: `bottom top+=${containerHeight}`,
               },
             })
             .to(boxes, { xPercent: -100 * boxes.length - 1 }, 0)
             .to(
               title,
               { x: () => -(title.offsetWidth - document.body.offsetWidth) },
-              0
+              0,
             )
             .to(line, { xPercent: -100 }, 0);
 
-          setTl(tl);
+          imgContainer.current.forEach((el) => {
+            gsap
+              .timeline({
+                defaults: {
+                  ease: "none",
+                },
+                scrollTrigger: {
+                  containerAnimation: tl,
+                  trigger: el,
+                  start: "top center",
+                  end: "+=50% center",
+                  scrub: true,
+                  onLeave() {
+                    splitting.forEach((data) => {
+                      if (!el!.contains(data.el as Element)) return;
+
+                      gsap.set(data.el as Element, { opacity: 1 });
+
+                      data.chars?.forEach((char, i) => {
+                        gsap.killTweensOf(char);
+                        gsap.set(char, { textContent: char.dataset.char });
+
+                        let firstRepeat = true;
+
+                        gsap
+                          .timeline({
+                            defaults: { duration: 0.03, repeatDelay: 0.03 },
+                          })
+                          .fromTo(
+                            char,
+                            { opacity: 0 },
+                            { opacity: 1, delay: (i + 1) * 0.04 },
+                          )
+                          .to(
+                            char,
+                            {
+                              repeat: 4,
+                              repeatRefresh: true,
+                              textContent: () =>
+                                CHARS[Math.floor(Math.random() * CHARS.length)],
+                              onStart() {
+                                gsap.set(char, { "--opa": 1 });
+                              },
+                              onRepeat() {
+                                if (firstRepeat) gsap.set(char, { "--opa": 0 });
+                                firstRepeat = false;
+                              },
+                            },
+                            "<",
+                          )
+                          .set(char, { textContent: char.dataset.char });
+                      });
+                    });
+                  },
+                  onEnterBack() {
+                    splitting.forEach((data) => {
+                      if (!el!.contains(data.el as Element)) return;
+
+                      data.chars!.toReversed().forEach((char, i) => {
+                        gsap.killTweensOf(char);
+                        let firstRepeat = true;
+
+                        gsap
+                          .timeline({
+                            defaults: { duration: 0.03, repeatDelay: 0.03 },
+                          })
+                          .to(char, {
+                            repeat: 4,
+                            repeatRefresh: true,
+                            textContent: () =>
+                              CHARS[Math.floor(Math.random() * CHARS.length)],
+                            onStart() {
+                              gsap.set(char, { "--opa": 1 });
+                            },
+                            onRepeat() {
+                              if (firstRepeat) gsap.set(char, { "--opa": 0 });
+                              firstRepeat = false;
+                            },
+                          })
+                          .fromTo(
+                            char,
+                            { opacity: 1 },
+                            { opacity: 0, delay: (i + 1) * 0.04 },
+                            "<",
+                          );
+                      });
+                    });
+                  },
+                },
+              })
+              .fromTo(
+                el?.querySelector(`.${s.wrapper}`)!,
+                {
+                  yPercent: -100,
+                  xPercent: (i) => (i % 2 ? 100 : -100),
+                },
+                {
+                  yPercent: 0,
+                  xPercent: 0,
+                },
+              )
+              .fromTo(
+                el?.querySelector("img")!,
+                {
+                  yPercent: 100,
+                  xPercent: (i) => (i % 2 ? -100 : 100),
+                },
+                {
+                  yPercent: 0,
+                  xPercent: 0,
+                },
+                0,
+              );
+          });
+
+          gsap.set("img", { opacity: 1 });
         })
         .add("(max-width: 700px)", () => {
-          setTl(null);
+          gsap.set("img", { opacity: 1 });
+
+          imgContainer.current.forEach((el) => {
+
+            gsap
+              .timeline({
+                defaults: {
+                  ease: "none",
+                },
+                scrollTrigger: {
+                  trigger: el,
+                  start: 'top bottom-=20%',
+                  end: '+=50% bottom-=20%',
+                  markers: true,
+                  scrub: true,
+                  onLeave() {
+                    splitting.forEach((data) => {
+                      if (!el!.contains(data.el as Element)) return;
+
+                      gsap.set(data.el as Element, { opacity: 1 });
+
+                      data.chars?.forEach((char, i) => {
+                        gsap.killTweensOf(char);
+                        gsap.set(char, { textContent: char.dataset.char });
+
+                        let firstRepeat = true;
+
+                        gsap
+                          .timeline({
+                            defaults: { duration: 0.03, repeatDelay: 0.03 },
+                          })
+                          .fromTo(
+                            char,
+                            { opacity: 0 },
+                            { opacity: 1, delay: (i + 1) * 0.04 },
+                          )
+                          .to(
+                            char,
+                            {
+                              repeat: 4,
+                              repeatRefresh: true,
+                              textContent: () =>
+                                CHARS[Math.floor(Math.random() * CHARS.length)],
+                              onStart() {
+                                gsap.set(char, { "--opa": 1 });
+                              },
+                              onRepeat() {
+                                if (firstRepeat) gsap.set(char, { "--opa": 0 });
+                                firstRepeat = false;
+                              },
+                            },
+                            "<",
+                          )
+                          .set(char, { textContent: char.dataset.char });
+                      });
+                    });
+                  },
+                  onEnterBack() {
+                    splitting.forEach((data) => {
+                      if (!el!.contains(data.el as Element)) return;
+
+                      data.chars!.toReversed().forEach((char, i) => {
+                        gsap.killTweensOf(char);
+                        let firstRepeat = true;
+
+                        gsap
+                          .timeline({
+                            defaults: { duration: 0.03, repeatDelay: 0.03 },
+                          })
+                          .to(char, {
+                            repeat: 4,
+                            repeatRefresh: true,
+                            textContent: () =>
+                              CHARS[Math.floor(Math.random() * CHARS.length)],
+                            onStart() {
+                              gsap.set(char, { "--opa": 1 });
+                            },
+                            onRepeat() {
+                              if (firstRepeat) gsap.set(char, { "--opa": 0 });
+                              firstRepeat = false;
+                            },
+                          })
+                          .fromTo(
+                            char,
+                            { opacity: 1 },
+                            { opacity: 0, delay: (i + 1) * 0.04 },
+                            "<",
+                          );
+                      });
+                    });
+                  },
+                },
+              })
+              .fromTo(
+                el?.querySelector(`.${s.wrapper}`)!,
+                {
+                  yPercent: -100,
+                  xPercent: (i) => (i % 2 ? 100 : -100),
+                },
+                {
+                  yPercent: 0,
+                  xPercent: 0,
+                },
+              )
+              .fromTo(
+                el?.querySelector("img")!,
+                {
+                  yPercent: 100,
+                  xPercent: (i) => (i % 2 ? -100 : 100),
+                },
+                {
+                  yPercent: 0,
+                  xPercent: 0,
+                },
+                0,
+              );
+          });
         });
     },
-    { scope: scrollContainer, dependencies: [container, scrollContainer] }
+    { scope: scrollContainer, dependencies: [container, scrollContainer] },
   );
-
-  const images = [
-    "https://tympanus.net/Development/ConnectedGrid/img/14.jpg",
-    "https://tympanus.net/Development/ConnectedGrid/img/15.jpg",
-    "https://tympanus.net/Development/ConnectedGrid/img/16.jpg",
-    "https://tympanus.net/Development/ConnectedGrid/img/17.jpg",
-    "https://tympanus.net/Development/ConnectedGrid/img/18.jpg",
-  ];
 
   return (
     <motion.div ref={container}>
       <motion.section className={`${styles.project_wrapper}`}>
-        <div
-          className={styles.scrollView}
-          ref={scrollContainer}>
+        <div className={styles.scrollView} ref={scrollContainer}>
           <h3 className={`${styles.title}`}>
             PROYECTOS
             <br />
@@ -81,19 +320,28 @@ const ProjectImages = (props: Props) => {
             <div
               className={styles.imgBox}
               key={i}
-              style={{ "--column": i + 1 } as React.CSSProperties}>
-              <ScrollImg
-                date={_.date}
-                title={_.title}
-                caption={_.description}
-                tag={_.tag}
-                scrollTl={tl}
-                isLeftSide={tl ? false : !(i % 2)}
-                src={_.image}
-                fill
-                sizes="50%"
-                alt="example"
-              />
+              style={{ "--column": i + 1 } as React.CSSProperties}
+            >
+              <figure
+                ref={(el) => void (imgContainer.current[i] = el!)}
+                className={s.figure}
+              >
+                <span className="word-animated">{_.date}</span>
+                <div className={s.wrapper}>
+                  <Image
+                    title={_.title}
+                    src={_.image}
+                    fill
+                    sizes="50%"
+                    alt="example"
+                  />
+                </div>
+                <figcaption className={s.caption}>
+                  <div className={s.tag}>{_.tag}</div>
+                  <div className={`word-animated ${s.title}`}>{_.title}</div>
+                  <div className="word-animated">{_.description}</div>
+                </figcaption>
+              </figure>
             </div>
           ))}
         </div>
