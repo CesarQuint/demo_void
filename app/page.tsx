@@ -11,10 +11,14 @@ import { animate as animation } from "framer-motion";
 import Footer from "./components/footer";
 import HeroContainer from "./components/Home/HeroContainer";
 
-import ProjectImages from "./components/Home/ProjectImages";
 import ProcessHome from "./components/Home/ProcessHome";
 import { PreFooterLink } from "./components/PreFooterLink";
 import TagsHome from "./components/Home/TagsHome";
+import dynamic from "next/dynamic";
+
+const ProjectImages = dynamic(() => import("./components/Home/ProjectImages"), {
+  ssr: false,
+});
 
 const transitionSpringPhysics: Spring = {
   type: "spring",
