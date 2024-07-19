@@ -35,10 +35,7 @@ const ProjectImages = (props: Props) => {
       });
 
       gsap.set(captions, { opacity: 0 });
-
-      const containerHeight = container.current!.offsetHeight;
-      const availableSpace = window.innerHeight - containerHeight;
-      const minHeight = 200;
+      gsap.set(line, { width: scrollContainer.current?.scrollWidth })
 
       gsap
         .matchMedia()
@@ -49,11 +46,12 @@ const ProjectImages = (props: Props) => {
                 ease: "none",
               },
               scrollTrigger: {
-                scrub: 0.1,
                 // markers: true,
+                scrub: 0.1,
+                pin: true,
                 trigger: container.current,
-                start: `+10% ${availableSpace < minHeight ? "center" : `bottom-=${containerHeight}`}`,
-                end: `bottom top+=${containerHeight}`,
+                start: 'top top',
+                end: 'bottom center',
               },
             })
             .to(boxes, { xPercent: -100 * boxes.length - 1 }, 0)
