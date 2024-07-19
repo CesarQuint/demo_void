@@ -99,7 +99,7 @@ const Tags = (props: Props) => {
 
   useGSAP(
     () => {
-      if (container.current !== null) {
+      if (imgLoad && container.current !== null) {
         const tags = gsap.utils.toArray<HTMLDivElement>(`.${styles.tag}`);
         const space = gsap.getProperty(container.current, "gap") as number;
 
@@ -114,7 +114,6 @@ const Tags = (props: Props) => {
           const start = tags[i].offsetTop + tags[i].clientHeight;
           const end = tags[i + 1].offsetTop + tags[i + 1].offsetHeight;
           const scrollStart = space * arr.length;
-          console.log(start);
 
           gsap.fromTo(
             el,
