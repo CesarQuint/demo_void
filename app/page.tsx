@@ -11,10 +11,14 @@ import { animate as animation } from "framer-motion";
 import Footer from "./components/footer";
 import HeroContainer from "./components/Home/HeroContainer";
 
-import ProjectImages from "./components/Home/ProjectImages";
 import ProcessHome from "./components/Home/ProcessHome";
 import { PreFooterLink } from "./components/PreFooterLink";
 import TagsHome from "./components/Home/TagsHome";
+import dynamic from "next/dynamic";
+
+const ProjectImages = dynamic(() => import("./components/Home/ProjectImages"), {
+  ssr: false,
+});
 
 const transitionSpringPhysics: Spring = {
   type: "spring",
@@ -82,7 +86,8 @@ function SecondPage() {
       initial={{ opacity: 1 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 1 }}
-      className={`${styles.main}`}>
+      className={`${styles.main}`}
+    >
       <motion.div
         ref={scope2}
         style={{
