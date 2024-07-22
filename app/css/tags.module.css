@@ -57,15 +57,17 @@
 }
 
 .title {
-  font-family: "graphie";
-  font-size: 2rem;
+  font-family: Panchang;
+  font-size: 2.8rem;
+  color: #fff;
 }
 
 .right_text_content {
   display: flex;
   flex-flow: column nowrap;
   gap: 2vh;
-  font-size: 1rem;
+  font-size: 1.4rem;
+  color: #f1f1f1;
 }
 /* Media Part */
 @media (min-width: 768px) {
