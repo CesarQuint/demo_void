@@ -35,11 +35,12 @@ const ProjectImages = (props: Props) => {
       });
 
       gsap.set(captions, { opacity: 0 });
-      gsap.set(line, { width: scrollContainer.current?.scrollWidth })
 
       gsap
         .matchMedia()
         .add("(min-width: 700px)", () => {
+          gsap.set(line, { width: scrollContainer.current?.scrollWidth });
+
           const tl = gsap
             .timeline({
               defaults: {
@@ -50,8 +51,8 @@ const ProjectImages = (props: Props) => {
                 scrub: 0.1,
                 pin: true,
                 trigger: container.current,
-                start: 'top top',
-                end: 'bottom center',
+                start: "top top",
+                end: "bottom center",
               },
             })
             .to(boxes, { xPercent: -100 * boxes.length - 1 }, 0)
@@ -183,7 +184,6 @@ const ProjectImages = (props: Props) => {
           gsap.set("img", { opacity: 1 });
 
           imgContainer.current.forEach((el) => {
-
             gsap
               .timeline({
                 defaults: {
@@ -191,9 +191,9 @@ const ProjectImages = (props: Props) => {
                 },
                 scrollTrigger: {
                   trigger: el,
-                  start: 'top bottom-=20%',
-                  end: '+=50% bottom-=20%',
-                  markers: true,
+                  start: "top bottom-=20%",
+                  end: "+=50% bottom-=20%",
+                  // markers: true,
                   scrub: true,
                   onLeave() {
                     splitting.forEach((data) => {
