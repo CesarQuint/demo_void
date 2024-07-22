@@ -67,6 +67,8 @@
   display: flex;
   flex-flow: row nowrap;
   gap: 10px;
+  width: 30%;
+  margin: auto;
 }
 
 .step {

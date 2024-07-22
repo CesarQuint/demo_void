@@ -7,7 +7,7 @@
   display: flex;
   height: 100%;
   flex-flow: column nowrap;
-  gap: 6vh;
+  gap: 16vh;
   align-items: center;
   justify-content: space-between;
 }
@@ -54,7 +54,7 @@
   display: flex;
   flex-flow: row nowrap;
   gap: 10px;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .about_buttons button {
@@ -98,7 +98,7 @@
     display: flex;
     flex-flow: row nowrap;
     gap: 2vh;
-    width: 80%;
+    width: 92%;
     justify-content: space-between;
     align-items: flex-start;
   }
