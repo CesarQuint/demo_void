@@ -1,0 +1,63 @@
+.main {
+  width: 100%;
+  padding: 20vh 4vh 10vh;
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 4vh;
+}
+
+.section {
+  padding: 2vh;
+  display: flex;
+  flex-flow: column nowrap;
+  background-color: #1d1d1d;
+  border-radius: 20px;
+  justify-content: space-between;
+}
+
+.section_1 {
+  height: 42vh;
+  font-family: "graphie";
+}
+.section_2 {
+  height: 48vh;
+}
+.section_3 {
+}
+
+.description {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 2vh;
+}
+
+.title {
+  font-family: "graphie";
+  font-size: 2rem;
+}
+
+.text {
+  font-family: "graphie";
+  font-size: 1.5rem;
+}
+
+.buttons_wrapper {
+  display: flex;
+  flex-flow: row;
+  gap: 1vh;
+}
+.buttons_wrapper button {
+  padding: 2vh;
+  border: none;
+  background-color: black;
+  color: white;
+  font-size: 1.2rem;
+}
+
+.button_1 {
+  border-radius: 20px;
+}
+
+.button_2 {
+  border-radius: 50%;
+}
