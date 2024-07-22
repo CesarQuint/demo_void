@@ -2,8 +2,10 @@ import React from "react";
 import { motion } from "framer-motion";
 import styles from "../css/footer.module.css";
 import Title from "./title";
-import Timer from "./Timer";
+// import Timer from "./Timer";
 import dynamic from "next/dynamic";
+
+const Timer = dynamic(() => import('./Timer'), { ssr: false});
 
 const TypedLink = dynamic(() => import("./TypedLink/TypedLink"), {
   ssr: false,
