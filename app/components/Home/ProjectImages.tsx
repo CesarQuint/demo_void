@@ -52,7 +52,7 @@ const ProjectImages = (props: Props) => {
                 pin: true,
                 trigger: container.current,
                 start: "top top",
-                end: "bottom+=100% center",
+                end: "bottom+=400% center",
               },
             })
             .to(boxes, { xPercent: -100 * boxes.length - 1 }, 0)
