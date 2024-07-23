@@ -41,7 +41,7 @@ const TagsContent = (props: TagsContentProps) => {
           <p className={styles.right_numeral}>{props.number}</p>
           <h5 className={styles.title}>{props.title}</h5>
         </section>
-        <section>
+        <section className={styles.image_wrapper}>
           <Image
             onLoad={() => {
               props.setImageLoaded(true);
