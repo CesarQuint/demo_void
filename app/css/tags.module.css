@@ -63,8 +63,8 @@
   color: #fff;
 }
 
-.right_text_content {
-  font-family: "graphie";
+.right_text_content p {
+  font-family: Graphie;
   display: flex;
   flex-flow: column nowrap;
   gap: 2vh;
