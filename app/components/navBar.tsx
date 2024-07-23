@@ -1,5 +1,5 @@
 "use client";
-import React, { MouseEvent, useRef, useState } from "react";
+import React, { MouseEvent, useRef, useState, useEffect } from "react";
 import Link from "next/link";
 import { useNavigation } from "../utils/navigationContext";
 import styles from "../css/navBar.module.css";
@@ -54,6 +54,41 @@ const NavBar = () => {
     { scope: container }
   );
 
+  const lastScrollY = useRef(0);
+
+  useGSAP(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      if (container.current) {
+        if (currentScrollY > lastScrollY.current) {
+          // Scrolling down
+          gsap.to(container.current, {
+            y: "-100%",
+            duration: 0.5,
+            ease: "power2.out",
+          });
+        } else {
+          // Scrolling up
+          gsap.to(container.current, {
+            y: "0%",
+            duration: 0.5,
+            ease: "power2.out",
+          });
+        }
+
+        // Update the last scroll position
+        lastScrollY.current = currentScrollY;
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, {});
+
   const toggleMenu = contextSafe(() => {
     if (windowInfo.innerWidth > 0 && windowInfo.innerWidth < 700) {
       setIsMenuOpen(!isMenuOpen);
@@ -92,9 +127,7 @@ const NavBar = () => {
             height={40}
           />
 
-          <button
-            className={styles.nav_btn}
-            onClick={toggleMenu}>
+          <button className={styles.nav_btn} onClick={toggleMenu}>
             <div className={styles.line1}></div>
             <div className={styles.line2}></div>
           </button>
@@ -109,7 +142,8 @@ const NavBar = () => {
                 href="/"
                 onClick={(e) => {
                   goTo(e, "/");
-                }}>
+                }}
+              >
                 Home
               </TypedLink>
               <TypedLink
@@ -118,7 +152,8 @@ const NavBar = () => {
                 href="/about"
                 onClick={(e) => {
                   goTo(e, "/about");
-                }}>
+                }}
+              >
                 El Estudio
               </TypedLink>
               {/* <TypedLink
@@ -148,7 +183,8 @@ const NavBar = () => {
             hoverAnimate={false}
             onClick={(e) => {
               goTo(e, "/about");
-            }}>
+            }}
+          >
             El Estudio
           </TypedLink>
           {/* <Link
