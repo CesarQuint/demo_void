@@ -7,7 +7,7 @@
   display: flex;
   height: 100%;
   flex-flow: column nowrap;
-  gap: 16vh;
+  gap: 12vh;
   align-items: center;
   justify-content: space-between;
 }
@@ -89,6 +89,10 @@
 
 /* Media Part */
 @media (min-width: 700px) {
+  .footer_flex {
+    gap: 30vh;
+  }
+
   .contact {
     width: 42%;
   }
