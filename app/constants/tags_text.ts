@@ -8,7 +8,7 @@ export interface AboutUsTag {
 export const about_us_tags: AboutUsTag[] = [
   {
     number: "01",
-    img: "https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/icons/concept.png",
+    img: "https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/icons/Concept-01.png",
     title: "Conceptualización",
     content: [
       "Todo empieza con una idea. En esta primera fase, nos sumergimos en las necesidades del proyecto. Explorando cada detalle y objetivo junto con nuestros clientes buscamos destilar el mensaje esencial que queremos transmitir a nuestros usuarios.",
@@ -17,7 +17,7 @@ export const about_us_tags: AboutUsTag[] = [
   },
   {
     number: "02",
-    img: "https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/icons/design.png",
+    img: "https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/icons/Design-01.png",
     title: "Diseño",
     content: [
       "Partiendo desde una idea clave, nos adentramos en la exploración creativa para desarrollar una fusión perfecta entre el concepto y las técnicas visuales.",
@@ -26,7 +26,7 @@ export const about_us_tags: AboutUsTag[] = [
   },
   {
     number: "03",
-    img: "https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/icons/production.png",
+    img: "https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/icons/Production-01.png",
     title: "Producción",
     content: [
       "En la fase de producción, transformamos la visión en realidad. Con pasos técnicos y logísticos, desarrollamos la pieza de forma tangible, ajustando cada detalle en el espacio físico. ",
@@ -35,7 +35,7 @@ export const about_us_tags: AboutUsTag[] = [
   },
   {
     number: "04",
-    img: "https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/icons/integration.png",
+    img: "https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/icons/Integration-01.png",
     title: "Integración",
     content: [
       "Finalmente, damos vida a la pieza, donde convergen todas las áreas. Desde arte y diseño de experiencia hasta el desarrollo técnico y de producción, creamos una obra que empuja los límites del arte y la tecnología, brindando una experiencia única e innovadora.",
