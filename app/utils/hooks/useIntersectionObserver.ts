@@ -12,7 +12,7 @@ export function useIntersectionObserver() {
         setIsIntersecting(entry.isIntersecting);
       },
       {
-        rootMargin: "200px",
+        rootMargin: "500px",
       }
     );
 
