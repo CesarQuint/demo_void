@@ -14,6 +14,7 @@ import { useGSAP } from "@gsap/react";
 import { AboutUsTag } from "../constants/tags_text";
 import useWindow from "../utils/hooks/useWindow";
 import Image from "next/image";
+import { useIntersectionObserver } from "../utils/hooks/useIntersectionObserver";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -40,7 +41,7 @@ const TagsContent = (props: TagsContentProps) => {
           <p className={styles.right_numeral}>{props.number}</p>
           <h5 className={styles.title}>{props.title}</h5>
         </section>
-        <section>
+        <section className={styles.image_wrapper}>
           <Image
             onLoad={() => {
               props.setImageLoaded(true);
@@ -93,9 +94,10 @@ const TagsContent = (props: TagsContentProps) => {
 };
 
 const Tags = (props: Props) => {
-  const container = useRef<HTMLDivElement>(null);
   const windowStatus = useWindow();
   const [imgLoad, setImageLoad] = useState(false);
+
+  const { isIntersecting, ref: container } = useIntersectionObserver();
 
   useGSAP(
     () => {
@@ -163,13 +165,9 @@ const Tags = (props: Props) => {
   return (
     <motion.div className={`${styles.main}`}>
       <motion.div className={`${styles.tags_wrapper}`}>
-        <motion.section
-          className={`${styles.tags_container}`}
-          ref={container}>
+        <motion.section className={`${styles.tags_container}`} ref={container}>
           {props.contentArr.map((_, i) => (
-            <motion.div
-              key={i}
-              className={`${styles.tag}`}>
+            <motion.div key={i} className={`${styles.tag}`}>
               <TagsContent
                 i={i}
                 img={_.img}
