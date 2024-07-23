@@ -101,65 +101,81 @@ const Tags = (props: Props) => {
 
   useGSAP(
     () => {
-      if (imgLoad && container.current !== null) {
-        const tags = gsap.utils.toArray<HTMLDivElement>(`.${styles.tag}`);
-        const space = gsap.getProperty(container.current, "gap") as number;
+      if (!imgLoad || !container.current) return;
 
-        const margins = tags.slice(1).map((el, i) => {
-          const iSpace = space * (i + 1);
-          const differenceHeight = tags[0].offsetHeight - el.offsetHeight;
+      const tags = gsap.utils.toArray<HTMLDivElement>(`.${styles.tag}`);
+      const heights = tags.map((el) => el.offsetHeight);
+      const tops = tags.map((el) => el.offsetTop);
+      const space = 32;
 
-          return differenceHeight + iSpace;
-        });
+      gsap.set(container.current, { height: container.current.offsetHeight });
 
-        tags.slice(1).forEach((el, i, arr) => {
-          const start = tags[i].offsetTop + tags[i].clientHeight;
-          const end = tags[i + 1].offsetTop + tags[i + 1].offsetHeight;
-          const scrollStart = space * arr.length;
+      gsap.set(tags, {
+        top: (i, el) => heights[0] - el.offsetHeight + space * i,
+        zIndex: (i) => tags.length - i,
+      });
 
-          gsap.fromTo(
-            el,
-            { scale: 0.95 - i * 0.02 },
-            {
-              scale: 1,
+      gsap.set(tags.slice(1), {
+        position: "absolute",
+        scale: (i) => 0.95 - i * 0.02,
+      });
+
+      const positions = tags.map(() => ({ y: 0 }));
+      const setted = tags.map(() => false);
+
+      function startScroll(i: number) {
+        if (setted[i] || i === tags.length - 1) return;
+        setted[i] = true;
+
+        const scroll = {
+          start:
+            i === 0
+              ? tops[i] + heights[i] / 2
+              : tops[i - 1] + heights[i - 1] / 2 + heights[i],
+          end: heights[i + 1],
+        };
+
+        const y = {
+          start: positions[i].y,
+          end: positions[i].y + heights[i + 1],
+        };
+
+        gsap
+          .timeline({
+            defaults: {
               ease: "none",
-              scrollTrigger: {
-                trigger: container.current,
-                start: `${start} bottom-=${scrollStart}`,
-                end: `${end} bottom-=${scrollStart}`,
-                // markers: true,
-                scrub: true,
-                onUpdate(e) {
-                  const iSpace = space * (i + 1);
-                  const differenceHeight =
-                    tags[0].offsetHeight - el.offsetHeight + iSpace;
-                  const y = (e.end - e.start) * e.progress;
-
-                  gsap.set(el, {
-                    marginTop: y > differenceHeight ? "auto" : margins[i],
-                  });
-                },
+            },
+            scrollTrigger: {
+              trigger: container.current,
+              start: `${scroll.start} center`,
+              end: `+=${scroll.end} center`,
+              // markers: true,
+              scrub: true,
+              onLeave() {
+                startScroll(i + 1);
               },
-            }
+            },
+          })
+          .to(tags[i + 1], { scale: 1 }, 0)
+          .fromTo(
+            positions.slice(i + 1),
+            { y: y.start },
+            {
+              y: y.end,
+              onUpdate() {
+                positions.slice(1).forEach(({ y }, i) => {
+                  gsap.set(tags[i + 1], { y });
+                });
+              },
+            },
+            0,
           );
-        });
 
-        gsap.set(container.current, {
-          maxHeight: container.current!.scrollHeight,
-        });
-
-        gsap.set(tags, {
-          bottom: (i) => space * (tags.length - i),
-          zIndex: (i) => tags.length - i,
-          position: "sticky",
-        });
-
-        tags
-          .slice(1)
-          .forEach((el, i) => gsap.set(el, { marginTop: margins[i] }));
       }
+
+      startScroll(0);
     },
-    { scope: container, dependencies: [container, imgLoad] }
+    { scope: container, dependencies: [container, imgLoad] },
   );
 
   return (
