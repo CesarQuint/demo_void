@@ -4,6 +4,8 @@ import styles from "../css/footer.module.css";
 import Title from "./title";
 // import Timer from "./Timer";
 import dynamic from "next/dynamic";
+import { useNavigation } from "../utils/navigationContext";
+import { useRouter } from "next/navigation";
 
 const Timer = dynamic(() => import("./Timer"), { ssr: false });
 
@@ -14,6 +16,18 @@ const TypedLink = dynamic(() => import("./TypedLink/TypedLink"), {
 type Props = {};
 
 const Footer = (props: Props) => {
+  const { setNavigationEvent } = useNavigation();
+  const router = useRouter();
+
+  function goTo(
+    e: React.MouseEvent<HTMLAnchorElement | MouseEvent>,
+    href: string
+  ) {
+    e.preventDefault();
+
+    setNavigationEvent({ state: true, href });
+  }
+
   return (
     <motion.div className={`${styles.footer}`}>
       <motion.section className={`${styles.footer_flex}`}>
@@ -22,7 +36,7 @@ const Footer = (props: Props) => {
         </motion.section>
 
         <motion.section className={` ${styles.text_container}`}>
-          <motion.div className={`${styles.flex_container}  ${styles.concat}`}>
+          <motion.div className={`${styles.flex_container}  ${styles.contact}`}>
             <div className={`${styles.contact_button_area_wrapper}`}>
               <p>¿Quieres empezar un nuevo proyecto?</p>
               <section className={`${styles.about_buttons}`}>
@@ -30,7 +44,7 @@ const Footer = (props: Props) => {
                 <button className={`${styles.btn_2}`}>+</button>
               </section>
             </div>
-            <p>CONTACTO@VOIDXR.STUDIO</p>
+            <a href="mailto:CONTACTO@VOIDXR.STUDIO">CONTACTO@VOIDXR.STUDIO</a>
           </motion.div>
           <motion.div
             className={`${styles.flex_container}  ${styles.information}`}
@@ -49,14 +63,14 @@ const Footer = (props: Props) => {
               <TypedLink
                 viewAnimate={true}
                 hoverAnimate={false}
-                href="/frammer_main"
+                href="/"
                 onClick={(e) => {
-                  // goTo(e, "/frammer_main");
+                  goTo(e, "/");
                 }}
               >
                 HOME
               </TypedLink>
-              <TypedLink
+              {/* <TypedLink
                 viewAnimate={true}
                 hoverAnimate={false}
                 href="/frammer_main"
@@ -65,18 +79,18 @@ const Footer = (props: Props) => {
                 }}
               >
                 PROJECTS
-              </TypedLink>
+              </TypedLink> */}
               <TypedLink
                 viewAnimate={true}
                 hoverAnimate={false}
-                href="/frammer_main"
+                href="/about"
                 onClick={(e) => {
-                  // goTo(e, "/frammer_main");
+                  goTo(e, "/about");
                 }}
               >
                 STUDIO
               </TypedLink>
-              <TypedLink
+              {/* <TypedLink
                 viewAnimate={true}
                 hoverAnimate={false}
                 href="/frammer_main"
@@ -85,7 +99,7 @@ const Footer = (props: Props) => {
                 }}
               >
                 CONTACT
-              </TypedLink>
+              </TypedLink> */}
             </nav>
           </motion.div>
           <motion.div className={`${styles.flex_container}  ${styles.social}`}>
@@ -95,9 +109,6 @@ const Footer = (props: Props) => {
                 viewAnimate={true}
                 hoverAnimate={false}
                 href="https://www.instagram.com/voidxr.studio?igsh=cDg5MzhmZ2V1ZGRq"
-                onClick={(e) => {
-                  // goTo(e, "/frammer_main");
-                }}
               >
                 INSTAGRAM
               </TypedLink>
@@ -105,9 +116,6 @@ const Footer = (props: Props) => {
                 viewAnimate={true}
                 hoverAnimate={false}
                 href="https://www.facebook.com/voidxr.studio/"
-                onClick={(e) => {
-                  // goTo(e, "/frammer_main");
-                }}
               >
                 FACEBOOK
               </TypedLink>
@@ -115,9 +123,6 @@ const Footer = (props: Props) => {
                 viewAnimate={true}
                 hoverAnimate={false}
                 href="https://www.tiktok.com/@voidxr.studio?_t=8ny8X7FJlEj&_r=1"
-                onClick={(e) => {
-                  // goTo(e, "/frammer_main");
-                }}
               >
                 TIKTOK
               </TypedLink>
@@ -125,9 +130,6 @@ const Footer = (props: Props) => {
                 viewAnimate={true}
                 hoverAnimate={false}
                 href="https://www.linkedin.com/company/voidxr/"
-                onClick={(e) => {
-                  // goTo(e, "/frammer_main");
-                }}
               >
                 LINKEDIN
               </TypedLink>

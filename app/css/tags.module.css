@@ -88,6 +88,7 @@
 
   .right_content {
     width: 60%;
+    justify-content: center;
   }
 
   .left_content h4 {
