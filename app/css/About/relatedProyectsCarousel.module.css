@@ -68,7 +68,7 @@
   display: flex;
   flex-flow: row nowrap;
   gap: 10px;
-  width: 30%;
+  width: 100%;
   margin: auto;
   height: 10px;
 }
@@ -76,7 +76,7 @@
 .step {
   transition: all 0.5s;
   width: 100%;
-  height: 2px;
+  height: 5px;
   border-radius: 40px;
 
   &:hover {
@@ -85,6 +85,13 @@
 }
 
 @media (min-width: 700px) {
+  .steps_container {
+    width: 30%;
+  }
+  .step {
+    height: 4px;
+  }
+
   .image_wrapper {
     transform: translate(-12%, 0);
   }

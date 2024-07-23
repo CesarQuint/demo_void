@@ -73,12 +73,10 @@ export default function Tabs({ tabs }: Props) {
             key={i}
             className={`${s.tab} ${i === currentTab ? s.active : ""}`}
           >
-            <p>
+            <p className={s.text_content}>
               {tab.content.map((txt, i) => (
                 <Fragment key={i}>
                   <span>{txt}</span>
-                  <br />
-                  <br />
                 </Fragment>
               ))}
             </p>
