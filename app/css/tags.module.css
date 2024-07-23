@@ -63,11 +63,12 @@
 }
 
 .right_text_content {
+  font-family: "graphie";
   display: flex;
   flex-flow: column nowrap;
   gap: 2vh;
   font-size: 1.4rem;
-  color: #f1f1f1;
+  color: #d1d1d1;
 }
 /* Media Part */
 @media (min-width: 768px) {
