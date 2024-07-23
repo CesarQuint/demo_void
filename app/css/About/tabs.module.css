@@ -121,4 +121,8 @@
   display: flex;
   width: 100%;
   overflow: scroll;
+
+  @media (min-width: 700px) {
+    overflow: hidden;
+  }
 }

@@ -57,8 +57,9 @@
 }
 
 .title {
-  font-family: "Panchang";
+  font-family: Panchang;
   font-size: 2.8rem;
+  color: #fff;
 }
 
 .right_text_content {

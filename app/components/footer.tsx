@@ -5,7 +5,7 @@ import Title from "./title";
 // import Timer from "./Timer";
 import dynamic from "next/dynamic";
 
-const Timer = dynamic(() => import('./Timer'), { ssr: false});
+const Timer = dynamic(() => import("./Timer"), { ssr: false });
 
 const TypedLink = dynamic(() => import("./TypedLink/TypedLink"), {
   ssr: false,
@@ -30,11 +30,11 @@ const Footer = (props: Props) => {
                 <button className={`${styles.btn_2}`}>+</button>
               </section>
             </div>
-            <p>+52 55 3245 2323</p>
             <p>CONTACTO@VOIDXR.STUDIO</p>
           </motion.div>
           <motion.div
-            className={`${styles.flex_container}  ${styles.information}`}>
+            className={`${styles.flex_container}  ${styles.information}`}
+          >
             <Timer />
             <p>
               Watteau 35, 03700
@@ -52,7 +52,8 @@ const Footer = (props: Props) => {
                 href="/frammer_main"
                 onClick={(e) => {
                   // goTo(e, "/frammer_main");
-                }}>
+                }}
+              >
                 HOME
               </TypedLink>
               <TypedLink
@@ -61,7 +62,8 @@ const Footer = (props: Props) => {
                 href="/frammer_main"
                 onClick={(e) => {
                   // goTo(e, "/frammer_main");
-                }}>
+                }}
+              >
                 PROJECTS
               </TypedLink>
               <TypedLink
@@ -70,7 +72,8 @@ const Footer = (props: Props) => {
                 href="/frammer_main"
                 onClick={(e) => {
                   // goTo(e, "/frammer_main");
-                }}>
+                }}
+              >
                 STUDIO
               </TypedLink>
               <TypedLink
@@ -79,7 +82,8 @@ const Footer = (props: Props) => {
                 href="/frammer_main"
                 onClick={(e) => {
                   // goTo(e, "/frammer_main");
-                }}>
+                }}
+              >
                 CONTACT
               </TypedLink>
             </nav>
@@ -93,7 +97,8 @@ const Footer = (props: Props) => {
                 href="https://www.instagram.com/voidxr.studio?igsh=cDg5MzhmZ2V1ZGRq"
                 onClick={(e) => {
                   // goTo(e, "/frammer_main");
-                }}>
+                }}
+              >
                 INSTAGRAM
               </TypedLink>
               <TypedLink
@@ -102,7 +107,8 @@ const Footer = (props: Props) => {
                 href="https://www.facebook.com/voidxr.studio/"
                 onClick={(e) => {
                   // goTo(e, "/frammer_main");
-                }}>
+                }}
+              >
                 FACEBOOK
               </TypedLink>
               <TypedLink
@@ -111,7 +117,8 @@ const Footer = (props: Props) => {
                 href="https://www.tiktok.com/@voidxr.studio?_t=8ny8X7FJlEj&_r=1"
                 onClick={(e) => {
                   // goTo(e, "/frammer_main");
-                }}>
+                }}
+              >
                 TIKTOK
               </TypedLink>
               <TypedLink
@@ -120,7 +127,8 @@ const Footer = (props: Props) => {
                 href="https://www.linkedin.com/company/voidxr/"
                 onClick={(e) => {
                   // goTo(e, "/frammer_main");
-                }}>
+                }}
+              >
                 LINKEDIN
               </TypedLink>
             </nav>
