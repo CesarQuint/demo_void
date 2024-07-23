@@ -26,7 +26,8 @@ const TextLogo = (props: TextLogoProps) => {
   const imageRef = useRef<HTMLDivElement>(null);
   const timelineRef = useRef<GSAPTimeline | null>(null);
   const [imgLoaded, setImgLoaded] = useState(false);
-  const { isIntersecting, ref: containerRef } = useIntersectionObserver();
+  const { isIntersecting, ref: containerRef } =
+    useIntersectionObserver("900px");
 
   useGSAP(
     () => {
