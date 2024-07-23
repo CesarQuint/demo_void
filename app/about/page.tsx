@@ -125,9 +125,9 @@ const About = (props: Props) => {
           controls={true}
         />
       </motion.div>
+      <Services />
       <Manifest />
       <Process />
-      <Services />
       <PreFooterLink text="PROYECTOS" />
       <Footer />
     </motion.div>
