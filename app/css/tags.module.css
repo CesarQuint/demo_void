@@ -24,6 +24,10 @@
   background: #101010;
   border: 2px solid #fff;
   transform-origin: bottom;
+
+  &:nth-child(n + 1) {
+    position: absolute;
+  }
 }
 
 .left_content {

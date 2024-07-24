@@ -105,35 +105,29 @@ const Tags = (props: Props) => {
 
       const tags = gsap.utils.toArray<HTMLDivElement>(`.${styles.tag}`);
       const heights = tags.map((el) => el.offsetHeight);
-      const tops = tags.map((el) => el.offsetTop);
       const space = 32;
 
-      gsap.set(container.current, { height: container.current.offsetHeight });
+      gsap.set(container.current, {
+        height: heights.reduce((s, h) => s + h + space, 0),
+      });
 
       gsap.set(tags, {
         top: (i, el) => heights[0] - el.offsetHeight + space * i,
         zIndex: (i) => tags.length - i,
       });
 
-      gsap.set(tags.slice(1), {
-        position: "absolute",
-        scale: (i) => 0.95 - i * 0.02,
-      });
+      gsap.set(tags.slice(1), { scale: (i) => 0.95 - i * 0.02 });
 
       const positions = tags.map(() => ({ y: 0 }));
-      const setted = tags.map(() => false);
+      const setters = tags.map((el) => gsap.quickSetter(el, "y", "px"));
+      const loaded = tags.map(() => false);
 
       function startScroll(i: number) {
-        if (setted[i] || i === tags.length - 1) return;
-        setted[i] = true;
+        if (loaded[i] || i === tags.length - 1) return;
+        loaded[i] = true;
 
-        const scroll = {
-          start:
-            i === 0
-              ? tops[i] + heights[i] / 2
-              : tops[i - 1] + heights[i - 1] / 2 + heights[i],
-          end: heights[i + 1],
-        };
+        const scrollDuration = Math.max(...heights);
+        const scrollStart = heights[0] / 2 + scrollDuration * i;
 
         const y = {
           start: positions[i].y,
@@ -147,8 +141,8 @@ const Tags = (props: Props) => {
             },
             scrollTrigger: {
               trigger: container.current,
-              start: `${scroll.start} center`,
-              end: `+=${scroll.end} center`,
+              start: `${scrollStart} center`,
+              end: `+=${scrollDuration} center`,
               // markers: true,
               scrub: true,
               onLeave() {
@@ -163,14 +157,13 @@ const Tags = (props: Props) => {
             {
               y: y.end,
               onUpdate() {
-                positions.slice(1).forEach(({ y }, i) => {
-                  gsap.set(tags[i + 1], { y });
-                });
+                positions
+                  .slice(i + 1)
+                  .forEach(({ y }, j) => setters[i + j + 1](y));
               },
             },
             0,
           );
-
       }
 
       startScroll(0);
