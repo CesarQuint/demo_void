@@ -13,8 +13,6 @@
   flex-direction: column;
   display: flex;
   margin-top: 4vh;
-  gap: 2rem;
-  clip-path: inset(0 0 0 0);
 }
 
 .tag {
@@ -26,8 +24,10 @@
   background: #101010;
   border: 2px solid #fff;
   transform-origin: bottom;
-  box-shadow: 0 -3rem 0px 2rem #000;
-  overflow: hidden;
+
+  &:nth-child(n + 1) {
+    position: absolute;
+  }
 }
 
 .left_content {
