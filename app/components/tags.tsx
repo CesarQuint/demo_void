@@ -119,20 +119,15 @@ const Tags = (props: Props) => {
       gsap.set(tags.slice(1), { scale: (i) => 0.95 - i * 0.02 });
 
       const positions = tags.map(() => ({ y: 0 }));
-      const setters = tags.map((el) => gsap.quickSetter(el, "y", "px"));
       const loaded = tags.map(() => false);
 
       function startScroll(i: number) {
         if (loaded[i] || i === tags.length - 1) return;
         loaded[i] = true;
 
-        const scrollDuration = Math.max(...heights);
-        const scrollStart = heights[0] / 2 + scrollDuration * i;
-
-        const y = {
-          start: positions[i].y,
-          end: positions[i].y + heights[i + 1],
-        };
+        const duration = Math.max(...heights);
+        const start = heights[0] / 2 + duration * i;
+        const y = positions[i].y + heights[i + 1];
 
         gsap
           .timeline({
@@ -141,8 +136,8 @@ const Tags = (props: Props) => {
             },
             scrollTrigger: {
               trigger: container.current,
-              start: `${scrollStart} center`,
-              end: `+=${scrollDuration} center`,
+              start: `${start} center`,
+              end: `+=${duration} center`,
               // markers: true,
               scrub: true,
               onLeave() {
@@ -151,19 +146,7 @@ const Tags = (props: Props) => {
             },
           })
           .to(tags[i + 1], { scale: 1 }, 0)
-          .fromTo(
-            positions.slice(i + 1),
-            { y: y.start },
-            {
-              y: y.end,
-              onUpdate() {
-                positions
-                  .slice(i + 1)
-                  .forEach(({ y }, j) => setters[i + j + 1](y));
-              },
-            },
-            0,
-          );
+          .to(tags.slice(i + 1), { y: `+=${y}` }, 0);
       }
 
       startScroll(0);
