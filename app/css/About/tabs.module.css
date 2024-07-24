@@ -1,0 +1,139 @@
+.container {
+  margin: 5.5rem 0 10rem;
+}
+
+.scrollContainer {
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+
+  max-width: 1200px;
+  margin: auto;
+}
+
+.header {
+  display: flex;
+  position: relative;
+  margin: 2rem 0 5.5rem;
+  padding-bottom: 0.5rem;
+
+  .title {
+    font-family: Panchang;
+    font-size: 1rem;
+    line-height: 1.8;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 300;
+
+    &.active {
+      font-weight: 700;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .line {
+    position: absolute;
+    height: 1px;
+    top: 100%;
+    background: #fff;
+  }
+
+  .title,
+  .line {
+    width: 100%;
+    flex-shrink: 0;
+  }
+
+  @media (min-width: 700px) {
+    font-size: 1.25rem;
+    gap: 3.75rem;
+
+    .title,
+    .line {
+      width: auto;
+      flex: 1;
+    }
+  }
+}
+
+.tab {
+  flex-shrink: 0;
+  width: 100%;
+
+  & p {
+    display: flex;
+    flex-direction: column;
+    gap: 3vh;
+  }
+
+  & p span {
+    font-family: Graphie;
+    font-weight: 100;
+    font-size: 1.8rem;
+    line-height: 1.2;
+  }
+
+  .number {
+    font-family: Panchang;
+    font-weight: 300;
+    font-size: 8.125rem;
+    margin: 2.5rem 0;
+    text-align: center;
+  }
+
+  @media (min-width: 700px) {
+    display: flex;
+    gap: 20px;
+
+    & p {
+      display: flex;
+      flex-direction: column;
+      gap: 3vh;
+      align-content: center;
+      justify-content: center;
+      font-size: 1.625rem;
+      line-height: 1.2;
+    }
+    .number {
+      font-size: 14.5rem;
+    }
+  }
+}
+
+.steps {
+  margin-top: 1.25rem;
+  display: flex;
+  gap: 0.75rem;
+
+  @media (min-width: 700px) {
+    display: none;
+  }
+
+  .step {
+    all: unset;
+    flex: 1;
+    height: 0.25rem;
+    margin: 1.25rem 0;
+    border-radius: 2rem;
+    background: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: background 500ms ease-out;
+
+    &.active {
+      background: #fff;
+    }
+  }
+}
+
+.options {
+  display: flex;
+  width: 100%;
+  overflow: scroll;
+
+  @media (min-width: 700px) {
+    overflow: hidden;
+  }
+}

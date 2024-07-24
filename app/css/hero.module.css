@@ -6,6 +6,8 @@
   background-color: black;
   height: 100vh;
   position: relative;
+  overflow: hidden;
+  opacity: 0;
 }
 
 .hero_wrapper {

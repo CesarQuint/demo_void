@@ -59,7 +59,7 @@ const About = (props: Props) => {
         safeToRemove();
       }
     };
-  }, []);
+  });
 
   useEffect(() => {
     if (navigationEvent.href !== pathname) {
@@ -118,15 +118,16 @@ const About = (props: Props) => {
       <Welcome />
       <motion.div className={styles.video_container}>
         <video
+          autoPlay={true}
+          muted={true}
           className={styles.video}
-          src="/videos/cdmx.mp4"
+          src="https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/videos/voidxr-demo-processes.mp4"
           controls={true}
         />
       </motion.div>
-
+      <Services />
       <Manifest />
       <Process />
-      <Services />
       <PreFooterLink text="PROYECTOS" />
       <Footer />
     </motion.div>

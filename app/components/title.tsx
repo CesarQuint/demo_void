@@ -1,4 +1,3 @@
-"use client";
 import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import Image from "next/image";
@@ -7,9 +6,12 @@ import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import logo from "../../public/void_Nb.svg";
 import CustomEase from "gsap/CustomEase";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+import { useIntersectionObserver } from "../utils/hooks/useIntersectionObserver";
 
 gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(CustomEase);
+gsap.registerPlugin(useGSAP);
 
 type Props = {};
 
@@ -21,41 +23,52 @@ type TextLogoProps = {
 };
 
 const TextLogo = (props: TextLogoProps) => {
-  const containerRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
   const timelineRef = useRef<GSAPTimeline | null>(null);
+  const [imgLoaded, setImgLoaded] = useState(false);
+  const { isIntersecting, ref: containerRef } =
+    useIntersectionObserver("900px");
 
-  useEffect(() => {
-    if (containerRef.current !== null) {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: `${props.offset} center`,
-          end: "bottom center",
-          scrub: 0,
-          markers: true,
-        },
-      });
+  useGSAP(
+    () => {
+      if (isIntersecting) {
+        timelineRef.current?.kill();
 
-      tl.to(imageRef.current, {
-        marginTop: `+=${props.margin! + 1}px`,
-        ease: "none",
-      });
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: `${props.offset} center`,
+            end: "bottom center",
+            scrub: 0,
+          },
+        });
 
-      timelineRef.current = tl;
-    }
-    return () => {
-      timelineRef.current?.kill();
-    };
-  }, []);
+        tl.to(imageRef.current, {
+          marginTop: `+=${props.margin! + 1}px`,
+          ease: "none",
+        });
+
+        timelineRef.current = tl;
+
+        return () => {
+          timelineRef.current?.kill();
+        };
+      }
+    },
+    { scope: containerRef, dependencies: [isIntersecting, imgLoaded] }
+  );
 
   return (
     <motion.div
       ref={containerRef}
       style={{ height: `${props.position}px`, willChange: "transform" }}
-      className={`${styles.text_rep}`}>
+      className={`${styles.text_rep}`}
+    >
       <motion.div ref={imageRef}>
         <Image
+          onLoad={() => {
+            setImgLoaded(true);
+          }}
           className={`${styles.image_logo} ${props.nameRef}`}
           src={logo}
           alt="logo"
@@ -68,6 +81,7 @@ const TextLogo = (props: TextLogoProps) => {
 const Title = (props: Props) => {
   const logoRef = useRef<HTMLDivElement>(null);
   const [positions, setPositions] = useState<number[]>([]);
+  const [imgLoaded, setImgLoaded] = useState(false);
 
   useEffect(() => {
     if (logoRef.current !== null) {
@@ -81,10 +95,6 @@ const Title = (props: Props) => {
       setPositions(newPositions);
     }
   }, []);
-
-  useEffect(() => {
-    console.log(positions);
-  }, [positions]);
 
   return (
     <motion.div className={`${styles.body}`}>
@@ -135,10 +145,11 @@ const Title = (props: Props) => {
             />
           </>
         )}
-        <div
-          ref={logoRef}
-          className={`${styles.text_rep}`}>
+        <div ref={logoRef} className={`${styles.text_rep}`}>
           <Image
+            onLoad={() => {
+              setImgLoaded(true);
+            }}
             className={`${styles.image_logo}`}
             src={logo}
             alt="logo"

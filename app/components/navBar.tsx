@@ -1,5 +1,5 @@
 "use client";
-import React, { MouseEvent, useRef, useState } from "react";
+import React, { MouseEvent, useRef, useState, useEffect } from "react";
 import Link from "next/link";
 import { useNavigation } from "../utils/navigationContext";
 import styles from "../css/navBar.module.css";
@@ -7,8 +7,12 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
-import TypedLink from "./TypedLink/TypedLink";
 import useWindow from "../utils/hooks/useWindow";
+import dynamic from "next/dynamic";
+
+const TypedLink = dynamic(() => import("./TypedLink/TypedLink"), {
+  ssr: false,
+});
 
 gsap.registerPlugin(useGSAP);
 
@@ -50,6 +54,41 @@ const NavBar = () => {
     { scope: container }
   );
 
+  const lastScrollY = useRef(0);
+
+  useGSAP(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      if (container.current) {
+        if (currentScrollY > lastScrollY.current) {
+          // Scrolling down
+          gsap.to(container.current, {
+            y: "-100%",
+            duration: 0.5,
+            ease: "power2.out",
+          });
+        } else {
+          // Scrolling up
+          gsap.to(container.current, {
+            y: "0%",
+            duration: 0.5,
+            ease: "power2.out",
+          });
+        }
+
+        // Update the last scroll position
+        lastScrollY.current = currentScrollY;
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, {});
+
   const toggleMenu = contextSafe(() => {
     if (windowInfo.innerWidth > 0 && windowInfo.innerWidth < 700) {
       setIsMenuOpen(!isMenuOpen);
@@ -80,7 +119,7 @@ const NavBar = () => {
           <Image
             className={styles.image_logo}
             onClick={(e) => {
-              goTo(e, "/frammer_main");
+              goTo(e, "/");
             }}
             src="/void.svg"
             alt="void"
@@ -88,9 +127,7 @@ const NavBar = () => {
             height={40}
           />
 
-          <button
-            className={styles.nav_btn}
-            onClick={toggleMenu}>
+          <button className={styles.nav_btn} onClick={toggleMenu}>
             <div className={styles.line1}></div>
             <div className={styles.line2}></div>
           </button>
@@ -102,13 +139,24 @@ const NavBar = () => {
               <TypedLink
                 viewAnimate={true}
                 hoverAnimate={false}
-                href="/frammer_main"
+                href="/"
                 onClick={(e) => {
-                  goTo(e, "/frammer_main");
-                }}>
+                  goTo(e, "/");
+                }}
+              >
                 Home
               </TypedLink>
               <TypedLink
+                viewAnimate={true}
+                hoverAnimate={false}
+                href="/about"
+                onClick={(e) => {
+                  goTo(e, "/about");
+                }}
+              >
+                El Estudio
+              </TypedLink>
+              {/* <TypedLink
                 viewAnimate={true}
                 hoverAnimate={false}
                 href="/playground"
@@ -116,42 +164,40 @@ const NavBar = () => {
                   goTo(e, "/playground");
                 }}>
                 Proyectos
-              </TypedLink>
-              <TypedLink
-                viewAnimate={true}
-                hoverAnimate={false}
-                href="/">
-                El Estudio
-              </TypedLink>
-              <TypedLink
+              </TypedLink> */}
+
+              {/* <TypedLink
                 viewAnimate={true}
                 hoverAnimate={false}
                 href="/">
                 Contacto
-              </TypedLink>
+              </TypedLink> */}
             </>
           )}
         </div>
         <div className={styles.linksMb}>
-          <TypedLink href="#">Proyectos</TypedLink>
+          {/* <TypedLink href="#">Proyectos</TypedLink> */}
           <TypedLink
             href="/about"
+            viewAnimate={true}
+            hoverAnimate={false}
             onClick={(e) => {
               goTo(e, "/about");
-            }}>
+            }}
+          >
             El Estudio
           </TypedLink>
-          <Link
+          {/* <Link
             href="#"
             className={styles.writeUs}>
             <span className={styles.writeUsTxt}>Escribenos</span>
             <span className={styles.writeUsIcon}>+</span>
-          </Link>
+          </Link> */}
         </div>
 
         <div className={styles.langs}>
-          <button>Español</button>
-          <button>English</button>
+          {/* <button>Español</button>
+          <button>English</button> */}
         </div>
       </section>
     </header>

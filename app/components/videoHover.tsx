@@ -8,6 +8,7 @@ import { log } from "console";
 
 //TODO : Work in the restart of the animation at out
 //TODO: Kill Propertly the animations
+//! Deprecated
 
 const VideoHover: React.FC = () => {
   const videoRef = useRef<HTMLVideoElement>(null);

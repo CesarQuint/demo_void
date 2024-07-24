@@ -1,15 +1,20 @@
-import { Vector3 } from 'three'
+import { Vector2 } from 'three'
 import { extend } from '@react-three/fiber'
 import { shaderMaterial } from '@react-three/drei'
 
+type VortexMaterialUniforms = {
+  u_time: number;
+  u_resolution: Vector2;
+};
+
 const VortexMaterial = shaderMaterial(
-    {
-        u_time: 0,
-        u_resolution: new Vector3(),
-        //pointer: new Vector2()
-    },
-    /*glsl*/
-    `
+  {
+    u_time: 0,
+    u_resolution: new Vector2(),
+    //pointer: new Vector2()
+  },
+  /*glsl*/
+  `
     varying vec2 vUv;
     void main() {
         vec4 modelPosition = modelMatrix * vec4(position, 1.0);
@@ -19,8 +24,8 @@ const VortexMaterial = shaderMaterial(
         vUv = uv;
     }
     `,
-    /*glsl*/
-    `
+  /*glsl*/
+  `
     #ifdef GL_ES
     precision mediump float;
     #endif
@@ -95,5 +100,18 @@ const VortexMaterial = shaderMaterial(
 )
 
 extend({ VortexMaterial });
+
+// Declare JSX intrinsic elements
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      vortexMaterial: {
+        key: string;
+        ref: React.RefObject<VortexMaterialUniforms>;
+        u_resolution: [number, number];
+      };
+    }
+  }
+}
 
 export { VortexMaterial };

@@ -1,26 +1,36 @@
 /* eslint-disable jsx-a11y/alt-text */
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import s from "./ScrollImg.module.css";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 interface Props extends React.ComponentProps<typeof Image> {
-  date: string
-  title: string
-  caption: string
-  tag: string
-  isLeftSide?: boolean
-  scrollTl?: gsap.core.Timeline | null
+  date: string;
+  title: string;
+  caption: string;
+  tag: string;
+  isLeftSide?: boolean;
+  scrollTl?: gsap.core.Timeline | null;
 }
 
-export default function ScrollImg({ title, caption, isLeftSide, date, tag, scrollTl, ...props }: Props) {
-  const container = useRef<HTMLElement>(null)
+export default function ScrollImg({
+  title,
+  caption,
+  isLeftSide,
+  date,
+  tag,
+  scrollTl,
+  ...props
+}: Props) {
+  const container = useRef<HTMLElement>(null);
+  const [imgLoaded, setImgLoaded] = useState(false);
 
   useGSAP(
     () => {
@@ -29,7 +39,7 @@ export default function ScrollImg({ title, caption, isLeftSide, date, tag, scrol
         container.current!.offsetTop + container.current!.offsetHeight;
       const bottomPercentage = (bottom / height) * 100;
 
-      gsap.set('img', { opacity: 1 })
+      gsap.set("img", { opacity: 1 });
 
       gsap
         .timeline({
@@ -39,8 +49,12 @@ export default function ScrollImg({ title, caption, isLeftSide, date, tag, scrol
           scrollTrigger: {
             containerAnimation: scrollTl!,
             trigger: container.current,
-            start: `${scrollTl ? 'top center' : `top bottom${bottomPercentage >= 90 ? "+=25%" : "-=15%"}`}`,
-            end: `${scrollTl ? '+=50% center' : '+=50%'}`,
+            start: `${
+              scrollTl
+                ? "top center"
+                : `top bottom${bottomPercentage >= 90 ? "+=25%" : "-=15%"}`
+            }`,
+            end: `${scrollTl ? "+=50% center" : "+=50%"}`,
             scrub: true,
           },
         })
@@ -79,25 +93,34 @@ export default function ScrollImg({ title, caption, isLeftSide, date, tag, scrol
             xPercent: 0,
             opacity: 1,
           },
-          0,
-        )
+          0
+        );
     },
-    { scope: container, dependencies: [isLeftSide, scrollTl], revertOnUpdate: true },
-  )
+    {
+      scope: container,
+      dependencies: [isLeftSide, scrollTl, imgLoaded],
+      revertOnUpdate: true,
+    }
+  );
 
   return (
-    <figure
+    <motion.figure
       ref={container}
       className={s.figure}>
       <span>{date}</span>
       <div className={s.wrapper}>
-        <Image {...props} />
+        <Image
+          onLoad={() => {
+            setImgLoaded(true);
+          }}
+          {...props}
+        />
       </div>
       <figcaption className={s.caption}>
         <div className={s.tag}>{tag}</div>
         <div className={s.title}>{title}</div>
         <div>{caption}</div>
       </figcaption>
-    </figure>
+    </motion.figure>
   );
 }

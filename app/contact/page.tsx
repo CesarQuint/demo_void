@@ -1,24 +1,22 @@
 "use client";
-import { useEffect, useRef } from "react";
-import { motion, usePresence, useAnimate, Spring } from "framer-motion";
-import styles from "../pageImage.module.css";
-import { usePathname } from "next/navigation";
+import React, { useEffect } from "react";
 import { useNavigation } from "../utils/navigationContext";
+import {
+  motion,
+  useAnimate,
+  usePresence,
+  AnimationSequence,
+  Spring,
+} from "framer-motion";
+import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
-import { AnimationSequence } from "framer-motion";
-import { animate as animation } from "framer-motion";
+import styles from "../css/about.module.css";
 
+import Main from "../components/Contact/main";
 import Footer from "../components/footer";
-import HeroContainer from "../components/Home/HeroContainer";
-import VideoHover from "../components/videoHover";
-import Video from "../components/Three/Video";
-
-import RepeatTextScrollFx from "../components/gsapComponents";
-import ProjectImages from "../components/Home/ProjectImages";
-import { DisplacementGeometry } from "../hero_demo/ColumnDisplacementMaterial";
-import { Canvas } from "@react-three/fiber";
-import ProcessHome from "../components/Home/ProcessHome";
 import { PreFooterLink } from "../components/PreFooterLink";
+
+type Props = {};
 
 const transitionSpringPhysics: Spring = {
   type: "spring",
@@ -27,14 +25,13 @@ const transitionSpringPhysics: Spring = {
   damping: 2,
 };
 
-const transitionColor = "deepskyblue";
-
-function SecondPage() {
+const Contact = (props: Props) => {
+  const { navigationEvent } = useNavigation();
+  const pathname = usePathname();
   const [isPresent, safeToRemove] = usePresence();
   const [scope2, animate] = useAnimate();
   const [scope3] = useAnimate();
-  const pathname = usePathname();
-  const { navigationEvent } = useNavigation();
+
   const router = useRouter();
 
   useEffect(() => {
@@ -51,13 +48,13 @@ function SecondPage() {
       ],
     ];
 
-    animation(sequence);
+    animate(sequence);
     return () => {
       if (!isPresent) {
         safeToRemove();
       }
     };
-  }, []);
+  });
 
   useEffect(() => {
     if (navigationEvent.href !== pathname) {
@@ -74,7 +71,7 @@ function SecondPage() {
         ],
       ];
 
-      animation(sequence).then(() => {
+      animate(sequence).then(() => {
         router.push(navigationEvent.href);
       });
     }
@@ -86,7 +83,8 @@ function SecondPage() {
       initial={{ opacity: 1 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 1 }}
-      className={`${styles.main}`}>
+      className={styles.main}
+    >
       <motion.div
         ref={scope2}
         style={{
@@ -113,15 +111,11 @@ function SecondPage() {
         transition={transitionSpringPhysics}
         className="courtain"
       />
-      <HeroContainer />
+      <Main />
 
-      {/* <Video /> */}
-      <ProjectImages />
-      <ProcessHome />
-      <PreFooterLink text="CONOCENOS" />
       <Footer />
     </motion.div>
   );
-}
+};
 
-export default SecondPage;
+export default Contact;

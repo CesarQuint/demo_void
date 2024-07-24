@@ -1,8 +1,5 @@
 .main {
   width: 100%;
-  height: -webkit-fill-available;
-  background-color: #101010;
-  z-index: 10;
 }
 
 .main h1 {
@@ -17,4 +14,20 @@
   width: 100%;
   height: 20rem;
   object-fit: cover;
+}
+
+.video_container {
+  padding: 10vh 6vh;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+
+.video {
+  width: 100%;
+  border-radius: 40px;
 }

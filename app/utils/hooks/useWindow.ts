@@ -1,6 +1,6 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 
-interface Window {
+interface WindowProps {
   innerWidth: number;
   innerHeight: number;
   navigator: {
@@ -10,32 +10,37 @@ interface Window {
   };
 }
 
-export default function useWindow(): Readonly<Window> {
-  const windowForReference = useRef<Window>({
-    innerWidth: window.innerWidth,
-    innerHeight: window.innerHeight,
+export default function useWindow(): Readonly<WindowProps> {
+  const [windowProps, setWindowProps] = useState<WindowProps>({
+    innerWidth: 0,
+    innerHeight: 0,
     navigator: {
-      language: window.navigator.language,
-      userAgent: window.navigator.userAgent,
-      platform: window.navigator.platform,
+      language: "",
+      userAgent: "",
+      platform: "",
     },
   });
 
   useEffect(() => {
-    //First load
+    if (typeof window !== "undefined") {
+      const updateWindow = () => {
+        setWindowProps({
+          innerWidth: window.innerWidth,
+          innerHeight: window.innerHeight,
+          navigator: {
+            language: window.navigator.language,
+            userAgent: window.navigator.userAgent,
+            platform: window.navigator.platform,
+          },
+        });
+      };
 
-    const updateWindow = () => {
-      windowForReference.current.innerHeight = window.innerHeight;
-      windowForReference.current.innerWidth = window.innerHeight;
-      windowForReference.current.navigator.language = window.navigator.language;
-      windowForReference.current.navigator.userAgent =
-        window.navigator.userAgent;
-      windowForReference.current.navigator.platform =
-        window.navigator.platform || "";
-    };
+      updateWindow();
 
-    window.addEventListener("resize", updateWindow);
+      window.addEventListener("resize", updateWindow);
+      return () => window.removeEventListener("resize", updateWindow);
+    }
   }, []);
 
-  return windowForReference.current;
+  return windowProps;
 }

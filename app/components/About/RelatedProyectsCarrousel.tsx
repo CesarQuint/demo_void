@@ -3,6 +3,10 @@ import { motion } from "framer-motion";
 import styles from "../../css/About/relatedProyectsCarousel.module.css";
 import Image from "next/image";
 import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { stand_out_projects } from "@/app/constants/stand_out_projects";
+
+gsap.registerPlugin(useGSAP);
 
 const images = [
   "https://tympanus.net/Development/ConnectedGrid/img/14.jpg",
@@ -17,11 +21,9 @@ const RelatedProyectsCarrousel = (props: Props) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const imageBandRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {}, []);
+  const { contextSafe } = useGSAP({ scope: containerRef });
 
-  const clickHandler = (number: number) => {
-    console.log(number, selectedStep);
-
+  const clickHandler = contextSafe((number: number) => {
     let movement = "";
     let percentage = 0;
 
@@ -55,30 +57,48 @@ const RelatedProyectsCarrousel = (props: Props) => {
         console.log("nothing");
         break;
     }
-  };
+  });
 
   return (
-    <motion.div className={styles.main}>
+    <motion.div
+      ref={containerRef}
+      className={styles.main}>
       <motion.div className={styles.image_container}>
         <motion.div
           ref={imageBandRef}
           className={styles.image_wrapper}>
-          {images.map((_, i) => (
+          {stand_out_projects.slice(0, 3).map((_, i) => (
             <span
               className={styles.single_image_container}
+              onClick={() => clickHandler(i + 1)}
               key={i + 1}>
+              {selectedStep == i + 1 && (
+                <div className={styles.text_information_of_project}>
+                  <p>{_.date}</p>
+                  <h3
+                    style={{
+                      fontFamily: "graphie",
+                      fontSize: "2rem",
+                      fontWeight: "100",
+                    }}>
+                    {_.title}
+                  </h3>
+                  <p style={{ textTransform: "uppercase" }}>{_.description}</p>
+                </div>
+              )}
+
               <img
                 style={{ scale: `${selectedStep !== i + 1 ? "0.8" : "1"}` }}
                 className={styles.image}
                 alt=""
-                src={_}
+                src={_.image}
               />
             </span>
           ))}
         </motion.div>
       </motion.div>
       <motion.div className={styles.steps_container}>
-        {new Array(3).fill("").map((_, i) => (
+        {new Array(images.length).fill("").map((_, i) => (
           <motion.div
             key={i + 1}
             onClick={() => clickHandler(i + 1)}

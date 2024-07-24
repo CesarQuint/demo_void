@@ -1,5 +1,14 @@
-/* Add this CSS to your styles (e.g., in App.css) */
 .cursor_ring {
+  z-index: 30;
+  opacity: 0;
+}
+
+.cursor_dot {
+  opacity: 0;
+}
+
+@media (min-width: 700px) {
+  .cursor_ring {
     position: absolute;
     width: 9rem;
     height: 9rem;
@@ -7,11 +16,12 @@
     border-radius: 50%;
     pointer-events: none;
     transform: translate(-50%, -50%);
-    z-index: 1000;
+    z-index: 30;
+    opacity: 0;
     transition: opacity 0.2s;
-}
+  }
 
-.cursor_dot {
+  .cursor_dot {
     position: absolute;
     width: 8px;
     height: 8px;
@@ -19,6 +29,8 @@
     border-radius: 50%;
     pointer-events: none;
     transform: translate(-50%, -50%);
-    z-index: 1000;
-    transition: opacity 0.2s;
+    z-index: 30;
+    opacity: 0;
+    transition: opacity 0.2navs;
+  }
 }

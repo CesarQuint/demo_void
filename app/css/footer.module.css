@@ -7,7 +7,7 @@
   display: flex;
   height: 100%;
   flex-flow: column nowrap;
-  gap: 6vh;
+  gap: 12vh;
   align-items: center;
   justify-content: space-between;
 }
@@ -18,7 +18,7 @@
   gap: 2vh;
   width: 80%;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   transform: all 1s;
 }
 
@@ -54,7 +54,7 @@
   display: flex;
   flex-flow: row nowrap;
   gap: 10px;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .about_buttons button {
@@ -78,27 +78,38 @@
 }
 
 .nav {
-  display: none;
+  display: flex;
+  gap: 3vh;
 }
 
 .social {
-  display: none;
+  display: flex;
+  gap: 3vh;
 }
 
 /* Media Part */
-@media (min-width: 590px) {
-  .social {
-    display: inline;
+@media (min-width: 700px) {
+  .footer_flex {
+    gap: 30vh;
   }
+
+  .contact {
+    width: 42%;
+  }
+
+  .information {
+    width: 25%;
+  }
+
   .nav {
-    display: inline;
+    width: 17%;
   }
 
   .text_container {
     display: flex;
     flex-flow: row nowrap;
-    gap: 2vh;
-    width: 80%;
+
+    width: 92%;
     justify-content: space-between;
     align-items: flex-start;
   }
