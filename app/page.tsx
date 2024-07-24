@@ -15,6 +15,7 @@ import ProcessHome from "./components/Home/ProcessHome";
 import { PreFooterLink } from "./components/PreFooterLink";
 import TagsHome from "./components/Home/TagsHome";
 import dynamic from "next/dynamic";
+import useWindow from "./utils/hooks/useWindow";
 
 const ProjectImages = dynamic(() => import("./components/Home/ProjectImages"), {
   ssr: false,
@@ -36,6 +37,7 @@ function SecondPage() {
   const pathname = usePathname();
   const { navigationEvent } = useNavigation();
   const router = useRouter();
+  const windowStatus = useWindow();
 
   useEffect(() => {
     const sequence: AnimationSequence = [
@@ -120,7 +122,11 @@ function SecondPage() {
           autoPlay={true}
           muted={true}
           className={styles.video}
-          src="https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/videos/voidxr-demo-eyecandy-home.mp4"
+          src={
+            windowStatus.innerWidth >= 700
+              ? "https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/videos/voidxr-demo-eyecandy-home.mp4"
+              : "https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/videos/voidxr-demo-eyecandy-home-mobile.mp4"
+          }
           controls={true}
         />
       </motion.div>
