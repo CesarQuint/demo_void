@@ -15,6 +15,7 @@ import { AboutUsTag } from "../constants/tags_text";
 import useWindow from "../utils/hooks/useWindow";
 import Image from "next/image";
 import { useIntersectionObserver } from "../utils/hooks/useIntersectionObserver";
+import { useNavigation } from "../utils/navigationContext";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -96,6 +97,7 @@ const TagsContent = (props: TagsContentProps) => {
 const Tags = (props: Props) => {
   const windowStatus = useWindow();
   const [imgLoad, setImageLoad] = useState(false);
+  const { navigationEvent } = useNavigation();
 
   const { isIntersecting, ref: container } = useIntersectionObserver();
 
@@ -151,7 +153,7 @@ const Tags = (props: Props) => {
 
       startScroll(0);
     },
-    { scope: container, dependencies: [container, imgLoad] },
+    { scope: container, dependencies: [navigationEvent, container, imgLoad] }
   );
 
   return (
