@@ -1,7 +1,8 @@
-import { useMemo, useState } from 'react';
-import { ThreeEvent, useFrame, useThree } from '@react-three/fiber';
-import { ShaderMaterial, Vector2 } from 'three';
+import { useMemo, useState } from "react";
+import { ThreeEvent, useFrame, useThree } from "@react-three/fiber";
+import { ShaderMaterial, Vector2 } from "three";
 
+/**ths */
 const VRTX_SHADER = `
     varying vec2 vUv;
     void main() {
@@ -91,29 +92,42 @@ type DisplacementGeometrySettings = {
   columns: number;
   glow: number;
   grid: boolean;
-}
+};
 
-export const DisplacementGeometry: React.FC<{ settings: DisplacementGeometrySettings }> = ({ settings: { contrast, columns, glow, easing_factor, orb_size, grid } }) => {
+export const DisplacementGeometry: React.FC<{
+  settings: DisplacementGeometrySettings;
+}> = ({
+  settings: { contrast, columns, glow, easing_factor, orb_size, grid },
+}) => {
   const { viewport, size } = useThree();
 
   const [currentMouse, setCurrentMouse] = useState(new Vector2());
   const [targetMouse, setTargetMouse] = useState(new Vector2());
 
-  const shaderMaterial = useMemo(() => new ShaderMaterial({
-    uniforms: {
-      u_time: { value: 0 },
-      u_mouse: { value: new Vector2() },
-      u_mouse_velocity: { value: new Vector2() },
-      u_resolution: { value: new Vector2(size.width * viewport.dpr, size.height * viewport.dpr) },
-      u_orb_size: { value: orb_size },
-      u_contrast: { value: contrast },
-      u_columns: { value: columns },
-      u_glow: { value: glow },
-      u_grid_toggle: { value: grid }
-    },
-    vertexShader: VRTX_SHADER,
-    fragmentShader: FRAG_SHADER,
-  }), [viewport, size, columns, glow, orb_size, contrast, grid]);
+  const shaderMaterial = useMemo(
+    () =>
+      new ShaderMaterial({
+        uniforms: {
+          u_time: { value: 0 },
+          u_mouse: { value: new Vector2() },
+          u_mouse_velocity: { value: new Vector2() },
+          u_resolution: {
+            value: new Vector2(
+              size.width * viewport.dpr,
+              size.height * viewport.dpr
+            ),
+          },
+          u_orb_size: { value: orb_size },
+          u_contrast: { value: contrast },
+          u_columns: { value: columns },
+          u_glow: { value: glow },
+          u_grid_toggle: { value: grid },
+        },
+        vertexShader: VRTX_SHADER,
+        fragmentShader: FRAG_SHADER,
+      }),
+    [viewport, size, columns, glow, orb_size, contrast, grid]
+  );
 
   const handlePointerMove = (event: ThreeEvent<PointerEvent>) => {
     if (event.intersections.length > 0) {
@@ -129,10 +143,12 @@ export const DisplacementGeometry: React.FC<{ settings: DisplacementGeometrySett
 
   useFrame((state) => {
     // Smoothly update the current mouse position
-    setCurrentMouse(new Vector2(
-      currentMouse.x + (targetMouse.x - currentMouse.x) * easing_factor,
-      currentMouse.y + (targetMouse.y - currentMouse.y) * easing_factor
-    ));
+    setCurrentMouse(
+      new Vector2(
+        currentMouse.x + (targetMouse.x - currentMouse.x) * easing_factor,
+        currentMouse.y + (targetMouse.y - currentMouse.y) * easing_factor
+      )
+    );
 
     shaderMaterial.uniforms.u_mouse.value.set(currentMouse.x, currentMouse.y);
     shaderMaterial.uniforms.u_time.value = state.clock.getElapsedTime();
@@ -141,7 +157,8 @@ export const DisplacementGeometry: React.FC<{ settings: DisplacementGeometrySett
   return (
     <mesh
       scale={[viewport.width, viewport.height, 1]}
-      onPointerMove={handlePointerMove}>
+      onPointerMove={handlePointerMove}
+    >
       <planeGeometry args={[1, 1, 1, 1]} />
       <primitive object={shaderMaterial} />
     </mesh>
