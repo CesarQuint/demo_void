@@ -42,8 +42,20 @@ const Footer = (props: Props) => {
             <div className={`${styles.contact_button_area_wrapper}`}>
               <p>¿Quieres empezar un nuevo proyecto?</p>
               <section className={`${styles.about_buttons}`}>
-                <button className={`${styles.btn_1}`}>ESCRIBENOS</button>
-                <button className={`${styles.btn_2}`}>
+                <button
+                  onClick={() => {
+                    router.push("mailto:CONTACTO@VOIDXR.STUDIO");
+                  }}
+                  className={`${styles.btn_1}`}
+                >
+                  ESCRIBENOS
+                </button>
+                <button
+                  onClick={() => {
+                    router.push("mailto:CONTACTO@VOIDXR.STUDIO");
+                  }}
+                  className={`${styles.btn_2}`}
+                >
                   <Image
                     style={{ height: "1rem", width: "1rem" }}
                     src={arrow}
@@ -142,6 +154,20 @@ const Footer = (props: Props) => {
                 href="https://www.linkedin.com/company/voidxr/"
               >
                 LINKEDIN
+              </TypedLink>
+              <TypedLink
+                viewAnimate={true}
+                hoverAnimate={false}
+                href="https://youtube.com/@voidxr_studio?si=5F3lHRRPmKbrZihn"
+              >
+                YOUTUBE
+              </TypedLink>
+              <TypedLink
+                viewAnimate={true}
+                hoverAnimate={false}
+                href="https://vimeo.com/voidxr"
+              >
+                VIMEO
               </TypedLink>
             </nav>
           </motion.div>

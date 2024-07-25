@@ -141,7 +141,7 @@ const Tags = (props: Props) => {
               start: `${start} center`,
               end: `+=${duration} center`,
               // markers: true,
-              scrub: true,
+              scrub: 0,
               onLeave() {
                 startScroll(i + 1);
               },
