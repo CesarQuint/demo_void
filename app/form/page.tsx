@@ -1,25 +1,21 @@
 "use client";
-import { useEffect, useRef } from "react";
-import { motion, usePresence, useAnimate, Spring } from "framer-motion";
-import styles from "./pageImage.module.css";
+import React, { useEffect } from "react";
+import { useNavigation } from "../utils/navigationContext";
+import {
+  motion,
+  useAnimate,
+  usePresence,
+  AnimationSequence,
+  Spring,
+} from "framer-motion";
 import { usePathname } from "next/navigation";
-import { useNavigation } from "./utils/navigationContext";
 import { useRouter } from "next/navigation";
-import { AnimationSequence } from "framer-motion";
-import { animate as animation } from "framer-motion";
+import styles from "../css/about.module.css";
 
-import Footer from "./components/footer";
-import HeroContainer from "./components/Home/HeroContainer";
+import Footer from "../components/footer";
+import FormCards from "../components/Form/FormCards";
 
-import ProcessHome from "./components/Home/ProcessHome";
-import { PreFooterLink } from "./components/PreFooterLink";
-import TagsHome from "./components/Home/TagsHome";
-import dynamic from "next/dynamic";
-import useWindow from "./utils/hooks/useWindow";
-
-const ProjectImages = dynamic(() => import("./components/Home/ProjectImages"), {
-  ssr: false,
-});
+type Props = {};
 
 const transitionSpringPhysics: Spring = {
   type: "spring",
@@ -28,16 +24,14 @@ const transitionSpringPhysics: Spring = {
   damping: 2,
 };
 
-const transitionColor = "deepskyblue";
-
-function SecondPage() {
+const Contact = (props: Props) => {
+  const { navigationEvent } = useNavigation();
+  const pathname = usePathname();
   const [isPresent, safeToRemove] = usePresence();
   const [scope2, animate] = useAnimate();
   const [scope3] = useAnimate();
-  const pathname = usePathname();
-  const { navigationEvent } = useNavigation();
+
   const router = useRouter();
-  const windowStatus = useWindow();
 
   useEffect(() => {
     const sequence: AnimationSequence = [
@@ -53,13 +47,13 @@ function SecondPage() {
       ],
     ];
 
-    animation(sequence);
+    animate(sequence);
     return () => {
       if (!isPresent) {
         safeToRemove();
       }
     };
-  }, []);
+  });
 
   useEffect(() => {
     if (navigationEvent.href !== pathname) {
@@ -76,7 +70,7 @@ function SecondPage() {
         ],
       ];
 
-      animation(sequence).then(() => {
+      animate(sequence).then(() => {
         router.push(navigationEvent.href);
       });
     }
@@ -88,7 +82,7 @@ function SecondPage() {
       initial={{ opacity: 1 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 1 }}
-      className={`${styles.main}`}
+      className={styles.main}
     >
       <motion.div
         ref={scope2}
@@ -116,29 +110,10 @@ function SecondPage() {
         transition={transitionSpringPhysics}
         className="courtain"
       />
-      <HeroContainer />
-      <motion.div className={styles.video_container}>
-        <video
-          autoPlay={true}
-          muted={true}
-          className={styles.video}
-          src={
-            windowStatus.innerWidth >= 700
-              ? "https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/videos/voidxr-demo-eyecandy-home.mp4"
-              : "https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/videos/voidxr-demo-eyecandy-home-mobile.mp4"
-          }
-          controls={true}
-        />
-      </motion.div>
-      <ProjectImages />
-      <ProcessHome />
-      <TagsHome />
-      <div style={{ height: "10vh" }}></div>
-      <PreFooterLink text="CONOCENOS" />
-      <div style={{ height: "5vh" }}></div>
+      <FormCards />
       <Footer />
     </motion.div>
   );
-}
+};
 
-export default SecondPage;
+export default Contact;

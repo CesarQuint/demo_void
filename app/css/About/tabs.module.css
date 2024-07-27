@@ -137,3 +137,14 @@
     overflow: hidden;
   }
 }
+
+.images {
+  padding-top: 5vh;
+  object-fit: contain;
+  width: 100%;
+  height: auto;
+
+  @media (min-width: 700px) {
+    width: 50%;
+  }
+}

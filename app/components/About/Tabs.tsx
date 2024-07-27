@@ -6,6 +6,7 @@ import s from "@/app/css/About/tabs.module.css";
 import { TabData } from "@/app/constants/tabs_text";
 
 import useWindow from "@/app/utils/hooks/useWindow";
+import Image from "next/image";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -80,7 +81,13 @@ export default function Tabs({ tabs }: Props) {
                 </Fragment>
               ))}
             </p>
-            <div className={s.number}>{`${i + 1}`.padStart(2, "0")}</div>
+            <Image
+              className={s.images}
+              src={tab.icon}
+              width={1000}
+              height={1000}
+              alt="icon image"
+            />
           </div>
         ))}
       </div>

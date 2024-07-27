@@ -14,6 +14,18 @@ const ProcessHome = (props: Props) => {
   return (
     <motion.section className={styles.main}>
       <h2 className={styles.title}>NUESTRO PROCESO</h2>
+      <Image
+        onLoad={() => {
+          setImgLoaded(true);
+        }}
+        className={styles.image}
+        src={
+          "https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/thumbnails/process-01.jpg"
+        }
+        alt="Process image"
+        width={1000}
+        height={1000}
+      />
       <motion.div className={styles.description}>
         <p>
           Somos un grupo de artistas digitales apasionados por la tecnología y
