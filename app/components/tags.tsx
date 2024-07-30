@@ -97,9 +97,9 @@ const TagsContent = (props: TagsContentProps) => {
 const Tags = (props: Props) => {
   const windowStatus = useWindow();
   const [imgLoad, setImageLoad] = useState(false);
-  const { navigationEvent } = useNavigation();
+  const { navigationEvent, setNavigationEvent } = useNavigation();
 
-  const { isIntersecting, ref: container } = useIntersectionObserver();
+  const { isIntersecting, ref: container } = useIntersectionObserver("0px");
 
   useGSAP(
     () => {
@@ -153,7 +153,10 @@ const Tags = (props: Props) => {
 
       startScroll(0);
     },
-    { scope: container, dependencies: [navigationEvent, container, imgLoad] }
+    {
+      scope: container,
+      dependencies: [setNavigationEvent, navigationEvent, container, imgLoad],
+    }
   );
 
   return (
