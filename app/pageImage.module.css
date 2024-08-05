@@ -25,6 +25,10 @@
   justify-content: center;
   flex-direction: column;
   flex-wrap: nowrap;
+
+  @media (min-width: 768px) {
+    padding: 10vh 6vh;
+  }
 }
 
 .video {

@@ -7,7 +7,7 @@
   display: flex;
   height: 100%;
   flex-flow: column nowrap;
-  gap: 6vh;
+  gap: 12vh;
   align-items: center;
   justify-content: space-between;
 }
@@ -54,7 +54,7 @@
   display: flex;
   flex-flow: row nowrap;
   gap: 10px;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .about_buttons button {
@@ -62,6 +62,9 @@
   background-color: #fff;
   color: #111;
   border: none;
+  &:hover {
+    cursor: pointer;
+  }
 }
 .btn_1 {
   border-radius: 40px;
@@ -78,28 +81,41 @@
 }
 
 .nav {
-  display: inline;
+  display: flex;
+  gap: 3vh;
 }
 
 .social {
-  display: inline;
+  display: flex;
+  gap: 3vh;
 }
 
 /* Media Part */
-@media (min-width: 590px) {
-  .social {
-    display: inline;
+@media (min-width: 700px) {
+  .footer_flex {
+    gap: 30vh;
   }
+
+  .contact {
+    width: 42%;
+    height: auto;
+  }
+
+  .information {
+    width: 25%;
+    height: auto;
+  }
+
   .nav {
-    display: inline;
+    width: 17%;
   }
 
   .text_container {
     display: flex;
     flex-flow: row nowrap;
-    gap: 2vh;
-    width: 80%;
+
+    width: 92%;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: stretch;
   }
 }

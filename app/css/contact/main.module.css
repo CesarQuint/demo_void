@@ -1,0 +1,143 @@
+.main {
+  width: 100%;
+  padding: 20vh 4vh 10vh;
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 4vh;
+
+  /* Media Part */
+  @media (min-width: 768px) {
+    flex-flow: row nowrap;
+  }
+}
+
+.section {
+  padding: 2vh;
+  display: flex;
+  flex-flow: column nowrap;
+  background-color: #1d1d1d;
+  border-radius: 20px;
+  justify-content: space-between;
+}
+
+.section_1 {
+  height: 42vh;
+  font-family: "graphie";
+  transition: all 0.5s;
+
+  &:hover {
+    box-shadow: 0px 1px 11px 0px #fff;
+  }
+  @media (min-width: 768px) {
+    height: auto;
+    width: 25%;
+  }
+}
+.section_2 {
+  height: 48vh;
+
+  transition: all 0.5s;
+
+  &:hover {
+    box-shadow: 0px 1px 11px 0px #fff;
+  }
+
+  @media (min-width: 768px) {
+    height: auto;
+    width: 25%;
+  }
+}
+.section_3 {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 5vh;
+  transition: all 0.5s;
+
+  &:hover {
+    box-shadow: 0px 1px 11px 0px #fff;
+  }
+
+  @media (min-width: 768px) {
+    height: auto;
+    width: 50%;
+  }
+}
+
+.description {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 2vh;
+}
+
+.title {
+  font-family: "graphie";
+  font-size: 2rem;
+}
+
+.text {
+  font-family: "graphie";
+  font-size: 1.5rem;
+}
+
+.buttons_wrapper {
+  display: flex;
+  flex-flow: row;
+  gap: 1vh;
+}
+.buttons_wrapper button {
+  &:hover {
+    cursor: pointer;
+  }
+  border: none;
+  background-color: black;
+  color: white;
+  font-size: 1.2re;
+  @media (min-width: 768px) {
+    font-size: 1.2vw;
+  }
+}
+
+.button_1 {
+  border-radius: 30px;
+  padding: 2vh 3vh;
+}
+
+.button_2 {
+  padding: 2vh;
+  border-radius: 50%;
+}
+
+.form {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 4vh;
+}
+
+.input_w_l {
+  display: flex;
+  flex-flow: column nowrap;
+  width: 100%;
+}
+
+.label {
+  font-size: x-large;
+}
+
+.input {
+  padding: 3vh 1vh 1vh;
+  background-color: #1d1d1d;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  font-size: large;
+}
+
+.names {
+  display: flex;
+  flex-flow: column wrap;
+  gap: 4vh;
+
+  @media (min-width: 768px) {
+    flex-flow: row wrap;
+  }
+}

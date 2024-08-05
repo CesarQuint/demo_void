@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 
-export function useIntersectionObserver() {
+export function useIntersectionObserver(rootMargin = "200px") {
   const [isIntersecting, setIsIntersecting] = useState(false);
   const ref = useRef<HTMLDivElement | null>(null);
 
@@ -12,7 +12,7 @@ export function useIntersectionObserver() {
         setIsIntersecting(entry.isIntersecting);
       },
       {
-        rootMargin: "200px",
+        rootMargin,
       }
     );
 

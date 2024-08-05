@@ -35,11 +35,12 @@ const ProjectImages = (props: Props) => {
       });
 
       gsap.set(captions, { opacity: 0 });
-      gsap.set(line, { width: scrollContainer.current?.scrollWidth })
 
       gsap
         .matchMedia()
         .add("(min-width: 700px)", () => {
+          gsap.set(line, { width: scrollContainer.current?.scrollWidth });
+
           const tl = gsap
             .timeline({
               defaults: {
@@ -50,15 +51,15 @@ const ProjectImages = (props: Props) => {
                 scrub: 0.1,
                 pin: true,
                 trigger: container.current,
-                start: 'top top',
-                end: 'bottom center',
+                start: "top top",
+                end: "bottom+=500% center",
               },
             })
             .to(boxes, { xPercent: -100 * boxes.length - 1 }, 0)
             .to(
               title,
               { x: () => -(title.offsetWidth - document.body.offsetWidth) },
-              0,
+              0
             )
             .to(line, { xPercent: -100 }, 0);
 
@@ -93,7 +94,7 @@ const ProjectImages = (props: Props) => {
                           .fromTo(
                             char,
                             { opacity: 0 },
-                            { opacity: 1, delay: (i + 1) * 0.04 },
+                            { opacity: 1, delay: (i + 1) * 0.04 }
                           )
                           .to(
                             char,
@@ -110,7 +111,7 @@ const ProjectImages = (props: Props) => {
                                 firstRepeat = false;
                               },
                             },
-                            "<",
+                            "<"
                           )
                           .set(char, { textContent: char.dataset.char });
                       });
@@ -145,7 +146,7 @@ const ProjectImages = (props: Props) => {
                             char,
                             { opacity: 1 },
                             { opacity: 0, delay: (i + 1) * 0.04 },
-                            "<",
+                            "<"
                           );
                       });
                     });
@@ -161,7 +162,7 @@ const ProjectImages = (props: Props) => {
                 {
                   yPercent: 0,
                   xPercent: 0,
-                },
+                }
               )
               .fromTo(
                 el?.querySelector("img")!,
@@ -173,7 +174,7 @@ const ProjectImages = (props: Props) => {
                   yPercent: 0,
                   xPercent: 0,
                 },
-                0,
+                0
               );
           });
 
@@ -183,7 +184,6 @@ const ProjectImages = (props: Props) => {
           gsap.set("img", { opacity: 1 });
 
           imgContainer.current.forEach((el) => {
-
             gsap
               .timeline({
                 defaults: {
@@ -191,9 +191,9 @@ const ProjectImages = (props: Props) => {
                 },
                 scrollTrigger: {
                   trigger: el,
-                  start: 'top bottom-=20%',
-                  end: '+=50% bottom-=20%',
-                  markers: true,
+                  start: "top bottom-=20%",
+                  end: "+=50% bottom-=20%",
+                  // markers: true,
                   scrub: true,
                   onLeave() {
                     splitting.forEach((data) => {
@@ -214,7 +214,7 @@ const ProjectImages = (props: Props) => {
                           .fromTo(
                             char,
                             { opacity: 0 },
-                            { opacity: 1, delay: (i + 1) * 0.04 },
+                            { opacity: 1, delay: (i + 1) * 0.04 }
                           )
                           .to(
                             char,
@@ -231,7 +231,7 @@ const ProjectImages = (props: Props) => {
                                 firstRepeat = false;
                               },
                             },
-                            "<",
+                            "<"
                           )
                           .set(char, { textContent: char.dataset.char });
                       });
@@ -266,7 +266,7 @@ const ProjectImages = (props: Props) => {
                             char,
                             { opacity: 1 },
                             { opacity: 0, delay: (i + 1) * 0.04 },
-                            "<",
+                            "<"
                           );
                       });
                     });
@@ -282,7 +282,7 @@ const ProjectImages = (props: Props) => {
                 {
                   yPercent: 0,
                   xPercent: 0,
-                },
+                }
               )
               .fromTo(
                 el?.querySelector("img")!,
@@ -294,12 +294,12 @@ const ProjectImages = (props: Props) => {
                   yPercent: 0,
                   xPercent: 0,
                 },
-                0,
+                0
               );
           });
         });
     },
-    { scope: scrollContainer, dependencies: [container, scrollContainer] },
+    { scope: scrollContainer, dependencies: [container, scrollContainer] }
   );
 
   return (
@@ -327,6 +327,7 @@ const ProjectImages = (props: Props) => {
                 <span className="word-animated">{_.date}</span>
                 <div className={s.wrapper}>
                   <Image
+                    style={{ objectFit: "cover" }}
                     title={_.title}
                     src={_.image}
                     fill

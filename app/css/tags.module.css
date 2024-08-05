@@ -13,8 +13,6 @@
   flex-direction: column;
   display: flex;
   margin-top: 4vh;
-  gap: 2rem;
-  clip-path: inset(0 0 0 0);
 }
 
 .tag {
@@ -26,7 +24,10 @@
   background: #101010;
   border: 2px solid #fff;
   transform-origin: bottom;
-  box-shadow: 0 -3rem 0px 2rem #000;
+
+  &:nth-child(n + 1) {
+    position: absolute;
+  }
 }
 
 .left_content {
@@ -57,18 +58,32 @@
 }
 
 .title {
-  font-family: "graphie";
-  font-size: 2rem;
+  font-family: Panchang;
+  font-size: 1rem;
+  color: #fff;
+  margin-bottom: 1rem;
 }
 
-.right_text_content {
+.right_text_content p {
+  font-family: Graphie;
   display: flex;
   flex-flow: column nowrap;
   gap: 2vh;
-  font-size: 1rem;
+  font-size: 1.4rem;
+  color: #d1d1d1;
+
 }
+
+.image_wrapper {
+  text-align: center;
+}
+
 /* Media Part */
 @media (min-width: 768px) {
+  .title {
+    font-size: 1.5rem;
+    margin-bottom: 0;
+  }
   .tags_wrapper {
     color: #101010;
     padding: 3vh 6vh;
@@ -80,6 +95,7 @@
 
   .right_content {
     width: 60%;
+    justify-content: center;
   }
 
   .left_content h4 {

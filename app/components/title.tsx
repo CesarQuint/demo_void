@@ -7,6 +7,7 @@ import logo from "../../public/void_Nb.svg";
 import CustomEase from "gsap/CustomEase";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import { useIntersectionObserver } from "../utils/hooks/useIntersectionObserver";
 
 gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(CustomEase);
@@ -22,43 +23,47 @@ type TextLogoProps = {
 };
 
 const TextLogo = (props: TextLogoProps) => {
-  const containerRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
   const timelineRef = useRef<GSAPTimeline | null>(null);
   const [imgLoaded, setImgLoaded] = useState(false);
+  const { isIntersecting, ref: containerRef } =
+    useIntersectionObserver("900px");
 
   useGSAP(
     () => {
-      timelineRef.current?.kill();
-
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: `${props.offset} center`,
-          end: "bottom center",
-          scrub: 0,
-        },
-      });
-
-      tl.to(imageRef.current, {
-        marginTop: `+=${props.margin! + 1}px`,
-        ease: "none",
-      });
-
-      timelineRef.current = tl;
-
-      return () => {
+      if (isIntersecting) {
         timelineRef.current?.kill();
-      };
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: `${props.offset} center`,
+            end: "bottom center",
+            scrub: 0,
+          },
+        });
+
+        tl.to(imageRef.current, {
+          marginTop: `+=${props.margin! + 1}px`,
+          ease: "none",
+        });
+
+        timelineRef.current = tl;
+
+        return () => {
+          timelineRef.current?.kill();
+        };
+      }
     },
-    { scope: containerRef, dependencies: [imgLoaded] }
+    { scope: containerRef, dependencies: [isIntersecting, imgLoaded] }
   );
 
   return (
     <motion.div
       ref={containerRef}
       style={{ height: `${props.position}px`, willChange: "transform" }}
-      className={`${styles.text_rep}`}>
+      className={`${styles.text_rep}`}
+    >
       <motion.div ref={imageRef}>
         <Image
           onLoad={() => {
@@ -140,9 +145,7 @@ const Title = (props: Props) => {
             />
           </>
         )}
-        <div
-          ref={logoRef}
-          className={`${styles.text_rep}`}>
+        <div ref={logoRef} className={`${styles.text_rep}`}>
           <Image
             onLoad={() => {
               setImgLoaded(true);
