@@ -87,3 +87,60 @@
   color: red;
   font-size: small;
 }
+
+/*Contact Region*/
+
+.contact {
+  display: flex;
+  flex-flow: row nowrap;
+  width: 100%;
+}
+
+.contact_column {
+  display: flex;
+  flex-flow: column nowrap;
+  width: 50%;
+  gap: 2vh;
+}
+
+.imput_text {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 1vh;
+  width: 80%;
+}
+
+.input_white {
+  background-color: white;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  transition: border-bottom-color 0.3s ease;
+  color: black;
+
+  &:focus-visible {
+    border-bottom: #1b1b1b;
+  }
+}
+
+/*Place region*/
+
+.input_form {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 6vw;
+}
+
+.input_place {
+  display: inline-flex;
+  flex-direction: row;
+  gap: 1vw;
+}
+
+/*Type of project region */
+
+.project_column {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 2vh;
+}
