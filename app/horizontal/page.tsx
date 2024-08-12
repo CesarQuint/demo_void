@@ -43,19 +43,26 @@ export default function Horizontal() {
             x: container.current!.clientWidth,
             xPercent: -100,
           },
-          0,
+          0
         );
     },
-    { scope: container },
+    { scope: container }
   );
 
   return (
     <main ref={container} className={s.main}>
       <div ref={scrollContainer} className={s.scrollContainer}>
-        <section className={s.hero}>
+        <section
+          style={{
+            backgroundSize: "cover",
+            backgroundImage:
+              "url( 'https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/thumbnails/14-k-thumbnail-01.png')",
+          }}
+          className={s.hero}
+        >
           <div className={s.title}>
-            <h1>Spheres</h1>
-            <h2>Instalación en nueva york</h2>
+            <h1>RAÍCES LUMÍNICAS</h1>
+            <h2>Instalación visual en el bosque.</h2>
           </div>
 
           <div ref={tags} className={s.tags}>

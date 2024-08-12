@@ -173,3 +173,14 @@
   border: 1px solid #7c7c7c;
   border-radius: 10px;
 }
+
+.calendar_flex {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 2vw;
+}
+
+.calendar_container {
+  background-color: red;
+  padding: 1vh;
+}

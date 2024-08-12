@@ -771,7 +771,16 @@ const FormCards = () => {
                 <ReturnButtons returnHandler={returnHandler} />
               </section>
               <section className={styles.right_second}>
-                <h2>Seleccion de fechas</h2>
+                <div className={styles.calendar_flex}>
+                  <section style={{ width: "50%" }}>
+                    <h2>Select</h2>
+                  </section>
+                  <section style={{ width: "50%" }}>
+                    <div className={styles.calendar_container}>
+                      <Calendar />
+                    </div>
+                  </section>
+                </div>
               </section>
               <section
                 style={{ justifyContent: "flex-end" }}
