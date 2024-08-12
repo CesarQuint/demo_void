@@ -1,0 +1,94 @@
+.main {
+  padding: 20vh 0;
+}
+
+.nav_container {
+  padding: 2vh 6vh;
+  overflow: scroll;
+  border-bottom: 3px solid #1b1b1b;
+}
+
+.selector {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 2vh;
+}
+
+.tab {
+  padding: 1vh 2vh;
+  min-width: max-content;
+}
+
+.all {
+  border-right: 1px solid #fff;
+}
+
+/*Start Region Cards*/
+.project_wrapper {
+  padding: 6vh;
+  border-start-start-radius: 40px;
+  border-start-end-radius: 40px;
+  position: relative;
+  overflow: hidden;
+}
+
+.scrollView {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Three columns of equal width */
+  gap: 1.875rem;
+  padding: 0 1.25rem;
+
+  .title {
+    font-family: "Panchang";
+    color: #dedede;
+    letter-spacing: 0px;
+    grid-column: 1 / -1;
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 5rem;
+  }
+
+  .line {
+    grid-column: 1 / -1;
+    margin-top: 5rem;
+
+    .viewAll {
+      padding: 0 2rem;
+      line-height: 3.75rem;
+      background: #000;
+      border: 1px solid #fff;
+      border-radius: 2rem;
+      font-weight: 300;
+      font-size: 1.25rem;
+      width: 100%;
+    }
+  }
+
+  & .imgBox {
+    position: relative;
+    grid-row: calc(var(--column) + 1) / span 1;
+
+    &:nth-of-type(odd) {
+      grid-column: 1 / span 3; /* Occupies the first 2/3 of the columns */
+    }
+    &:nth-of-type(even) {
+      grid-column: 1 / span 3; /* Occupies the last 2/3 of the columns */
+    }
+  }
+}
+
+@media (min-width: 700px) {
+  .scrollView {
+    & .imgBox {
+      position: relative;
+      grid-row: calc(var(--column) + 1) / span 1;
+
+      &:nth-of-type(odd) {
+        grid-column: 1 / span 2; /* Occupies the first 2/3 of the columns */
+      }
+      &:nth-of-type(even) {
+        grid-column: 2 / span 2; /* Occupies the last 2/3 of the columns */
+      }
+    }
+  }
+}
