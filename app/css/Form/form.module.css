@@ -16,11 +16,12 @@
   border-radius: 20px;
   height: 55vh;
   width: 80%;
-  padding: 1vw;
+  padding: 2vh 2vw;
   color: black;
   background-color: white;
   box-shadow: 0px 2px 6px 0px #1b1b1b;
   display: flex;
+  gap: 2vw;
   flex-flow: row nowrap;
 }
 
@@ -143,4 +144,32 @@
   display: flex;
   flex-flow: column nowrap;
   gap: 2vh;
+}
+
+.farewell_card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+  gap: 2vh;
+}
+
+.form_row {
+  display: flex;
+  gap: 4vw;
+}
+
+.journey {
+  width: 70%;
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 2vh;
+}
+
+.text_area {
+  color: #1b1b1b;
+  background-color: white;
+  padding: 1rem;
+  border: 1px solid #7c7c7c;
+  border-radius: 10px;
 }

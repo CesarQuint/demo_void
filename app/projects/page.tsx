@@ -9,11 +9,13 @@ import { AnimationSequence } from "framer-motion";
 import { animate as animation } from "framer-motion";
 import dynamic from "next/dynamic";
 
-import Footer from "../components/footer";
-
 import { PreFooterLink } from "../components/PreFooterLink";
 
 const Main = dynamic(() => import("../components/projects/main"), {
+  ssr: false,
+});
+
+const Footer = dynamic(() => import("../components/footer"), {
   ssr: false,
 });
 
@@ -111,11 +113,8 @@ function SecondPage() {
         transition={transitionSpringPhysics}
         className="courtain"
       />
-
       <Main />
-
       <PreFooterLink text="CONOCENOS" />
-      <div style={{ height: "5vh" }}></div>
       <Footer />
     </motion.div>
   );

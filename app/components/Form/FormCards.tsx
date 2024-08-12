@@ -5,6 +5,8 @@ import { useGSAP } from "@gsap/react";
 import Image from "next/image";
 import arrow from "../../../public/images/wArrow.svg";
 import wArrow from "../../../public/images/arrow.svg";
+import { Card } from "./CardTemplate";
+import Calendar from "react-calendar";
 
 gsap.registerPlugin(useGSAP);
 
@@ -36,30 +38,92 @@ interface ChildrenCard {
   ref: RefObject<HTMLDivElement>;
   justify?: string;
   left?: any;
-  right: any;
+  right?: any;
   top: number;
   scale: number;
+  fullcard?: any;
 }
 
-const Card = React.forwardRef<HTMLDivElement, Omit<ChildrenCard, "ref">>(
-  (props, ref) => {
-    return (
-      <div
-        ref={ref}
-        style={{ top: `${props.top}vh`, transform: `scale(${props.scale})` }}
-        className={styles.card}
+const FareWellCard = React.forwardRef<
+  HTMLDivElement,
+  Omit<ChildrenCard, "ref">
+>((props, ref) => {
+  return (
+    <div
+      ref={ref}
+      style={{ top: `${props.top}vh`, transform: `scale(${props.scale})` }}
+      className={styles.card}
+    >
+      <section className={styles.farewell_card}>{props.fullcard}</section>
+    </div>
+  );
+});
+
+const ReturnButtons = ({ returnHandler }: { returnHandler: () => void }) => {
+  return (
+    <>
+      <button
+        onClick={() => {
+          returnHandler();
+        }}
+        className={styles.white_button}
       >
-        <section className={styles.card_left_content}>{props.left}</section>
-        <section
-          style={{ justifyContent: props.justify || "space-around" }}
-          className={styles.card_right_content}
-        >
-          {props.right}
-        </section>
-      </div>
-    );
-  }
-);
+        <Image
+          style={{
+            width: "2vw",
+            height: "2vh",
+            backgroundColor: "white",
+            transform: "rotate(180deg)",
+          }}
+          width={1000}
+          height={1000}
+          src={arrow}
+          alt="arrow"
+        />
+      </button>
+      <button
+        onClick={() => {
+          returnHandler();
+        }}
+        className={styles.white_button}
+      >
+        REGRESAR
+      </button>
+    </>
+  );
+};
+const ContinueButtons = ({ clickHandler }: { clickHandler: () => void }) => {
+  return (
+    <>
+      <button
+        onClick={() => clickHandler()}
+        style={{ padding: "1rem", borderRadius: "40px" }}
+        className={styles.black_button}
+      >
+        CONTINUAR
+      </button>
+      <button
+        onClick={() => clickHandler()}
+        style={{
+          padding: "10px",
+          borderRadius: "50%",
+        }}
+        className={styles.black_button}
+      >
+        <Image
+          style={{
+            width: "2vw",
+            height: "2vw",
+          }}
+          width={1000}
+          height={1000}
+          src={wArrow}
+          alt="arrow"
+        />
+      </button>
+    </>
+  );
+};
 
 const FormCards = () => {
   const card1 = useRef<HTMLDivElement>(null);
@@ -94,28 +158,26 @@ const FormCards = () => {
 
   const { contextSafe } = useGSAP();
 
-  const clickHandler = contextSafe(
-    (ref: React.RefObject<HTMLDivElement>, color = "red") => {
-      gsap.to(ref.current, {
-        y: "-150%",
-      });
+  const clickHandler = contextSafe((ref: React.RefObject<HTMLDivElement>) => {
+    gsap.to(ref.current, {
+      y: "-150%",
+    });
 
-      availableCards.has(ref) && availableCards.shift(ref);
+    availableCards.has(ref) && availableCards.shift(ref);
 
-      availableCards.get().forEach((card, i) => {
-        if (i < 2) {
-          gsap.to(card.current, {
-            top: `-=${4}vh`,
-            scale: "+=0.02",
-          });
-        } else {
-          gsap.to(card.current, { scale: "+=0.02" });
-        }
-      });
+    availableCards.get().forEach((card, i) => {
+      if (i < 2) {
+        gsap.to(card.current, {
+          top: `-=${4}vh`,
+          scale: "+=0.02",
+        });
+      } else {
+        gsap.to(card.current, { scale: "+=0.02" });
+      }
+    });
 
-      animatedCards.unshift(ref);
-    }
-  );
+    animatedCards.unshift(ref);
+  });
 
   const returnHandler = contextSafe(() => {
     const prevCard = animatedCards.get()[0];
@@ -143,46 +205,20 @@ const FormCards = () => {
   return (
     <section className={styles.main}>
       <div className={styles.cards_container}>
-        <Card
+        <FareWellCard
+          justify="center"
           ref={card12}
           scale={0.78}
           top={10}
-          left={<></>}
-          right={
+          fullcard={
             <>
-              <section
-                style={{ justifyContent: "flex-end" }}
-                className={styles.right_first}
-              >
-                <button
-                  onClick={() => {
-                    returnHandler();
-                  }}
-                  className={styles.white_button}
-                >
-                  <Image
-                    style={{
-                      width: "2vw",
-                      height: "2vh",
-                      backgroundColor: "white",
-                      transform: "rotate(180deg)",
-                    }}
-                    width={1000}
-                    height={1000}
-                    src={arrow}
-                    alt="arrow"
-                  />
-                </button>
-                <button
-                  onClick={() => {
-                    returnHandler();
-                  }}
-                  className={styles.white_button}
-                >
-                  REGRESAR
-                </button>
+              <section style={{ justifyContent: "flex-end" }}>
+                <ReturnButtons returnHandler={returnHandler} />
               </section>
-              <section className={styles.right_second}>
+              <section
+                style={{ alignItems: "center" }}
+                className={styles.right_second}
+              >
                 <h2>¡Gracias!</h2>
                 <h4>Nos contactaremos contigo lo antes posible.</h4>
               </section>
@@ -191,14 +227,14 @@ const FormCards = () => {
                 className={styles.right_third}
               >
                 <button
-                  onClick={() => clickHandler(card12, "green")}
+                  onClick={() => clickHandler(card12)}
                   style={{ padding: "1rem", borderRadius: "40px" }}
                   className={styles.black_button}
                 >
                   IR AL HOME
                 </button>
                 <button
-                  onClick={() => clickHandler(card12, "green")}
+                  onClick={() => clickHandler(card12)}
                   style={{
                     padding: "10px",
                     borderRadius: "50%",
@@ -245,69 +281,83 @@ const FormCards = () => {
                 style={{ justifyContent: "flex-end" }}
                 className={styles.right_first}
               >
-                <button
-                  onClick={() => {
-                    returnHandler();
-                  }}
-                  className={styles.white_button}
-                >
-                  <Image
-                    style={{
-                      width: "2vw",
-                      height: "2vh",
-                      backgroundColor: "white",
-                      transform: "rotate(180deg)",
-                    }}
-                    width={1000}
-                    height={1000}
-                    src={arrow}
-                    alt="arrow"
-                  />
-                </button>
-                <button
-                  onClick={() => {
-                    returnHandler();
-                  }}
-                  className={styles.white_button}
-                >
-                  REGRESAR
-                </button>
+                <ReturnButtons returnHandler={returnHandler} />
               </section>
               <section className={styles.right_second}>
                 <form>
-                  <textarea name="" id=""></textarea>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexFlow: "column nowrap",
+                      gap: "2vw",
+                      marginBottom: "3vh",
+                    }}
+                  >
+                    <p>¿Habrá invitados especiales?</p>
+                    <section className={styles.form_row}>
+                      <div className={styles.input_place}>
+                        <input
+                          type="radio"
+                          name="area"
+                          id="inside"
+                          value="inside"
+                        />
+                        <label htmlFor="">Si</label>
+                      </div>
+                      <div className={styles.input_place}>
+                        <input
+                          type="radio"
+                          name="area"
+                          id="inside"
+                          value="inside"
+                        />
+                        <label htmlFor="">No</label>
+                      </div>
+                    </section>
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexFlow: "column nowrap",
+                      gap: "2vw",
+                    }}
+                  >
+                    <p>
+                      ¿Tienes un layout con la ubicación de escenario, asientos
+                      y área para house?
+                    </p>
+                    <section className={styles.form_row}>
+                      <div className={styles.input_place}>
+                        <input
+                          type="radio"
+                          name="area"
+                          id="inside"
+                          value="inside"
+                        />
+                        <label htmlFor="">Si</label>
+                      </div>
+                      <div className={styles.input_place}>
+                        <input
+                          type="radio"
+                          name="area"
+                          id="inside"
+                          value="inside"
+                        />
+                        <label htmlFor="">No</label>
+                      </div>
+                    </section>
+                  </div>
                 </form>
               </section>
               <section
                 style={{ justifyContent: "flex-end" }}
                 className={styles.right_third}
               >
-                <button
-                  onClick={() => clickHandler(card11, "green")}
-                  style={{ padding: "1rem", borderRadius: "40px" }}
-                  className={styles.black_button}
-                >
-                  CONTINUAR
-                </button>
-                <button
-                  onClick={() => clickHandler(card11, "green")}
-                  style={{
-                    padding: "10px",
-                    borderRadius: "50%",
+                <ContinueButtons
+                  clickHandler={() => {
+                    clickHandler(card11);
                   }}
-                  className={styles.black_button}
-                >
-                  <Image
-                    style={{
-                      width: "2vw",
-                      height: "2vw",
-                    }}
-                    width={1000}
-                    height={1000}
-                    src={wArrow}
-                    alt="arrow"
-                  />
-                </button>
+                />
               </section>
             </>
           }
@@ -337,69 +387,84 @@ const FormCards = () => {
                 style={{ justifyContent: "flex-end" }}
                 className={styles.right_first}
               >
-                <button
-                  onClick={() => {
-                    returnHandler();
-                  }}
-                  className={styles.white_button}
-                >
-                  <Image
-                    style={{
-                      width: "2vw",
-                      height: "2vh",
-                      backgroundColor: "white",
-                      transform: "rotate(180deg)",
-                    }}
-                    width={1000}
-                    height={1000}
-                    src={arrow}
-                    alt="arrow"
-                  />
-                </button>
-                <button
-                  onClick={() => {
-                    returnHandler();
-                  }}
-                  className={styles.white_button}
-                >
-                  REGRESAR
-                </button>
+                <ReturnButtons returnHandler={returnHandler} />
               </section>
               <section className={styles.right_second}>
                 <form>
-                  <textarea name="" id=""></textarea>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexFlow: "column nowrap",
+                      gap: "2vw",
+                      marginBottom: "3vh",
+                    }}
+                  >
+                    ¿Incluimos sistema de audio además de los equipos de
+                    proyección?
+                    <section className={styles.form_row}>
+                      <div className={styles.input_place}>
+                        <input
+                          type="radio"
+                          name="area"
+                          id="inside"
+                          value="inside"
+                        />
+                        <label htmlFor="">Si</label>
+                      </div>
+                      <div className={styles.input_place}>
+                        <input
+                          type="radio"
+                          name="area"
+                          id="inside"
+                          value="inside"
+                        />
+                        <label htmlFor="">No</label>
+                      </div>
+                    </section>
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexFlow: "column nowrap",
+                      gap: "2vw",
+                    }}
+                  >
+                    <p>
+                      ¿Incluimos un kit de iluminación complementaria para el
+                      evento?
+                    </p>
+                    <section className={styles.form_row}>
+                      <div className={styles.input_place}>
+                        <input
+                          type="radio"
+                          name="area"
+                          id="inside"
+                          value="inside"
+                        />
+                        <label htmlFor="">Si</label>
+                      </div>
+                      <div className={styles.input_place}>
+                        <input
+                          type="radio"
+                          name="area"
+                          id="inside"
+                          value="inside"
+                        />
+                        <label htmlFor="">No</label>
+                      </div>
+                    </section>
+                  </div>
                 </form>
               </section>
               <section
                 style={{ justifyContent: "flex-end" }}
                 className={styles.right_third}
               >
-                <button
-                  onClick={() => clickHandler(card10, "green")}
-                  style={{ padding: "1rem", borderRadius: "40px" }}
-                  className={styles.black_button}
-                >
-                  CONTINUAR
-                </button>
-                <button
-                  onClick={() => clickHandler(card10, "green")}
-                  style={{
-                    padding: "10px",
-                    borderRadius: "50%",
+                <ContinueButtons
+                  clickHandler={() => {
+                    clickHandler(card10);
                   }}
-                  className={styles.black_button}
-                >
-                  <Image
-                    style={{
-                      width: "2vw",
-                      height: "2vw",
-                    }}
-                    width={1000}
-                    height={1000}
-                    src={wArrow}
-                    alt="arrow"
-                  />
-                </button>
+                />
               </section>
             </>
           }
@@ -432,69 +497,33 @@ const FormCards = () => {
                 style={{ justifyContent: "flex-end" }}
                 className={styles.right_first}
               >
-                <button
-                  onClick={() => {
-                    returnHandler();
-                  }}
-                  className={styles.white_button}
-                >
-                  <Image
-                    style={{
-                      width: "2vw",
-                      height: "2vh",
-                      backgroundColor: "white",
-                      transform: "rotate(180deg)",
-                    }}
-                    width={1000}
-                    height={1000}
-                    src={arrow}
-                    alt="arrow"
-                  />
-                </button>
-                <button
-                  onClick={() => {
-                    returnHandler();
-                  }}
-                  className={styles.white_button}
-                >
-                  REGRESAR
-                </button>
+                <ReturnButtons returnHandler={returnHandler} />
               </section>
               <section className={styles.right_second}>
                 <form>
-                  <textarea name="" id=""></textarea>
+                  <div className={styles.journey}>
+                    <label>
+                      ¿Puedes describir la experiencia de usuario o user
+                      journey?
+                    </label>
+                    <textarea
+                      className={styles.text_area}
+                      placeholder="Text"
+                      name=""
+                      id=""
+                    ></textarea>
+                  </div>
                 </form>
               </section>
               <section
                 style={{ justifyContent: "flex-end" }}
                 className={styles.right_third}
               >
-                <button
-                  onClick={() => clickHandler(card9, "green")}
-                  style={{ padding: "1rem", borderRadius: "40px" }}
-                  className={styles.black_button}
-                >
-                  CONTINUAR
-                </button>
-                <button
-                  onClick={() => clickHandler(card9, "green")}
-                  style={{
-                    padding: "10px",
-                    borderRadius: "50%",
+                <ContinueButtons
+                  clickHandler={() => {
+                    clickHandler(card9);
                   }}
-                  className={styles.black_button}
-                >
-                  <Image
-                    style={{
-                      width: "2vw",
-                      height: "2vw",
-                    }}
-                    width={1000}
-                    height={1000}
-                    src={wArrow}
-                    alt="arrow"
-                  />
-                </button>
+                />
               </section>
             </>
           }
@@ -527,33 +556,7 @@ const FormCards = () => {
                 style={{ justifyContent: "flex-end" }}
                 className={styles.right_first}
               >
-                <button
-                  onClick={() => {
-                    returnHandler();
-                  }}
-                  className={styles.white_button}
-                >
-                  <Image
-                    style={{
-                      width: "2vw",
-                      height: "2vh",
-                      backgroundColor: "white",
-                      transform: "rotate(180deg)",
-                    }}
-                    width={1000}
-                    height={1000}
-                    src={arrow}
-                    alt="arrow"
-                  />
-                </button>
-                <button
-                  onClick={() => {
-                    returnHandler();
-                  }}
-                  className={styles.white_button}
-                >
-                  REGRESAR
-                </button>
+                <ReturnButtons returnHandler={returnHandler} />
               </section>
               <section className={styles.right_second}>
                 <h1>Duracion del Contenido</h1>
@@ -563,32 +566,11 @@ const FormCards = () => {
                 style={{ justifyContent: "flex-end" }}
                 className={styles.right_third}
               >
-                <button
-                  onClick={() => clickHandler(card8, "green")}
-                  style={{ padding: "1rem", borderRadius: "40px" }}
-                  className={styles.black_button}
-                >
-                  CONTINUAR
-                </button>
-                <button
-                  onClick={() => clickHandler(card8, "green")}
-                  style={{
-                    padding: "10px",
-                    borderRadius: "50%",
+                <ContinueButtons
+                  clickHandler={() => {
+                    clickHandler(card8);
                   }}
-                  className={styles.black_button}
-                >
-                  <Image
-                    style={{
-                      width: "2vw",
-                      height: "2vw",
-                    }}
-                    width={1000}
-                    height={1000}
-                    src={wArrow}
-                    alt="arrow"
-                  />
-                </button>
+                />
               </section>
             </>
           }
@@ -621,33 +603,7 @@ const FormCards = () => {
                 style={{ justifyContent: "flex-end" }}
                 className={styles.right_first}
               >
-                <button
-                  onClick={() => {
-                    returnHandler();
-                  }}
-                  className={styles.white_button}
-                >
-                  <Image
-                    style={{
-                      width: "2vw",
-                      height: "2vh",
-                      backgroundColor: "white",
-                      transform: "rotate(180deg)",
-                    }}
-                    width={1000}
-                    height={1000}
-                    src={arrow}
-                    alt="arrow"
-                  />
-                </button>
-                <button
-                  onClick={() => {
-                    returnHandler();
-                  }}
-                  className={styles.white_button}
-                >
-                  REGRESAR
-                </button>
+                <ReturnButtons returnHandler={returnHandler} />
               </section>
               <section className={styles.right_second}>
                 <p>
@@ -727,32 +683,11 @@ const FormCards = () => {
                 style={{ justifyContent: "flex-end" }}
                 className={styles.right_third}
               >
-                <button
-                  onClick={() => clickHandler(card7, "green")}
-                  style={{ padding: "1rem", borderRadius: "40px" }}
-                  className={styles.black_button}
-                >
-                  CONTINUAR
-                </button>
-                <button
-                  onClick={() => clickHandler(card7, "green")}
-                  style={{
-                    padding: "10px",
-                    borderRadius: "50%",
+                <ContinueButtons
+                  clickHandler={() => {
+                    clickHandler(card7);
                   }}
-                  className={styles.black_button}
-                >
-                  <Image
-                    style={{
-                      width: "2vw",
-                      height: "2vw",
-                    }}
-                    width={1000}
-                    height={1000}
-                    src={wArrow}
-                    alt="arrow"
-                  />
-                </button>
+                />
               </section>
             </>
           }
@@ -785,33 +720,7 @@ const FormCards = () => {
                 style={{ justifyContent: "flex-end" }}
                 className={styles.right_first}
               >
-                <button
-                  onClick={() => {
-                    returnHandler();
-                  }}
-                  className={styles.white_button}
-                >
-                  <Image
-                    style={{
-                      width: "2vw",
-                      height: "2vh",
-                      backgroundColor: "white",
-                      transform: "rotate(180deg)",
-                    }}
-                    width={1000}
-                    height={1000}
-                    src={arrow}
-                    alt="arrow"
-                  />
-                </button>
-                <button
-                  onClick={() => {
-                    returnHandler();
-                  }}
-                  className={styles.white_button}
-                >
-                  REGRESAR
-                </button>
+                <ReturnButtons returnHandler={returnHandler} />
               </section>
               <section className={styles.right_second}>
                 <form>
@@ -822,32 +731,11 @@ const FormCards = () => {
                 style={{ justifyContent: "flex-end" }}
                 className={styles.right_third}
               >
-                <button
-                  onClick={() => clickHandler(card6, "green")}
-                  style={{ padding: "1rem", borderRadius: "40px" }}
-                  className={styles.black_button}
-                >
-                  CONTINUAR
-                </button>
-                <button
-                  onClick={() => clickHandler(card6, "green")}
-                  style={{
-                    padding: "10px",
-                    borderRadius: "50%",
+                <ContinueButtons
+                  clickHandler={() => {
+                    clickHandler(card6);
                   }}
-                  className={styles.black_button}
-                >
-                  <Image
-                    style={{
-                      width: "2vw",
-                      height: "2vw",
-                    }}
-                    width={1000}
-                    height={1000}
-                    src={wArrow}
-                    alt="arrow"
-                  />
-                </button>
+                />
               </section>
             </>
           }
@@ -880,33 +768,7 @@ const FormCards = () => {
                 style={{ justifyContent: "flex-end" }}
                 className={styles.right_first}
               >
-                <button
-                  onClick={() => {
-                    returnHandler();
-                  }}
-                  className={styles.white_button}
-                >
-                  <Image
-                    style={{
-                      width: "2vw",
-                      height: "2vh",
-                      backgroundColor: "white",
-                      transform: "rotate(180deg)",
-                    }}
-                    width={1000}
-                    height={1000}
-                    src={arrow}
-                    alt="arrow"
-                  />
-                </button>
-                <button
-                  onClick={() => {
-                    returnHandler();
-                  }}
-                  className={styles.white_button}
-                >
-                  REGRESAR
-                </button>
+                <ReturnButtons returnHandler={returnHandler} />
               </section>
               <section className={styles.right_second}>
                 <h2>Seleccion de fechas</h2>
@@ -915,32 +777,11 @@ const FormCards = () => {
                 style={{ justifyContent: "flex-end" }}
                 className={styles.right_third}
               >
-                <button
-                  onClick={() => clickHandler(card5, "green")}
-                  style={{ padding: "1rem", borderRadius: "40px" }}
-                  className={styles.black_button}
-                >
-                  CONTINUAR
-                </button>
-                <button
-                  onClick={() => clickHandler(card5, "green")}
-                  style={{
-                    padding: "10px",
-                    borderRadius: "50%",
+                <ContinueButtons
+                  clickHandler={() => {
+                    clickHandler(card5);
                   }}
-                  className={styles.black_button}
-                >
-                  <Image
-                    style={{
-                      width: "2vw",
-                      height: "2vw",
-                    }}
-                    width={1000}
-                    height={1000}
-                    src={wArrow}
-                    alt="arrow"
-                  />
-                </button>
+                />
               </section>
             </>
           }
@@ -973,33 +814,7 @@ const FormCards = () => {
                 style={{ justifyContent: "flex-end" }}
                 className={styles.right_first}
               >
-                <button
-                  onClick={() => {
-                    returnHandler();
-                  }}
-                  className={styles.white_button}
-                >
-                  <Image
-                    style={{
-                      width: "2vw",
-                      height: "2vh",
-                      backgroundColor: "white",
-                      transform: "rotate(180deg)",
-                    }}
-                    width={1000}
-                    height={1000}
-                    src={arrow}
-                    alt="arrow"
-                  />
-                </button>
-                <button
-                  onClick={() => {
-                    returnHandler();
-                  }}
-                  className={styles.white_button}
-                >
-                  REGRESAR
-                </button>
+                <ReturnButtons returnHandler={returnHandler} />
               </section>
               <section className={styles.right_second}>
                 <p>
@@ -1018,32 +833,11 @@ const FormCards = () => {
                 style={{ justifyContent: "flex-end" }}
                 className={styles.right_third}
               >
-                <button
-                  onClick={() => clickHandler(card4, "green")}
-                  style={{ padding: "1rem", borderRadius: "40px" }}
-                  className={styles.black_button}
-                >
-                  CONTINUAR
-                </button>
-                <button
-                  onClick={() => clickHandler(card4, "green")}
-                  style={{
-                    padding: "10px",
-                    borderRadius: "50%",
+                <ContinueButtons
+                  clickHandler={() => {
+                    clickHandler(card4);
                   }}
-                  className={styles.black_button}
-                >
-                  <Image
-                    style={{
-                      width: "2vw",
-                      height: "2vw",
-                    }}
-                    width={1000}
-                    height={1000}
-                    src={wArrow}
-                    alt="arrow"
-                  />
-                </button>
+                />
               </section>
             </>
           }
@@ -1076,33 +870,7 @@ const FormCards = () => {
                 style={{ justifyContent: "flex-end" }}
                 className={styles.right_first}
               >
-                <button
-                  onClick={() => {
-                    returnHandler();
-                  }}
-                  className={styles.white_button}
-                >
-                  <Image
-                    style={{
-                      width: "2vw",
-                      height: "2vh",
-                      backgroundColor: "white",
-                      transform: "rotate(180deg)",
-                    }}
-                    width={1000}
-                    height={1000}
-                    src={arrow}
-                    alt="arrow"
-                  />
-                </button>
-                <button
-                  onClick={() => {
-                    returnHandler();
-                  }}
-                  className={styles.white_button}
-                >
-                  REGRESAR
-                </button>
+                <ReturnButtons returnHandler={returnHandler} />
               </section>
               <section className={styles.right_second}>
                 <p>
@@ -1136,32 +904,11 @@ const FormCards = () => {
                 style={{ justifyContent: "flex-end" }}
                 className={styles.right_third}
               >
-                <button
-                  onClick={() => clickHandler(card3, "green")}
-                  style={{ padding: "1rem", borderRadius: "40px" }}
-                  className={styles.black_button}
-                >
-                  CONTINUAR
-                </button>
-                <button
-                  onClick={() => clickHandler(card3, "green")}
-                  style={{
-                    padding: "10px",
-                    borderRadius: "50%",
+                <ContinueButtons
+                  clickHandler={() => {
+                    clickHandler(card3);
                   }}
-                  className={styles.black_button}
-                >
-                  <Image
-                    style={{
-                      width: "2vw",
-                      height: "2vw",
-                    }}
-                    width={1000}
-                    height={1000}
-                    src={wArrow}
-                    alt="arrow"
-                  />
-                </button>
+                />
               </section>
             </>
           }
@@ -1194,33 +941,7 @@ const FormCards = () => {
                 style={{ justifyContent: "flex-end" }}
                 className={styles.right_first}
               >
-                <button
-                  onClick={() => {
-                    returnHandler();
-                  }}
-                  className={styles.white_button}
-                >
-                  <Image
-                    style={{
-                      width: "2vw",
-                      height: "2vh",
-                      backgroundColor: "white",
-                      transform: "rotate(180deg)",
-                    }}
-                    width={1000}
-                    height={1000}
-                    src={arrow}
-                    alt="arrow"
-                  />
-                </button>
-                <button
-                  onClick={() => {
-                    returnHandler();
-                  }}
-                  className={styles.white_button}
-                >
-                  REGRESAR
-                </button>
+                <ReturnButtons returnHandler={returnHandler} />
               </section>
               <section className={styles.right_second}>
                 <form className={styles.contact}>
@@ -1298,32 +1019,11 @@ const FormCards = () => {
                 style={{ justifyContent: "flex-end" }}
                 className={styles.right_third}
               >
-                <button
-                  onClick={() => clickHandler(card2, "green")}
-                  style={{ padding: "1rem", borderRadius: "40px" }}
-                  className={styles.black_button}
-                >
-                  CONTINUAR
-                </button>
-                <button
-                  onClick={() => clickHandler(card2, "green")}
-                  style={{
-                    padding: "10px",
-                    borderRadius: "50%",
+                <ContinueButtons
+                  clickHandler={() => {
+                    clickHandler(card2);
                   }}
-                  className={styles.black_button}
-                >
-                  <Image
-                    style={{
-                      width: "2vw",
-                      height: "2vw",
-                    }}
-                    width={1000}
-                    height={1000}
-                    src={wArrow}
-                    alt="arrow"
-                  />
-                </button>
+                />
               </section>
             </>
           }
@@ -1379,32 +1079,11 @@ const FormCards = () => {
                 <p> ¡Gracias por tu colaboración!</p>
               </section>
               <section className={styles.right_third}>
-                <button
-                  onClick={() => clickHandler(card1, "green")}
-                  style={{ padding: "1rem", borderRadius: "40px" }}
-                  className={styles.black_button}
-                >
-                  CONTINUAR
-                </button>
-                <button
-                  onClick={() => clickHandler(card1, "green")}
-                  style={{
-                    padding: "10px",
-                    borderRadius: "50%",
+                <ContinueButtons
+                  clickHandler={() => {
+                    clickHandler(card1);
                   }}
-                  className={styles.black_button}
-                >
-                  <Image
-                    style={{
-                      width: "2vw",
-                      height: "2vw",
-                    }}
-                    width={1000}
-                    height={1000}
-                    src={wArrow}
-                    alt="arrow"
-                  />
-                </button>
+                />
               </section>
             </>
           }
