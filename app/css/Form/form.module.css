@@ -5,34 +5,51 @@
 
 .cards_container {
   width: 100%;
-  height: 70vh;
-  border: 1px solid white;
+  height: 100vh;
   position: relative;
-  padding: 5vh 10vw;
+  padding: 5vh 2vw;
+  @media (min-width: 700px) {
+    padding: 5vh 10vw;
+    height: 70vh;
+  }
 }
 
 .card {
   position: absolute;
   border-radius: 20px;
-  height: 55vh;
-  width: 80%;
-  padding: 2vh 2vw;
+  height: 80vh;
+  width: 95%;
+  padding: 3vh 4vw;
   color: black;
-  background-color: white;
+  background-color: #ededed;
   box-shadow: 0px 2px 6px 0px #1b1b1b;
   display: flex;
   gap: 2vw;
-  flex-flow: row nowrap;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  @media (min-width: 700px) {
+    flex-flow: row nowrap;
+    width: 80%;
+    height: 65vh;
+  }
 }
 
 .card_left_content {
   display: flex;
   flex-flow: column nowrap;
-  width: 40%;
+  height: 20%;
+
+  @media (min-width: 700px) {
+    width: 40%;
+    height: auto;
+  }
 }
 
 .left_first {
-  height: 10%;
+  height: auto;
+  @media (min-width: 700px) {
+    height: 10%;
+  }
 }
 .left_second {
   height: 80%;
@@ -44,23 +61,36 @@
   }
 }
 .left_third {
-  height: 10%;
+  height: auto;
+  @media (min-width: 700px) {
+    height: 10%;
+  }
 }
 
 .card_right_content {
   display: flex;
   flex-flow: column nowrap;
-  width: 60%;
+  width: 100%;
+  height: 80%;
   gap: 3vh;
+  @media (min-width: 700px) {
+    width: 60%;
+    height: auto;
+  }
 }
 
 .right_first {
-  display: flex;
-  flex-flow: row nowrap;
+  display: none;
+  @media (min-width: 700px) {
+    display: flex;
+    flex-flow: row nowrap;
+  }
 }
+
 .right_second {
   display: flex;
   flex-flow: column nowrap;
+  height: inherit;
   gap: 3vh;
 }
 .right_third {
@@ -68,7 +98,7 @@
 }
 
 .white_button {
-  background-color: white;
+  background-color: #ededed;
   color: black;
   border: none;
   &:hover {
@@ -93,31 +123,43 @@
 
 .contact {
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: column nowrap;
+  gap: 4vh;
   width: 100%;
+  @media (min-width: 700px) {
+    gap: none;
+    flex-flow: row nowrap;
+  }
 }
 
 .contact_column {
   display: flex;
   flex-flow: column nowrap;
-  width: 50%;
-  gap: 2vh;
+  gap: 4vh;
+  @media (min-width: 700px) {
+    gap: 2vh;
+    width: 50%;
+  }
 }
 
 .imput_text {
   display: flex;
   flex-flow: column nowrap;
-  gap: 1vh;
-  width: 80%;
+  gap: 2vh;
+  @media (min-width: 700px) {
+    width: 80%;
+  }
 }
 
 .input_white {
-  background-color: white;
+  background-color: #ededed;
   border-top: none;
   border-left: none;
   border-right: none;
   transition: border-bottom-color 0.3s ease;
   color: black;
+
+  padding: 1vh;
 
   &:focus-visible {
     border-bottom: #1b1b1b;
@@ -177,10 +219,46 @@
 .calendar_flex {
   display: flex;
   flex-flow: row nowrap;
-  gap: 2vw;
+  gap: 1vw;
 }
 
 .calendar_container {
-  background-color: red;
+  background-color: white;
+  border-radius: 20px;
+  padding: 2vh;
+}
+
+.input_date {
+  background-color: #ededed;
   padding: 1vh;
+  border: 1px solid #6b6b6b;
+  border-radius: 20px;
+  transition: border-bottom-color 0.3s ease;
+  color: #1f1f1f;
+
+  &:focus-visible {
+    border-bottom: #1b1b1b;
+  }
+}
+
+.dates_flex {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 3vh;
+}
+
+.schedule_form {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 3vh;
+  width: 60%;
+}
+
+.arrow_button {
+  width: 4vw;
+  height: 4vw;
+  @media (min-width: 700px) {
+    width: 2vw;
+    height: 2vw;
+  }
 }

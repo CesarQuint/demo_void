@@ -6,7 +6,18 @@ import Image from "next/image";
 import arrow from "../../../public/images/wArrow.svg";
 import wArrow from "../../../public/images/arrow.svg";
 import { Card } from "./CardTemplate";
-import Calendar from "react-calendar";
+
+import { WelcomeCard } from "./Cards/CardWelcome";
+import { ContactCard } from "./Cards/CardContact";
+import { PlaceTypeCard } from "./Cards/PlaceTypeCard";
+import { ExtraInformationCard } from "./Cards/ExtraInformationCard";
+import { ComplemetarySystemsCard } from "./Cards/ComplemetarySystems";
+import { AboutYourProjectCard } from "./Cards/AboutYourProjectCard";
+import { LookingForProjectCard } from "./Cards/LookingForProject";
+import { DatesAvailableCard } from "./Cards/DatesAvailableCard";
+import { ScheduleCard } from "./Cards/ScheduleCard";
+import { EventDurationCard } from "./Cards/EventDurationCard";
+import { LocationCard } from "./Cards/LocationCard";
 
 gsap.registerPlugin(useGSAP);
 
@@ -59,7 +70,11 @@ const FareWellCard = React.forwardRef<
   );
 });
 
-const ReturnButtons = ({ returnHandler }: { returnHandler: () => void }) => {
+export const ReturnButtons = ({
+  returnHandler,
+}: {
+  returnHandler: () => void;
+}) => {
   return (
     <>
       <button
@@ -72,7 +87,7 @@ const ReturnButtons = ({ returnHandler }: { returnHandler: () => void }) => {
           style={{
             width: "2vw",
             height: "2vh",
-            backgroundColor: "white",
+            backgroundColor: " #ededed",
             transform: "rotate(180deg)",
           }}
           width={1000}
@@ -92,7 +107,12 @@ const ReturnButtons = ({ returnHandler }: { returnHandler: () => void }) => {
     </>
   );
 };
-const ContinueButtons = ({ clickHandler }: { clickHandler: () => void }) => {
+
+export const ContinueButtons = ({
+  clickHandler,
+}: {
+  clickHandler: () => void;
+}) => {
   return (
     <>
       <button
@@ -111,10 +131,7 @@ const ContinueButtons = ({ clickHandler }: { clickHandler: () => void }) => {
         className={styles.black_button}
       >
         <Image
-          style={{
-            width: "2vw",
-            height: "2vw",
-          }}
+          className={styles.arrow_button}
           width={1000}
           height={1000}
           src={wArrow}
@@ -256,846 +273,90 @@ const FormCards = () => {
             </>
           }
         />
-        <Card
-          ref={card11}
-          scale={0.8}
-          top={10}
-          left={
-            <>
-              <section className={styles.left_first}>
-                <p>11</p>
-              </section>
-              <section className={styles.left_second}>
-                <h2 className={styles.title}>Información extra</h2>
-              </section>
-              <section className={styles.left_third}>
-                <p className={styles.warning}>
-                  Las preguntas marcadas con * son obligatorias.
-                </p>
-              </section>
-            </>
-          }
-          right={
-            <>
-              <section
-                style={{ justifyContent: "flex-end" }}
-                className={styles.right_first}
-              >
-                <ReturnButtons returnHandler={returnHandler} />
-              </section>
-              <section className={styles.right_second}>
-                <form>
-                  <div
-                    style={{
-                      display: "flex",
-                      flexFlow: "column nowrap",
-                      gap: "2vw",
-                      marginBottom: "3vh",
-                    }}
-                  >
-                    <p>¿Habrá invitados especiales?</p>
-                    <section className={styles.form_row}>
-                      <div className={styles.input_place}>
-                        <input
-                          type="radio"
-                          name="area"
-                          id="inside"
-                          value="inside"
-                        />
-                        <label htmlFor="">Si</label>
-                      </div>
-                      <div className={styles.input_place}>
-                        <input
-                          type="radio"
-                          name="area"
-                          id="inside"
-                          value="inside"
-                        />
-                        <label htmlFor="">No</label>
-                      </div>
-                    </section>
-                  </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      flexFlow: "column nowrap",
-                      gap: "2vw",
-                    }}
-                  >
-                    <p>
-                      ¿Tienes un layout con la ubicación de escenario, asientos
-                      y área para house?
-                    </p>
-                    <section className={styles.form_row}>
-                      <div className={styles.input_place}>
-                        <input
-                          type="radio"
-                          name="area"
-                          id="inside"
-                          value="inside"
-                        />
-                        <label htmlFor="">Si</label>
-                      </div>
-                      <div className={styles.input_place}>
-                        <input
-                          type="radio"
-                          name="area"
-                          id="inside"
-                          value="inside"
-                        />
-                        <label htmlFor="">No</label>
-                      </div>
-                    </section>
-                  </div>
-                </form>
-              </section>
-              <section
-                style={{ justifyContent: "flex-end" }}
-                className={styles.right_third}
-              >
-                <ContinueButtons
-                  clickHandler={() => {
-                    clickHandler(card11);
-                  }}
-                />
-              </section>
-            </>
-          }
+        <ExtraInformationCard
+          cardRef={card11}
+          clickHandler={() => clickHandler(card11)}
+          returnHandler={() => {
+            returnHandler();
+          }}
         />
-        <Card
-          ref={card10}
-          scale={0.82}
-          top={10}
-          left={
-            <>
-              <section className={styles.left_first}>
-                <p>10</p>
-              </section>
-              <section className={styles.left_second}>
-                <h2 className={styles.title}>Sistemas complementarios</h2>
-              </section>
-              <section className={styles.left_third}>
-                <p className={styles.warning}>
-                  Las preguntas marcadas con * son obligatorias.
-                </p>
-              </section>
-            </>
-          }
-          right={
-            <>
-              <section
-                style={{ justifyContent: "flex-end" }}
-                className={styles.right_first}
-              >
-                <ReturnButtons returnHandler={returnHandler} />
-              </section>
-              <section className={styles.right_second}>
-                <form>
-                  <div
-                    style={{
-                      display: "flex",
-                      flexFlow: "column nowrap",
-                      gap: "2vw",
-                      marginBottom: "3vh",
-                    }}
-                  >
-                    ¿Incluimos sistema de audio además de los equipos de
-                    proyección?
-                    <section className={styles.form_row}>
-                      <div className={styles.input_place}>
-                        <input
-                          type="radio"
-                          name="area"
-                          id="inside"
-                          value="inside"
-                        />
-                        <label htmlFor="">Si</label>
-                      </div>
-                      <div className={styles.input_place}>
-                        <input
-                          type="radio"
-                          name="area"
-                          id="inside"
-                          value="inside"
-                        />
-                        <label htmlFor="">No</label>
-                      </div>
-                    </section>
-                  </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      flexFlow: "column nowrap",
-                      gap: "2vw",
-                    }}
-                  >
-                    <p>
-                      ¿Incluimos un kit de iluminación complementaria para el
-                      evento?
-                    </p>
-                    <section className={styles.form_row}>
-                      <div className={styles.input_place}>
-                        <input
-                          type="radio"
-                          name="area"
-                          id="inside"
-                          value="inside"
-                        />
-                        <label htmlFor="">Si</label>
-                      </div>
-                      <div className={styles.input_place}>
-                        <input
-                          type="radio"
-                          name="area"
-                          id="inside"
-                          value="inside"
-                        />
-                        <label htmlFor="">No</label>
-                      </div>
-                    </section>
-                  </div>
-                </form>
-              </section>
-              <section
-                style={{ justifyContent: "flex-end" }}
-                className={styles.right_third}
-              >
-                <ContinueButtons
-                  clickHandler={() => {
-                    clickHandler(card10);
-                  }}
-                />
-              </section>
-            </>
-          }
+
+        <ComplemetarySystemsCard
+          cardRef={card10}
+          clickHandler={() => clickHandler(card10)}
+          returnHandler={() => {
+            returnHandler();
+          }}
         />
-        {
-          //** Nineth Card Region */
-        }
-        <Card
-          ref={card9}
-          scale={0.84}
-          top={10}
-          left={
-            <>
-              <section className={styles.left_first}>
-                <p>09</p>
-              </section>
-              <section className={styles.left_second}>
-                <h2 className={styles.title}>Sobre tu proyecto</h2>
-              </section>
-              <section className={styles.left_third}>
-                <p className={styles.warning}>
-                  Las preguntas marcadas con * son obligatorias.
-                </p>
-              </section>
-            </>
-          }
-          right={
-            <>
-              <section
-                style={{ justifyContent: "flex-end" }}
-                className={styles.right_first}
-              >
-                <ReturnButtons returnHandler={returnHandler} />
-              </section>
-              <section className={styles.right_second}>
-                <form>
-                  <div className={styles.journey}>
-                    <label>
-                      ¿Puedes describir la experiencia de usuario o user
-                      journey?
-                    </label>
-                    <textarea
-                      className={styles.text_area}
-                      placeholder="Text"
-                      name=""
-                      id=""
-                    ></textarea>
-                  </div>
-                </form>
-              </section>
-              <section
-                style={{ justifyContent: "flex-end" }}
-                className={styles.right_third}
-              >
-                <ContinueButtons
-                  clickHandler={() => {
-                    clickHandler(card9);
-                  }}
-                />
-              </section>
-            </>
-          }
+
+        <AboutYourProjectCard
+          cardRef={card9}
+          clickHandler={() => clickHandler(card9)}
+          returnHandler={() => {
+            returnHandler();
+          }}
         />
-        {
-          //** Eight Card Region */
-        }
-        <Card
-          ref={card8}
-          scale={0.86}
-          top={10}
-          left={
-            <>
-              <section className={styles.left_first}>
-                <p>08</p>
-              </section>
-              <section className={styles.left_second}>
-                <h2 className={styles.title}>Sobre tu proyecto</h2>
-              </section>
-              <section className={styles.left_third}>
-                <p className={styles.warning}>
-                  Las preguntas marcadas con * son obligatorias.
-                </p>
-              </section>
-            </>
-          }
-          right={
-            <>
-              <section
-                style={{ justifyContent: "flex-end" }}
-                className={styles.right_first}
-              >
-                <ReturnButtons returnHandler={returnHandler} />
-              </section>
-              <section className={styles.right_second}>
-                <h1>Duracion del Contenido</h1>
-                <p>Hey</p>
-              </section>
-              <section
-                style={{ justifyContent: "flex-end" }}
-                className={styles.right_third}
-              >
-                <ContinueButtons
-                  clickHandler={() => {
-                    clickHandler(card8);
-                  }}
-                />
-              </section>
-            </>
-          }
+
+        <EventDurationCard
+          cardRef={card8}
+          clickHandler={() => clickHandler(card8)}
+          returnHandler={() => {
+            returnHandler();
+          }}
         />
-        {
-          //** Seventh Card Region */
-        }
-        <Card
-          ref={card7}
-          scale={0.88}
-          top={10}
-          left={
-            <>
-              <section className={styles.left_first}>
-                <p>07</p>
-              </section>
-              <section className={styles.left_second}>
-                <h2 className={styles.title}>Sobre tu proyecto</h2>
-              </section>
-              <section className={styles.left_third}>
-                <p className={styles.warning}>
-                  Las preguntas marcadas con * son obligatorias.
-                </p>
-              </section>
-            </>
-          }
-          right={
-            <>
-              <section
-                style={{ justifyContent: "flex-end" }}
-                className={styles.right_first}
-              >
-                <ReturnButtons returnHandler={returnHandler} />
-              </section>
-              <section className={styles.right_second}>
-                <p>
-                  ¿Qué tipo de proyecto buscas?
-                  <span style={{ display: "inline", color: "red", margin: 0 }}>
-                    *
-                  </span>
-                </p>
-                <div
-                  style={{
-                    display: "flex",
-                    flexFlow: "row nowrap",
-                    gap: "2vw",
-                  }}
-                >
-                  <section className={styles.project_column}>
-                    <div className={styles.input_place}>
-                      <input
-                        type="radio"
-                        name="area"
-                        id="inside"
-                        value="inside"
-                      />
-                      <label htmlFor="">Mapping sobre fachada</label>
-                    </div>
-                    <div className={styles.input_place}>
-                      <input
-                        type="radio"
-                        name="area"
-                        id="outside"
-                        value="outside"
-                      />
-                      <label htmlFor="">Experiencia inmersiva</label>
-                    </div>
-                    <div className={styles.input_place}>
-                      <input
-                        type="radio"
-                        name="area"
-                        id="outside"
-                        value="outside"
-                      />
-                      <label htmlFor="">Activación de marca</label>
-                    </div>
-                  </section>
-                  <section className={styles.project_column}>
-                    <div className={styles.input_place}>
-                      <input
-                        type="radio"
-                        name="area"
-                        id="inside"
-                        value="inside"
-                      />
-                      <label htmlFor="">Mapping sobre fachada</label>
-                    </div>
-                    <div className={styles.input_place}>
-                      <input
-                        type="radio"
-                        name="area"
-                        id="outside"
-                        value="outside"
-                      />
-                      <label htmlFor="">Experiencia inmersiva</label>
-                    </div>
-                    <div className={styles.input_place}>
-                      <input
-                        type="radio"
-                        name="area"
-                        id="outside"
-                        value="outside"
-                      />
-                      <label htmlFor="">Activación de marca</label>
-                    </div>
-                  </section>
-                </div>
-              </section>
-              <section
-                style={{ justifyContent: "flex-end" }}
-                className={styles.right_third}
-              >
-                <ContinueButtons
-                  clickHandler={() => {
-                    clickHandler(card7);
-                  }}
-                />
-              </section>
-            </>
-          }
+
+        <LookingForProjectCard
+          cardRef={card7}
+          clickHandler={() => clickHandler(card7)}
+          returnHandler={() => {
+            returnHandler();
+          }}
         />
-        {
-          //** Sixth Card Region */
-        }
-        <Card
-          ref={card6}
-          scale={0.9}
-          top={10}
-          left={
-            <>
-              <section className={styles.left_first}>
-                <p>06</p>
-              </section>
-              <section className={styles.left_second}>
-                <h2 className={styles.title}>Información del evento</h2>
-              </section>
-              <section className={styles.left_third}>
-                <p className={styles.warning}>
-                  Las preguntas marcadas con * son obligatorias.
-                </p>
-              </section>
-            </>
-          }
-          right={
-            <>
-              <section
-                style={{ justifyContent: "flex-end" }}
-                className={styles.right_first}
-              >
-                <ReturnButtons returnHandler={returnHandler} />
-              </section>
-              <section className={styles.right_second}>
-                <form>
-                  <h3>Horario del evento</h3>
-                </form>
-              </section>
-              <section
-                style={{ justifyContent: "flex-end" }}
-                className={styles.right_third}
-              >
-                <ContinueButtons
-                  clickHandler={() => {
-                    clickHandler(card6);
-                  }}
-                />
-              </section>
-            </>
-          }
+
+        <ScheduleCard
+          cardRef={card6}
+          clickHandler={() => clickHandler(card6)}
+          returnHandler={() => {
+            returnHandler();
+          }}
         />
-        {
-          //** Fifth Card Region */
-        }
-        <Card
-          ref={card5}
-          scale={0.92}
-          top={10}
-          left={
-            <>
-              <section className={styles.left_first}>
-                <p>05</p>
-              </section>
-              <section className={styles.left_second}>
-                <h2 className={styles.title}>Información del evento</h2>
-              </section>
-              <section className={styles.left_third}>
-                <p className={styles.warning}>
-                  Las preguntas marcadas con * son obligatorias.
-                </p>
-              </section>
-            </>
-          }
-          right={
-            <>
-              <section
-                style={{ justifyContent: "flex-end" }}
-                className={styles.right_first}
-              >
-                <ReturnButtons returnHandler={returnHandler} />
-              </section>
-              <section className={styles.right_second}>
-                <div className={styles.calendar_flex}>
-                  <section style={{ width: "50%" }}>
-                    <h2>Select</h2>
-                  </section>
-                  <section style={{ width: "50%" }}>
-                    <div className={styles.calendar_container}>
-                      <Calendar />
-                    </div>
-                  </section>
-                </div>
-              </section>
-              <section
-                style={{ justifyContent: "flex-end" }}
-                className={styles.right_third}
-              >
-                <ContinueButtons
-                  clickHandler={() => {
-                    clickHandler(card5);
-                  }}
-                />
-              </section>
-            </>
-          }
+
+        <DatesAvailableCard
+          cardRef={card5}
+          clickHandler={() => clickHandler(card5)}
+          returnHandler={() => {
+            returnHandler();
+          }}
         />
-        {
-          //** Fourth Card Region */
-        }
-        <Card
-          ref={card4}
-          scale={0.94}
-          top={10}
-          left={
-            <>
-              <section className={styles.left_first}>
-                <p>04</p>
-              </section>
-              <section className={styles.left_second}>
-                <h2 className={styles.title}>Información del evento</h2>
-              </section>
-              <section className={styles.left_third}>
-                <p className={styles.warning}>
-                  Las preguntas marcadas con * son obligatorias.
-                </p>
-              </section>
-            </>
-          }
-          right={
-            <>
-              <section
-                style={{ justifyContent: "flex-end" }}
-                className={styles.right_first}
-              >
-                <ReturnButtons returnHandler={returnHandler} />
-              </section>
-              <section className={styles.right_second}>
-                <p>
-                  Direccion del Evento
-                  <span style={{ display: "inline", color: "red", margin: 0 }}>
-                    *
-                  </span>
-                </p>
-                <form className={styles.input_form}>
-                  <div className={styles.input_place}>
-                    <input type="text" />
-                  </div>
-                </form>
-              </section>
-              <section
-                style={{ justifyContent: "flex-end" }}
-                className={styles.right_third}
-              >
-                <ContinueButtons
-                  clickHandler={() => {
-                    clickHandler(card4);
-                  }}
-                />
-              </section>
-            </>
-          }
+
+        <LocationCard
+          cardRef={card4}
+          clickHandler={() => clickHandler(card4)}
+          returnHandler={() => {
+            returnHandler();
+          }}
         />
-        {
-          //** Third Card Region */
-        }
-        <Card
-          ref={card3}
-          scale={0.96}
-          top={10}
-          left={
-            <>
-              <section className={styles.left_first}>
-                <p>03</p>
-              </section>
-              <section className={styles.left_second}>
-                <h2 className={styles.title}>Tipo de ubicación</h2>
-              </section>
-              <section className={styles.left_third}>
-                <p className={styles.warning}>
-                  Las preguntas marcadas con * son obligatorias.
-                </p>
-              </section>
-            </>
-          }
-          right={
-            <>
-              <section
-                style={{ justifyContent: "flex-end" }}
-                className={styles.right_first}
-              >
-                <ReturnButtons returnHandler={returnHandler} />
-              </section>
-              <section className={styles.right_second}>
-                <p>
-                  ¿Tu evento es en interior o exterior?
-                  <span style={{ display: "inline", color: "red", margin: 0 }}>
-                    *
-                  </span>
-                </p>
-                <form className={styles.input_form}>
-                  <div className={styles.input_place}>
-                    <label htmlFor="">Interior</label>
-                    <input
-                      type="radio"
-                      name="area"
-                      id="inside"
-                      value="inside"
-                    />
-                  </div>
-                  <div className={styles.input_place}>
-                    <label htmlFor="">Exterior</label>
-                    <input
-                      type="radio"
-                      name="area"
-                      id="outside"
-                      value="outside"
-                    />
-                  </div>
-                </form>
-              </section>
-              <section
-                style={{ justifyContent: "flex-end" }}
-                className={styles.right_third}
-              >
-                <ContinueButtons
-                  clickHandler={() => {
-                    clickHandler(card3);
-                  }}
-                />
-              </section>
-            </>
-          }
+
+        <PlaceTypeCard
+          cardRef={card3}
+          clickHandler={() => clickHandler(card3)}
+          returnHandler={() => {
+            returnHandler();
+          }}
         />
-        {
-          //** Second Card Region */
-        }
-        <Card
-          ref={card2}
-          scale={0.98}
-          top={6}
-          left={
-            <>
-              <section className={styles.left_first}>
-                <p>02</p>
-              </section>
-              <section className={styles.left_second}>
-                <h2 className={styles.title}>Datos de Contacto</h2>
-              </section>
-              <section className={styles.left_third}>
-                <p className={styles.warning}>
-                  Las preguntas marcadas con * son obligatorias.
-                </p>
-              </section>
-            </>
-          }
-          right={
-            <>
-              <section
-                style={{ justifyContent: "flex-end" }}
-                className={styles.right_first}
-              >
-                <ReturnButtons returnHandler={returnHandler} />
-              </section>
-              <section className={styles.right_second}>
-                <form className={styles.contact}>
-                  <div className={styles.contact_column}>
-                    <section className={styles.imput_text}>
-                      <label htmlFor="">
-                        Nombre
-                        <p
-                          style={{ display: "inline", color: "red", margin: 0 }}
-                        >
-                          *
-                        </p>
-                      </label>
-                      <input
-                        className={styles.input_white}
-                        type="text"
-                        name=""
-                        id=""
-                      />
-                    </section>
-                    <section className={styles.imput_text}>
-                      <label htmlFor="">
-                        Teléfono
-                        <p
-                          style={{ display: "inline", color: "red", margin: 0 }}
-                        >
-                          *
-                        </p>
-                      </label>
-                      <input
-                        className={styles.input_white}
-                        type="text"
-                        name=""
-                        id=""
-                      />
-                    </section>
-                  </div>
-                  <div className={styles.contact_column}>
-                    <section className={styles.imput_text}>
-                      <label htmlFor="">
-                        Organización
-                        <p
-                          style={{ display: "inline", color: "red", margin: 0 }}
-                        >
-                          *
-                        </p>
-                      </label>
-                      <input
-                        className={styles.input_white}
-                        type="text"
-                        name=""
-                        id=""
-                      />
-                    </section>
-                    <section className={styles.imput_text}>
-                      <label htmlFor="">
-                        Email
-                        <p
-                          style={{ display: "inline", color: "red", margin: 0 }}
-                        >
-                          *
-                        </p>
-                      </label>
-                      <input
-                        className={styles.input_white}
-                        type="text"
-                        name=""
-                        id=""
-                      />
-                    </section>
-                  </div>
-                </form>
-              </section>
-              <section
-                style={{ justifyContent: "flex-end" }}
-                className={styles.right_third}
-              >
-                <ContinueButtons
-                  clickHandler={() => {
-                    clickHandler(card2);
-                  }}
-                />
-              </section>
-            </>
-          }
+
+        <ContactCard
+          cardRef={card2}
+          clickHandler={() => clickHandler(card2)}
+          returnHandler={() => {
+            returnHandler();
+          }}
         />
-        {
-          //** Fisrs Card Region */
-        }
-        <Card
-          justify="center"
-          ref={card1}
-          scale={1}
-          top={2}
-          left={
-            <>
-              <section className={styles.left_first}></section>
-              <section className={styles.left_second}>
-                <h2 className={styles.title}>
-                  ¡Hagamos una realidad distinta!
-                </h2>
-              </section>
-              <section className={styles.left_third}></section>
-            </>
-          }
-          right={
-            <>
-              <section className={styles.right_first}>
-                <button className={styles.white_button}>
-                  <Image
-                    style={{
-                      width: "2vw",
-                      height: "2vh",
-                      backgroundColor: "white",
-                      transform: "rotate(180deg)",
-                    }}
-                    width={1000}
-                    height={1000}
-                    src={arrow}
-                    alt="arrow"
-                  />
-                </button>
-                <button className={styles.white_button}>REGRESAR</button>
-              </section>
-              <section className={styles.right_second}>
-                <p>
-                  Te invitamos a responder a nuestro breve cuestionario. Con tus
-                  respuestas, podremos ofrecerte una cotización rápida y
-                  precisa.
-                </p>
-                <p>
-                  Nos pondremos en contacto para afinar algunos detalles si es
-                  necesario.
-                </p>
-                <p> ¡Gracias por tu colaboración!</p>
-              </section>
-              <section className={styles.right_third}>
-                <ContinueButtons
-                  clickHandler={() => {
-                    clickHandler(card1);
-                  }}
-                />
-              </section>
-            </>
-          }
+
+        <WelcomeCard
+          cardRef={card1}
+          clickHandler={() => clickHandler(card1)}
+          returnHandler={() => {}}
         />
       </div>
     </section>
