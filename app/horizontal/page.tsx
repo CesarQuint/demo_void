@@ -6,6 +6,7 @@ import { useGSAP } from "@gsap/react";
 import s from "../css/horizontal.module.css";
 import { ScrollTrigger, Draggable } from "gsap/all";
 import RelatedProyectsCarrousel from "../components/About/RelatedProyectsCarrousel";
+import useWindow from "../utils/hooks/useWindow";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger, Draggable);
 
@@ -18,8 +19,11 @@ export default function Horizontal() {
 
   useGSAP(
     () => {
+      const isMobile = window.matchMedia("(max-width: 768px)").matches;
       const tagsHeight = tags.current?.offsetHeight;
       gsap.set(container.current, { "--tags-size": tagsHeight });
+
+      if (isMobile) return;
 
       tl.current = gsap
         .timeline({
@@ -46,7 +50,7 @@ export default function Horizontal() {
           0
         );
     },
-    { scope: container }
+    { scope: container, dependencies: [] }
   );
 
   return (
@@ -55,6 +59,7 @@ export default function Horizontal() {
         <section
           style={{
             backgroundSize: "cover",
+            backgroundPosition: "center",
             backgroundImage:
               "url( 'https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/thumbnails/14-k-thumbnail-01.png')",
           }}
@@ -147,19 +152,19 @@ export default function Horizontal() {
           </section>
           <section className={s.desarrollo}>
             <ul className={s.list}>
-              <li>
+              <li className={s.li_tag}>
                 <span>Componentes Multimedia</span>
               </li>
-              <li>
+              <li className={s.li_tag}>
                 <span>Videomapping</span>
               </li>
-              <li>
+              <li className={s.li_tag}>
                 <span>Iluminación</span>
               </li>
-              <li>
+              <li className={s.li_tag}>
                 <span>Animación</span>
               </li>
-              <li>
+              <li className={s.li_tag}>
                 <span>Interactividad</span>
               </li>
             </ul>

@@ -3,6 +3,9 @@
   display: flex;
 
   --tags-size: 112px;
+  @media (max-width: 700px) {
+    display: initial;
+  }
 }
 
 .hero {
@@ -30,6 +33,10 @@
       line-height: 1.18;
       letter-spacing: -0.05em;
     }
+
+    @media (max-width: 700px) {
+      font-size: 1rem;
+    }
   }
 
   .tags {
@@ -51,6 +58,10 @@
         margin-right: auto;
       }
     }
+  }
+
+  @media (max-width: 700px) {
+    width: initial;
   }
 }
 
@@ -76,6 +87,14 @@
       overflow: auto;
       padding-bottom: 4rem;
     }
+
+    @media (max-width: 700px) {
+      display: initial;
+    }
+  }
+
+  @media (max-width: 700px) {
+    display: initial;
   }
 }
 
@@ -171,11 +190,25 @@
     list-style: none;
     text-transform: uppercase;
 
-    & li:before {
+    li.li_tag {
+      display: flex;
+
+      & span {
+        width: max-content;
+      }
+    }
+
+    & li.li_tag:before {
       content: "▶ ";
       padding-right: 1ch;
       vertical-align: middle;
       font-size: 0.5em;
+    }
+
+    @media (max-width: 700px) {
+      overflow: scroll;
+      gap: 1.5rem;
+      flex-direction: row;
     }
   }
 
@@ -195,6 +228,10 @@
     & img {
       width: 100%;
     }
+  }
+
+  @media (max-width: 700px) {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -231,22 +268,42 @@
 
 .links {
   width: 100vw;
+  @media (max-width: 700px) {
+    width: 100%;
+  }
 }
 .intro {
   width: 70vw;
+  @media (max-width: 700px) {
+    width: 100%;
+  }
 }
 .desarrollo {
   width: 70vw;
+  @media (max-width: 700px) {
+    width: 100%;
+  }
 }
 .imgSection {
   width: 70vw;
+  @media (max-width: 700px) {
+    width: 100%;
+  }
 }
 .card {
   width: 60vw;
+  @media (max-width: 700px) {
+    width: 100%;
+  }
 }
 .relatedProjects {
   width: 90vw;
   margin: 0 30vw;
   display: flex;
   align-items: center;
+  @media (max-width: 700px) {
+    width: 100%;
+    margin: 0;
+    padding: 2vh 3vw;
+  }
 }
