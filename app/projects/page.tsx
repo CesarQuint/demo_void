@@ -114,7 +114,7 @@ function SecondPage() {
         className="courtain"
       />
       <Main />
-      <PreFooterLink text="CONOCENOS" />
+      <PreFooterLink href="/about" text="CONOCENOS" />
       <Footer />
     </motion.div>
   );

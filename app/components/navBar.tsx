@@ -156,27 +156,31 @@ const NavBar = () => {
               >
                 El Estudio
               </TypedLink>
-              {/* <TypedLink
+              <TypedLink
                 viewAnimate={true}
                 hoverAnimate={false}
-                href="/playground"
+                href="/projects"
                 onClick={(e) => {
-                  goTo(e, "/playground");
-                }}>
+                  goTo(e, "/projects");
+                }}
+              >
                 Proyectos
-              </TypedLink> */}
+              </TypedLink>
 
-              {/* <TypedLink
+              <TypedLink
                 viewAnimate={true}
                 hoverAnimate={false}
-                href="/">
+                onClick={(e) => {
+                  goTo(e, "/contact");
+                }}
+                href="/contact"
+              >
                 Contacto
-              </TypedLink> */}
+              </TypedLink>
             </>
           )}
         </div>
         <div className={styles.linksMb}>
-          {/* <TypedLink href="#">Proyectos</TypedLink> */}
           <TypedLink
             href="/about"
             viewAnimate={true}
@@ -187,12 +191,26 @@ const NavBar = () => {
           >
             El Estudio
           </TypedLink>
-          {/* <Link
-            href="#"
-            className={styles.writeUs}>
+          <TypedLink
+            href="/about"
+            viewAnimate={true}
+            hoverAnimate={false}
+            onClick={(e) => {
+              goTo(e, "/projects");
+            }}
+          >
+            Proyectos
+          </TypedLink>
+          <Link
+            onClick={(e) => {
+              goTo(e, "/contact");
+            }}
+            href="/contact"
+            className={styles.writeUs}
+          >
             <span className={styles.writeUsTxt}>Escribenos</span>
             <span className={styles.writeUsIcon}>+</span>
-          </Link> */}
+          </Link>
         </div>
 
         <div className={styles.langs}>

@@ -88,7 +88,8 @@ const About = (props: Props) => {
       initial={{ opacity: 1 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 1 }}
-      className={styles.main}>
+      className={styles.main}
+    >
       <motion.div
         ref={scope2}
         style={{
@@ -128,7 +129,7 @@ const About = (props: Props) => {
       <Services />
       <Manifest />
       <Process />
-      <PreFooterLink text="PROYECTOS" />
+      <PreFooterLink href="/projects" text="PROYECTOS" />
       <Footer />
     </motion.div>
   );

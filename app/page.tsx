@@ -134,7 +134,7 @@ function SecondPage() {
       <ProcessHome />
       <TagsHome />
       <div style={{ height: "10vh" }}></div>
-      <PreFooterLink text="CONOCENOS" />
+      <PreFooterLink href="/about" text="CONOCENOS" />
       <div style={{ height: "5vh" }}></div>
       <Footer />
     </motion.div>

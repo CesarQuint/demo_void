@@ -141,3 +141,12 @@
     flex-flow: row wrap;
   }
 }
+
+.arrow_button {
+  width: 4vw;
+  height: 4vw;
+  @media (min-width: 700px) {
+    width: 2vw;
+    height: 2vw;
+  }
+}

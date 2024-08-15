@@ -7,15 +7,16 @@
   flex-flow: row nowrap;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 2vw;
 }
 
 .wrapper h2 {
-  font-size: 2rem;
+  font-size: 1.5rem;
   text-align: center;
   font-family: "Panchang";
   font-weight: 100;
   display: inline;
+  padding: 1rem;
 }
 
 .arrow_container {
