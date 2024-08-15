@@ -8,7 +8,7 @@ const CardsFilledStatus = () => {
       <motion.section className={styles.status_flex}>
         {new Array(11).fill("").map((_, i) => (
           <div key={i} className={styles.number}>
-            -{i}-
+            {i}
           </div>
         ))}
       </motion.section>

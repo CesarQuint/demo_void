@@ -92,16 +92,6 @@ const Footer = (props: Props) => {
               >
                 HOME
               </TypedLink>
-              {/* <TypedLink
-                viewAnimate={true}
-                hoverAnimate={false}
-                href="/frammer_main"
-                onClick={(e) => {
-                  // goTo(e, "/frammer_main");
-                }}
-              >
-                PROJECTS
-              </TypedLink> */}
               <TypedLink
                 viewAnimate={true}
                 hoverAnimate={false}
@@ -112,16 +102,27 @@ const Footer = (props: Props) => {
               >
                 STUDIO
               </TypedLink>
-              {/* <TypedLink
+              <TypedLink
                 viewAnimate={true}
                 hoverAnimate={false}
-                href="/frammer_main"
+                href="/projects"
                 onClick={(e) => {
-                  // goTo(e, "/frammer_main");
+                  goTo(e, "/projects");
                 }}
               >
+                PROJECTS
+              </TypedLink>
+
+              <TypedLink
+                viewAnimate={true}
+                hoverAnimate={false}
+                onClick={(e) => {
+                  goTo(e, "/contact");
+                }}
+                href="/contact"
+              >
                 CONTACT
-              </TypedLink> */}
+              </TypedLink>
             </nav>
           </motion.div>
           <motion.div className={`${styles.flex_container}  ${styles.social}`}>

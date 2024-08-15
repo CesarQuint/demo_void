@@ -167,14 +167,61 @@ const Main = (props: Props) => {
       <motion.section className={styles.nav_container}>
         <motion.nav className={styles.selector}>
           <motion.div className={`${styles.all} ${styles.tab}`}>
+            <Image
+              className={`${styles.icon}`}
+              width={1000}
+              height={1000}
+              alt="Icon"
+              src={
+                "https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/icons/check_circle.svg"
+              }
+            />
             TODO
           </motion.div>
-          <motion.div className={styles.tab}>EN VIVO</motion.div>
-          <motion.div className={styles.tab}>XR</motion.div>
-          <motion.div className={styles.tab}>EXPERIENCIA</motion.div>
+          <motion.div className={styles.tab}>
+            <Image
+              className={`${styles.icon}`}
+              width={1000}
+              height={1000}
+              alt="Icon"
+              src={
+                "https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/icons/check_circle.svg"
+              }
+            />
+            EN VIVO
+          </motion.div>
+          <motion.div className={styles.tab}>
+            {" "}
+            <Image
+              className={`${styles.icon}`}
+              width={1000}
+              height={1000}
+              alt="Icon"
+              src={
+                "https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/icons/check_circle.svg"
+              }
+            />
+            XR
+          </motion.div>
+          <motion.div className={styles.tab}>
+            <Image
+              className={`${styles.icon}`}
+              width={1000}
+              height={1000}
+              alt="Icon"
+              src={
+                "https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/icons/check_circle.svg"
+              }
+            />
+            EXPERIENCIA
+          </motion.div>
         </motion.nav>
       </motion.section>
       <motion.div ref={container}>
+        <p className={styles.about}>
+          Partiendo del arte y con la tecnología como base, creamos experiencias
+          que detonan sensaciones y emocionan a las personas.
+        </p>
         <motion.section className={`${styles.project_wrapper}`}>
           <div className={styles.scrollView} ref={scrollContainer}>
             {stand_out_projects.map((_, i) => (
