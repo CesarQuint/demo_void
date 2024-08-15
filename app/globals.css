@@ -160,7 +160,7 @@ a {
 
 .react-calendar__navigation {
   display: flex;
-  height: 44px;
+  height: 2rem;
 }
 
 .react-calendar__navigation button {
@@ -205,18 +205,19 @@ a {
 .react-calendar__month-view__days__day--neighboringMonth,
 .react-calendar__decade-view__years__year--neighboringDecade,
 .react-calendar__century-view__decades__decade--neighboringCentury {
-  color: #757575;
+  color: black;
 }
 
 .react-calendar__year-view .react-calendar__tile,
 .react-calendar__decade-view .react-calendar__tile,
 .react-calendar__century-view .react-calendar__tile {
-  padding: 2em 0.5em;
+  color: black;
+  padding: 0.5rem;
 }
 
 .react-calendar__tile {
   max-width: 100%;
-  padding: 10px 6.6667px;
+  padding: 0.4rem;
   background: none;
   text-align: center;
   line-height: 16px;
@@ -232,7 +233,7 @@ a {
 .react-calendar__month-view__days__day--neighboringMonth:disabled,
 .react-calendar__decade-view__years__year--neighboringDecade:disabled,
 .react-calendar__century-view__decades__decade--neighboringCentury:disabled {
-  color: #cdcdcd;
+  color: black;
 }
 
 .react-calendar__tile:enabled:hover,
@@ -303,6 +304,10 @@ a {
 .react-time-picker {
   display: inline-flex;
   position: relative;
+}
+
+.duration .react-time-picker {
+  font-size: xx-large;
 }
 
 .react-time-picker,

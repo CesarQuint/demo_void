@@ -1,6 +1,9 @@
 .main {
   width: 100%;
-  padding: 16vh 0;
+  padding: 16vh 0 0;
+  @media (min-width: 700px) {
+    padding: 16vh 0;
+  }
 }
 
 .cards_container {
@@ -47,6 +50,10 @@
 
 .left_first {
   height: auto;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  font-weight: 800;
   @media (min-width: 700px) {
     height: 10%;
   }
@@ -151,6 +158,16 @@
   }
 }
 
+.imput_text_date {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 2vh;
+  width: 42%;
+  @media (min-width: 700px) {
+    width: 80%;
+  }
+}
+
 .input_white {
   background-color: #ededed;
   border-top: none;
@@ -202,24 +219,41 @@
 }
 
 .journey {
-  width: 70%;
   display: flex;
   flex-flow: column nowrap;
   gap: 2vh;
+  @media (min-width: 700px) {
+    width: 70%;
+  }
 }
 
 .text_area {
   color: #1b1b1b;
   background-color: white;
   padding: 1rem;
+  height: 30vh;
   border: 1px solid #7c7c7c;
   border-radius: 10px;
+  @media (min-width: 700px) {
+    height: auto;
+  }
 }
 
 .calendar_flex {
   display: flex;
-  flex-flow: row nowrap;
-  gap: 1vw;
+  flex-flow: column nowrap;
+  gap: 2vh;
+  @media (min-width: 700px) {
+    flex-flow: row nowrap;
+    gap: 3vh;
+  }
+}
+
+.calendar_wrapper {
+  width: 100%;
+  @media (min-width: 700px) {
+    width: 60%;
+  }
 }
 
 .calendar_container {
@@ -241,10 +275,23 @@
   }
 }
 
+.input_date_flex {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  @media (min-width: 700px) {
+    flex-flow: column nowrap;
+    gap: 3vh;
+  }
+}
+
 .dates_flex {
   display: flex;
   flex-flow: column nowrap;
   gap: 3vh;
+  @media (min-width: 700px) {
+    width: 40%;
+  }
 }
 
 .schedule_form {
@@ -260,5 +307,11 @@
   @media (min-width: 700px) {
     width: 2vw;
     height: 2vw;
+  }
+}
+
+.return_button_top {
+  @media (min-width: 700px) {
+    display: none;
   }
 }

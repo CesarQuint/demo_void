@@ -29,6 +29,9 @@ export const LocationCard: React.FC<CustomCardProps> = ({
         <>
           <section className={styles.left_first}>
             <p>04</p>
+            <div className={styles.return_button_top}>
+              <ReturnButtons returnHandler={returnHandler} />
+            </div>
           </section>
           <section className={styles.left_second}>
             <h2 className={styles.title}>Información del evento</h2>

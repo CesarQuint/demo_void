@@ -14,6 +14,7 @@ import styles from "../css/about.module.css";
 
 import Footer from "../components/footer";
 import FormCards from "../components/Form/FormCards";
+import CardsFilledStatus from "../components/Form/CardsFilledStatus";
 
 type Props = {};
 
@@ -111,6 +112,7 @@ const Contact = (props: Props) => {
         className="courtain"
       />
       <FormCards />
+      <CardsFilledStatus />
       <Footer />
     </motion.div>
   );

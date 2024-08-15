@@ -41,6 +41,9 @@ export const DatesAvailableCard: React.FC<CustomCardProps> = ({
         <>
           <section className={styles.left_first}>
             <p>05</p>
+            <div className={styles.return_button_top}>
+              <ReturnButtons returnHandler={returnHandler} />
+            </div>
           </section>
           <section className={styles.left_second}>
             <h2 className={styles.title}>Información del evento</h2>
@@ -62,55 +65,57 @@ export const DatesAvailableCard: React.FC<CustomCardProps> = ({
           </section>
           <section className={styles.right_second}>
             <div className={styles.calendar_flex}>
-              <section className={styles.dates_flex} style={{ width: "40%" }}>
+              <section className={styles.dates_flex}>
                 <h4>
                   Disponibilidad de fechas
                   <p style={{ display: "inline", color: "red", margin: 0 }}>
                     *
                   </p>
                 </h4>
-                <section className={styles.imput_text}>
-                  <label htmlFor="">
-                    Fecha de Inicio
-                    <p style={{ display: "inline", color: "red", margin: 0 }}>
-                      *
-                    </p>
-                  </label>
-                  <input
-                    value={
-                      Array.isArray(selectedDates)
-                        ? selectedDates[0].toLocaleDateString() // Format the date as desired
-                        : "--/--/----"
-                    }
-                    readOnly={true}
-                    className={styles.input_date}
-                    type="text"
-                    name=""
-                    id=""
-                  />
-                </section>
-                <section className={styles.imput_text}>
-                  <label htmlFor="">
-                    Fecha de Finalizacion
-                    <p style={{ display: "inline", color: "red", margin: 0 }}>
-                      *
-                    </p>
-                  </label>
-                  <input
-                    value={
-                      Array.isArray(selectedDates)
-                        ? selectedDates[1].toLocaleDateString() // Format the date as desired
-                        : "--/--/----"
-                    }
-                    readOnly={true}
-                    className={styles.input_date}
-                    type="text"
-                    name=""
-                    id=""
-                  />
-                </section>
+                <div className={styles.input_date_flex}>
+                  <section className={styles.imput_text_date}>
+                    <label htmlFor="">
+                      Fecha de Inicio
+                      <p style={{ display: "inline", color: "red", margin: 0 }}>
+                        *
+                      </p>
+                    </label>
+                    <input
+                      value={
+                        Array.isArray(selectedDates)
+                          ? selectedDates[0].toLocaleDateString() // Format the date as desired
+                          : "--/--/----"
+                      }
+                      readOnly={true}
+                      className={styles.input_date}
+                      type="text"
+                      name=""
+                      id=""
+                    />
+                  </section>
+                  <section className={styles.imput_text_date}>
+                    <label htmlFor="">
+                      Fecha de Finalizacion
+                      <p style={{ display: "inline", color: "red", margin: 0 }}>
+                        *
+                      </p>
+                    </label>
+                    <input
+                      value={
+                        Array.isArray(selectedDates)
+                          ? selectedDates[1].toLocaleDateString() // Format the date as desired
+                          : "--/--/----"
+                      }
+                      readOnly={true}
+                      className={styles.input_date}
+                      type="text"
+                      name=""
+                      id=""
+                    />
+                  </section>
+                </div>
               </section>
-              <section style={{ width: "60%" }}>
+              <section className={styles.calendar_wrapper}>
                 <div className={styles.calendar_container}>
                   <Calendar
                     className="calender-body"

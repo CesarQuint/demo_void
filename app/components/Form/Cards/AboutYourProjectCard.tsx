@@ -25,6 +25,9 @@ export const AboutYourProjectCard: React.FC<CustomCardProps> = ({
         <>
           <section className={styles.left_first}>
             <p>09</p>
+            <div className={styles.return_button_top}>
+              <ReturnButtons returnHandler={returnHandler} />
+            </div>
           </section>
           <section className={styles.left_second}>
             <h2 className={styles.title}>Sobre tu proyecto</h2>

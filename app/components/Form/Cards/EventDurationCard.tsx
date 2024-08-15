@@ -1,8 +1,9 @@
-import React, { RefObject } from "react";
+import React, { RefObject, useState } from "react";
 import Image from "next/image";
 import styles from "../../../css/Form/form.module.css"; // Adjust the import based on your structure
 import { ContinueButtons, ReturnButtons } from "../FormCards";
 import { Card } from "../CardTemplate";
+import TimePicker from "react-time-picker";
 
 interface CustomCardProps {
   cardRef: RefObject<HTMLDivElement>;
@@ -15,6 +16,7 @@ export const EventDurationCard: React.FC<CustomCardProps> = ({
   clickHandler,
   returnHandler,
 }) => {
+  const [startDate, setStartDate] = useState("00:00");
   return (
     <Card
       ref={cardRef}
@@ -24,6 +26,9 @@ export const EventDurationCard: React.FC<CustomCardProps> = ({
         <>
           <section className={styles.left_first}>
             <p>08</p>
+            <div className={styles.return_button_top}>
+              <ReturnButtons returnHandler={returnHandler} />
+            </div>
           </section>
           <section className={styles.left_second}>
             <h2 className={styles.title}>Sobre tu proyecto</h2>
@@ -45,7 +50,19 @@ export const EventDurationCard: React.FC<CustomCardProps> = ({
           </section>
           <section className={styles.right_second}>
             <h1>Duracion del Contenido</h1>
-            <p>Hey</p>
+            <section className="duration">
+              <label htmlFor=""></label>
+              <TimePicker
+                value={startDate}
+                onChange={(e) => {
+                  setStartDate(e as string);
+                }}
+                format="HH:mm"
+                clockIcon={null}
+                clearIcon={null}
+                disableClock={true}
+              />
+            </section>
           </section>
           <section
             style={{ justifyContent: "flex-end" }}

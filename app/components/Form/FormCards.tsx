@@ -243,32 +243,7 @@ const FormCards = () => {
                 style={{ justifyContent: "flex-end" }}
                 className={styles.right_third}
               >
-                <button
-                  onClick={() => clickHandler(card12)}
-                  style={{ padding: "1rem", borderRadius: "40px" }}
-                  className={styles.black_button}
-                >
-                  IR AL HOME
-                </button>
-                <button
-                  onClick={() => clickHandler(card12)}
-                  style={{
-                    padding: "10px",
-                    borderRadius: "50%",
-                  }}
-                  className={styles.black_button}
-                >
-                  <Image
-                    style={{
-                      width: "2vw",
-                      height: "2vw",
-                    }}
-                    width={1000}
-                    height={1000}
-                    src={wArrow}
-                    alt="arrow"
-                  />
-                </button>
+                <ContinueButtons clickHandler={() => {}} />
               </section>
             </>
           }
