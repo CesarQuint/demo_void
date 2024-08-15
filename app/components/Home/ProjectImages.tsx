@@ -309,7 +309,7 @@ const ProjectImages = (props: Props) => {
           <h3 className={`${styles.title}`}>
             PROYECTOS
             <br />
-            DESTACADOS
+            <span className={s.second}>DESTACADOS</span>
           </h3>
           <div className={styles.line}>
             <button className={styles.viewAll}>PROXIMAMENTE</button>

@@ -61,7 +61,7 @@
     display: grid;
     grid-template-rows: 1fr 1fr;
     grid-auto-flow: column;
-    grid-auto-columns: 50vh;
+    grid-auto-columns: 30vw;
     gap: 1.875rem 0;
     margin-left: 50vw;
     position: relative;

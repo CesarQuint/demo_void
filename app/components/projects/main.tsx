@@ -37,7 +37,7 @@ const Main = (props: Props) => {
 
       gsap.set(captions, { opacity: 0 });
 
-      gsap.matchMedia().add("(max-width: 1700px)", () => {
+      gsap.matchMedia().add("(max-width: 2700px)", () => {
         gsap.set("img", { opacity: 1 });
 
         imgContainer.current.forEach((el) => {
