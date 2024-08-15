@@ -14,7 +14,7 @@ import styles from "../css/about.module.css";
 
 import Main from "../components/Contact/main";
 import Footer from "../components/footer";
-import { PreFooterLink } from "../components/PreFooterLink";
+import PreFooterLink from "../components/PreFooterLink";
 
 type Props = {};
 

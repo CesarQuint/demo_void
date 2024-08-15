@@ -12,7 +12,7 @@ import Footer from "./components/footer";
 import HeroContainer from "./components/Home/HeroContainer";
 
 import ProcessHome from "./components/Home/ProcessHome";
-import { PreFooterLink } from "./components/PreFooterLink";
+import PreFooterLink from "./components/PreFooterLink";
 import TagsHome from "./components/Home/TagsHome";
 import dynamic from "next/dynamic";
 import useWindow from "./utils/hooks/useWindow";

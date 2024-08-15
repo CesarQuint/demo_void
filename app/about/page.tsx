@@ -17,7 +17,7 @@ import Manifest from "../components/About/Manifest";
 import Process from "../components/About/Process";
 import Services from "../components/About/Services";
 import Footer from "../components/footer";
-import { PreFooterLink } from "../components/PreFooterLink";
+import PreFooterLink from "../components/PreFooterLink";
 
 //! Temporal
 

@@ -9,9 +9,11 @@ import { AnimationSequence } from "framer-motion";
 import { animate as animation } from "framer-motion";
 import dynamic from "next/dynamic";
 
-import { PreFooterLink } from "../components/PreFooterLink";
-
 const Main = dynamic(() => import("../components/projects/main"), {
+  ssr: false,
+});
+
+const PreFooterLink = dynamic(() => import("../components/PreFooterLink"), {
   ssr: false,
 });
 

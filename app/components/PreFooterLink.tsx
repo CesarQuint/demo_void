@@ -11,7 +11,7 @@ type Props = {
   href: string;
 };
 
-export const PreFooterLink = (props: Props) => {
+const PreFooterLink = (props: Props) => {
   const arrowOne = useRef<HTMLDivElement>(null);
   const arrowTwo = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -84,3 +84,4 @@ export const PreFooterLink = (props: Props) => {
     </motion.section>
   );
 };
+export default PreFooterLink;
