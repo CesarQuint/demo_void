@@ -6,6 +6,7 @@ import { useGSAP } from "@gsap/react";
 import s from "../css/horizontal.module.css";
 import { ScrollTrigger, Draggable } from "gsap/all";
 import RelatedProyectsCarrousel from "../components/About/RelatedProyectsCarrousel";
+import CarouselCaseStudy from "../components/Horizontal/CarouselCaseStudy";
 import useWindow from "../utils/hooks/useWindow";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger, Draggable);
@@ -253,10 +254,7 @@ export default function Horizontal() {
             />
           </section>
           <section className={s.imgSection}>
-            <img
-              src="https://img.freepik.com/free-photo/sunset-silhouettes-trees-mountains-generative-ai_169016-29371.jpg"
-              alt=""
-            />
+            <CarouselCaseStudy />
           </section>
           <section className={s.relatedProjects}>
             <RelatedProyectsCarrousel />
