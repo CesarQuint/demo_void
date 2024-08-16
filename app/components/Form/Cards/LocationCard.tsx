@@ -60,7 +60,7 @@ export const LocationCard: React.FC<CustomCardProps> = ({
             </p>
             <form className={styles.input_form}>
               <div className={styles.input_place}>
-                <input type="text" />
+                <input className={styles.input_white} type="text" />
               </div>
             </form>
           </section>
