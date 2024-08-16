@@ -1,22 +1,20 @@
 import React, { useEffect, useState, useRef } from "react";
-
 import { gsap } from "gsap";
 import { Draggable } from "gsap/Draggable";
+import { motion } from "framer-motion";
 import styles from "../../css/Horizontal/carousel.module.css";
 import { stand_out_projects } from "@/app/constants/stand_out_projects";
 
 gsap.registerPlugin(Draggable);
 
-const imageUrl =
-  "https://img.freepik.com/free-photo/sunset-silhouettes-trees-mountains-generative-ai_169016-29371.jpg";
-
 const CarouselCaseStudy: React.FC = () => {
-  const images = new Array(5).fill(imageUrl); // Assuming 5 thumbnails
-  const [selectedImage, setSelectedImage] = useState(images[0]);
+  const [selectedImage, setSelectedImage] = useState(
+    stand_out_projects[0].image
+  );
   const thumbnailsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // GSAP Draggable
+    // GSAP Draggable setup
     Draggable.create(thumbnailsRef.current, {
       type: "x",
       bounds: thumbnailsRef.current,
@@ -31,7 +29,9 @@ const CarouselCaseStudy: React.FC = () => {
   }, []);
 
   const getClosestThumbnail = () => {
-    const thumbnails = thumbnailsRef.current?.querySelectorAll(".thumbnail");
+    const thumbnails = thumbnailsRef.current?.querySelectorAll(
+      `.${styles.thumbnail}`
+    );
     let closest = null;
     let closestDistance = Number.MAX_VALUE;
     const centerX = window.innerWidth / 2;
@@ -50,20 +50,33 @@ const CarouselCaseStudy: React.FC = () => {
 
   return (
     <div className={styles.carousel_container}>
-      <div className={styles.main_image}>
+      <motion.div
+        className={styles.main_image}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
         <img src={selectedImage} alt="Selected" />
-      </div>
-      <div className={styles.thumbnails} ref={thumbnailsRef}>
+      </motion.div>
+      <motion.div
+        className={styles.thumbnails}
+        ref={thumbnailsRef}
+        drag="x"
+        dragConstraints={thumbnailsRef}
+        dragElastic={0.1}
+        whileTap={{ cursor: "grabbing" }}
+      >
         {stand_out_projects.map((image, index) => (
-          <img
+          <motion.img
             key={index}
             src={image.image}
             alt={`Thumbnail ${index + 1}`}
             className={styles.thumbnail}
             onClick={() => setSelectedImage(image.image)}
+            whileHover={{ scale: 1.1 }}
           />
         ))}
-      </div>
+      </motion.div>
     </div>
   );
 };

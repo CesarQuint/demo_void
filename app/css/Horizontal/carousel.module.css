@@ -16,6 +16,9 @@
   max-height: 100%;
   object-fit: cover;
   border-radius: 20px;
+  @media (max-width: 700px) {
+    height: 40vh;
+  }
 }
 
 .thumbnails {
@@ -24,6 +27,7 @@
   cursor: grab;
   width: 80%;
   margin: auto;
+  overflow: scroll;
 }
 
 .thumbnail {
