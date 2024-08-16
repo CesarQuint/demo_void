@@ -70,6 +70,8 @@ const FareWellCard = React.forwardRef<
   );
 });
 
+FareWellCard.displayName = "FareWellCard";
+
 export const ReturnButtons = ({
   returnHandler,
 }: {
@@ -142,7 +144,7 @@ export const ContinueButtons = ({
   );
 };
 
-const FormCards = () => {
+export default function FormCards() {
   const card1 = useRef<HTMLDivElement>(null);
   const card2 = useRef<HTMLDivElement>(null);
   const card3 = useRef<HTMLDivElement>(null);
@@ -336,6 +338,4 @@ const FormCards = () => {
       </div>
     </section>
   );
-};
-
-export default FormCards;
+}

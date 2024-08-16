@@ -29,3 +29,5 @@ export const Card = React.forwardRef<HTMLDivElement, Omit<ChildrenCard, "ref">>(
     );
   }
 );
+
+Card.displayName = "Card";
