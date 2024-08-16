@@ -61,7 +61,7 @@ export default function Horizontal() {
             backgroundSize: "cover",
             backgroundPosition: "center",
             backgroundImage:
-              "url( 'https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/thumbnails/14-k-thumbnail-01.png')",
+              " linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.4640449929971989) 40%, rgba(0,0,0,0) 100%),url(https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/thumbnails/14-k-thumbnail-01.png)",
           }}
           className={s.hero}
         >

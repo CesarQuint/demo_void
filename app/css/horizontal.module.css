@@ -27,7 +27,7 @@
     margin: 0 3.5rem;
 
     & h2 {
-      font-family: "Input Mono";
+      font-family: "input-mono";
       font-weight: 300;
       font-size: 1rem;
       line-height: 1.18;
@@ -43,10 +43,11 @@
     margin: 5rem 0 calc(var(--tags-size) * -1);
     padding: 0 3.5rem 5rem;
     display: flex;
+    flex-wrap: wrap;
     gap: 12px;
 
     .tag {
-      font-family: "Input Mono";
+      font-family: "input-mono";
       font-weight: 400;
       font-size: 0.75rem;
       line-height: 1.16;
@@ -58,10 +59,15 @@
         margin-right: auto;
       }
     }
+
+    @media (max-width: 700px) {
+      margin: 0;
+    }
   }
 
   @media (max-width: 700px) {
     width: initial;
+    gap: 4vh;
   }
 }
 
