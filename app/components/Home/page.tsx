@@ -1,24 +1,23 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
-import { motion, usePresence, useAnimate, Spring } from "framer-motion";
-import styles from "./pageImage.module.css";
-import { usePathname } from "next/navigation";
-import { useNavigation } from "./utils/navigationContext";
-import { useRouter } from "next/navigation";
-import { AnimationSequence } from "framer-motion";
-import { animate as animation } from "framer-motion";
 
-import Footer from "./components/footer";
-import HeroContainer from "./components/Home/HeroContainer";
-
-import ProcessHome from "./components/Home/ProcessHome";
-import PreFooterLink from "./components/PreFooterLink";
-import TagsHome from "./components/Home/TagsHome";
 import dynamic from "next/dynamic";
-import useWindow from "./utils/hooks/useWindow";
-import LoadingComponent from "./components/LoadingComponent";
+import { useEffect, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { motion, usePresence, useAnimate, Spring, animate as animation, AnimationSequence } from "framer-motion";
 
-const ProjectImages = dynamic(() => import("./components/Home/ProjectImages"), {
+import styles from "./pageImage.module.css";
+import useWindow from "../../utils/hooks/useWindow";
+import { useNavigation } from "../../utils/navigationContext";
+
+
+import Footer from "../footer";
+import TagsHome from "./TagsHome";
+import ProcessHome from "./ProcessHome";
+import HeroContainer from "./HeroContainer";
+import PreFooterLink from "../PreFooterLink";
+import LoadingComponent from "../LoadingComponent";
+
+const ProjectImages = dynamic(() => import("./ProjectImages"), {
   ssr: false,
 });
 
@@ -29,11 +28,9 @@ const transitionSpringPhysics: Spring = {
   damping: 2,
 };
 
-const transitionColor = "deepskyblue";
-
 function SecondPage() {
   const [isPresent, safeToRemove] = usePresence();
-  const [scope2, animate] = useAnimate();
+  const [scope2] = useAnimate();
   const [scope3] = useAnimate();
   const pathname = usePathname();
   const { navigationEvent } = useNavigation();
