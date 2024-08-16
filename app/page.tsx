@@ -48,7 +48,7 @@ function SecondPage() {
     setLoadingProgress(0);
 
     // Simulate a 4-second delay
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 4000));
 
     setRequestFullfilled(true);
   };
@@ -59,7 +59,7 @@ function SecondPage() {
     } else {
       const interval = setInterval(() => {
         setLoadingProgress((prev) => (prev < 100 ? prev + 25 : prev));
-      }, 100);
+      }, 1000);
 
       return () => clearInterval(interval);
     }

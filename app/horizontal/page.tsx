@@ -80,14 +80,29 @@ export default function Horizontal() {
 
         <div className={s.wrapper}>
           <section className={s.links}>
-            <a href="#intro">intro</a>
-            <a href="#conceptualizacion">conceptualización</a>
-            <a href="#desarrollo">desarrollo</a>
-            <a href="#produccion">producción</a>
-            <a href="#conclusion">conclusión</a>
-            <a href="#referencias">referencias</a>
-            <a href="#alianzas">alianzas</a>
-            <a href="#galeria">galería</a>
+            <section className={s.inner_links}>
+              <a href="#intro">intro</a>
+              <a href="#conceptualizacion">conceptualización</a>
+              <a href="#desarrollo">desarrollo</a>
+              <a href="#produccion">
+                producción
+                <div className={s.submenu_links}>
+                  <a className={s.none_hover} href="#intro">
+                    subcontext
+                  </a>
+                  <a className={s.none_hover} href="#conceptualizacion">
+                    subcontext
+                  </a>
+                  <a className={s.none_hover} href="#desarrollo">
+                    subcontext
+                  </a>
+                </div>
+              </a>
+              <a href="#conclusion">conclusión</a>
+              <a href="#referencias">referencias</a>
+              <a href="#alianzas">alianzas</a>
+              <a href="#galeria">galería</a>
+            </section>
           </section>
           <section id="intro" className={s.intro}>
             <p className={s.date}>Fecha: 1 de junio, 2024</p>

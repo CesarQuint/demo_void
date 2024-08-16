@@ -173,7 +173,7 @@ const Main = (props: Props) => {
               height={1000}
               alt="Icon"
               src={
-                "https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/icons/check_circle.svg"
+                "https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/icons/check_circle_filled.svg"
               }
             />
             TODO
