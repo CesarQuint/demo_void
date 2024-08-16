@@ -35,3 +35,28 @@
   width: 100%;
   border-radius: 40px;
 }
+
+.loaderContainer {
+  width: 100%;
+  background-color: black;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: 2vh;
+}
+
+.bar {
+  width: 80%;
+  height: 1vh;
+}
+
+.loader_text {
+  font-size: 4vw;
+}
+
+.loaderBar {
+  height: 100%;
+  background-color: white;
+  border-radius: 40px;
+}

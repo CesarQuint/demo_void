@@ -65,7 +65,9 @@
   .title {
     font-family: "Panchang";
     font-weight: 500;
-    font-size: xx-large;
+    @media (min-width: 700px) {
+      font-size: xx-large;
+    }
   }
 }
 .left_third {
@@ -315,4 +317,19 @@
   @media (min-width: 700px) {
     display: none;
   }
+}
+
+.time_picker {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+}
+
+.time_input {
+  padding: 0.5rem;
+  font-size: 2rem;
+  background-color: white;
+  color: #1f1f1f;
+  border: none;
+  border-radius: 10px;
 }

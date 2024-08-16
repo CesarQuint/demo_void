@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, usePresence, useAnimate, Spring } from "framer-motion";
 import styles from "./pageImage.module.css";
 import { usePathname } from "next/navigation";
@@ -16,6 +16,7 @@ import PreFooterLink from "./components/PreFooterLink";
 import TagsHome from "./components/Home/TagsHome";
 import dynamic from "next/dynamic";
 import useWindow from "./utils/hooks/useWindow";
+import LoadingComponent from "./components/LoadingComponent";
 
 const ProjectImages = dynamic(() => import("./components/Home/ProjectImages"), {
   ssr: false,
@@ -38,6 +39,35 @@ function SecondPage() {
   const { navigationEvent } = useNavigation();
   const router = useRouter();
   const windowStatus = useWindow();
+
+  const [loadingProgress, setLoadingProgress] = useState(0);
+  const [requestFullfilled, setRequestFullfilled] = useState(false);
+
+  const fetchTest = async () => {
+    setRequestFullfilled(false);
+    setLoadingProgress(0);
+
+    // Simulate a 4-second delay
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    setRequestFullfilled(true);
+  };
+
+  useEffect(() => {
+    if (requestFullfilled) {
+      setLoadingProgress(100);
+    } else {
+      const interval = setInterval(() => {
+        setLoadingProgress((prev) => (prev < 100 ? prev + 25 : prev));
+      }, 100);
+
+      return () => clearInterval(interval);
+    }
+  }, [requestFullfilled]);
+
+  useEffect(() => {
+    fetchTest();
+  }, []);
 
   useEffect(() => {
     const sequence: AnimationSequence = [
@@ -116,27 +146,34 @@ function SecondPage() {
         transition={transitionSpringPhysics}
         className="courtain"
       />
-      <HeroContainer />
-      <motion.div className={styles.video_container}>
-        <video
-          autoPlay={true}
-          muted={true}
-          className={styles.video}
-          src={
-            windowStatus.innerWidth >= 700
-              ? "https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/videos/voidxr-demo-eyecandy-home.mp4"
-              : "https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/videos/voidxr-demo-eyecandy-home-mobile.mp4"
-          }
-          controls={true}
-        />
-      </motion.div>
-      <ProjectImages />
-      <ProcessHome />
-      <TagsHome />
-      <div style={{ height: "10vh" }}></div>
-      <PreFooterLink href="/about" text="CONOCENOS" />
-      <div style={{ height: "5vh" }}></div>
-      <Footer />
+
+      {requestFullfilled ? (
+        <>
+          <HeroContainer />
+          <motion.div className={styles.video_container}>
+            <video
+              autoPlay={true}
+              muted={true}
+              className={styles.video}
+              src={
+                windowStatus.innerWidth >= 700
+                  ? "https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/videos/voidxr-demo-eyecandy-home.mp4"
+                  : "https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/videos/voidxr-demo-eyecandy-home-mobile.mp4"
+              }
+              controls={true}
+            />
+          </motion.div>
+          <ProjectImages />
+          <ProcessHome />
+          <TagsHome />
+          <div style={{ height: "10vh" }}></div>
+          <PreFooterLink href="/about" text="CONOCENOS" />
+          <div style={{ height: "5vh" }}></div>
+          <Footer />
+        </>
+      ) : (
+        <LoadingComponent height="100vh" loadingProgress={loadingProgress} />
+      )}
     </motion.div>
   );
 }

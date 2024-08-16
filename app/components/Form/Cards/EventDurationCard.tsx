@@ -1,9 +1,7 @@
 import React, { RefObject, useState } from "react";
-import Image from "next/image";
 import styles from "../../../css/Form/form.module.css"; // Adjust the import based on your structure
 import { ContinueButtons, ReturnButtons } from "../FormCards";
 import { Card } from "../CardTemplate";
-import TimePicker from "react-time-picker";
 
 interface CustomCardProps {
   cardRef: RefObject<HTMLDivElement>;
@@ -11,12 +9,60 @@ interface CustomCardProps {
   returnHandler: () => void;
 }
 
+// Custom time picker to handle "MM:SS"
+const CustomTimePicker: React.FC<{
+  value: string;
+  onChange: (value: string) => void;
+}> = ({ value, onChange }) => {
+  const [minutes, setMinutes] = useState(value.split(":")[0]);
+  const [seconds, setSeconds] = useState(value.split(":")[1]);
+
+  const handleMinutesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let newMinutes = e.target.value;
+    if (parseInt(newMinutes) > 59) newMinutes = "59";
+    setMinutes(newMinutes);
+    onChange(`${newMinutes}:${seconds}`);
+  };
+
+  const handleSecondsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let newSeconds = e.target.value;
+    if (parseInt(newSeconds) > 59) newSeconds = "59";
+    setSeconds(newSeconds);
+    onChange(`${minutes}:${newSeconds}`);
+  };
+
+  return (
+    <div className={styles.time_picker}>
+      <input
+        type="number"
+        value={minutes}
+        onChange={handleMinutesChange}
+        min="0"
+        max="59"
+        className={styles.time_input}
+        aria-label="Minutes"
+      />
+      <span>:</span>
+      <input
+        type="number"
+        value={seconds}
+        onChange={handleSecondsChange}
+        min="0"
+        max="59"
+        className={styles.time_input}
+        aria-label="Seconds"
+      />
+    </div>
+  );
+};
+
 export const EventDurationCard: React.FC<CustomCardProps> = ({
   cardRef,
   clickHandler,
   returnHandler,
 }) => {
-  const [startDate, setStartDate] = useState("00:00");
+  const [duration, setDuration] = useState("00:00");
+
   return (
     <Card
       ref={cardRef}
@@ -49,18 +95,13 @@ export const EventDurationCard: React.FC<CustomCardProps> = ({
             <ReturnButtons returnHandler={returnHandler} />
           </section>
           <section className={styles.right_second}>
-            <h1>Duracion del Contenido</h1>
+            <h1>Duración del Contenido</h1>
             <section className="duration">
-              <label htmlFor=""></label>
-              <TimePicker
-                value={startDate}
-                onChange={(e) => {
-                  setStartDate(e as string);
+              <CustomTimePicker
+                value={duration}
+                onChange={(value) => {
+                  setDuration(value);
                 }}
-                format="HH:mm"
-                clockIcon={null}
-                clearIcon={null}
-                disableClock={true}
               />
             </section>
           </section>
