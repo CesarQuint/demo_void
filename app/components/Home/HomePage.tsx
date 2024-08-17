@@ -16,6 +16,8 @@ import HeroContainer from "./HeroContainer";
 import PreFooterLink from "../PreFooterLink";
 import LoadingComponent from "../LoadingComponent";
 
+import { Project } from "@/app/Strapi/interfaces/Entities/Project";
+
 const ProjectImages = dynamic(() => import("./ProjectImages"), {
   ssr: false,
 });
@@ -25,6 +27,13 @@ const transitionSpringPhysics: Spring = {
   mass: 0.5,
   stiffness: 20,
   damping: 2,
+};
+
+type Props = {
+  data: {
+    strapiBaseUrl: string | undefined;
+    projects: Project[];
+  }
 };
 
 function HomePage(props: Props) {
@@ -159,7 +168,7 @@ function HomePage(props: Props) {
               controls={true}
             />
           </motion.div>
-          <ProjectImages />
+          <ProjectImages data={{ strapiBaseUrl: props.data.strapiBaseUrl, projects: props.data.projects }} />
           <ProcessHome />
           <TagsHome />
           <div style={{ height: "10vh" }}></div>
