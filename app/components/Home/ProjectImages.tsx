@@ -6,16 +6,22 @@ import s from "../ScrollImg/ScrollImg.module.css";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/all";
-import { stand_out_projects } from "@/app/constants/stand_out_projects";
 import Image from "next/image";
 import Splitting from "splitting";
+
+import { Project } from "@/app/Strapi/interfaces/Entities/Project";
 
 // prettier-ignore
 const CHARS = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '!', '@', '#', '$', '%', '^', '&', '*', '-', '_', '+', '=', ';', ':', '<', '>', ',']
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
-type Props = {};
+type Props = {
+  data: {
+    strapiBaseUrl: string | undefined;
+    projects: Project[]
+  }
+};
 
 const ProjectImages = (props: Props) => {
   const container = useRef<HTMLDivElement>(null);
@@ -314,7 +320,7 @@ const ProjectImages = (props: Props) => {
           <div className={styles.line}>
             <button className={styles.viewAll}>PROXIMAMENTE</button>
           </div>
-          {stand_out_projects.map((_, i) => (
+          {props.data.projects.map((_: Project, i: number) => (
             <div
               className={styles.imgBox}
               key={i}
@@ -324,21 +330,20 @@ const ProjectImages = (props: Props) => {
                 ref={(el) => void (imgContainer.current[i] = el!)}
                 className={s.figure}
               >
-                <span className="word-animated">{_.date}</span>
+                <span className="word-animated">{_.attributes.EventDate}</span>
                 <div className={s.wrapper}>
                   <Image
                     style={{ objectFit: "cover" }}
-                    title={_.title}
-                    src={_.image}
+                    title={_.attributes.Title}
+                    src={props.data.strapiBaseUrl + _.attributes.Cover.data.attributes.formats.medium.url}
                     fill
                     sizes="50%"
                     alt="example"
                   />
                 </div>
                 <figcaption className={s.caption}>
-                  <div className={s.tag}>{_.tag}</div>
-                  <div className={`word-animated ${s.title}`}>{_.title}</div>
-                  <div className="word-animated">{_.description}</div>
+                  <div className={s.tag}>{_.attributes.Category.data.attributes.Name}</div>
+                  <div className={`word-animated ${s.title}`}>{_.attributes.Title}</div>
                 </figcaption>
               </figure>
             </div>
