@@ -9,7 +9,6 @@ import styles from "./pageImage.module.css";
 import useWindow from "../../utils/hooks/useWindow";
 import { useNavigation } from "../../utils/navigationContext";
 
-
 import Footer from "../footer";
 import TagsHome from "./TagsHome";
 import ProcessHome from "./ProcessHome";
@@ -28,7 +27,7 @@ const transitionSpringPhysics: Spring = {
   damping: 2,
 };
 
-function SecondPage() {
+function HomePage(props: Props) {
   const [isPresent, safeToRemove] = usePresence();
   const [scope2] = useAnimate();
   const [scope3] = useAnimate();
@@ -175,4 +174,4 @@ function SecondPage() {
   );
 }
 
-export default SecondPage;
+export default HomePage;
