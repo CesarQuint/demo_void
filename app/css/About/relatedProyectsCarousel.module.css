@@ -10,14 +10,14 @@
 
 .image_wrapper {
   width: max-content;
-  transform: translate(-30%, 0);
+  transform: translate(-25%, 0);
   will-change: "transform";
 }
 
 .single_image_container {
   position: relative;
-  width: 68vw;
-  height: 40vh;
+  width: 50vw;
+  height: 30vh;
   display: inline-block;
   will-change: "transform";
 }
@@ -98,6 +98,7 @@
 
   .single_image_container {
     width: 45vw;
+    height: 40vh;
   }
   .image {
     transform: translate(-16%, 0);
