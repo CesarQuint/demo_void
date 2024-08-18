@@ -1,13 +1,15 @@
 "use client";
+
+import Image from "next/image";
 import React, { useRef } from "react";
 import { motion } from "framer-motion";
+import { gsap } from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/all";
+import Splitting from "splitting";
+
 import styles from "../../css/projects.module.css";
 import s from "../ScrollImg/ScrollImg.module.css";
-import { useGSAP } from "@gsap/react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/all";
-import Image from "next/image";
-import Splitting from "splitting";
 
 import { Project } from "@/app/Strapi/interfaces/Entities/Project";
 
