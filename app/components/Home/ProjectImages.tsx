@@ -22,6 +22,88 @@ const StaticContent = {
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
+const BackgroundTitle = (props: { title: string }) =>
+(
+  <h3 className={styles.title}>
+    {props.title.split(" ")[0]?.toUpperCase()}
+    <br />
+    <span className={s.second}>
+      {props.title.split(" ")[1]?.toUpperCase()}
+    </span>
+  </h3>
+);
+
+const ViewAllProjectsButton = (props: { buttonText: string }) =>
+(
+  <div className={styles.line}>
+    <button className={styles.viewAll}>{props.buttonText.toUpperCase()}</button>
+  </div>
+);
+
+const ProjectElementContent = (props: { data: { project: Project, strapiBaseUrl: string } }) =>
+(<>
+  <span className="word-animated">{props.data.project.attributes.EventDate.toUpperCase()}</span>
+  <ProjectElementImage data={{
+    title: props.data.project.attributes.Title,
+    url: props.data.strapiBaseUrl + props.data.project.attributes.Cover.data.attributes.formats.large.url
+  }} />
+  <ProjectElementCaption data={{
+    title: props.data.project.attributes.Title,
+    category: props.data.project.attributes.Category.data.attributes.Name,
+    description: props.data.project.attributes.Subtitle,
+  }} />
+</>);
+
+const ProjectElementImage = (props: { data: { title: string, url: string } }) =>
+(
+  <div className={s.wrapper}>
+    <Image
+      style={{ objectFit: "cover" }}
+      title={props.data.title}
+      src={props.data.url}
+      fill
+      sizes="50%"
+      alt={props.data.title}
+    />
+  </div>
+);
+
+const ProjectElementCaption = (props: { data: { title: string, category: string, description: string } }) =>
+(
+  <figcaption className={s.caption}>
+    <div className={s.tag}>{props.data.category.toUpperCase()}</div>
+    <div className={`word-animated ${s.title}`}>{props.data.title}</div>
+    <div className={`word-animated ${s.description}`}>{props.data.description.toUpperCase()}</div>
+  </figcaption>
+);
+
+const ProjectElement = (props: { refHook: (el: HTMLElement) => void, idx: number, data: { project: Project, strapiBaseUrl: string } }) =>
+(
+  <div
+    className={styles.imgBox}
+    style={{ "--column": props.idx + 1 } as React.CSSProperties}
+  >
+    <figure className={s.figure} ref={props.refHook}>
+      <ProjectElementContent data={{ project: props.data.project, strapiBaseUrl: props.data.strapiBaseUrl }} />
+    </figure>
+  </div>
+);
+
+const ProjectsHorizontalCarousel = (props: { imageContainers: HTMLElement[], data: { projects: Project[], strapiBaseUrl: string } }) =>
+(<>{
+  props.data.projects.map((project: Project, idx: number) =>
+  (
+    <ProjectElement
+      key={idx}
+      idx={idx}
+      data={{
+        project,
+        strapiBaseUrl: props.data.strapiBaseUrl
+      }}
+      refHook={(element: HTMLElement) => void (props.imageContainers[idx] = element)}
+    />
+  ))
+}</>);
 
 const ProjectImages = (props: { data: { strapiBaseUrl: string | undefined; projects: Project[] } }) => {
   const container = useRef<HTMLDivElement>(null);
@@ -312,42 +394,9 @@ const ProjectImages = (props: { data: { strapiBaseUrl: string | undefined; proje
     <motion.div ref={container}>
       <motion.section className={`${styles.project_wrapper}`}>
         <div className={styles.scrollView} ref={scrollContainer}>
-          <h3 className={`${styles.title}`}>
-            PROYECTOS
-            <br />
-            <span className={s.second}>DESTACADOS</span>
-          </h3>
-          <div className={styles.line}>
-            <button className={styles.viewAll}>PROXIMAMENTE</button>
-          </div>
-          {props.data.projects.map((_: Project, i: number) => (
-            <div
-              className={styles.imgBox}
-              key={i}
-              style={{ "--column": i + 1 } as React.CSSProperties}
-            >
-              <figure
-                ref={(el) => void (imgContainer.current[i] = el!)}
-                className={s.figure}
-              >
-                <span className="word-animated">{_.attributes.EventDate}</span>
-                <div className={s.wrapper}>
-                  <Image
-                    style={{ objectFit: "cover" }}
-                    title={_.attributes.Title}
-                    src={props.data.strapiBaseUrl + _.attributes.Cover.data.attributes.formats.medium.url}
-                    fill
-                    sizes="50%"
-                    alt="example"
-                  />
-                </div>
-                <figcaption className={s.caption}>
-                  <div className={s.tag}>{_.attributes.Category.data.attributes.Name}</div>
-                  <div className={`word-animated ${s.title}`}>{_.attributes.Title}</div>
-                </figcaption>
-              </figure>
-            </div>
-          ))}
+          <BackgroundTitle title={StaticContent.BACKGRUND_TITLE} />
+          <ViewAllProjectsButton buttonText={StaticContent.HYPERLINK_BUTTON} />
+          <ProjectsHorizontalCarousel imageContainers={imgContainers.current} data={{ projects: props.data.projects, strapiBaseUrl: props.data.strapiBaseUrl ?? "" }} />
         </div>
       </motion.section>
     </motion.div>
