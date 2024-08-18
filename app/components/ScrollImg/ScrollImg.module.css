@@ -29,11 +29,14 @@
   font-size: 1em;
 }
 
-.title {
+.title * {
+  font-family: "panchang";
+  font-weight: 300;
   font-size: 1.25em;
 }
 
 .tag {
+  font-family: "graphie";
   padding: 0.5rem 1rem;
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 5rem;
@@ -41,7 +44,7 @@
 }
 
 .second {
-  color: black;
+  color: white;
   font-family: "Panchang";
   @media (min-width: 700px) {
     padding: 0 0 0 60vw;
