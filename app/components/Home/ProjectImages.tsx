@@ -25,8 +25,8 @@ gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const ProjectImages = (props: { data: { strapiBaseUrl: string | undefined; projects: Project[] } }) => {
   const container = useRef<HTMLDivElement>(null);
+  const imgContainers = useRef<HTMLElement[]>([]);
   const scrollContainer = useRef<HTMLDivElement>(null);
-  const imgContainer = useRef<HTMLElement[]>([]);
 
   useGSAP(
     () => {
@@ -69,7 +69,7 @@ const ProjectImages = (props: { data: { strapiBaseUrl: string | undefined; proje
             )
             .to(line, { xPercent: -100 }, 0);
 
-          imgContainer.current.forEach((el) => {
+          imgContainers.current.forEach((el) => {
             gsap
               .timeline({
                 defaults: {
@@ -189,7 +189,7 @@ const ProjectImages = (props: { data: { strapiBaseUrl: string | undefined; proje
         .add("(max-width: 700px)", () => {
           gsap.set("img", { opacity: 1 });
 
-          imgContainer.current.forEach((el) => {
+          imgContainers.current.forEach((el) => {
             gsap
               .timeline({
                 defaults: {
