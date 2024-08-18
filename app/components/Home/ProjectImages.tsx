@@ -13,8 +13,7 @@ import s from "../ScrollImg/ScrollImg.module.css";
 
 import { Project } from "@/app/Strapi/interfaces/Entities/Project";
 
-// prettier-ignore
-const CHARS = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '!', '@', '#', '$', '%', '^', '&', '*', '-', '_', '+', '=', ';', ':', '<', '>', ',']
+const CHARS = "!#$%&*+,-:;<=>@^_abcdefghijklmnopqrstuvwxyz";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
