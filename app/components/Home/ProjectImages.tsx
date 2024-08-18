@@ -15,6 +15,11 @@ import { Project } from "@/app/Strapi/interfaces/Entities/Project";
 
 const CHARS = "!#$%&*+,-:;<=>@^_abcdefghijklmnopqrstuvwxyz";
 
+const StaticContent = {
+  BACKGRUND_TITLE: "Proyectos destacados",
+  HYPERLINK_BUTTON: "Ver todos",
+};
+
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 type Props = {
