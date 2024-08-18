@@ -22,14 +22,8 @@ const StaticContent = {
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
-type Props = {
-  data: {
-    strapiBaseUrl: string | undefined;
-    projects: Project[]
-  }
-};
 
-const ProjectImages = (props: Props) => {
+const ProjectImages = (props: { data: { strapiBaseUrl: string | undefined; projects: Project[] } }) => {
   const container = useRef<HTMLDivElement>(null);
   const scrollContainer = useRef<HTMLDivElement>(null);
   const imgContainer = useRef<HTMLElement[]>([]);
