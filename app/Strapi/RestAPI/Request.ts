@@ -1,13 +1,18 @@
+type Sort = { property: string, order: 'asc' | 'desc' };
 type Fields = [string, ...string[]];
-
+type Filters = [Filter, ...Filter[]];
 type Populate = [string, ...string[]];
+type Filter = { key: string | string[], value: string, operator: FilterOperator };
+type FilterOperator = '$eqi';
 
 type StrapiRequestParameters = {
-  url: string;
-  parameters: {
-    fields?: Fields,
-    populate?: Populate,
-  },
+    path: string;
+    parameters?: {
+        sort?: Sort,
+        fields?: Fields,
+        filters?: Filters,
+        populate?: Populate,
+    },
 }
 
 /**
@@ -15,32 +20,45 @@ type StrapiRequestParameters = {
   *
   */
 export class StrapiRequest {
-  private attributes: StrapiRequestParameters;
-  private queryParameters: string;
+    private attributes: StrapiRequestParameters;
+    private queryParameters: string;
 
-  constructor(params: StrapiRequestParameters) {
-    this.attributes = params;
-    this.queryParameters = this.stringifyQueryParameters(this.attributes.parameters);
-  }
+    constructor(params: StrapiRequestParameters) {
+        this.attributes = params;
+        this.queryParameters = this.stringifyQueryParameters(this.attributes.parameters);
+    }
 
-  private stringifyQueryParameters(params: StrapiRequestParameters['parameters']): string {
-    const query_params: string[][] = [];
+    private stringifyQueryParameters(params: StrapiRequestParameters['parameters'] = {}): string {
+        const query_params: string[][] = [];
 
-    params.fields && query_params.push(this.stringifyFieldsParameters(params.fields));
-    params.populate && query_params.push(this.stringifyPopulateParameters(params.populate));
+        params.sort && query_params.push(this.stringifySortParameters(params.sort));
+        params.fields && query_params.push(this.stringifyFieldsParameters(params.fields));
+        params.filters && query_params.push(this.stringifyFiltersParameters(params.filters));
+        params.populate && query_params.push(this.stringifyPopulateParameters(params.populate));
 
-    return '?' + query_params.flat().join('&');
-  }
+        return '?' + query_params.flat().join('&');
+    }
 
-  private stringifyFieldsParameters(fields: Fields): string[] {
-    return fields.map((val, idx) => `fields[${idx}]=${val}`);
-  }
+    private stringifySortParameters(sort: Sort): [string] {
+        return [`sort=${sort.property}:${sort.order}`];
+    }
 
-  private stringifyPopulateParameters(populate: Populate): string[] {
-    return populate.map((val, idx) => `populate[${idx}]=${val}`);
-  }
+    private stringifyFieldsParameters(fields: Fields): string[] {
+        return fields.map((val, idx) => `fields[${idx}]=${val}`);
+    }
 
-  get url() {
-    return process.env.STRAPI_BASE_URL + this.attributes.url + this.queryParameters;
-  }
+    private stringifyFiltersParameters(filters: Filters): string[] {
+        const stringify_key_params = (keys: Filter['key']) => Array.isArray(keys) ? stringify_array(keys) : `[${keys}]`;
+        const stringify_array = (keys: string[]) => keys.map((key) => `[${key}]`).join('');
+
+        return filters.map((filter) => `filters${stringify_key_params(filter.key)}[${filter.operator}]=${filter.value}`);
+    }
+
+    private stringifyPopulateParameters(populate: Populate): string[] {
+        return populate.map((val, idx) => `populate[${idx}]=${val}`);
+    }
+
+    get url() {
+        return process.env.NEXT_PUBLIC_STRAPI_BASE_URL + this.attributes.path + this.queryParameters;
+    }
 }
