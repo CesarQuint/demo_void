@@ -1,25 +1,19 @@
 "use client";
-import { useEffect, useRef } from "react";
-import { motion, usePresence, useAnimate, Spring } from "framer-motion";
-import styles from "../css/Projects/main.module.css";
-import { usePathname } from "next/navigation";
-import { useNavigation } from "../utils/navigationContext";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { AnimationSequence } from "framer-motion";
-import { animate as animation } from "framer-motion";
+import { motion, usePresence, useAnimate, animate as animation, AnimationSequence, Spring } from "framer-motion";
 import dynamic from "next/dynamic";
 
-const Main = dynamic(() => import("../components/projects/main"), {
-  ssr: false,
-});
+import styles from "../../css/Projects/main.module.css";
+import { usePathname } from "next/navigation";
+import { useNavigation } from "../../utils/navigationContext";
 
-const PreFooterLink = dynamic(() => import("../components/PreFooterLink"), {
-  ssr: false,
-});
+import { Project } from "@/app/Strapi/interfaces/Entities/Project";
+import { Category } from "@/app/Strapi/interfaces/Entities/Category";
 
-const Footer = dynamic(() => import("../components/footer"), {
-  ssr: false,
-});
+const ProjectsSectionView = dynamic(() => import('./ProjectsSectionView'), { ssr: false });
+const PreFooterLink = dynamic(() => import("../PreFooterLink"), { ssr: false });
+const Footer = dynamic(() => import('../footer'), { ssr: false });
 
 const transitionSpringPhysics: Spring = {
   type: "spring",
@@ -28,15 +22,14 @@ const transitionSpringPhysics: Spring = {
   damping: 2,
 };
 
-const transitionColor = "deepskyblue";
-
-function SecondPage() {
+export function ProjectsView(props: { data: { categories: Category[] } }) {
   const [isPresent, safeToRemove] = usePresence();
-  const [scope2, animate] = useAnimate();
+  const [scope2] = useAnimate();
   const [scope3] = useAnimate();
   const pathname = usePathname();
   const { navigationEvent } = useNavigation();
   const router = useRouter();
+  const [state, setState] = useState<boolean>(false);
 
   useEffect(() => {
     const sequence: AnimationSequence = [
@@ -115,11 +108,9 @@ function SecondPage() {
         transition={transitionSpringPhysics}
         className="courtain"
       />
-      <Main />
+      <ProjectsSectionView data={props.data} loadState={() => setState(!state)} />
       <PreFooterLink href="/about" text="CONOCENOS" />
-      <Footer />
+      <Footer state={state} />
     </motion.div>
   );
 }
-
-export default SecondPage;
