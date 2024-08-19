@@ -4,9 +4,13 @@ import Image from "next/image";
 import styles from "../../../css/Form/form.module.css"; // Adjust the import based on your structure
 import { ContinueButtons, ReturnButtons } from "../FormCards";
 import { Card } from "../CardTemplate";
-import Calendar from "react-calendar";
+
 import { Value } from "react-calendar/dist/cjs/shared/types";
 import { Range } from "react-calendar/dist/cjs/shared/types";
+
+import dynamic from "next/dynamic";
+
+const Calendar = dynamic(() => import("react-calendar"), { ssr: false });
 
 interface CustomCardProps {
   cardRef: RefObject<HTMLDivElement>;
