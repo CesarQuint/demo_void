@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import styles from "../pageImage.module.css";
+import styles from "./Home/pageImage.module.css";
 import TypedLink from "./TypedLink/TypedLink";
 
 const LoadingComponent = ({
