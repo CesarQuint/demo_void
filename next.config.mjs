@@ -20,6 +20,12 @@ const nextConfig = {
         port: "",
         pathname: "/icons/**",
       },
+      {
+        protocol: process.env.STRAPI_URL_PROTOCOL,
+        hostname: process.env.STRAPI_URL_HOST,
+        port: process.env.STRAPI_URL_PORT,
+        pathname: "/uploads/**",
+      },
     ],
   },
 };
