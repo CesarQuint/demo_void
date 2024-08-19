@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import styles from "../css/footer.module.css";
 import Title from "./title";
@@ -15,7 +15,7 @@ const TypedLink = dynamic(() => import("./TypedLink/TypedLink"), {
 import Image from "next/image";
 import arrow from "../../public/images/wArrow.svg";
 
-type Props = {};
+type Props = { state?: boolean };
 
 const Footer = (props: Props) => {
   const { setNavigationEvent } = useNavigation();
@@ -29,6 +29,8 @@ const Footer = (props: Props) => {
 
     setNavigationEvent({ state: true, href });
   }
+
+  useEffect(() => { }, [props.state]);
 
   return (
     <motion.div className={`${styles.footer}`}>
