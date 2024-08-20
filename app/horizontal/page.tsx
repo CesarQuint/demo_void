@@ -55,7 +55,7 @@ function ImageSection(props: { data: ImageFormat }) {
 function SectionComponent({ data }: { data: SectionBlock & HeadingProps & { image: ImageFormat } }) {
   switch (data.type) {
     case 'heading':
-      return (<Heading level={data.level ?? 0} children={data.children} type={data.type} />);
+      return (<Heading level={data.level ?? 0} type={data.type}>{data.children}</Heading>);
 
     case 'paragraph':
       return (<>{data.children.map((block, idx) => (<p key={idx}>{block.text}</p>))}</>);
