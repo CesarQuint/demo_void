@@ -3,12 +3,10 @@ import { Category } from "../interfaces/Entities/Category";
 import { Project } from "../interfaces/Entities/Project";
 import { Response } from "../interfaces/Responses/Response";
 
-const CACHE_RULE = process.env.NODE_ENV === 'development' ? 'no-store' : 'force-cache';
 const REVALIDATE = process.env.NODE_ENV === 'development' ? 0 : /* 24 hours in seconds */ 24 * 60 * 60;
 
 const fetchDefaultOptions = (): RequestInit => ({
   method: 'GET',
-  cache: CACHE_RULE,
   next: { revalidate: REVALIDATE }
 });
 
