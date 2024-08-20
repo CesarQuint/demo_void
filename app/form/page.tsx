@@ -112,7 +112,7 @@ const Contact = (props: Props) => {
         className="courtain"
       />
       <FormCards />
-      <CardsFilledStatus />
+      {/* <CardsFilledStatus /> */}
       <Footer />
     </motion.div>
   );

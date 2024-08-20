@@ -1,3 +1,4 @@
+"use client";
 import React, { RefObject, useState } from "react";
 import Image from "next/image";
 import styles from "../../../css/Form/form.module.css"; // Adjust the import based on your structure
@@ -63,6 +64,7 @@ export const ScheduleCard: React.FC<CustomCardProps> = ({
                 </label>
                 <TimePicker
                   value={startDate}
+                  format="HH:mm"
                   onChange={(e) => {
                     setStartDate(e as string);
                   }}
@@ -78,6 +80,7 @@ export const ScheduleCard: React.FC<CustomCardProps> = ({
                   </p>
                 </label>
                 <TimePicker
+                  format="HH:mm"
                   value={endDate}
                   onChange={(e) => {
                     setEndDate(e as string);

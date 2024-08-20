@@ -99,6 +99,8 @@ const NavBar = () => {
   });
 
   function goTo(e: MouseEvent, href: string) {
+    console.log("click");
+
     e.preventDefault();
 
     if (

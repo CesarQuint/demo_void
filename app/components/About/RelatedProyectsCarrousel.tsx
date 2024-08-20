@@ -60,18 +60,15 @@ const RelatedProyectsCarrousel = (props: Props) => {
   });
 
   return (
-    <motion.div
-      ref={containerRef}
-      className={styles.main}>
+    <motion.div ref={containerRef} className={styles.main}>
       <motion.div className={styles.image_container}>
-        <motion.div
-          ref={imageBandRef}
-          className={styles.image_wrapper}>
+        <motion.div ref={imageBandRef} className={styles.image_wrapper}>
           {stand_out_projects.slice(0, 3).map((_, i) => (
             <span
               className={styles.single_image_container}
               onClick={() => clickHandler(i + 1)}
-              key={i + 1}>
+              key={i + 1}
+            >
               {selectedStep == i + 1 && (
                 <div className={styles.text_information_of_project}>
                   <p>{_.date}</p>
@@ -80,7 +77,8 @@ const RelatedProyectsCarrousel = (props: Props) => {
                       fontFamily: "graphie",
                       fontSize: "2rem",
                       fontWeight: "100",
-                    }}>
+                    }}
+                  >
                     {_.title}
                   </h3>
                   <p style={{ textTransform: "uppercase" }}>{_.description}</p>
@@ -105,7 +103,8 @@ const RelatedProyectsCarrousel = (props: Props) => {
             style={{
               backgroundColor: `${selectedStep == i + 1 ? "grey" : "#3b3b3b"}`,
             }}
-            className={`${styles.step} image_${i + 1}`}></motion.div>
+            className={`${styles.step} image_${i + 1}`}
+          ></motion.div>
         ))}
       </motion.div>
     </motion.div>

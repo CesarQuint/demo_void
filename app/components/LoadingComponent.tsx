@@ -1,7 +1,11 @@
 import React from "react";
 import { motion } from "framer-motion";
-import styles from "./Home/pageImage.module.css";
-import TypedLink from "./TypedLink/TypedLink";
+import dynamic from "next/dynamic";
+import styles from "../pageImage.module.css";
+
+const TypedLink = dynamic(() => import("./TypedLink/TypedLink"), {
+  ssr: false,
+});
 
 const LoadingComponent = ({
   loadingProgress,

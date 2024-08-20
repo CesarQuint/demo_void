@@ -7,6 +7,7 @@ import { useGSAP } from "@gsap/react";
 import s from "../css/horizontal.module.css";
 import { ScrollTrigger, Draggable } from "gsap/all";
 import RelatedProyectsCarrousel from "../components/About/RelatedProyectsCarrousel";
+import CarouselCaseStudy from "../components/Horizontal/CarouselCaseStudy";
 import { Project, SectionBlock, HeadingProps } from "../Strapi/interfaces/Entities/Project";
 import { ImageFormat } from "../Strapi/interfaces/Entities/ImageFormat";
 
@@ -137,14 +138,29 @@ export default function Horizontal(props: { data: { project: Project[] } }) {
 
         <div className={s.wrapper}>
           <section className={s.links}>
-            <a href="#intro">intro</a>
-            <a href="#conceptualizacion">conceptualización</a>
-            <a href="#desarrollo">desarrollo</a>
-            <a href="#produccion">producción</a>
-            <a href="#conclusion">conclusión</a>
-            <a href="#referencias">referencias</a>
-            <a href="#alianzas">alianzas</a>
-            <a href="#galeria">galería</a>
+            <section className={s.inner_links}>
+              <a href="#intro">intro</a>
+              <a href="#conceptualizacion">conceptualización</a>
+              <a href="#desarrollo">desarrollo</a>
+              <a href="#produccion">
+                producción
+                <div className={s.submenu_links}>
+                  <a className={s.none_hover} href="#intro">
+                    subcontext
+                  </a>
+                  <a className={s.none_hover} href="#conceptualizacion">
+                    subcontext
+                  </a>
+                  <a className={s.none_hover} href="#desarrollo">
+                    subcontext
+                  </a>
+                </div>
+              </a>
+              <a href="#conclusion">conclusión</a>
+              <a href="#referencias">referencias</a>
+              <a href="#alianzas">alianzas</a>
+              <a href="#galeria">galería</a>
+            </section>
           </section>
           <section id="intro" className={s.intro}>
             <p className={s.date}>{project.attributes.EventDate}</p>
@@ -296,10 +312,7 @@ export default function Horizontal(props: { data: { project: Project[] } }) {
             />
           </section>
           <section className={s.imgSection}>
-            <img
-              src="https://img.freepik.com/free-photo/sunset-silhouettes-trees-mountains-generative-ai_169016-29371.jpg"
-              alt=""
-            />
+            <CarouselCaseStudy />
           </section>
           <section className={s.relatedProjects}>
             <RelatedProyectsCarrousel />
