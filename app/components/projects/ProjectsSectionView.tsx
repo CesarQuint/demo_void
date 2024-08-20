@@ -57,7 +57,7 @@ const CategoryTabs = ({ activeIndex, setActive, data }: { activeIndex: number, s
   </TypedLink>
 
   {data.categories.map((category, idx) => (
-    <TypedLink href={'/proyectos/' + category.attributes.slug} onClick={(e) => (e.preventDefault(), setActive(idx))}>
+    <TypedLink key={idx} href={'/proyectos/' + category.attributes.slug} onClick={(e) => (e.preventDefault(), setActive(idx))}>
       <CategoryTab active={idx === activeIndex} data={{ category }} />
     </TypedLink>
   ))}
