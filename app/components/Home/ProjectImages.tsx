@@ -108,7 +108,7 @@ const ProjectsHorizontalCarousel = (props: { imageContainers: HTMLElement[], dat
   ))
 }</>);
 
-const ProjectImages = (props: { data: { strapiBaseUrl: string | undefined; projects: Project[] } }) => {
+const ProjectImages = (props: { data: { projects: Project[] } }) => {
   const container = useRef<HTMLDivElement>(null);
   const imgContainers = useRef<HTMLElement[]>([]);
   const scrollContainer = useRef<HTMLDivElement>(null);
