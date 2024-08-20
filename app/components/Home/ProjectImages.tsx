@@ -399,7 +399,7 @@ const ProjectImages = (props: { data: { strapiBaseUrl: string | undefined; proje
         <div className={styles.scrollView} ref={scrollContainer}>
           <BackgroundTitle title={StaticContent.BACKGRUND_TITLE} />
           <ViewAllProjectsButton buttonText={StaticContent.HYPERLINK_BUTTON} />
-          <ProjectsHorizontalCarousel imageContainers={imgContainers.current} data={{ projects: props.data.projects, strapiBaseUrl: props.data.strapiBaseUrl ?? "" }} />
+          <ProjectsHorizontalCarousel imageContainers={imgContainers.current} data={{ projects: props.data.projects }} />
         </div>
       </motion.section>
     </motion.div>
