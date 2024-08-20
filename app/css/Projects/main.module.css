@@ -1,25 +1,28 @@
 .main {
-  padding: 20vh 0;
+  padding: 15vh 0;
 }
 
 .nav_container {
-  padding: 2vh 6vh;
+  padding-bottom: 1rem;
   overflow: scroll;
   border-bottom: 3px solid #1b1b1b;
 }
 
 .selector {
+  justify-content: flex-start;
+  max-width: 75vw;
+  margin: auto;
   display: flex;
   flex-flow: row nowrap;
   gap: 2vh;
 }
 
 .tab {
-  padding: 1vh 2vh;
+  padding-right: 2vh;
   min-width: max-content;
   display: flex;
   flex-flow: row nowrap;
-  gap: 1vw;
+  gap: 0.5vw;
   align-items: center;
 }
 
@@ -104,9 +107,10 @@
 
 .about {
   padding: 6vh;
-  font-weight: 700;
+  font-weight: 100;
   width: 100%;
   font-size: 1.5rem;
+  font-family: 'graphie';
   line-height: 2rem;
   @media (min-width: 700px) {
     width: 60%;
