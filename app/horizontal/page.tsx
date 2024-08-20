@@ -58,7 +58,7 @@ function SectionComponent({ data }: { data: SectionBlock & HeadingProps & { imag
       return (<Heading level={data.level ?? 0} children={data.children} type={data.type} />);
 
     case 'paragraph':
-      return (<>{data.children.map((block) => (<p>{block.text}</p>))}</>);
+      return (<>{data.children.map((block, idx) => (<p key={idx}>{block.text}</p>))}</>);
 
     case 'image':
       return <ImageSection data={data.image} />
@@ -149,7 +149,7 @@ export default function Horizontal(props: { data: { project: Project[] } }) {
           <section id="intro" className={s.intro}>
             <p className={s.date}>{project.attributes.EventDate}</p>
             <p>UBICACIÓN: {project.attributes.Location}</p>
-            {project.attributes.Introduction.map((content) => (<SectionComponent data={content} />))}
+            {project.attributes.Introduction.map((content, idx) => (<SectionComponent key={idx} data={content} />))}
 
             <p className={s.txt}>
               La locación que escogimos es parte de las 65,721 hectáreas del
