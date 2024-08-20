@@ -1,5 +1,8 @@
-import HomeServer from './server-components/HomeServer';
+import HomeView from './components/Home/HomePage';
+import { getProjectsData } from './Strapi/RestAPI/ProjectsProvider';
 
-export default function Page() {
-  return (<HomeServer />);
-};
+export default async function HomeServer() {
+  const PROJECTS = await getProjectsData();
+
+  return <HomeView data={{ projects: PROJECTS.data }} />;
+}

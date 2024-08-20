@@ -1,21 +1,81 @@
 "use client";
 
+import Image from "next/image";
 import { useRef } from "react";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import s from "../css/horizontal.module.css";
 import { ScrollTrigger, Draggable } from "gsap/all";
 import RelatedProyectsCarrousel from "../components/About/RelatedProyectsCarrousel";
-import useWindow from "../utils/hooks/useWindow";
+import { Project, SectionBlock, HeadingProps } from "../Strapi/interfaces/Entities/Project";
+import { ImageFormat } from "../Strapi/interfaces/Entities/ImageFormat";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger, Draggable);
 
-export default function Horizontal() {
+function Heading({ level, children }: HeadingProps) {
+  switch (level) {
+    case 1:
+      return <h1 className={s.title}>{children[0].text}</h1>;
+
+    case 2:
+      return <h2 className={s.title}>{children[0].text}</h2>;
+
+    case 3:
+      return <h3 className={s.title}>{children[0].text}</h3>;
+
+    case 4:
+      return <h4 className={s.title}>{children[0].text}</h4>;
+
+    case 5:
+      return <h5 className={s.title}>{children[0].text}</h5>;
+
+    case 6:
+      return <h6 className={s.title}>{children[0].text}</h6>;
+
+    default:
+      throw Error('Unknown level: ' + level);
+  }
+}
+
+function ImageSection(props: { data: ImageFormat }) {
+  return (
+    <section className={s.imgSection}>
+      <Image
+        style={{ objectFit: "cover" }}
+        title={props.data.caption ?? ''}
+        src={process.env.NEXT_PUBLIC_STRAPI_BASE_URL + props.data.formats.medium.url}
+        fill
+        sizes="50%"
+        alt={props.data.alternativeText ?? ''}
+      />
+    </section>
+  );
+}
+
+function SectionComponent({ data }: { data: SectionBlock & HeadingProps & { image: ImageFormat } }) {
+  switch (data.type) {
+    case 'heading':
+      return (<Heading level={data.level ?? 0} type={data.type}>{data.children}</Heading>);
+
+    case 'paragraph':
+      return (<>{data.children.map((block, idx) => (<p key={idx}>{block.text}</p>))}</>);
+
+    case 'image':
+      return <ImageSection data={data.image} />
+
+    default:
+      throw Error('Unknown type: ' + data.type);
+  }
+}
+
+export default function Horizontal(props: { data: { project: Project[] } }) {
   const container = useRef<HTMLElement>(null);
   const tags = useRef<HTMLDivElement>(null);
   const scroller = useRef<HTMLDivElement>(null);
   const scrollContainer = useRef<HTMLDivElement>(null);
   const tl = useRef<gsap.core.Timeline | null>(null);
+
+  const project = props.data.project[0];
 
   useGSAP(
     () => {
@@ -66,15 +126,12 @@ export default function Horizontal() {
           className={s.hero}
         >
           <div className={s.title}>
-            <h1>RAÍCES LUMÍNICAS</h1>
-            <h2>Instalación visual en el bosque.</h2>
+            <h1>{project.attributes.Title.toUpperCase()}</h1>
+            <h2>{project.attributes.Subtitle.toUpperCase()}</h2>
           </div>
 
           <div ref={tags} className={s.tags}>
-            <div className={s.tag}>Instalación Inmersiva</div>
-            <div className={s.tag}>Video Mapping</div>
-            <div className={s.tag}>Naturaleza</div>
-            <div className={s.tag}>Tag 3</div>
+            <div className={s.tag}>{project.attributes.Category.data.attributes.Name}</div>
           </div>
         </section>
 
@@ -90,8 +147,9 @@ export default function Horizontal() {
             <a href="#galeria">galería</a>
           </section>
           <section id="intro" className={s.intro}>
-            <p className={s.date}>Fecha: 1 de junio, 2024</p>
-            <p>UBICACIÓN: Camino a Ocotitlán, Tepoztlán, Morelos, México</p>
+            <p className={s.date}>{project.attributes.EventDate}</p>
+            <p>UBICACIÓN: {project.attributes.Location}</p>
+            {project.attributes.Introduction.map((content, idx) => (<SectionComponent key={idx} data={content} />))}
 
             <p className={s.txt}>
               La locación que escogimos es parte de las 65,721 hectáreas del

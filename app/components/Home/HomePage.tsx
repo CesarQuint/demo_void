@@ -29,12 +29,7 @@ const transitionSpringPhysics: Spring = {
   damping: 2,
 };
 
-type Props = {
-  data: {
-    strapiBaseUrl: string | undefined;
-    projects: Project[];
-  }
-};
+type Props = { data: { projects: Project[] } };
 
 function HomePage(props: Props) {
   const [isPresent, safeToRemove] = usePresence();
@@ -168,7 +163,7 @@ function HomePage(props: Props) {
               controls={true}
             />
           </motion.div>
-          <ProjectImages data={{ strapiBaseUrl: props.data.strapiBaseUrl, projects: props.data.projects }} />
+          <ProjectImages data={{ projects: props.data.projects }} />
           <ProcessHome />
           <TagsHome />
           <div style={{ height: "10vh" }}></div>

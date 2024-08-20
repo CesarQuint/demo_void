@@ -11,7 +11,9 @@ import Splitting from "splitting";
 import styles from "../../css/projects.module.css";
 import s from "../ScrollImg/ScrollImg.module.css";
 
+import TypedLink from "../TypedLink/TypedLink";
 import { Project } from "@/app/Strapi/interfaces/Entities/Project";
+import Link from "next/link";
 
 const CHARS = "!#$%&*+,-:;<=>@^_abcdefghijklmnopqrstuvwxyz";
 
@@ -36,16 +38,17 @@ const BackgroundTitle = (props: { title: string }) =>
 const ViewAllProjectsButton = (props: { buttonText: string }) =>
 (
   <div className={styles.line}>
-    <button className={styles.viewAll}>{props.buttonText.toUpperCase()}</button>
+    <Link className={styles.viewAll} href="/proyectos">{props.buttonText.toUpperCase()}</Link>
   </div>
 );
 
-const ProjectElementContent = (props: { data: { project: Project, strapiBaseUrl: string } }) =>
+export const ProjectElementContent = (props: { data: { project: Project } }) =>
 (<>
   <span className="word-animated">{props.data.project.attributes.EventDate.toUpperCase()}</span>
   <ProjectElementImage data={{
     title: props.data.project.attributes.Title,
-    url: props.data.strapiBaseUrl + props.data.project.attributes.Cover.data.attributes.formats.large.url
+    slug: props.data.project.attributes.slug,
+    url: props.data.project.attributes.Cover.data.attributes.formats.large.url
   }} />
   <ProjectElementCaption data={{
     title: props.data.project.attributes.Title,
@@ -54,58 +57,58 @@ const ProjectElementContent = (props: { data: { project: Project, strapiBaseUrl:
   }} />
 </>);
 
-const ProjectElementImage = (props: { data: { title: string, url: string } }) =>
+export const ProjectElementImage = (props: { loadHook?: () => void, data: { title: string, url: string, slug: string } }) =>
 (
-  <div className={s.wrapper}>
-    <Image
-      style={{ objectFit: "cover" }}
-      title={props.data.title}
-      src={props.data.url}
-      fill
-      sizes="50%"
-      alt={props.data.title}
-    />
-  </div>
+  <Link href={`/projects/${props.data.slug}`}>
+    <div className={s.wrapper}>
+      <Image
+        onLoad={() => props.loadHook && props.loadHook()}
+        style={{ objectFit: "cover" }}
+        title={props.data.title}
+        src={process.env.NEXT_PUBLIC_STRAPI_BASE_URL + props.data.url}
+        fill
+        sizes="50%"
+        alt={props.data.title}
+      />
+    </div>
+  </Link>
 );
 
-const ProjectElementCaption = (props: { data: { title: string, category: string, description: string } }) =>
+export const ProjectElementCaption = (props: { data: { title: string, category: string, description: string } }) =>
 (
   <figcaption className={s.caption}>
     <div className={s.tag}>{props.data.category.toUpperCase()}</div>
     <div className={`word-animated ${s.title}`}>{props.data.title}</div>
-    <div className={`word-animated ${s.description}`}>{props.data.description.toUpperCase()}</div>
+    <div className="word-animated">{props.data.description.toUpperCase()}</div>
   </figcaption>
 );
 
-const ProjectElement = (props: { refHook: (el: HTMLElement) => void, idx: number, data: { project: Project, strapiBaseUrl: string } }) =>
+export const ProjectElement = (props: { refHook: (el: HTMLElement) => void, idx: number, data: { project: Project } }) =>
 (
   <div
     className={styles.imgBox}
     style={{ "--column": props.idx + 1 } as React.CSSProperties}
   >
     <figure className={s.figure} ref={props.refHook}>
-      <ProjectElementContent data={{ project: props.data.project, strapiBaseUrl: props.data.strapiBaseUrl }} />
+      <ProjectElementContent data={{ project: props.data.project }} />
     </figure>
   </div>
 );
 
-const ProjectsHorizontalCarousel = (props: { imageContainers: HTMLElement[], data: { projects: Project[], strapiBaseUrl: string } }) =>
+const ProjectsHorizontalCarousel = (props: { imageContainers: HTMLElement[], data: { projects: Project[] } }) =>
 (<>{
   props.data.projects.map((project: Project, idx: number) =>
   (
     <ProjectElement
       key={idx}
       idx={idx}
-      data={{
-        project,
-        strapiBaseUrl: props.data.strapiBaseUrl
-      }}
+      data={{ project }}
       refHook={(element: HTMLElement) => void (props.imageContainers[idx] = element)}
     />
   ))
 }</>);
 
-const ProjectImages = (props: { data: { strapiBaseUrl: string | undefined; projects: Project[] } }) => {
+const ProjectImages = (props: { data: { projects: Project[] } }) => {
   const container = useRef<HTMLDivElement>(null);
   const imgContainers = useRef<HTMLElement[]>([]);
   const scrollContainer = useRef<HTMLDivElement>(null);
@@ -396,7 +399,7 @@ const ProjectImages = (props: { data: { strapiBaseUrl: string | undefined; proje
         <div className={styles.scrollView} ref={scrollContainer}>
           <BackgroundTitle title={StaticContent.BACKGRUND_TITLE} />
           <ViewAllProjectsButton buttonText={StaticContent.HYPERLINK_BUTTON} />
-          <ProjectsHorizontalCarousel imageContainers={imgContainers.current} data={{ projects: props.data.projects, strapiBaseUrl: props.data.strapiBaseUrl ?? "" }} />
+          <ProjectsHorizontalCarousel imageContainers={imgContainers.current} data={{ projects: props.data.projects }} />
         </div>
       </motion.section>
     </motion.div>
