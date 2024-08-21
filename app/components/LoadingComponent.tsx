@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
-import styles from "../pageImage.module.css";
+import styles from "./Home/pageImage.module.css";
 
 const TypedLink = dynamic(() => import("./TypedLink/TypedLink"), {
   ssr: false,
