@@ -18,6 +18,19 @@ import CaseStudyWrapper from "../components/Horizontal/CaseStudyWrapper";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger, Draggable);
 
+export enum ContentSections {
+  Introduction = "Introducción",
+  Conceptualization = "Conceptualización",
+  Development = "Desarrollo",
+  Production = "Producción",
+  MultimediaComponents = "Componentes Multimedia",
+  Videomapping = "Videomapping",
+  Illumination = "Iluminación",
+  Animation = "Animación",
+  Interactivity = "Interactividad",
+  Credits = "Créditos",
+}
+
 function Heading({ level, children }: HeadingProps) {
   switch (level) {
     case 1:
@@ -95,6 +108,21 @@ function SectionComponent({
   }
 }
 
+function handleNavClick(
+  e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
+  id: string
+) {
+  e.preventDefault(); // Prevent the default anchor behavior
+
+  // Find the target section by ID
+  const targetSection = document.getElementById(id);
+
+  // Scroll to the section with smooth behavior
+  if (targetSection) {
+    targetSection.scrollIntoView({ behavior: "smooth" });
+  }
+}
+
 export default function Horizontal(props: { data: { project: Project[] } }) {
   const container = useRef<HTMLElement>(null);
   const tags = useRef<HTMLDivElement>(null);
@@ -103,7 +131,8 @@ export default function Horizontal(props: { data: { project: Project[] } }) {
   const tl = useRef<gsap.core.Timeline | null>(null);
 
   const project = props.data.project[0];
-  console.log(project);
+
+  console.log(Object.keys(project.attributes));
 
   useGSAP(
     () => {
@@ -168,30 +197,36 @@ export default function Horizontal(props: { data: { project: Project[] } }) {
           <div className={s.wrapper}>
             <section className={s.links}>
               <section className={s.inner_links}>
-                <a href="#intro">intro</a>
-                <a href="#conceptualizacion">conceptualización</a>
-                <a href="#desarrollo">desarrollo</a>
-                <a href="#produccion">
-                  producción
-                  <div className={s.submenu_links}>
-                    <a className={s.none_hover} href="#intro">
-                      subcontext
-                    </a>
-                    <a className={s.none_hover} href="#conceptualizacion">
-                      subcontext
-                    </a>
-                    <a className={s.none_hover} href="#desarrollo">
-                      subcontext
-                    </a>
-                  </div>
-                </a>
-                <a href="#conclusion">conclusión</a>
-                <a href="#referencias">referencias</a>
-                <a href="#alianzas">alianzas</a>
-                <a href="#galeria">galería</a>
+                {Object.keys(project.attributes).map((tag) => {
+                  const sectionId =
+                    ContentSections[tag as keyof typeof ContentSections];
+                  if (sectionId) {
+                    return (
+                      <a
+                        key={tag}
+                        href={`#${sectionId}`}
+                        onClick={(e) => handleNavClick(e, sectionId)}
+                      >
+                        {sectionId}
+                      </a>
+                    );
+                  }
+                  return null;
+                })}
+                <div className={s.submenu_links}>
+                  <a className={s.none_hover} href="#intro">
+                    subcontext
+                  </a>
+                  <a className={s.none_hover} href="#conceptualizacion">
+                    subcontext
+                  </a>
+                  <a className={s.none_hover} href="#desarrollo">
+                    subcontext
+                  </a>
+                </div>
               </section>
             </section>
-            <section id="intro" className={s.intro}>
+            <section id="Introducción" className={s.intro}>
               <p className={s.date}>{project.attributes.EventDate}</p>
               <p>UBICACIÓN: {project.attributes.Location}</p>
               {project.attributes.Introduction.map((content, idx) => (
@@ -205,7 +240,7 @@ export default function Horizontal(props: { data: { project: Project[] } }) {
               />
             </section>
             {project.attributes.Conceptualization && (
-              <section id="concepto" className={s.card}>
+              <section id="Conceptualización" className={s.card}>
                 <h3 className={s.title}>Concepto</h3>
                 {project.attributes.Conceptualization.map((content, idx) => (
                   <SectionComponent key={idx} data={content} />
@@ -214,7 +249,7 @@ export default function Horizontal(props: { data: { project: Project[] } }) {
             )}
 
             {project.attributes.Development && (
-              <section id="desarrollo" className={s.card}>
+              <section id="Desarrollo" className={s.card}>
                 <h3 className={s.title}>Desarrollo</h3>
                 {project.attributes.Development.map((content, idx) => (
                   <SectionComponent key={idx} data={content} />
@@ -283,7 +318,7 @@ export default function Horizontal(props: { data: { project: Project[] } }) {
               </div>
             </section>
             {project.attributes.Production && (
-              <section id="produccion" className={s.card}>
+              <section id="Producción" className={s.card}>
                 <h3 className={s.title}>Producción</h3>
                 {project.attributes.Production.map((content, idx) => (
                   <SectionComponent key={idx} data={content} />
