@@ -169,7 +169,7 @@
 .submenu_links {
   z-index: 10;
   position: absolute;
-  display: flex;
+  display: none;
   flex-direction: column;
   gap: 2vh;
   padding: 0 3.75rem;
@@ -298,6 +298,9 @@
 .card {
   padding: 0 3.5rem;
   font-family: Graphie;
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 3vh;
 
   .title {
     font-weight: 300;
@@ -366,4 +369,11 @@
     margin: 0;
     padding: 2vh 13vw;
   }
+}
+
+.img_new {
+  width: 100%;
+  height: fit-content;
+  aspect-ratio: 43/25;
+  background: #4b89cc;
 }
