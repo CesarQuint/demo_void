@@ -14,6 +14,7 @@ import s from "../ScrollImg/ScrollImg.module.css";
 import TypedLink from "../TypedLink/TypedLink";
 import { Project } from "@/app/Strapi/interfaces/Entities/Project";
 import Link from "next/link";
+import { useNavigation } from "@/app/utils/navigationContext";
 
 const CHARS = "!#$%&*+,-:;<=>@^_abcdefghijklmnopqrstuvwxyz";
 
@@ -24,41 +25,51 @@ const StaticContent = {
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
-const BackgroundTitle = (props: { title: string }) =>
-(
+const BackgroundTitle = (props: { title: string }) => (
   <h3 className={styles.title}>
     {props.title.split(" ")[0]?.toUpperCase()}
     <br />
-    <span className={s.second}>
-      {props.title.split(" ")[1]?.toUpperCase()}
-    </span>
+    <span className={s.second}>{props.title.split(" ")[1]?.toUpperCase()}</span>
   </h3>
 );
 
-const ViewAllProjectsButton = (props: { buttonText: string }) =>
-(
+const ViewAllProjectsButton = (props: { buttonText: string }) => (
   <div className={styles.line}>
-    <Link className={styles.viewAll} href="/proyectos">{props.buttonText.toUpperCase()}</Link>
+    <Link className={styles.viewAll} href="/proyectos">
+      {props.buttonText.toUpperCase()}
+    </Link>
   </div>
 );
 
-export const ProjectElementContent = (props: { data: { project: Project } }) =>
-(<>
-  <span className="word-animated">{props.data.project.attributes.EventDate.toUpperCase()}</span>
-  <ProjectElementImage data={{
-    title: props.data.project.attributes.Title,
-    slug: props.data.project.attributes.slug,
-    url: props.data.project.attributes.Cover.data.attributes.formats.large.url
-  }} />
-  <ProjectElementCaption data={{
-    title: props.data.project.attributes.Title,
-    category: props.data.project.attributes.Category.data.attributes.Name,
-    description: props.data.project.attributes.Subtitle,
-  }} />
-</>);
+export const ProjectElementContent = (props: {
+  data: { project: Project };
+}) => (
+  <>
+    <span className="word-animated">
+      {props.data.project.attributes.EventDate.toUpperCase()}
+    </span>
+    <ProjectElementImage
+      data={{
+        title: props.data.project.attributes.Title,
+        slug: props.data.project.attributes.slug,
+        url: props.data.project.attributes.Cover.data.attributes.formats.large
+          .url,
+      }}
+    />
+    <ProjectElementCaption
+      data={{
+        title: props.data.project.attributes.Title,
+        category: props.data.project.attributes.Category.data.attributes.Name,
+        description: props.data.project.attributes.Subtitle,
+      }}
+    />
+  </>
+);
 
-export const ProjectElementImage = (props: { loadHook?: () => void, data: { title: string, url: string, slug: string } }) =>
-(
+export const ProjectElementImage = (props: {
+  loadHook?: () => void;
+  data: { title: string; url: string; slug: string };
+}) => (
   <Link href={`/projects/${props.data.slug}`}>
     <div className={s.wrapper}>
       <Image
@@ -74,8 +85,9 @@ export const ProjectElementImage = (props: { loadHook?: () => void, data: { titl
   </Link>
 );
 
-export const ProjectElementCaption = (props: { data: { title: string, category: string, description: string } }) =>
-(
+export const ProjectElementCaption = (props: {
+  data: { title: string; category: string; description: string };
+}) => (
   <figcaption className={s.caption}>
     <div className={s.tag}>{props.data.category.toUpperCase()}</div>
     <div className={`word-animated ${s.title}`}>{props.data.title}</div>
@@ -83,30 +95,49 @@ export const ProjectElementCaption = (props: { data: { title: string, category: 
   </figcaption>
 );
 
-export const ProjectElement = (props: { refHook: (el: HTMLElement) => void, idx: number, data: { project: Project } }) =>
-(
-  <div
-    className={styles.imgBox}
-    style={{ "--column": props.idx + 1 } as React.CSSProperties}
-  >
-    <figure className={s.figure} ref={props.refHook}>
-      <ProjectElementContent data={{ project: props.data.project }} />
-    </figure>
-  </div>
-);
+export const ProjectElement = (props: {
+  refHook: (el: HTMLElement) => void;
+  idx: number;
+  data: { project: Project };
+}) => {
+  const { setNavigationEvent } = useNavigation();
 
-const ProjectsHorizontalCarousel = (props: { imageContainers: HTMLElement[], data: { projects: Project[] } }) =>
-(<>{
-  props.data.projects.map((project: Project, idx: number) =>
-  (
-    <ProjectElement
-      key={idx}
-      idx={idx}
-      data={{ project }}
-      refHook={(element: HTMLElement) => void (props.imageContainers[idx] = element)}
-    />
-  ))
-}</>);
+  function goTo(href: string) {
+    setNavigationEvent({ state: true, href });
+  }
+
+  return (
+    <div
+      onClick={(e) => {
+        goTo(`/projects/${props.data.project.attributes.slug}`);
+      }}
+      className={styles.imgBox}
+      style={{ "--column": props.idx + 1 } as React.CSSProperties}
+    >
+      <figure className={s.figure} ref={props.refHook}>
+        <ProjectElementContent data={{ project: props.data.project }} />
+      </figure>
+    </div>
+  );
+};
+
+const ProjectsHorizontalCarousel = (props: {
+  imageContainers: HTMLElement[];
+  data: { projects: Project[] };
+}) => (
+  <>
+    {props.data.projects.map((project: Project, idx: number) => (
+      <ProjectElement
+        key={idx}
+        idx={idx}
+        data={{ project }}
+        refHook={(element: HTMLElement) =>
+          void (props.imageContainers[idx] = element)
+        }
+      />
+    ))}
+  </>
+);
 
 const ProjectImages = (props: { data: { projects: Project[] } }) => {
   const container = useRef<HTMLDivElement>(null);
@@ -399,7 +430,10 @@ const ProjectImages = (props: { data: { projects: Project[] } }) => {
         <div className={styles.scrollView} ref={scrollContainer}>
           <BackgroundTitle title={StaticContent.BACKGRUND_TITLE} />
           <ViewAllProjectsButton buttonText={StaticContent.HYPERLINK_BUTTON} />
-          <ProjectsHorizontalCarousel imageContainers={imgContainers.current} data={{ projects: props.data.projects }} />
+          <ProjectsHorizontalCarousel
+            imageContainers={imgContainers.current}
+            data={{ projects: props.data.projects }}
+          />
         </div>
       </motion.section>
     </motion.div>
