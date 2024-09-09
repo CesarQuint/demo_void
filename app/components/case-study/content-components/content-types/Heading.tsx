@@ -15,7 +15,7 @@ const throwInvalidHeadingLevelException = (level: number) => {
 }
 
 const validateHeadingLevel = (level: number): boolean =>
-    (level > 1 && level < 6) || throwInvalidHeadingLevelException(level);
+    (level > 0 && level < 6) || throwInvalidHeadingLevelException(level);
 
 const HeadingElement = (data: HeadingData): React.ReactElement => React.createElement(
     'h' + data.level,
