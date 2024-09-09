@@ -23,10 +23,10 @@ export interface Project extends Entity {
         Location: string;
 
         [ContentSection.INTRODUCTION]: string;
-        [ContentSection.CONCEPTUALIZATION]: ContentData[] | null;
-        [ContentSection.DEVELOPMENT]: ContentData[] | null;
-        [ContentSection.PRODUCTION]: ContentData[] | null;
-        [ContentSection.RESULTS]: ContentData[] | null;
-        Credits: ContentData[] | null;
+        [ContentSection.CONCEPTUALIZATION]: ContentData | null;
+        [ContentSection.DEVELOPMENT]: ContentData | null;
+        [ContentSection.PRODUCTION]: ContentData | null;
+        [ContentSection.RESULTS]: ContentData | null;
+        Credits: ContentData | null;
     };
 };
