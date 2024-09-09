@@ -1,0 +1,96 @@
+.menuContainer {
+    width: 100vw;
+    overflow: hidden;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+
+    @media (min-width: 700px) {
+        position: absolute;
+        bottom: 12rem;
+    }
+}
+
+.menuItem {
+    position: relative;
+    margin: 2rem 1.5rem;
+    cursor: pointer;
+}
+
+.menuItem > a {
+    display: block;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: white;
+    font-size: 1.5rem;
+    position: relative;
+}
+
+.menuItem > a::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 0;
+    width: 80%;
+    height: 1px;
+    background-color: white;
+    transition: width 0.3s ease-in-out;
+    opacity: 0;
+}
+
+.menuItem:hover > a::before {
+    opacity: 1;
+    width: 100%;
+}
+
+.subMenu {
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    min-width: 200px;
+    list-style-type: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out;
+    opacity: 0.5;
+    z-index: 50;
+}
+
+.menuItem:hover .subMenu {
+    opacity: 1;
+    visibility: visible;
+}
+
+.subMenuItem {
+    width: 50vw;
+    padding: 0.5rem 0;
+}
+
+.subMenuItem::before {
+    content: "▶ ";
+    margin-right: 2ch;
+    vertical-align: middle;
+    font-size: 0.5em;
+}
+
+.subMenuItem a {
+    text-transform: uppercase;
+    position: absolute;
+    text-decoration: none;
+    color: white;
+    display: inline;
+    transition: transform 0.2s ease-out;
+}
+
+.subMenuItem:hover a {
+    transform: translateX(15px);
+}
