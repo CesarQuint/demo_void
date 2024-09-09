@@ -42,7 +42,7 @@ const Introduction: React.FC<IntroductionProps> = ({ data }) =>
 
         <p>UBICACIÓN: {data.location}</p>
 
-        <div className={styles.introDescription}>
+        <div className={styles.summary}>
             <Paragraph
                 data={{
                     type: 'paragraph',
