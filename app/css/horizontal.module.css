@@ -84,7 +84,7 @@
     box-sizing: border-box;
     grid-auto-flow: column;
     width: fit-content;
-    padding-top: 170px;
+    padding-top: 3rem;
     margin-top: var(--tags-size);
 
     & section {
