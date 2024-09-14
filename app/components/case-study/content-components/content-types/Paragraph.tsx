@@ -1,6 +1,6 @@
 import React from "react";
 import InnerText, { InnerTextData } from "./Text";
-import styles from '../../../../css/case-study/content-components.module.css'
+import styles from './Paragraph.module.css';
 
 type ParagraphData = {
     type: 'paragraph',
