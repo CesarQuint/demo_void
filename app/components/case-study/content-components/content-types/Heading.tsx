@@ -1,6 +1,6 @@
 import React from "react";
 import InnerText, { InnerTextData } from "./Text";
-import styles from '../../../../css/case-study/content-components.module.css'
+import styles from './Heading.module.css';
 
 type HeadingData = {
     level: number;
@@ -14,15 +14,13 @@ const throwInvalidHeadingLevelException = (level: number) => {
     throw new Error(`Invalid heading level: ${level}`);
 }
 
-const validateHeadingLevel = (level: number): boolean =>
-    (level > 0 && level < 6) || throwInvalidHeadingLevelException(level);
+const validateHeadingLevel = (level: number): string =>
+    (level > 0 && level < 6) ? String(level) : throwInvalidHeadingLevelException(level);
 
-const HeadingElement = (data: HeadingData): React.ReactElement => React.createElement(
-    'h' + data.level,
+const Heading = ({ data }: HeadingProps): React.JSX.Element => React.createElement(
+    'h' + validateHeadingLevel(data.level),
     { className: styles.heading },
     <InnerText children={data.children} />
 );
-
-const Heading = ({ data }: HeadingProps) => validateHeadingLevel(data.level) && HeadingElement(data);
 
 export default Heading;

@@ -1,0 +1,11 @@
+.heading {
+    margin-bottom: 3rem;
+    text-transform: uppercase;
+}
+
+.heading * {
+    font-family: 'input-mono';
+    font-weight: 400;
+    font-size: 2rem;
+    line-height: 1.3;
+}
