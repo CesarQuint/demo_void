@@ -1,6 +1,4 @@
 import { Project } from "@/app/Strapi/interfaces/Entities/Project";
-import Heading from "../content-components/content-types/Heading";
-import Paragraph from "../content-components/content-types/Paragraph";
 import { ContentSectionTitles } from "./ContentMenu";
 import styles from './Introduction.module.css'
 
@@ -26,29 +24,14 @@ const dateWithMonthName = (date: Date): string => {
 const Introduction: React.FC<IntroductionProps> = ({ data }) =>
 (
     <section className={styles.intro}>
-        <Heading
-            data={{
-                level: 1,
-                type: 'heading',
-                children: [{
-                    type: "text",
-                    text: ContentSectionTitles.Introduction.title.toUpperCase()
-                }]
-            }} />
+        <h1 className={styles.title}>
+            {ContentSectionTitles.Introduction.title}
+        </h1>
 
-        <p className={styles.date}>
-            FECHA: {dateWithMonthName(new Date(data.eventDate))}
-        </p>
-
+        <p>FECHA: {dateWithMonthName(new Date(data.eventDate))}</p>
         <p>UBICACIÓN: {data.location}</p>
 
-        <div className={styles.summary}>
-            <Paragraph
-                data={{
-                    type: 'paragraph',
-                    children: [{ type: 'text', text: data.intro }]
-                }} />
-        </div>
+        <p className={styles.summary}>{data.intro}</p>
     </section>
 );
 
