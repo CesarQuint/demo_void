@@ -1,5 +1,5 @@
 import React from "react";
-import styles from '../../../../css/case-study/content-types.module.css';
+import styles from './Text.module.css';
 
 type StylingTypes = 'bold' | 'italic' | 'underline' | 'strikethrough' | 'code';
 
@@ -26,11 +26,12 @@ type InnerTextProps = { children: InnerTextData[] };
 
 const mapToTextStyleClasses = (text: TextData): string =>
     [
-        text.code && 'code',
-        text.bold && 'bold',
-        text.italic && 'italic',
-        text.underline && 'underline',
-        text.strikethrough && 'strikethrough',
+        styles.innertext,
+        text.code && styles.code,
+        text.bold && styles.bold,
+        text.italic && styles.italic,
+        text.underline && styles.underline,
+        text.strikethrough && styles.strikethrough,
     ].filter(Boolean).join(' ');
 
 const mapToTextOrLink = (data: InnerTextData) =>
