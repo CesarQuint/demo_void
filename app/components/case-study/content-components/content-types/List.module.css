@@ -1,0 +1,9 @@
+.list {
+    font-family: 'graphie';
+    margin: 20px 0;
+    padding-left: 40px;
+}
+
+.listItem {
+    margin-bottom: 10px;
+}
