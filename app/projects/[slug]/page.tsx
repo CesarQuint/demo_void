@@ -1,8 +1,9 @@
-import { getProjectDetails } from "../../Strapi/RestAPI/ProjectsProvider";
+import { getProjectDetails, getProjectsByCategory } from "../../Strapi/RestAPI/ProjectsProvider";
 import Horizontal from "../../horizontal/page";
 
 export default async function ProjectView({ params }: { params: { slug: string } }) {
-  const PROJECT = await getProjectDetails({ slug: params.slug });
+    const PROJECT = await getProjectDetails({ slug: params.slug });
+    const RELATED = await getProjectsByCategory({ slug: PROJECT.data[0].attributes.Category.data.attributes.slug });
 
-  return <Horizontal data={{ project: [PROJECT.data].flat() }} />
+    return <Horizontal data={{ project: PROJECT.data[0], related: RELATED.data }} />
 };

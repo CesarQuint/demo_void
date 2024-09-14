@@ -40,7 +40,7 @@ export async function getProjectsByCategory({ slug }: { slug: string }): Promise
   return sendFetchCommand<Project[]>(req);
 }
 
-export async function getProjectDetails({ slug }: { slug: string }): Promise<Response<Project>> {
+export async function getProjectDetails({ slug }: { slug: string }): Promise<Response<Project[]>> {
   const req = new StrapiRequest({
     path: '/api/projects',
     parameters: {
@@ -49,7 +49,7 @@ export async function getProjectDetails({ slug }: { slug: string }): Promise<Res
     }
   });
 
-  return sendFetchCommand<Project>(req);
+  return sendFetchCommand<Project[]>(req);
 }
 
 export async function getCategoriesData(): Promise<Response<Category[]>> {

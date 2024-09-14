@@ -130,7 +130,6 @@ export default function Horizontal(props: { data: { project: Project[] } }) {
   const scrollContainer = useRef<HTMLDivElement>(null);
   const tl = useRef<gsap.core.Timeline | null>(null);
 
-  const project = props.data.project[0];
 
   console.log(Object.keys(project.attributes));
 
@@ -223,6 +222,7 @@ export default function Horizontal(props: { data: { project: Project[] } }) {
                   <a className={s.none_hover} href="#desarrollo">
                     subcontext
                   </a>
+    const project = props.data.project;
                 </div>
               </section>
             </section>
