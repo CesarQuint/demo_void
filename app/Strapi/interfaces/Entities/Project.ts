@@ -2,9 +2,9 @@ import { Entity } from "./Entity";
 import { Category } from "./Category"
 import { ImageContent } from "./ImageFormat";
 
-import { ContentData } from "@/app/components/case-study/section-components/Content";
+import { ContentData } from "@/app/components/case-study/section-components/ContentSections";
 
-export enum ContentSection {
+export enum ContentSectionName {
     INTRODUCTION = 'Introduction',
     CONCEPTUALIZATION = 'Conceptualization',
     DEVELOPMENT = 'Development',
@@ -22,11 +22,11 @@ export interface Project extends Entity {
         Category: { data: Category };
         Location: string;
 
-        [ContentSection.INTRODUCTION]: string;
-        [ContentSection.CONCEPTUALIZATION]: ContentData | null;
-        [ContentSection.DEVELOPMENT]: ContentData | null;
-        [ContentSection.PRODUCTION]: ContentData | null;
-        [ContentSection.RESULTS]: ContentData | null;
+        [ContentSectionName.INTRODUCTION]: string;
+        [ContentSectionName.CONCEPTUALIZATION]: ContentData | null;
+        [ContentSectionName.DEVELOPMENT]: ContentData | null;
+        [ContentSectionName.PRODUCTION]: ContentData | null;
+        [ContentSectionName.RESULTS]: ContentData | null;
         Credits: ContentData | null;
     };
 };
