@@ -5,6 +5,7 @@ import { HeadingProps } from '../content-components/content-types/Heading';
 import { InnerTextData } from '../content-components/content-types/Text';
 import { ContentData, ContentSectionData } from './ContentSections';
 import styles from './ContentMenu.module.css';
+import { ParagraphProps } from '../content-components/content-types/Paragraph';
 
 type SubIndexData = {
     index: number;
@@ -47,6 +48,26 @@ export const ContentSectionTitles: ContentSectionItems = {
         title: 'galería',
     },
 }
+
+const paragraphIsNotEmpty = (paragraph: ParagraphProps['data']): boolean =>
+    paragraph.children.reduce((prev, curr) =>
+        prev || (curr.type === 'text' ? !!curr.text.length : true),
+        false
+    );
+
+const contentArrayIsNotEmpty = (content: ContentData): boolean =>
+    content.reduce((prev, curr) =>
+        prev || (curr.type === 'paragraph' ? paragraphIsNotEmpty(curr) : true),
+        false
+    );
+
+const contentStringIsNotEmpty = (content: string | null): boolean =>
+    typeof content === 'string' && !!content.length;
+
+export const sectionHasContent = (project: Project) => (section: ContentSectionName): boolean =>
+    Array.isArray(project.attributes[section])
+        ? contentArrayIsNotEmpty(project.attributes[section] as ContentData)
+        : contentStringIsNotEmpty(project.attributes[section] as string | null);
 
 const mapToSubIndexData = (section: ContentSectionData): SubIndexData[] => {
     const isSubindexEmpty = typeof section === 'string' || section === null;
@@ -105,6 +126,7 @@ const mapProjectDataToMenuItems = (project: Project): MenuItemData[] =>
     Object
         .keys(project.attributes)
         .filter(isInContentSection)
+        .filter(sectionHasContent(project))
         .map(mapToMenuItemData(project))
         .sort((a, b) => a.index - b.index);
 
