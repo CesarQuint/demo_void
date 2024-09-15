@@ -15,7 +15,7 @@ const throwInvalidHeadingLevelException = (level: number) => {
 }
 
 const validateHeadingLevel = (level: number): string =>
-    (level > 0 && level < 6) ? String(level) : throwInvalidHeadingLevelException(level);
+    (level > 0 && level < 7) ? String(level) : throwInvalidHeadingLevelException(level);
 
 const Heading = ({ data }: HeadingProps): React.JSX.Element => React.createElement(
     'h' + validateHeadingLevel(data.level),
