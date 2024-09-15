@@ -1,6 +1,7 @@
-.menuContainer {
-    width: 100vw;
-    overflow: hidden;
+.container {
+    display: flex;
+    align-items: center;
+    padding: 0 5vw !important;
 }
 
 .menu {
@@ -10,17 +11,12 @@
     list-style-type: none;
     margin: 0;
     padding: 0;
-    width: 100vw;
-
-    @media (min-width: 700px) {
-        position: absolute;
-        bottom: 12rem;
-    }
+    width: 100%;
 }
 
 .menuItem {
     position: relative;
-    margin: 2rem 1.5rem;
+    padding: 2rem 1.5rem;
     cursor: pointer;
 }
 

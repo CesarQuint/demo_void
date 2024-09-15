@@ -141,7 +141,7 @@ const ContentMenu: React.FC<MenuProps> = ({ data }) => {
     items.push(ContentSectionTitles.gallery);
 
     return (
-        <div className={styles.menuContainer}>
+        <section className={styles.container}>
             <ul className={styles.menu}>
                 {items.map((item, index) => (
                     <MenuItem
@@ -152,7 +152,7 @@ const ContentMenu: React.FC<MenuProps> = ({ data }) => {
                         setActiveIndex={setActiveIndex} />
                 ))}
             </ul>
-        </div>
+        </section>
     );
 };
 
