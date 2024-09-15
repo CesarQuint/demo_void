@@ -73,7 +73,7 @@ const mapToSubIndexData = (section: ContentSectionData): SubIndexData[] => {
     const isSubindexEmpty = typeof section === 'string' || section === null;
     if (isSubindexEmpty) return [];
 
-    const reducer = (
+    const reduceHeadingProps = (
         prev: HeadingProps['data'][],
         curr: HeadingProps['data']
     ): HeadingProps['data'][] => {
@@ -81,19 +81,19 @@ const mapToSubIndexData = (section: ContentSectionData): SubIndexData[] => {
             return [curr];
         } else if (curr.level === prev[0].level) {
             return [...prev, curr];
+        } else {
+            return prev;
         }
-
-        return prev;
     };
 
-    const childrenToStringReducer = (
+    const reduceChildrenToString = (
         prev: string,
         curr: InnerTextData,
     ) => prev + mapInnerTextToString(curr);
 
     const mapInnerTextToString = (innerText: InnerTextData): string =>
         innerText.type === 'link'
-            ? innerText.children.reduce(childrenToStringReducer, '')
+            ? innerText.children.reduce(reduceChildrenToString, '')
             : innerText.text;
 
     const mapToSubindex = (
@@ -101,13 +101,15 @@ const mapToSubIndexData = (section: ContentSectionData): SubIndexData[] => {
         idx: number
     ): SubIndexData => ({
         index: idx,
-        title: heading.children.reduce(childrenToStringReducer, ''),
+        title: heading.children.reduce(reduceChildrenToString, ''),
     });
 
-    const headings = section.filter((content: ContentData[0]): content is HeadingProps['data'] => content.type === 'heading');
-    const topHeadings = headings.reduce(reducer, []).map(mapToSubindex);
+    const HEADINGS = section
+        .filter((content: ContentData[0]): content is HeadingProps['data'] =>
+            content.type === 'heading')
+        .reduce(reduceHeadingProps, []).map(mapToSubindex);
 
-    return topHeadings;
+    return HEADINGS;
 };
 
 const isInContentSection = (key: string): key is ContentSectionName =>
