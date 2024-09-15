@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { FiChevronRight } from 'react-icons/fi';
-import { Project, ContentSection } from '@/app/Strapi/interfaces/Entities/Project';
+import { Project, ContentSectionName } from '@/app/Strapi/interfaces/Entities/Project';
 import { HeadingProps } from '../content-components/content-types/Heading';
 import { InnerTextData } from '../content-components/content-types/Text';
-import { ContentSectionData } from './Content';
+import { ContentData, ContentSectionData } from './ContentSections';
 import styles from './ContentMenu.module.css';
 
 type SubIndexData = {
@@ -19,26 +19,26 @@ type MenuItemData = {
 
 type MenuProps = { data: Project };
 
-type ContentSectionItems = Record<ContentSection | 'gallery', MenuItemData>;
+type ContentSectionItems = Record<ContentSectionName | 'gallery', MenuItemData>;
 
 export const ContentSectionTitles: ContentSectionItems = {
-    [ContentSection.INTRODUCTION]: {
+    [ContentSectionName.INTRODUCTION]: {
         index: 0,
         title: 'introducción',
     },
-    [ContentSection.CONCEPTUALIZATION]: {
+    [ContentSectionName.CONCEPTUALIZATION]: {
         index: 1,
         title: 'conceptualización',
     },
-    [ContentSection.DEVELOPMENT]: {
+    [ContentSectionName.DEVELOPMENT]: {
         index: 2,
         title: 'desarrollo',
     },
-    [ContentSection.PRODUCTION]: {
+    [ContentSectionName.PRODUCTION]: {
         index: 3,
         title: 'producción',
     },
-    [ContentSection.RESULTS]: {
+    [ContentSectionName.RESULTS]: {
         index: 4,
         title: 'resultados',
     },
@@ -83,22 +83,22 @@ const mapToSubIndexData = (section: ContentSectionData): SubIndexData[] => {
         title: heading.children.reduce(childrenToStringReducer, ''),
     });
 
-    const headings = section.filter((content): content is HeadingProps['data'] => content.type === 'heading');
+    const headings = section.filter((content: ContentData[0]): content is HeadingProps['data'] => content.type === 'heading');
     const topHeadings = headings.reduce(reducer, []).map(mapToSubindex);
 
     return topHeadings;
 };
 
-const isInContentSection = (key: string): key is ContentSection =>
-    Object.values(ContentSection).includes(key as ContentSection);
+const isInContentSection = (key: string): key is ContentSectionName =>
+    Object.values(ContentSectionName).includes(key as ContentSectionName);
 
-const mapToProjectSection = (section: ContentSection, data: ContentSectionData): MenuItemData => ({
+const mapToProjectSection = (section: ContentSectionName, data: ContentSectionData): MenuItemData => ({
     index: ContentSectionTitles[section].index,
     title: ContentSectionTitles[section].title,
     subIndexes: mapToSubIndexData(data)
 });
 
-const mapToMenuItemData = (project: Project) => (section: ContentSection): MenuItemData =>
+const mapToMenuItemData = (project: Project) => (section: ContentSectionName): MenuItemData =>
     mapToProjectSection(section, project.attributes[section]);
 
 const mapProjectDataToMenuItems = (project: Project): MenuItemData[] =>
