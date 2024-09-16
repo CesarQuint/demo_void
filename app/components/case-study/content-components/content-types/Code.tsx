@@ -1,4 +1,4 @@
-import styles from '../../../../css/case-study/content-components.module.css'
+import styles from './Code.module.css';
 
 type CodeText = {
     type: 'text';
@@ -14,10 +14,15 @@ export type CodeProps = { data: CodeData };
 
 const Code = ({ data }: CodeProps): React.JSX.Element =>
 (
-    <div className={styles.code_block}>
-        <pre>
+    <div className={styles.codeblock}>
+        <pre className={styles.codeblockPre}>
             {data.children.map((content, idx) => (
-                <code key={idx}>{content.text}</code>
+                <code
+                    key={idx}
+                    className={styles.codeblockCode}
+                >
+                    {content.text}
+                </code>
             ))}
         </pre>
     </div>
