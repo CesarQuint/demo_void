@@ -15,7 +15,7 @@ type ImageData = {
 
 export type ImageProps = { data: ImageData };
 
-const chooseFormat = (data: ImageData['image']) =>
+export const chooseFormat = (data: ImageData['image']) =>
     data.formats.large ??
     data.formats.medium ??
     data.formats.small ??
