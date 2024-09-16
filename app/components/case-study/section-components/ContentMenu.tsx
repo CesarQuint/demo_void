@@ -112,7 +112,7 @@ const mapToSubIndexData = (section: ContentSectionData): SubIndexData[] => {
     return HEADINGS;
 };
 
-const isInContentSection = (key: string): key is ContentSectionName =>
+export const isInContentSection = (key: string): key is ContentSectionName =>
     Object.values(ContentSectionName).includes(key as ContentSectionName);
 
 const mapToProjectSection = (section: ContentSectionName, data: ContentSectionData): MenuItemData => ({
