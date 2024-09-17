@@ -71,6 +71,25 @@
     padding: 0.5rem 0;
 }
 
+.subMenuItem::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 1.8rem;
+    left: 0;
+    background-color: white;
+    transform-origin: bottom right;
+    transition: transform 0.3s ease;
+    z-index: -1;
+    color: white;
+}
+
+.subMenuItem:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+
 .subMenuItem::before {
     content: "▶ ";
     margin-right: 2ch;
@@ -89,4 +108,5 @@
 
 .subMenuItem:hover a {
     transform: translateX(15px);
+    color: black;
 }
