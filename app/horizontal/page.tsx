@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import s from "../css/horizontal.module.css";
@@ -18,6 +18,7 @@ import CaseStudyVideo from "../components/case-study/section-components/Introduc
 gsap.registerPlugin(useGSAP, ScrollTrigger, Draggable);
 
 export default function Horizontal(props: { data: { project: Project, related: Project[] } }) {
+    const [isMobile, setIsMobile] = useState(false);
     const container = useRef<HTMLElement>(null);
     const scrollContainer = useRef<HTMLDivElement>(null);
     const tl = useRef<gsap.core.Timeline | null>(null);
@@ -39,9 +40,22 @@ export default function Horizontal(props: { data: { project: Project, related: P
         },
     ].filter((section) => sectionHasContent(project)(section.name));
 
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth <= 768);
+        };
+
+        handleResize();
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
     useGSAP(() => {
-        // returns for screen width less than 768px
-        if (window.matchMedia("(max-width: 768px)").matches) return;
+        if (isMobile) return;
 
         tl.current = gsap
             .timeline({
@@ -52,7 +66,6 @@ export default function Horizontal(props: { data: { project: Project, related: P
                     trigger: container.current,
                     pin: true,
                     scrub: 0.01,
-                    // markers: true,
                     fastScrollEnd: true,
                     preventOverlaps: true,
                     end: `${scrollContainer.current!.scrollWidth} bottom`,
@@ -66,7 +79,11 @@ export default function Horizontal(props: { data: { project: Project, related: P
                 },
                 0
             );
-    }, { scope: container, dependencies: [] });
+
+        return () => {
+            if (tl.current) tl.current.kill();
+        };
+    }, { scope: container, dependencies: [isMobile] });
 
     return (
         <CaseStudyWrapper>
@@ -78,8 +95,8 @@ export default function Horizontal(props: { data: { project: Project, related: P
                             title: project.attributes.Title,
                             subtitle: project.attributes.Subtitle,
                             category: project.attributes.Category,
-                        }} />
-
+                        }}
+                    />
                     <div className={s.wrapper}>
                         <ContentMenu data={project} />
                         <Introduction
