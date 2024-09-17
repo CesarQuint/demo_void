@@ -31,7 +31,7 @@ export async function getProjectsByCategory({ slug }: { slug: string }): Promise
     path: '/api/projects',
     parameters: {
       sort: { property: 'EventDate', order: 'desc' },
-      fields: ['Title', 'EventDate', 'Subtitle'],
+      fields: ['Title', 'EventDate', 'Subtitle', 'slug'],
       filters: [{ key: ['Category', 'slug'], value: slug, operator: '$eqi' }],
       populate: ['Cover', 'Category'],
     }
