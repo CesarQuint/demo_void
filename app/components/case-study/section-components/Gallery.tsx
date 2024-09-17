@@ -62,7 +62,7 @@ const GalleryCarousel: React.FC<GalleryProps> = ({ data }) => {
         }
     };
 
-    return (
+    return (!!IMAGES.length &&
         <section id="gallery">
             <div className={styles.container}>
                 <motion.div
