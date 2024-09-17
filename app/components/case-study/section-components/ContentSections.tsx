@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Project } from "@/app/Strapi/interfaces/Entities/Project";
 import { ContentSectionName } from "@/app/Strapi/interfaces/Entities/Project";
 import Code, { CodeProps } from "../content-components/content-types/Code";
@@ -53,23 +53,7 @@ const ContentSwitch = (content: ContentData[0], idx: number): React.JSX.Element 
 const ContentSection: React.FC<{ data: ContentData }> = ({ data }) =>
     data.map((content, idx) => ContentSwitch(content, idx));
 
-const SectionMobile: React.FC<SectionProps> = ({ data: content }) => (
-    <section
-        id={content.name}
-        className={styles.contentSection}
-    >
-        <h1 className={styles.title}>
-            {ContentSectionTitles[content.name].title}
-        </h1>
-        <div className={styles.innerContent}>
-            {content.data && (
-                <ContentSection data={content.data} />
-            )}
-        </div>
-    </section>
-);
-
-const SectionDesktop: React.FC<SectionProps> = ({ data: content }) => {
+const Section: React.FC<SectionProps> = ({ data: content }) => {
     const [activeSection, setActiveSection] = useState(0);
     const contentChunks: ContentData[] = chunkArrayEveryHeading(content.data ?? []);
     const headings: SubIndexData[] = contentChunks
@@ -114,20 +98,10 @@ const SectionDesktop: React.FC<SectionProps> = ({ data: content }) => {
     )
 };
 
-const renderMobileSection = (data: ContentSectionsProps['data']) =>
-    data
-        .filter((content) => Boolean(content.data))
-        .map((content) => SectionMobile({ data: content }));
-
-const renderDesktopSection = (data: ContentSectionsProps['data']) =>
-    data
-        .filter((content) => Boolean(content.data))
-        .map((content) => SectionDesktop({ data: content }));
-
 const ContentSections: React.FC<ContentSectionsProps> = ({ data }) =>
-    window.matchMedia("(max-width: 768px)").matches
-        ? renderMobileSection(data)
-        : renderDesktopSection(data);
+    data
+        .filter((content) => Boolean(content.data))
+        .map((content) => Section({ data: content }));
 
 const chunkArrayEveryHeading = (content: ContentData): ContentData[] =>
     content.reduce((acc: ContentData[], curr: ContentData[0]) => (
