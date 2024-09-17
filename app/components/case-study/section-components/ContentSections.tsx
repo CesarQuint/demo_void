@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Project } from "@/app/Strapi/interfaces/Entities/Project";
 import { ContentSectionName } from "@/app/Strapi/interfaces/Entities/Project";
 import Code, { CodeProps } from "../content-components/content-types/Code";
@@ -6,7 +7,7 @@ import Image, { ImageProps } from "../content-components/content-types/Image";
 import Heading, { HeadingProps } from "../content-components/content-types/Heading";
 import List, { ListProps } from "../content-components/content-types/List";
 import Quote, { QuoteProps } from "../content-components/content-types/Quote";
-import { ContentSectionTitles } from "./ContentMenu";
+import { ContentSectionTitles, mapToSubIndexData, SubIndexData } from "./ContentMenu";
 import styles from './ContentSections.module.css';
 
 export type ContentData =
@@ -27,6 +28,8 @@ export type ContentSectionsProps = {
         name: ContentSectionName;
     }[]
 };
+
+type SectionProps = { data: ContentSectionsProps['data'][0] };
 
 const ContentSwitch = (content: ContentData[0]): React.JSX.Element => {
     switch (content.type) {
@@ -50,27 +53,87 @@ const ContentSwitch = (content: ContentData[0]): React.JSX.Element => {
 const ContentSection: React.FC<{ data: ContentData }> = ({ data }) =>
     data.map((content) => ContentSwitch(content));
 
-const Section: React.FC<{ data: ContentSectionsProps['data'][0] }> =
-    ({ data: content }) => (
+const SectionMobile: React.FC<SectionProps> = ({ data: content }) => (
+    <section
+        id={content.name}
+        className={styles.contentSection}
+    >
+        <h1 className={styles.title}>
+            {ContentSectionTitles[content.name].title}
+        </h1>
+        <div className={styles.innerContent}>
+            {content.data && (
+                <ContentSection data={content.data} />
+            )}
+        </div>
+    </section>
+);
+
+const SectionDesktop: React.FC<SectionProps> = ({ data: content }) => {
+    const [activeSection, setActiveSection] = useState(0);
+    const contentChunks: ContentData[] = chunkArrayEveryHeading(content.data ?? []);
+    const headings: SubIndexData[] = contentChunks
+        .map((chunk): ContentData[0] => chunk[0])
+        .map((content) => mapToSubIndexData([content]))
+        .map(([subindex], idx) => ({ index: idx, title: subindex?.title ?? 'introducción' }))
+
+    return (
         <section
             id={content.name}
             className={styles.contentSection}
         >
-            <div className={styles.innerContent}>
-                <h1 className={styles.title}>
-                    {ContentSectionTitles[content.name].title}
-                </h1>
+            <h1 className={styles.title}>
+                {ContentSectionTitles[content.name].title}
+            </h1>
 
-                {content.data && (
-                    <ContentSection data={content.data} />
-                )}
-            </div>
+            {!!headings.length && (
+                <div className={styles.innerContent}>
+                    <div className={styles.sideMenu}>
+                        <ul className={styles.menuList}>
+                            {headings.map((heading) => (
+                                <li
+                                    className={styles.sideMenuItem}
+                                    onClick={() => setActiveSection(heading.index)}
+                                >
+                                    <span>{heading.title}</span>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+
+                    <div className={styles.content}>
+                        {content.data && (
+                            <ContentSection data={contentChunks[activeSection]} />
+                        )}
+                    </div>
+                </div>
+            )}
+
         </section>
-    );
+    )
+};
 
-const ContentSections: React.FC<ContentSectionsProps> = ({ data }) =>
+const renderMobileSection = (data: ContentSectionsProps['data']) =>
     data
         .filter((content) => Boolean(content.data))
-        .map((content) => Section({ data: content }));
+        .map((content) => SectionMobile({ data: content }));
+
+const renderDesktopSection = (data: ContentSectionsProps['data']) =>
+    data
+        .filter((content) => Boolean(content.data))
+        .map((content) => SectionDesktop({ data: content }));
+
+const ContentSections: React.FC<ContentSectionsProps> = ({ data }) =>
+    window.matchMedia("(max-width: 768px)").matches
+        ? renderMobileSection(data)
+        : renderDesktopSection(data);
+
+const chunkArrayEveryHeading = (content: ContentData): ContentData[] =>
+    content.reduce((acc: ContentData[], curr: ContentData[0]) => (
+        curr.type === 'heading'
+            ? acc.push([curr])
+            : acc[acc.length - 1].push(curr),
+        acc
+    ), [[]]);
 
 export default ContentSections;
