@@ -31,27 +31,27 @@ export type ContentSectionsProps = {
 
 type SectionProps = { data: ContentSectionsProps['data'][0] };
 
-const ContentSwitch = (content: ContentData[0]): React.JSX.Element => {
+const ContentSwitch = (content: ContentData[0], idx: number): React.JSX.Element => {
     switch (content.type) {
         case "code":
-            return Code({ data: content });
+            return <Code data={content} key={idx} />;
         case "paragraph":
-            return Paragraph({ data: content });
+            return <Paragraph data={content} key={idx} />;
         case "heading":
-            return Heading({ data: content });
+            return <Heading data={content} key={idx} />;
         case "list":
-            return List({ data: content });
+            return <List data={content} key={idx} />;
         case "quote":
-            return Quote({ data: content });
+            return <Quote data={content} key={idx} />;
         case "image":
-            return Image({ data: content });
+            return <Image data={content} key={idx} />;
         default:
             throw new TypeError("Unexpected content type");
     }
 };
 
 const ContentSection: React.FC<{ data: ContentData }> = ({ data }) =>
-    data.map((content) => ContentSwitch(content));
+    data.map((content, idx) => ContentSwitch(content, idx));
 
 const SectionMobile: React.FC<SectionProps> = ({ data: content }) => (
     <section
@@ -90,8 +90,9 @@ const SectionDesktop: React.FC<SectionProps> = ({ data: content }) => {
                 <div className={styles.innerContent}>
                     <div className={styles.sideMenu}>
                         <ul className={styles.menuList}>
-                            {headings.map((heading) => (
+                            {headings.map((heading, idx) => (
                                 <li
+                                    key={idx}
                                     className={styles.sideMenuItem}
                                     onClick={() => setActiveSection(heading.index)}
                                 >
