@@ -3,7 +3,7 @@ import { Category } from "../interfaces/Entities/Category";
 import { Project } from "../interfaces/Entities/Project";
 import { Response } from "../interfaces/Responses/Response";
 
-const REVALIDATE = process.env.NODE_ENV === 'development' ? 0 : /* 24 hours in seconds */ 24 * 60 * 60;
+const REVALIDATE = process.env.CACHE_STRAPI_REQS !== 'true' ? 0 : /* 24 hours in seconds */ 24 * 60 * 60;
 
 const fetchDefaultOptions = (): RequestInit => ({
   method: 'GET',
