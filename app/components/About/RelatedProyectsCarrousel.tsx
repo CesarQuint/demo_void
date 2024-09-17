@@ -31,7 +31,7 @@ const RelatedProyectsCarrousel = (props: Props) => {
     return (!!props.data.length &&
         <section>
             <h2 className={styles.heading}>
-                Projectos Relacionados
+                Proyectos Relacionados
             </h2>
             <div className={styles.section}>
                 <div className={styles.container}>
