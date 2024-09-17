@@ -8,6 +8,14 @@
     justify-content: center;
 }
 
+.heading {
+    text-transform: uppercase;
+    text-align: center;
+    font-family: 'panchang';
+    font-size: 2rem;
+    padding-bottom: 2rem;
+}
+
 .container {
     width: 50vw;
     position: relative;

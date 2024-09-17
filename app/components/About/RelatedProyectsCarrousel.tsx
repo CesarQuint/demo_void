@@ -29,37 +29,42 @@ const RelatedProyectsCarrousel = (props: Props) => {
     };
 
     return (!!props.data.length &&
-        <section className={styles.section}>
-            <div className={styles.container}>
-                <motion.div
-                    drag="x"
-                    dragConstraints={{
-                        left: 0,
-                        right: 0,
-                    }}
-                    style={{
-                        x: dragX
-                    }}
-                    animate={{
-                        translateX: `-${selectedStep * 100}%`,
-                    }}
-                    transition={TRANSITION_CONFIG}
-                    onDragEnd={onDragEnd}
-                    className={styles.carousel}
-                >
-                    <ProjectThumbnails
-                        projects={props.data}
-                        activeIndex={selectedStep}
-                        setActiveIndex={setSelectedStep}
-                        setNavigationEvent={(href: string) => setNavigationEvent({ state: true, href })}
-                    />
-                </motion.div>
+        <section>
+            <h2 className={styles.heading}>
+                Projectos Relacionados
+            </h2>
+            <div className={styles.section}>
+                <div className={styles.container}>
+                    <motion.div
+                        drag="x"
+                        dragConstraints={{
+                            left: 0,
+                            right: 0,
+                        }}
+                        style={{
+                            x: dragX
+                        }}
+                        animate={{
+                            translateX: `-${selectedStep * 100}%`,
+                        }}
+                        transition={TRANSITION_CONFIG}
+                        onDragEnd={onDragEnd}
+                        className={styles.carousel}
+                    >
+                        <ProjectThumbnails
+                            projects={props.data}
+                            activeIndex={selectedStep}
+                            setActiveIndex={setSelectedStep}
+                            setNavigationEvent={(href: string) => setNavigationEvent({ state: true, href })}
+                        />
+                    </motion.div>
 
-                <StepButtons
-                    index={selectedStep}
-                    length={props.data.length}
-                    setIndex={setSelectedStep}
-                />
+                    <StepButtons
+                        index={selectedStep}
+                        length={props.data.length}
+                        setIndex={setSelectedStep}
+                    />
+                </div>
             </div>
         </section>
     );
