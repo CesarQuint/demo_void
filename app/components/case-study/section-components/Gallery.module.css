@@ -9,8 +9,8 @@
     cursor: grab;
 }
 
-.carousel::active {
-    cursor: grabing;
+.carousel:active {
+    cursor: grabbing;
 }
 
 .image {
