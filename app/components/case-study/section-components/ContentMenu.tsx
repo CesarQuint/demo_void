@@ -7,7 +7,7 @@ import { ContentData, ContentSectionData } from './ContentSections';
 import styles from './ContentMenu.module.css';
 import { ParagraphProps } from '../content-components/content-types/Paragraph';
 
-type SubIndexData = {
+export type SubIndexData = {
     index: number;
     title: string;
 };
@@ -69,7 +69,7 @@ export const sectionHasContent = (project: Project) => (section: ContentSectionN
         ? contentArrayIsNotEmpty(project.attributes[section] as ContentData)
         : contentStringIsNotEmpty(project.attributes[section] as string | null);
 
-const mapToSubIndexData = (section: ContentSectionData): SubIndexData[] => {
+export const mapToSubIndexData = (section: ContentSectionData): SubIndexData[] => {
     const isSubindexEmpty = typeof section === 'string' || section === null;
     if (isSubindexEmpty) return [];
 
@@ -151,7 +151,7 @@ const MenuItem: React.FC<{
             >
                 {item.subIndexes.map((subItem, subIndex) => (
                     <li key={subIndex} className={styles.subMenuItem}>
-                        <a href='#'>{subItem.title}</a>
+                        <a href={'#'}>{subItem.title}</a>
                     </li>
                 ))}
             </ul>
