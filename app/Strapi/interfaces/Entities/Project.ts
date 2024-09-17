@@ -19,6 +19,7 @@ export interface Project extends Entity {
         EventDate: string;
         Subtitle: string;
         Cover: { data: { id: number, attributes: ImageContent } };
+        Case_Study_Video: { data: { id: number, attributes: Omit<ImageContent, 'formats'> & { formats: null } } }
         Category: { data: Category };
         Location: string;
 

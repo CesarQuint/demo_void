@@ -45,7 +45,7 @@ export async function getProjectDetails({ slug }: { slug: string }): Promise<Res
     path: '/api/projects',
     parameters: {
       filters: [{ key: 'slug', value: slug, operator: '$eqi' }],
-      populate: ['Cover', 'Category'],
+      populate: ['Cover', 'Category', 'Case_Study_Video'],
     }
   });
 
