@@ -28,7 +28,7 @@ const RelatedProyectsCarrousel = (props: Props) => {
         }
     };
 
-    return (
+    return (!!props.data.length &&
         <section className={styles.section}>
             <div className={styles.container}>
                 <motion.div
