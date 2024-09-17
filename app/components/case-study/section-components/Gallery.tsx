@@ -63,7 +63,7 @@ const GalleryCarousel: React.FC<GalleryProps> = ({ data }) => {
     };
 
     return (
-        <section>
+        <section id="gallery">
             <div className={styles.container}>
                 <motion.div
                     drag="x"
