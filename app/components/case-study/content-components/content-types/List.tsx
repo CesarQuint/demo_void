@@ -14,7 +14,7 @@ type ListItemData = {
     children: InnerTextData[];
 }
 
-type ListItemProps = { data: ListItemData };
+type ListItemProps = { data: ListItemData, key: number };
 
 export type ListProps = { data: ListData };
 
@@ -23,26 +23,26 @@ const mapToListFormat = (data: ListData): React.JSX.Element =>
         ? OrderedList({ children: data.children })
         : UnorderedList({ children: data.children });
 
-const mapToListChild = (data: ListData | ListItemData): React.JSX.Element =>
+const mapToListChild = (data: ListData | ListItemData, key: number): React.JSX.Element =>
     data.type === 'list'
         ? mapToListFormat(data)
-        : ListItem({ data });
+        : ListItem({ data, key });
 
 const OrderedList = ({ children }: { children: ListData['children'] }): React.JSX.Element =>
 (
     <ol className={styles.list} >
-        {children.map((data) => mapToListChild(data))}
+        {children.map((data, idx) => mapToListChild(data, idx))}
     </ol>
 );
 
 const UnorderedList = ({ children }: { children: ListData['children'] }): React.JSX.Element =>
 (
     <ul className={styles.list} >
-        {children.map((data) => mapToListChild(data))}
+        {children.map((data, idx) => mapToListChild(data, idx))}
     </ul>
 );
 
-const ListItem = ({ data }: ListItemProps): React.JSX.Element =>
+const ListItem = ({ data, key: number }: ListItemProps): React.JSX.Element =>
 (
     <li className={styles.listItem}>
         <InnerText data={data.children} />
