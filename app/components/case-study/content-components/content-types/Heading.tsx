@@ -20,7 +20,7 @@ const validateHeadingLevel = (level: number): string =>
 const Heading = ({ data }: HeadingProps): React.JSX.Element => React.createElement(
     'h' + validateHeadingLevel(data.level),
     { className: styles.heading },
-    <InnerText children={data.children} />
+    <InnerText data={data.children} />
 );
 
 export default Heading;

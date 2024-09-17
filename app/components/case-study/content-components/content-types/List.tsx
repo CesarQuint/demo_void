@@ -45,7 +45,7 @@ const UnorderedList = ({ children }: { children: ListData['children'] }): React.
 const ListItem = ({ data }: ListItemProps): React.JSX.Element =>
 (
     <li className={styles.listItem}>
-        <InnerText children={data.children} />
+        <InnerText data={data.children} />
     </li>
 );
 

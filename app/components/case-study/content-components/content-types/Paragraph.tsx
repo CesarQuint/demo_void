@@ -12,7 +12,7 @@ export type ParagraphProps = { data: ParagraphData };
 const Paragraph = ({ data }: ParagraphProps): React.JSX.Element =>
 (
     <p className={styles.paragraph}>
-        <InnerText children={data.children} />
+        <InnerText data={data.children} />
     </p>
 );
 

@@ -20,7 +20,7 @@ export type InnerTextData = TextData | LinkData;
 
 type TextProps = { data: TextData };
 type LinkProps = { data: LinkData };
-type InnerTextProps = { children: InnerTextData[] };
+type InnerTextProps = { data: InnerTextData[] };
 
 const mapToTextStyleClasses = (text: TextData): string =>
     [
@@ -51,7 +51,7 @@ const Text = ({ data }: TextProps): React.JSX.Element =>
     </span>
 );
 
-const InnerText = ({ children }: InnerTextProps): React.JSX.Element[] =>
-    children.map((i) => mapToTextOrLink(i));
+const InnerText = ({ data }: InnerTextProps): React.JSX.Element[] =>
+    data.map((i) => mapToTextOrLink(i));
 
 export default InnerText;

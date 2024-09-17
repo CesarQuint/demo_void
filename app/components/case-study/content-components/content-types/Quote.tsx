@@ -11,7 +11,7 @@ export type QuoteProps = { data: QuoteData };
 const Quote = ({ data }: QuoteProps): React.JSX.Element =>
 (
     <blockquote className={styles.quote}>
-        <InnerText children={data.children} />
+        <InnerText data={data.children} />
     </blockquote>
 );
 
