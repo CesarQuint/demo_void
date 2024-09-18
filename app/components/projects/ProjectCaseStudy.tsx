@@ -3,21 +3,21 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
-import s from "../css/horizontal.module.css";
+import s from "./ProjectCaseStudy.module.css";
 import { ScrollTrigger, Draggable } from "gsap/all";
-import RelatedProyectsCarrousel from "../components/About/RelatedProyectsCarrousel";
-import GalleryCarousel from "../components/case-study/section-components/Gallery";
-import { ContentSectionName, Project } from "../Strapi/interfaces/Entities/Project";
-import CaseStudyWrapper from "../components/Horizontal/CaseStudyWrapper";
-import Cover from "../components/case-study/section-components/Cover";
-import ContentSections, { ContentSectionsProps } from "../components/case-study/section-components/ContentSections";
-import ContentMenu, { sectionHasContent } from "../components/case-study/section-components/ContentMenu";
-import Introduction from "../components/case-study/section-components/Introduction";
-import CaseStudyVideo from "../components/case-study/section-components/IntroductoryVideo";
+import RelatedProyectsCarrousel from "../../components/About/RelatedProyectsCarrousel";
+import GalleryCarousel from "../../components/case-study/section-components/Gallery";
+import { ContentSectionName, Project } from "../../Strapi/interfaces/Entities/Project";
+import CaseStudyWrapper from "../../components/Horizontal/CaseStudyWrapper";
+import Cover from "../../components/case-study/section-components/Cover";
+import ContentSections, { ContentSectionsProps } from "../../components/case-study/section-components/ContentSections";
+import ContentMenu, { sectionHasContent } from "../../components/case-study/section-components/ContentMenu";
+import Introduction from "../../components/case-study/section-components/Introduction";
+import CaseStudyVideo from "../../components/case-study/section-components/IntroductoryVideo";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger, Draggable);
 
-export default function Horizontal(props: { data: { project: Project, related: Project[] } }) {
+export default function ProjectCaseStudy(props: { data: { project: Project, related: Project[] } }) {
     const [isMobile, setIsMobile] = useState(false);
     const container = useRef<HTMLElement>(null);
     const scrollContainer = useRef<HTMLDivElement>(null);
