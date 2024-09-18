@@ -1,11 +1,10 @@
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment, useRef, useState } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
-import s from "@/app/css/About/tabs.module.css";
-import { TabData } from "@/app/constants/tabs_text";
-
-import useWindow from "@/app/utils/hooks/useWindow";
+import s from "../../css/About/tabs.module.css";
+import { TabData } from "../../constants/tabs_text";
+import useWindow from "../../utils/hooks/useWindow";
 import Image from "next/image";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
