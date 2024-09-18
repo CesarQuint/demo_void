@@ -107,7 +107,7 @@ const Tags = (props: Props) => {
 
       const tags = gsap.utils.toArray<HTMLDivElement>(`.${styles.tag}`);
       const heights = tags.map((el) => el.offsetHeight);
-      const space = 32;
+      const space = 20;
 
       gsap.set(container.current, {
         height: heights.reduce((s, h) => s + h + space, 0),
@@ -116,9 +116,10 @@ const Tags = (props: Props) => {
       gsap.set(tags, {
         top: (i, el) => heights[0] - el.offsetHeight + space * i,
         zIndex: (i) => tags.length - i,
+        borderColor: (i) => `rgba(128, 128, 128, ${1 - i * 0.3})`,
       });
 
-      gsap.set(tags.slice(1), { scale: (i) => 0.95 - i * 0.02 });
+      gsap.set(tags.slice(1), { scale: (i) => 0.95 - i * 0.04 });
 
       const positions = tags.map(() => ({ y: 0 }));
       const loaded = tags.map(() => false);
@@ -148,7 +149,12 @@ const Tags = (props: Props) => {
             },
           })
           .to(tags[i + 1], { scale: 1 }, 0)
-          .to(tags.slice(i + 1), { y: `+=${y}` }, 0);
+          .to(tags.slice(i + 1), { y: `+=${y}` }, 0)
+          .to(
+            tags[i + 1],
+            { borderColor: gsap.getProperty(tags[i], "borderColor") },
+            0
+          );
       }
 
       startScroll(0);
