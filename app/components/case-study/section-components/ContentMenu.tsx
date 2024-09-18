@@ -43,6 +43,10 @@ export const ContentSectionTitles: ContentSectionItems = {
         index: 4,
         title: 'resultados',
     },
+    [ContentSectionName.CREDITS]: {
+        index: 5,
+        title: 'agradecimientos',
+    },
     gallery: {
         index: 5,
         title: 'galería',

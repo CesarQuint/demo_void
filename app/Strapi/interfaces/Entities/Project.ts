@@ -10,6 +10,7 @@ export enum ContentSectionName {
     DEVELOPMENT = 'Development',
     PRODUCTION = 'Production',
     RESULTS = 'Results',
+    CREDITS = 'Credits',
 }
 
 export interface Project extends Entity {
@@ -28,6 +29,6 @@ export interface Project extends Entity {
         [ContentSectionName.DEVELOPMENT]: ContentData | null;
         [ContentSectionName.PRODUCTION]: ContentData | null;
         [ContentSectionName.RESULTS]: ContentData | null;
-        Credits: ContentData | null;
+        [ContentSectionName.CREDITS]: ContentData | null;
     };
 };
