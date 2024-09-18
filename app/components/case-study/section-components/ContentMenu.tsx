@@ -136,6 +136,8 @@ const mapProjectDataToMenuItems = (project: Project): MenuItemData[] =>
         .map(mapToMenuItemData(project))
         .sort((a, b) => a.index - b.index);
 
+const findNameFromIndex = (idx: number) => Object.entries(ContentSectionTitles).find(([key, item]) => item.index === idx)?.[0];
+
 const MenuItem: React.FC<{
     idx: number,
     item: MenuItemData,
@@ -148,7 +150,7 @@ const MenuItem: React.FC<{
         onMouseEnter={() => setActiveIndex(idx)}
         onMouseLeave={() => setActiveIndex(null)}
     >
-        <a href="#"><FiChevronRight style={{ marginRight: '0.5rem' }} />{item.title}</a>
+        <a href={'#' + findNameFromIndex(idx)}><FiChevronRight style={{ marginRight: '0.5rem' }} />{item.title}</a>
         {item.subIndexes && (
             <ul
                 className={`${styles.subMenu} ${activeIndex === idx ? styles.active : ''}`}
