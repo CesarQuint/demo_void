@@ -14,7 +14,6 @@ import s from "../ScrollImg/ScrollImg.module.css";
 
 import { Project } from "@/app/Strapi/interfaces/Entities/Project";
 import Link from "next/link";
-import { useNavigation } from "@/app/utils/navigationContext";
 
 const CHARS = "!#$%&*+,-:;<=>@^_abcdefghijklmnopqrstuvwxyz";
 
