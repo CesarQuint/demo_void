@@ -1,114 +1,142 @@
-import { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
+import { Transition, motion, useMotionValue } from "framer-motion";
 import styles from "../../css/About/relatedProyectsCarousel.module.css";
-import Image from "next/image";
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
-import { stand_out_projects } from "@/app/constants/stand_out_projects";
+import { Project } from "@/app/Strapi/interfaces/Entities/Project";
+import { useNavigation } from "@/app/utils/navigationContext";
 
-gsap.registerPlugin(useGSAP);
+const TRANSITION_CONFIG: Transition = {
+    type: "spring",
+    bounce: 0.2,
+};
 
-const images = [
-  "https://tympanus.net/Development/ConnectedGrid/img/14.jpg",
-  "https://tympanus.net/Development/ConnectedGrid/img/15.jpg",
-  "https://tympanus.net/Development/ConnectedGrid/img/16.jpg",
-];
-
-type Props = {};
+type Props = { data: Project[] };
 
 const RelatedProyectsCarrousel = (props: Props) => {
-  const [selectedStep, setSelectedStep] = useState(2);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const imageBandRef = useRef<HTMLDivElement>(null);
+    const [selectedStep, setSelectedStep] = useState(0);
+    const dragX = useMotionValue(0);
+    const { setNavigationEvent } = useNavigation();
 
-  const { contextSafe } = useGSAP({ scope: containerRef });
 
-  const clickHandler = contextSafe((number: number) => {
-    let movement = "";
-    let percentage = 0;
+    const DRAG_BUFFER = 50;
 
-    if (number !== selectedStep) {
-      movement = number > selectedStep ? "right" : "left";
+    const onDragEnd = () => {
+        const x = dragX.get();
+        if (x <= -DRAG_BUFFER && selectedStep < props.data.length - 1) {
+            setSelectedStep((pv) => pv + 1);
+        } else if (x >= DRAG_BUFFER && selectedStep > 0) {
+            setSelectedStep((pv) => pv - 1);
+        }
+    };
 
-      const maxNumber = Math.max(number, selectedStep);
-      const minNumber = Math.min(number, selectedStep);
+    return (!!props.data.length &&
+        <section>
+            <h2 className={styles.heading}>
+                Proyectos Relacionados
+            </h2>
+            <div className={styles.section}>
+                <div className={styles.container}>
+                    <motion.div
+                        drag="x"
+                        dragConstraints={{
+                            left: 0,
+                            right: 0,
+                        }}
+                        style={{
+                            x: dragX
+                        }}
+                        animate={{
+                            translateX: `-${selectedStep * 100}%`,
+                        }}
+                        transition={TRANSITION_CONFIG}
+                        onDragEnd={onDragEnd}
+                        className={styles.carousel}
+                    >
+                        <ProjectThumbnails
+                            projects={props.data}
+                            activeIndex={selectedStep}
+                            setActiveIndex={setSelectedStep}
+                            setNavigationEvent={(href: string) => setNavigationEvent({ state: true, href })}
+                        />
+                    </motion.div>
 
-      percentage = (maxNumber - minNumber) * 32;
-
-      setSelectedStep(number);
-    }
-
-    switch (movement) {
-      case "right":
-        gsap.to(imageBandRef.current, {
-          x: `-=${percentage}%`,
-          ease: "power1",
-        });
-        break;
-
-      case "left":
-        gsap.to(imageBandRef.current, {
-          x: `+=${percentage}%`,
-          ease: "power1",
-        });
-        break;
-
-      default:
-        console.log("nothing");
-        break;
-    }
-  });
-
-  return (
-    <motion.div ref={containerRef} className={styles.main}>
-      <motion.div className={styles.image_container}>
-        <motion.div ref={imageBandRef} className={styles.image_wrapper}>
-          {stand_out_projects.slice(0, 3).map((_, i) => (
-            <span
-              className={styles.single_image_container}
-              onClick={() => clickHandler(i + 1)}
-              key={i + 1}
-            >
-              {selectedStep == i + 1 && (
-                <div className={styles.text_information_of_project}>
-                  <p>{_.date}</p>
-                  <h3
-                    style={{
-                      fontFamily: "graphie",
-                      fontSize: "2rem",
-                      fontWeight: "100",
-                    }}
-                  >
-                    {_.title}
-                  </h3>
-                  <p style={{ textTransform: "uppercase" }}>{_.description}</p>
+                    <StepButtons
+                        index={selectedStep}
+                        length={props.data.length}
+                        setIndex={setSelectedStep}
+                    />
                 </div>
-              )}
-
-              <img
-                style={{ scale: `${selectedStep !== i + 1 ? "0.8" : "1"}` }}
-                className={styles.image}
-                alt=""
-                src={_.image}
-              />
-            </span>
-          ))}
-        </motion.div>
-      </motion.div>
-      <motion.div className={styles.steps_container}>
-        {new Array(images.length).fill("").map((_, i) => (
-          <motion.div
-            key={i + 1}
-            onClick={() => clickHandler(i + 1)}
-            style={{
-              backgroundColor: `${selectedStep == i + 1 ? "grey" : "#3b3b3b"}`,
-            }}
-            className={`${styles.step} image_${i + 1}`}
-          ></motion.div>
-        ))}
-      </motion.div>
-    </motion.div>
-  );
+            </div>
+        </section>
+    );
 };
+
+const ProjectThumbnails: React.FC<{
+    projects: Project[];
+    activeIndex: number;
+    setActiveIndex: Dispatch<SetStateAction<number>>;
+    setNavigationEvent: (href: string) => void;
+}> = ({
+    projects,
+    activeIndex,
+    setActiveIndex,
+    setNavigationEvent,
+}) => (<>
+    {projects.map((project, idx) => (
+        <motion.div
+            key={idx}
+            animate={{
+                scale: activeIndex === idx ? 0.95 : 0.85,
+            }}
+            transition={TRANSITION_CONFIG}
+            className={styles.cover}
+            onClick={() => setActiveIndex(idx)}
+            style={{
+                backgroundImage:
+                    `url(${process.env.NEXT_PUBLIC_STRAPI_BASE_URL}` +
+                    `${project.attributes.Cover.data.attributes.url})`,
+            }}
+        >
+            <div
+                className={styles.contents}
+                onClick={() => setNavigationEvent('/projects/' + project.attributes.slug)}
+            >
+                <p>{project.attributes.EventDate}</p>
+                <h3
+                    style={{
+                        fontFamily: "graphie",
+                        fontSize: "2rem",
+                        fontWeight: "100",
+                    }}
+                >
+                    {project.attributes.Title}
+                </h3>
+                <p style={{ textTransform: "uppercase" }}>{project.attributes.Subtitle}</p>
+            </div>
+        </motion.div>
+    ))}
+</>);
+
+const StepButtons: React.FC<{
+    index: number;
+    length: number;
+    setIndex: Dispatch<SetStateAction<number>>;
+}> = ({
+    index,
+    length,
+    setIndex,
+}) => (
+        <div className={styles.steps}>
+            {Array(length)
+                .fill(null)
+                .map((_, idx) => (
+                    <button
+                        key={idx}
+                        onClick={() => setIndex(idx)}
+                        className={styles.step + ' ' + (index === idx ? styles.activeStep : '')}
+                    />
+                ))
+            }
+        </div>
+    );
 
 export default RelatedProyectsCarrousel;

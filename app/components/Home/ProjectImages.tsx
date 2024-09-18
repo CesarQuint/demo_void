@@ -7,14 +7,13 @@ import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
 import Splitting from "splitting";
+import { useNavigation } from "@/app/utils/navigationContext";
 
 import styles from "../../css/projects.module.css";
 import s from "../ScrollImg/ScrollImg.module.css";
 
-import TypedLink from "../TypedLink/TypedLink";
 import { Project } from "@/app/Strapi/interfaces/Entities/Project";
 import Link from "next/link";
-import { useNavigation } from "@/app/utils/navigationContext";
 
 const CHARS = "!#$%&*+,-:;<=>@^_abcdefghijklmnopqrstuvwxyz";
 
@@ -69,9 +68,13 @@ export const ProjectElementContent = (props: {
 export const ProjectElementImage = (props: {
   loadHook?: () => void;
   data: { title: string; url: string; slug: string };
-}) => (
-  <Link href={`/projects/${props.data.slug}`}>
-    <div className={s.wrapper}>
+}) => {
+  const { setNavigationEvent } = useNavigation();
+  return (
+    <div
+      className={s.wrapper}
+      onClick={() => setNavigationEvent({ state: true, href: '/projects/' + props.data.slug })}
+    >
       <Image
         onLoad={() => props.loadHook && props.loadHook()}
         style={{ objectFit: "cover" }}
@@ -82,8 +85,8 @@ export const ProjectElementImage = (props: {
         alt={props.data.title}
       />
     </div>
-  </Link>
-);
+  );
+}
 
 export const ProjectElementCaption = (props: {
   data: { title: string; category: string; description: string };

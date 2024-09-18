@@ -109,8 +109,8 @@ export default function ProjectsSectionView(props: {
       activeIconIndex === -1
         ? getProjectsData()
         : getProjectsByCategory({
-            slug: props.data.categories[activeIconIndex].attributes.slug,
-          })
+          slug: props.data.categories[activeIconIndex].attributes.slug,
+        })
     ).then((res) => (setProjects(res.data), props.loadState()));
   }, [activeIconIndex]);
 
