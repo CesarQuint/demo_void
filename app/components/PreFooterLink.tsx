@@ -54,7 +54,12 @@ const PreFooterLink = (props: Props) => {
   });
 
   return (
-    <motion.section ref={containerRef} className={styles.wrapper}>
+    <motion.section
+      onMouseEnter={hoverHandler}
+      onMouseLeave={hoverOutHandler}
+      ref={containerRef}
+      className={styles.wrapper}
+    >
       <h2
         onClick={() => {
           goTo(props.href);
@@ -66,8 +71,6 @@ const PreFooterLink = (props: Props) => {
         onClick={() => {
           goTo(props.href);
         }}
-        onMouseEnter={hoverHandler}
-        onMouseLeave={hoverOutHandler}
         className={styles.arrow_container}
       >
         <div

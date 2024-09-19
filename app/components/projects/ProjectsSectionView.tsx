@@ -1,33 +1,121 @@
 "use client";
-import React, { useRef, useState } from "react";
-import { motion } from "framer-motion";
-import styles from "../../css/Projects/main.module.css";
-import s from "../ScrollImg/ScrollImg.module.css";
-import { useGSAP } from "@gsap/react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/all";
-import { stand_out_projects } from "@/app/constants/stand_out_projects";
 import Image from "next/image";
-import Splitting from "splitting";
 
-// prettier-ignore
-const CHARS = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '!', '@', '#', '$', '%', '^', '&', '*', '-', '_', '+', '=', ';', ':', '<', '>', ',']
+import Splitting from "splitting";
+import { motion } from "framer-motion";
+import React, { useEffect, useRef, useState } from "react";
+import { useNavigation } from "@/app/utils/navigationContext";
+
+import { gsap } from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/all";
+
+import s from "../ScrollImg/ScrollImg.module.css";
+import styles from "../../css/Projects/main.module.css";
+
+import TypedLink from "../TypedLink/TypedLink";
+import { Project } from "@/app/Strapi/interfaces/Entities/Project";
+import { Category } from "@/app/Strapi/interfaces/Entities/Category";
+import {
+  ProjectElementImage,
+  ProjectElementCaption,
+} from "../Home/ProjectImages";
+
+import {
+  getProjectsByCategory,
+  getProjectsData,
+} from "../../Strapi/RestAPI/ProjectsProvider";
+
+const CHARS = "!#$%&*+,-:;<=>@^_abcdefghijklmnopqrstuvwxyz";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
-type Props = {};
+const TAB_ICONS = {
+  ACTIVE:
+    "https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/icons/check_circle_filled.svg",
+  INACTIVE:
+    "https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/icons/check_circle.svg",
+};
 
-const Main = (props: Props) => {
+const CategoryStateIcon = ({ active }: { active: boolean }) => (
+  <Image
+    className={styles.icon}
+    width={1000}
+    height={1000}
+    alt="Icon"
+    src={active ? TAB_ICONS.ACTIVE : TAB_ICONS.INACTIVE}
+  />
+);
+
+const CategoryTab = ({
+  active,
+  data,
+}: {
+  active: boolean;
+  data: { category: Category };
+}) => (
+  <div className={styles.tab}>
+    <CategoryStateIcon active={active} />
+    {data.category.attributes.Name.toUpperCase()}
+  </div>
+);
+
+const CategoryTabs = ({
+  activeIndex,
+  setActive,
+  data,
+}: {
+  activeIndex: number;
+  setActive: (idx: number) => void;
+  data: { categories: Category[] };
+}) => (
+  <>
+    <TypedLink
+      href="/proyectos"
+      onClick={(e) => (e.preventDefault(), setActive(-1))}
+    >
+      <div className={[styles.all, styles.tab].join(" ")}>
+        <CategoryStateIcon active={activeIndex === -1} />
+        {"todo".toUpperCase()}
+      </div>
+    </TypedLink>
+
+    {data.categories.map((category, idx) => (
+      <TypedLink
+        key={idx}
+        href={"/proyectos/" + category.attributes.slug}
+        onClick={(e) => (e.preventDefault(), setActive(idx))}
+      >
+        <CategoryTab active={idx === activeIndex} data={{ category }} />
+      </TypedLink>
+    ))}
+  </>
+);
+
+export default function ProjectsSectionView(props: {
+  data: { categories: Category[] };
+  loadState: () => void;
+}) {
   const container = useRef<HTMLDivElement>(null);
   const scrollContainer = useRef<HTMLDivElement>(null);
   const imgContainer = useRef<HTMLElement[]>([]);
   const [imgLoaded, setImageLoaded] = useState(false);
+  const [activeIconIndex, setActiveIconIndex] = useState(-1);
+  const [projects, setProjects] = useState<Project[]>([]);
+  const { setNavigationEvent } = useNavigation();
+
+  useEffect(() => {
+    Promise.resolve(
+      activeIconIndex === -1
+        ? getProjectsData()
+        : getProjectsByCategory({
+          slug: props.data.categories[activeIconIndex].attributes.slug,
+        })
+    ).then((res) => (setProjects(res.data), props.loadState()));
+  }, [activeIconIndex]);
 
   useGSAP(
     () => {
-      const [title, line, ...boxes] = scrollContainer.current!
-        .children as any as HTMLElement[];
-
       const captions = gsap.utils.toArray<HTMLEmbedElement>(".word-animated");
 
       const splitting = Splitting({
@@ -162,59 +250,19 @@ const Main = (props: Props) => {
     }
   );
 
+  function goTo(href: string) {
+    setNavigationEvent({ state: true, href });
+  }
+
   return (
     <motion.div>
       <motion.section className={styles.nav_container}>
         <motion.nav className={styles.selector}>
-          <motion.div className={`${styles.all} ${styles.tab}`}>
-            <Image
-              className={`${styles.icon}`}
-              width={1000}
-              height={1000}
-              alt="Icon"
-              src={
-                "https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/icons/check_circle_filled.svg"
-              }
-            />
-            TODO
-          </motion.div>
-          <motion.div className={styles.tab}>
-            <Image
-              className={`${styles.icon}`}
-              width={1000}
-              height={1000}
-              alt="Icon"
-              src={
-                "https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/icons/check_circle.svg"
-              }
-            />
-            EN VIVO
-          </motion.div>
-          <motion.div className={styles.tab}>
-            {" "}
-            <Image
-              className={`${styles.icon}`}
-              width={1000}
-              height={1000}
-              alt="Icon"
-              src={
-                "https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/icons/check_circle.svg"
-              }
-            />
-            XR
-          </motion.div>
-          <motion.div className={styles.tab}>
-            <Image
-              className={`${styles.icon}`}
-              width={1000}
-              height={1000}
-              alt="Icon"
-              src={
-                "https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/icons/check_circle.svg"
-              }
-            />
-            EXPERIENCIA
-          </motion.div>
+          <CategoryTabs
+            activeIndex={activeIconIndex}
+            setActive={setActiveIconIndex}
+            data={{ categories: props.data.categories }}
+          />
         </motion.nav>
       </motion.section>
       <motion.div ref={container}>
@@ -224,8 +272,11 @@ const Main = (props: Props) => {
         </p>
         <motion.section className={`${styles.project_wrapper}`}>
           <div className={styles.scrollView} ref={scrollContainer}>
-            {stand_out_projects.map((_, i) => (
+            {projects.map((project, i) => (
               <div
+                onClick={(e) => {
+                  goTo(`/projects/${project.attributes.slug}`);
+                }}
                 className={styles.imgBox}
                 key={i}
                 style={{ "--column": i + 1 } as React.CSSProperties}
@@ -234,25 +285,26 @@ const Main = (props: Props) => {
                   ref={(el) => void (imgContainer.current[i] = el!)}
                   className={s.figure}
                 >
-                  <span className="word-animated">{_.date}</span>
-                  <div className={s.wrapper}>
-                    <Image
-                      onLoad={() => {
-                        setImageLoaded(true);
-                      }}
-                      style={{ objectFit: "cover" }}
-                      title={_.title}
-                      src={_.image}
-                      fill
-                      sizes="50%"
-                      alt="example"
-                    />
-                  </div>
-                  <figcaption className={s.caption}>
-                    <div className={s.tag}>{_.tag}</div>
-                    <div className={`word-animated ${s.title}`}>{_.title}</div>
-                    <div className="word-animated">{_.description}</div>
-                  </figcaption>
+                  <span className="word-animated">
+                    {project.attributes.EventDate}
+                  </span>
+                  <ProjectElementImage
+                    data={{
+                      title: project.attributes.Title,
+                      slug: project.attributes.slug,
+                      url: project.attributes.Cover.data.attributes.formats
+                        .large.url,
+                    }}
+                    loadHook={() => setImageLoaded(true)}
+                  />
+                  <ProjectElementCaption
+                    data={{
+                      title: project.attributes.Title,
+                      category:
+                        project.attributes.Category.data.attributes.Name,
+                      description: project.attributes.Subtitle,
+                    }}
+                  />
                 </figure>
               </div>
             ))}
@@ -261,6 +313,4 @@ const Main = (props: Props) => {
       </motion.div>
     </motion.div>
   );
-};
-
-export default Main;
+}

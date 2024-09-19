@@ -1,0 +1,29 @@
+.imageContainer {
+    margin: 4rem 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.imageFigure {
+    margin: auto;
+    padding: 0;
+    display: inline-block;
+    text-align: center;
+}
+
+.imageImg {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    display: block;
+    margin: 0 auto;
+}
+
+.imageCaption {
+    margin-top: 0.5em;
+    font-size: 0.9em;
+    color: #555;
+    font-style: italic;
+    text-align: center;
+}

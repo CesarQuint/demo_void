@@ -14,13 +14,13 @@ const Form = () => {
       <motion.div>
         <form className={styles.form}>
           <div className={styles.names}>
-            <section className={styles.input_w_l}>
+            <section className={styles.input_w_l_n}>
               <label className={styles.label} htmlFor="">
                 Nombre
               </label>
               <input className={styles.input} type="text" name="" id="" />
             </section>
-            <section className={styles.input_w_l}>
+            <section className={styles.input_w_l_n}>
               <label className={styles.label} htmlFor="">
                 Apellido
               </label>

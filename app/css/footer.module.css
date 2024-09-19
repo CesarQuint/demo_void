@@ -53,12 +53,11 @@
 .about_buttons {
   display: flex;
   flex-flow: row nowrap;
-  gap: 10px;
+  gap: 1px;
   justify-content: flex-start;
 }
 
 .about_buttons button {
-  padding: 2vh;
   background-color: #fff;
   color: #111;
   border: none;
@@ -67,17 +66,19 @@
   }
 }
 .btn_1 {
+  padding: 1vh 2vw !important;
   border-radius: 40px;
 }
 
 .btn_2 {
+  padding: 0.5rem;
   border-radius: 100%;
 }
 
 .contact_button_area_wrapper {
   display: flex;
   flex-flow: column nowrap;
-  gap: 1vh;
+  gap: 2vh;
 }
 
 .nav {
