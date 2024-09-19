@@ -1,8 +1,8 @@
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { Transition, motion, useMotionValue } from "framer-motion";
 import styles from "../../css/About/relatedProyectsCarousel.module.css";
-import { Project } from "@/app/Strapi/interfaces/Entities/Project";
-import { useNavigation } from "@/app/utils/navigationContext";
+import { Project } from "../../Strapi/interfaces/Entities/Project";
+import { useNavigation } from "../../utils/navigationContext";
 
 const TRANSITION_CONFIG: Transition = {
     type: "spring",
