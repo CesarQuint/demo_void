@@ -4,7 +4,7 @@ import Image from "next/image";
 import Splitting from "splitting";
 import { motion } from "framer-motion";
 import React, { useEffect, useRef, useState } from "react";
-import { useNavigation } from "@/app/utils/navigationContext";
+import { useNavigation } from "../../utils/navigationContext";
 
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -14,8 +14,8 @@ import s from "../ScrollImg/ScrollImg.module.css";
 import styles from "../../css/Projects/main.module.css";
 
 import TypedLink from "../TypedLink/TypedLink";
-import { Project } from "@/app/Strapi/interfaces/Entities/Project";
-import { Category } from "@/app/Strapi/interfaces/Entities/Category";
+import { Project } from "../../Strapi/interfaces/Entities/Project";
+import { Category } from "../../Strapi/interfaces/Entities/Category";
 import {
   ProjectElementImage,
   ProjectElementCaption,

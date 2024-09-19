@@ -1,4 +1,4 @@
-import { Project } from "@/app/Strapi/interfaces/Entities/Project";
+import { Project } from "../../../Strapi/interfaces/Entities/Project";
 import { ContentSectionTitles } from "./ContentMenu";
 import styles from './Introduction.module.css'
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { Project } from "@/app/Strapi/interfaces/Entities/Project";
-import { ContentSectionName } from "@/app/Strapi/interfaces/Entities/Project";
+import { Project } from "../../../Strapi/interfaces/Entities/Project";
+import { ContentSectionName } from "../../../Strapi/interfaces/Entities/Project";
 import Code, { CodeProps } from "../content-components/content-types/Code";
 import Paragraph, { ParagraphProps } from "../content-components/content-types/Paragraph";
 import Image, { ImageProps } from "../content-components/content-types/Image";

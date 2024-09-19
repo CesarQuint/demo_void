@@ -8,8 +8,7 @@ import styles from "../../css/Projects/main.module.css";
 import { usePathname } from "next/navigation";
 import { useNavigation } from "../../utils/navigationContext";
 
-import { Project } from "@/app/Strapi/interfaces/Entities/Project";
-import { Category } from "@/app/Strapi/interfaces/Entities/Category";
+import { Category } from "../../Strapi/interfaces/Entities/Category";
 
 const ProjectsSectionView = dynamic(() => import('./ProjectsSectionView'), { ssr: false });
 const PreFooterLink = dynamic(() => import("../PreFooterLink"), { ssr: false });

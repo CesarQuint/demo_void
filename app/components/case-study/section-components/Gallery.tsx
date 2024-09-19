@@ -1,6 +1,6 @@
 import React, { useEffect, useState, Dispatch, SetStateAction } from "react";
 import { Transition, motion, useMotionValue } from "framer-motion";
-import { ContentSectionName, Project } from "@/app/Strapi/interfaces/Entities/Project";
+import { ContentSectionName, Project } from "../../../Strapi/interfaces/Entities/Project";
 import { ImageProps, chooseFormat } from "../content-components/content-types/Image";
 import { isInContentSection } from '../section-components/ContentMenu';
 import styles from './Gallery.module.css';

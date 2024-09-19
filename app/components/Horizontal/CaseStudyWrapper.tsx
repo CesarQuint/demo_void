@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, ReactNode } from "react";
-import { useNavigation } from "@/app/utils/navigationContext";
+import { useNavigation } from "../../utils/navigationContext";
 import {
   motion,
   useAnimate,

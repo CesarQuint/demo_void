@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FiChevronRight } from 'react-icons/fi';
-import { Project, ContentSectionName } from '@/app/Strapi/interfaces/Entities/Project';
+import { Project, ContentSectionName } from '../../../Strapi/interfaces/Entities/Project';
 import { HeadingProps } from '../content-components/content-types/Heading';
 import { InnerTextData } from '../content-components/content-types/Text';
 import { ContentData, ContentSectionData } from './ContentSections';
