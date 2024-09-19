@@ -14,6 +14,7 @@
     "@react-three/fiber": "^8.16.8",
     "@react-three/postprocessing": "^2.16.2",
     "@react-three/xr": "^5.7.1",
+    "@types/node": "^22.5.5",
     "dat.gui": "^0.7.9",
     "date-fns": "^3.6.0",
     "framer-motion": "^11.2.10",
@@ -29,16 +30,15 @@
     "react-time-picker": "^7.0.0",
     "splitting": "^1.1.0",
     "three": "^0.165.0",
-    "three-stdlib": "^2.30.3"
+    "three-stdlib": "^2.30.3",
+    "typescript": "^5.6.2"
   },
   "devDependencies": {
-    "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/splitting": "^1.0.6",
     "@types/three": "^0.165.0",
     "eslint": "^8",
-    "eslint-config-next": "14.2.3",
-    "typescript": "^5"
+    "eslint-config-next": "14.2.3"
   }
 }
