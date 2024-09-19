@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import Tags from "../tags";
-import { about_us_tags } from "@/app/constants/tags_text";
 import styles from "../../css/home/processHome.module.css";
 import Image from "next/image";
 
@@ -10,7 +8,7 @@ type Props = {};
 const ProcessHome = (props: Props) => {
   const [imgLoaded, setImgLoaded] = useState(false);
 
-  useEffect(() => {}, [imgLoaded]);
+  useEffect(() => { }, [imgLoaded]);
   return (
     <motion.section className={styles.main}>
       <h2 className={styles.title}>NUESTRO PROCESO</h2>

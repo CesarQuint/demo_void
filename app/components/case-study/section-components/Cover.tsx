@@ -1,5 +1,5 @@
 import styles from './Cover.module.css';
-import { Project } from '@/app/Strapi/interfaces/Entities/Project';
+import { Project } from '../../../Strapi/interfaces/Entities/Project';
 
 type CoverProps = {
     data: {

@@ -2,7 +2,7 @@ import { Entity } from "./Entity";
 import { Category } from "./Category"
 import { ImageContent } from "./ImageFormat";
 
-import { ContentData } from "@/app/components/case-study/section-components/ContentSections";
+import { ContentData } from "../../../components/case-study/section-components/ContentSections";
 
 export enum ContentSectionName {
     INTRODUCTION = 'Introduction',

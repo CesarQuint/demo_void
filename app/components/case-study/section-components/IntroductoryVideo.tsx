@@ -1,4 +1,4 @@
-import { Project } from "@/app/Strapi/interfaces/Entities/Project"
+import { Project } from "../../../Strapi/interfaces/Entities/Project"
 import styles from './IntroductoryVideo.module.css';
 
 type CaseStudyVideoProps = { data: Project['attributes']['Case_Study_Video']['data'] }
