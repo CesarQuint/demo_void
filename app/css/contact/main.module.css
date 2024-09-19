@@ -6,7 +6,7 @@
   gap: 4vh;
 
   /* Media Part */
-  @media (min-width: 768px) {
+  @media (min-width: 1024px) {
     flex-flow: row nowrap;
   }
 }
@@ -28,7 +28,7 @@
   &:hover {
     box-shadow: 0px 1px 11px 0px #fff;
   }
-  @media (min-width: 768px) {
+  @media (min-width: 1024px) {
     height: auto;
     width: 25%;
   }
@@ -42,7 +42,7 @@
     box-shadow: 0px 1px 11px 0px #fff;
   }
 
-  @media (min-width: 768px) {
+  @media (min-width: 1024px) {
     height: auto;
     width: 25%;
   }
@@ -50,14 +50,14 @@
 .section_3 {
   display: flex;
   flex-flow: column nowrap;
-  gap: 5vh;
+  gap: 3vh;
   transition: all 0.5s;
 
   &:hover {
     box-shadow: 0px 1px 11px 0px #fff;
   }
 
-  @media (min-width: 768px) {
+  @media (min-width: 1024px) {
     height: auto;
     width: 50%;
   }
@@ -119,26 +119,33 @@
   width: 100%;
 }
 
+.input_w_l_n {
+  display: flex;
+  flex-flow: column nowrap;
+  width: 100%;
+}
+
 .label {
-  font-size: x-large;
+  font-size: large;
 }
 
 .input {
-  padding: 3vh 1vh 1vh;
+  padding: 1vh 1vh 1vh;
   background-color: #1d1d1d;
   border-top: none;
   border-left: none;
   border-right: none;
-  font-size: large;
+  font-size: medium;
 }
 
 .names {
   display: flex;
   flex-flow: column wrap;
-  gap: 4vh;
+  gap: 2vw;
+  overflow: hidden;
 
-  @media (min-width: 768px) {
-    flex-flow: row wrap;
+  @media (min-width: 1024px) {
+    flex-flow: row nowrap;
   }
 }
 

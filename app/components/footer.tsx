@@ -30,7 +30,7 @@ const Footer = (props: Props) => {
     setNavigationEvent({ state: true, href });
   }
 
-  useEffect(() => { }, [props.state]);
+  useEffect(() => {}, [props.state]);
 
   return (
     <motion.div className={`${styles.footer}`}>
@@ -42,7 +42,9 @@ const Footer = (props: Props) => {
         <motion.section className={` ${styles.text_container}`}>
           <motion.div className={`${styles.flex_container}  ${styles.contact}`}>
             <div className={`${styles.contact_button_area_wrapper}`}>
-              <p>¿Quieres empezar un nuevo proyecto?</p>
+              <p style={{ textTransform: "uppercase" }}>
+                ¿Quieres empezar un nuevo proyecto?
+              </p>
               <section className={`${styles.about_buttons}`}>
                 <button
                   onClick={() => {
@@ -73,106 +75,113 @@ const Footer = (props: Props) => {
           <motion.div
             className={`${styles.flex_container}  ${styles.information}`}
           >
-            <Timer />
-            <p>
-              Watteau 35, 03700
-              <br /> Ciudad de México,
-              <br /> CDMX
-            </p>
+            <div className={`${styles.contact_button_area_wrapper}`}>
+              <Timer />
+              <p>
+                Watteau 35, 03700
+                <br /> Ciudad de México,
+                <br /> CDMX
+              </p>
+            </div>
             <p>Void XR 2024®</p>
           </motion.div>
           <motion.div className={`${styles.flex_container}  ${styles.nav}`}>
-            <p>NAVIGATION</p>
-            <nav className={`${styles.links}`}>
-              <TypedLink
-                viewAnimate={true}
-                hoverAnimate={false}
-                href="/"
-                onClick={(e) => {
-                  goTo(e, "/");
-                }}
-              >
-                HOME
-              </TypedLink>
-              <TypedLink
-                viewAnimate={true}
-                hoverAnimate={false}
-                href="/about"
-                onClick={(e) => {
-                  goTo(e, "/about");
-                }}
-              >
-                STUDIO
-              </TypedLink>
-              <TypedLink
-                viewAnimate={true}
-                hoverAnimate={false}
-                href="/projects"
-                onClick={(e) => {
-                  goTo(e, "/projects");
-                }}
-              >
-                PROJECTS
-              </TypedLink>
+            <div className={`${styles.contact_button_area_wrapper}`}>
+              <p>NAVIGATION</p>
+              <nav className={`${styles.links}`}>
+                <TypedLink
+                  viewAnimate={true}
+                  hoverAnimate={false}
+                  href="/"
+                  onClick={(e) => {
+                    goTo(e, "/");
+                  }}
+                >
+                  HOME
+                </TypedLink>
+                <TypedLink
+                  viewAnimate={true}
+                  hoverAnimate={false}
+                  href="/projects"
+                  onClick={(e) => {
+                    goTo(e, "/projects");
+                  }}
+                >
+                  PROJECTS
+                </TypedLink>
+                <TypedLink
+                  viewAnimate={true}
+                  hoverAnimate={false}
+                  href="/about"
+                  onClick={(e) => {
+                    goTo(e, "/about");
+                  }}
+                >
+                  STUDIO
+                </TypedLink>
 
-              <TypedLink
-                viewAnimate={true}
-                hoverAnimate={false}
-                onClick={(e) => {
-                  goTo(e, "/contact");
-                }}
-                href="/contact"
-              >
-                CONTACT
-              </TypedLink>
-            </nav>
+                <TypedLink
+                  viewAnimate={true}
+                  hoverAnimate={false}
+                  onClick={(e) => {
+                    goTo(e, "/contact");
+                  }}
+                  href="/contact"
+                >
+                  CONTACT
+                </TypedLink>
+              </nav>
+            </div>
           </motion.div>
           <motion.div className={`${styles.flex_container}  ${styles.social}`}>
-            <p>SOCIAL</p>
-            <nav className={`${styles.links}`}>
-              <TypedLink
-                viewAnimate={true}
-                hoverAnimate={false}
-                href="https://www.instagram.com/voidxr.studio?igsh=cDg5MzhmZ2V1ZGRq"
-              >
-                INSTAGRAM
-              </TypedLink>
-              <TypedLink
-                viewAnimate={true}
-                hoverAnimate={false}
-                href="https://www.facebook.com/voidxr.studio/"
-              >
-                FACEBOOK
-              </TypedLink>
-              <TypedLink
-                viewAnimate={true}
-                hoverAnimate={false}
-                href="https://www.tiktok.com/@voidxr.studio?_t=8ny8X7FJlEj&_r=1"
-              >
-                TIKTOK
-              </TypedLink>
-              <TypedLink
-                viewAnimate={true}
-                hoverAnimate={false}
-                href="https://www.linkedin.com/company/voidxr/"
-              >
-                LINKEDIN
-              </TypedLink>
-              <TypedLink
-                viewAnimate={true}
-                hoverAnimate={false}
-                href="https://youtube.com/@voidxr_studio?si=5F3lHRRPmKbrZihn"
-              >
-                YOUTUBE
-              </TypedLink>
-              <TypedLink
-                viewAnimate={true}
-                hoverAnimate={false}
-                href="https://vimeo.com/voidxr"
-              >
-                VIMEO
-              </TypedLink>
-            </nav>
+            <div className={`${styles.contact_button_area_wrapper}`}>
+              <p>SOCIAL</p>
+              <nav className={`${styles.links}`}>
+                <TypedLink
+                  viewAnimate={true}
+                  hoverAnimate={false}
+                  href="https://www.instagram.com/voidxr.studio?igsh=cDg5MzhmZ2V1ZGRq"
+                >
+                  INSTAGRAM
+                </TypedLink>
+                <TypedLink
+                  viewAnimate={true}
+                  hoverAnimate={false}
+                  href="https://www.facebook.com/voidxr.studio/"
+                >
+                  FACEBOOK
+                </TypedLink>
+                <TypedLink
+                  viewAnimate={true}
+                  hoverAnimate={false}
+                  href="https://www.tiktok.com/@voidxr.studio?_t=8ny8X7FJlEj&_r=1"
+                >
+                  TIKTOK
+                </TypedLink>
+                <TypedLink
+                  viewAnimate={true}
+                  hoverAnimate={false}
+                  href="https://youtube.com/@voidxr_studio?si=5F3lHRRPmKbrZihn"
+                >
+                  YOUTUBE
+                </TypedLink>
+
+                <TypedLink
+                  viewAnimate={true}
+                  hoverAnimate={false}
+                  href="https://vimeo.com/voidxr"
+                >
+                  VIMEO
+                </TypedLink>
+                <TypedLink
+                  viewAnimate={true}
+                  hoverAnimate={false}
+                  href="https://www.linkedin.com/company/voidxr/"
+                >
+                  LINKEDIN
+                </TypedLink>
+              </nav>
+            </div>
           </motion.div>
         </motion.section>
       </motion.section>

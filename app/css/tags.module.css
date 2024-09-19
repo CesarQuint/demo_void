@@ -16,6 +16,7 @@
 }
 
 .tag {
+  min-height: 40vh;
   padding: 2rem;
   border-radius: 15px;
   display: flex;
@@ -25,6 +26,7 @@
   border: 2px solid #fff;
   transform-origin: bottom;
   will-change: transform;
+  align-items: center;
 
   &:nth-child(n + 1) {
     position: absolute;
@@ -72,7 +74,6 @@
   gap: 2vh;
   font-size: 1.4rem;
   color: #d1d1d1;
-
 }
 
 .image_wrapper {
