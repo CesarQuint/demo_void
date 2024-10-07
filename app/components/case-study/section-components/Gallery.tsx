@@ -108,7 +108,7 @@ const Images: React.FC<{
                 key={idx}
                 style={{
                     backgroundImage:
-                        `url(${process.env.NEXT_PUBLIC_STRAPI_BASE_URL + chooseFormat(i.image).url})`,
+                        `url(${process.env.NEXT_PUBLIC_STRAPI_MEDIA_URL + chooseFormat(i.image).url})`,
                 }}
                 animate={{
                     scale: activeIdx === idx ? 0.95 : 0.85,
@@ -135,7 +135,7 @@ const Thumbnails: React.FC<{
             {images.map((image, index) => (
                 <motion.img
                     key={index}
-                    src={process.env.NEXT_PUBLIC_STRAPI_BASE_URL + chooseFormat(image.image).url}
+                    src={process.env.NEXT_PUBLIC_STRAPI_MEDIA_URL + chooseFormat(image.image).url}
                     alt={image.image.alternativeText || 'Image'}
                     className={styles.thumbnail}
                     onClick={() => setActiveIdx(index)}

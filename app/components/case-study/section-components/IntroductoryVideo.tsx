@@ -10,7 +10,7 @@ const CaseStudyVideo: React.FC<CaseStudyVideoProps> = ({ data }) => (
                 autoPlay={true}
                 muted={true}
                 className={styles.video}
-                src={process.env.NEXT_PUBLIC_STRAPI_BASE_URL + data.attributes.url}
+                src={process.env.NEXT_PUBLIC_STRAPI_MEDIA_URL + data.attributes.url}
                 controls={true}
             />
         </div>

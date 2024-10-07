@@ -16,7 +16,7 @@ const Cover: React.FC<CoverProps> = ({ data }) =>
         style={{
             backgroundSize: "cover",
             backgroundPosition: "center",
-            backgroundImage: `url(${process.env.NEXT_PUBLIC_STRAPI_BASE_URL + data.image.attributes.formats.large.url})`,
+            backgroundImage: `url(${process.env.NEXT_PUBLIC_STRAPI_MEDIA_URL + data.image.attributes.formats.large.url})`,
         }}
         className={styles.cover}
     >
