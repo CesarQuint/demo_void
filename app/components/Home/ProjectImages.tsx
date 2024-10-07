@@ -28,7 +28,9 @@ const BackgroundTitle = (props: { title: string }) => (
     <h3 className={styles.title}>
         {props.title.split(" ")[0]?.toUpperCase()}
         <br />
-        <span className={s.second}>{props.title.split(" ")[1]?.toUpperCase()}</span>
+        <span className={s.second}>
+            {props.title.split(" ")[1]?.toUpperCase()}
+        </span>
     </h3>
 );
 
@@ -51,14 +53,15 @@ export const ProjectElementContent = (props: {
             data={{
                 title: props.data.project.attributes.Title,
                 slug: props.data.project.attributes.slug,
-                url: props.data.project.attributes.Cover.data.attributes.formats.large
-                    .url,
+                url: props.data.project.attributes.Cover.data.attributes.formats
+                    .large.url,
             }}
         />
         <ProjectElementCaption
             data={{
                 title: props.data.project.attributes.Title,
-                category: props.data.project.attributes.Category.data.attributes.Name,
+                category:
+                    props.data.project.attributes.Category.data.attributes.Name,
                 description: props.data.project.attributes.Subtitle,
             }}
         />
@@ -73,20 +76,25 @@ export const ProjectElementImage = (props: {
     return (
         <div
             className={s.wrapper}
-            onClick={() => setNavigationEvent({ state: true, href: '/projects/' + props.data.slug })}
+            onClick={() =>
+                setNavigationEvent({
+                    state: true,
+                    href: "/projects/" + props.data.slug,
+                })
+            }
         >
             <Image
                 onLoad={() => props.loadHook && props.loadHook()}
                 style={{ objectFit: "cover" }}
                 title={props.data.title}
-                src={process.env.NEXT_PUBLIC_STRAPI_BASE_URL + props.data.url}
+                src={process.env.NEXT_PUBLIC_STRAPI_MEDIA_URL + props.data.url}
                 fill
                 sizes="50%"
                 alt={props.data.title}
             />
         </div>
     );
-}
+};
 
 export const ProjectElementCaption = (props: {
     data: { title: string; category: string; description: string };
@@ -94,7 +102,9 @@ export const ProjectElementCaption = (props: {
     <figcaption className={s.caption}>
         <div className={s.tag}>{props.data.category.toUpperCase()}</div>
         <div className={`word-animated ${s.title}`}>{props.data.title}</div>
-        <div className="word-animated">{props.data.description.toUpperCase()}</div>
+        <div className="word-animated">
+            {props.data.description.toUpperCase()}
+        </div>
     </figcaption>
 );
 
@@ -152,7 +162,8 @@ const ProjectImages = (props: { data: { projects: Project[] } }) => {
             const [title, line, ...boxes] = scrollContainer.current!
                 .children as any as HTMLElement[];
 
-            const captions = gsap.utils.toArray<HTMLEmbedElement>(".word-animated");
+            const captions =
+                gsap.utils.toArray<HTMLEmbedElement>(".word-animated");
 
             const splitting = Splitting({
                 target: captions,
@@ -161,10 +172,11 @@ const ProjectImages = (props: { data: { projects: Project[] } }) => {
 
             gsap.set(captions, { opacity: 0 });
 
-            gsap
-                .matchMedia()
+            gsap.matchMedia()
                 .add("(min-width: 700px)", () => {
-                    gsap.set(line, { width: scrollContainer.current?.scrollWidth });
+                    gsap.set(line, {
+                        width: scrollContainer.current?.scrollWidth,
+                    });
 
                     const tl = gsap
                         .timeline({
@@ -183,101 +195,148 @@ const ProjectImages = (props: { data: { projects: Project[] } }) => {
                         .to(boxes, { xPercent: -100 * boxes.length - 1 }, 0)
                         .to(
                             title,
-                            { x: () => -(title.offsetWidth - document.body.offsetWidth) },
-                            0
+                            {
+                                x: () =>
+                                    -(
+                                        title.offsetWidth -
+                                        document.body.offsetWidth
+                                    ),
+                            },
+                            0,
                         )
                         .to(line, { xPercent: -100 }, 0);
 
                     imgContainers.current.forEach((el) => {
-                        gsap
-                            .timeline({
-                                defaults: {
-                                    ease: "none",
-                                },
-                                scrollTrigger: {
-                                    containerAnimation: tl,
-                                    trigger: el,
-                                    start: "top center",
-                                    end: "+=50% center",
-                                    scrub: true,
-                                    onLeave() {
-                                        splitting.forEach((data) => {
-                                            if (!el!.contains(data.el as Element)) return;
+                        gsap.timeline({
+                            defaults: {
+                                ease: "none",
+                            },
+                            scrollTrigger: {
+                                containerAnimation: tl,
+                                trigger: el,
+                                start: "top center",
+                                end: "+=50% center",
+                                scrub: true,
+                                onLeave() {
+                                    splitting.forEach((data) => {
+                                        if (!el!.contains(data.el as Element))
+                                            return;
 
-                                            gsap.set(data.el as Element, { opacity: 1 });
-
-                                            data.chars?.forEach((char, i) => {
-                                                gsap.killTweensOf(char);
-                                                gsap.set(char, { textContent: char.dataset.char });
-
-                                                let firstRepeat = true;
-
-                                                gsap
-                                                    .timeline({
-                                                        defaults: { duration: 0.03, repeatDelay: 0.03 },
-                                                    })
-                                                    .fromTo(
-                                                        char,
-                                                        { opacity: 0 },
-                                                        { opacity: 1, delay: (i + 1) * 0.04 }
-                                                    )
-                                                    .to(
-                                                        char,
-                                                        {
-                                                            repeat: 4,
-                                                            repeatRefresh: true,
-                                                            textContent: () =>
-                                                                CHARS[Math.floor(Math.random() * CHARS.length)],
-                                                            onStart() {
-                                                                gsap.set(char, { "--opa": 1 });
-                                                            },
-                                                            onRepeat() {
-                                                                if (firstRepeat) gsap.set(char, { "--opa": 0 });
-                                                                firstRepeat = false;
-                                                            },
-                                                        },
-                                                        "<"
-                                                    )
-                                                    .set(char, { textContent: char.dataset.char });
-                                            });
+                                        gsap.set(data.el as Element, {
+                                            opacity: 1,
                                         });
-                                    },
-                                    onEnterBack() {
-                                        splitting.forEach((data) => {
-                                            if (!el!.contains(data.el as Element)) return;
 
-                                            data.chars!.toReversed().forEach((char, i) => {
+                                        data.chars?.forEach((char, i) => {
+                                            gsap.killTweensOf(char);
+                                            gsap.set(char, {
+                                                textContent: char.dataset.char,
+                                            });
+
+                                            let firstRepeat = true;
+
+                                            gsap.timeline({
+                                                defaults: {
+                                                    duration: 0.03,
+                                                    repeatDelay: 0.03,
+                                                },
+                                            })
+                                                .fromTo(
+                                                    char,
+                                                    { opacity: 0 },
+                                                    {
+                                                        opacity: 1,
+                                                        delay: (i + 1) * 0.04,
+                                                    },
+                                                )
+                                                .to(
+                                                    char,
+                                                    {
+                                                        repeat: 4,
+                                                        repeatRefresh: true,
+                                                        textContent: () =>
+                                                            CHARS[
+                                                                Math.floor(
+                                                                    Math.random() *
+                                                                        CHARS.length,
+                                                                )
+                                                            ],
+                                                        onStart() {
+                                                            gsap.set(char, {
+                                                                "--opa": 1,
+                                                            });
+                                                        },
+                                                        onRepeat() {
+                                                            if (firstRepeat)
+                                                                gsap.set(char, {
+                                                                    "--opa": 0,
+                                                                });
+                                                            firstRepeat = false;
+                                                        },
+                                                    },
+                                                    "<",
+                                                )
+                                                .set(char, {
+                                                    textContent:
+                                                        char.dataset.char,
+                                                });
+                                        });
+                                    });
+                                },
+                                onEnterBack() {
+                                    splitting.forEach((data) => {
+                                        if (!el!.contains(data.el as Element))
+                                            return;
+
+                                        data.chars!.toReversed().forEach(
+                                            (char, i) => {
                                                 gsap.killTweensOf(char);
                                                 let firstRepeat = true;
 
-                                                gsap
-                                                    .timeline({
-                                                        defaults: { duration: 0.03, repeatDelay: 0.03 },
-                                                    })
+                                                gsap.timeline({
+                                                    defaults: {
+                                                        duration: 0.03,
+                                                        repeatDelay: 0.03,
+                                                    },
+                                                })
                                                     .to(char, {
                                                         repeat: 4,
                                                         repeatRefresh: true,
                                                         textContent: () =>
-                                                            CHARS[Math.floor(Math.random() * CHARS.length)],
+                                                            CHARS[
+                                                                Math.floor(
+                                                                    Math.random() *
+                                                                        CHARS.length,
+                                                                )
+                                                            ],
                                                         onStart() {
-                                                            gsap.set(char, { "--opa": 1 });
+                                                            gsap.set(char, {
+                                                                "--opa": 1,
+                                                            });
                                                         },
                                                         onRepeat() {
-                                                            if (firstRepeat) gsap.set(char, { "--opa": 0 });
+                                                            if (firstRepeat)
+                                                                gsap.set(char, {
+                                                                    "--opa": 0,
+                                                                });
                                                             firstRepeat = false;
                                                         },
                                                     })
                                                     .fromTo(
                                                         char,
                                                         { opacity: 1 },
-                                                        { opacity: 0, delay: (i + 1) * 0.04 },
-                                                        "<"
+                                                        {
+                                                            opacity: 0,
+                                                            delay:
+                                                                (i + 1) * 0.04,
+                                                        },
+                                                        "<",
                                                     );
-                                            });
-                                        });
-                                    },
+                                            },
+                                        );
+                                    });
                                 },
-                            })
+                            },
+                        })
                             .fromTo(
                                 el?.querySelector(`.${s.wrapper}`)!,
                                 {
@@ -287,7 +346,7 @@ const ProjectImages = (props: { data: { projects: Project[] } }) => {
                                 {
                                     yPercent: 0,
                                     xPercent: 0,
-                                }
+                                },
                             )
                             .fromTo(
                                 el?.querySelector("img")!,
@@ -299,7 +358,7 @@ const ProjectImages = (props: { data: { projects: Project[] } }) => {
                                     yPercent: 0,
                                     xPercent: 0,
                                 },
-                                0
+                                0,
                             );
                     });
 
@@ -309,95 +368,136 @@ const ProjectImages = (props: { data: { projects: Project[] } }) => {
                     gsap.set("img", { opacity: 1 });
 
                     imgContainers.current.forEach((el) => {
-                        gsap
-                            .timeline({
-                                defaults: {
-                                    ease: "none",
-                                },
-                                scrollTrigger: {
-                                    trigger: el,
-                                    start: "top bottom-=20%",
-                                    end: "+=50% bottom-=20%",
-                                    // markers: true,
-                                    scrub: true,
-                                    onLeave() {
-                                        splitting.forEach((data) => {
-                                            if (!el!.contains(data.el as Element)) return;
+                        gsap.timeline({
+                            defaults: {
+                                ease: "none",
+                            },
+                            scrollTrigger: {
+                                trigger: el,
+                                start: "top bottom-=20%",
+                                end: "+=50% bottom-=20%",
+                                // markers: true,
+                                scrub: true,
+                                onLeave() {
+                                    splitting.forEach((data) => {
+                                        if (!el!.contains(data.el as Element))
+                                            return;
 
-                                            gsap.set(data.el as Element, { opacity: 1 });
-
-                                            data.chars?.forEach((char, i) => {
-                                                gsap.killTweensOf(char);
-                                                gsap.set(char, { textContent: char.dataset.char });
-
-                                                let firstRepeat = true;
-
-                                                gsap
-                                                    .timeline({
-                                                        defaults: { duration: 0.03, repeatDelay: 0.03 },
-                                                    })
-                                                    .fromTo(
-                                                        char,
-                                                        { opacity: 0 },
-                                                        { opacity: 1, delay: (i + 1) * 0.04 }
-                                                    )
-                                                    .to(
-                                                        char,
-                                                        {
-                                                            repeat: 4,
-                                                            repeatRefresh: true,
-                                                            textContent: () =>
-                                                                CHARS[Math.floor(Math.random() * CHARS.length)],
-                                                            onStart() {
-                                                                gsap.set(char, { "--opa": 1 });
-                                                            },
-                                                            onRepeat() {
-                                                                if (firstRepeat) gsap.set(char, { "--opa": 0 });
-                                                                firstRepeat = false;
-                                                            },
-                                                        },
-                                                        "<"
-                                                    )
-                                                    .set(char, { textContent: char.dataset.char });
-                                            });
+                                        gsap.set(data.el as Element, {
+                                            opacity: 1,
                                         });
-                                    },
-                                    onEnterBack() {
-                                        splitting.forEach((data) => {
-                                            if (!el!.contains(data.el as Element)) return;
 
-                                            data.chars!.toReversed().forEach((char, i) => {
+                                        data.chars?.forEach((char, i) => {
+                                            gsap.killTweensOf(char);
+                                            gsap.set(char, {
+                                                textContent: char.dataset.char,
+                                            });
+
+                                            let firstRepeat = true;
+
+                                            gsap.timeline({
+                                                defaults: {
+                                                    duration: 0.03,
+                                                    repeatDelay: 0.03,
+                                                },
+                                            })
+                                                .fromTo(
+                                                    char,
+                                                    { opacity: 0 },
+                                                    {
+                                                        opacity: 1,
+                                                        delay: (i + 1) * 0.04,
+                                                    },
+                                                )
+                                                .to(
+                                                    char,
+                                                    {
+                                                        repeat: 4,
+                                                        repeatRefresh: true,
+                                                        textContent: () =>
+                                                            CHARS[
+                                                                Math.floor(
+                                                                    Math.random() *
+                                                                        CHARS.length,
+                                                                )
+                                                            ],
+                                                        onStart() {
+                                                            gsap.set(char, {
+                                                                "--opa": 1,
+                                                            });
+                                                        },
+                                                        onRepeat() {
+                                                            if (firstRepeat)
+                                                                gsap.set(char, {
+                                                                    "--opa": 0,
+                                                                });
+                                                            firstRepeat = false;
+                                                        },
+                                                    },
+                                                    "<",
+                                                )
+                                                .set(char, {
+                                                    textContent:
+                                                        char.dataset.char,
+                                                });
+                                        });
+                                    });
+                                },
+                                onEnterBack() {
+                                    splitting.forEach((data) => {
+                                        if (!el!.contains(data.el as Element))
+                                            return;
+
+                                        data.chars!.toReversed().forEach(
+                                            (char, i) => {
                                                 gsap.killTweensOf(char);
                                                 let firstRepeat = true;
 
-                                                gsap
-                                                    .timeline({
-                                                        defaults: { duration: 0.03, repeatDelay: 0.03 },
-                                                    })
+                                                gsap.timeline({
+                                                    defaults: {
+                                                        duration: 0.03,
+                                                        repeatDelay: 0.03,
+                                                    },
+                                                })
                                                     .to(char, {
                                                         repeat: 4,
                                                         repeatRefresh: true,
                                                         textContent: () =>
-                                                            CHARS[Math.floor(Math.random() * CHARS.length)],
+                                                            CHARS[
+                                                                Math.floor(
+                                                                    Math.random() *
+                                                                        CHARS.length,
+                                                                )
+                                                            ],
                                                         onStart() {
-                                                            gsap.set(char, { "--opa": 1 });
+                                                            gsap.set(char, {
+                                                                "--opa": 1,
+                                                            });
                                                         },
                                                         onRepeat() {
-                                                            if (firstRepeat) gsap.set(char, { "--opa": 0 });
+                                                            if (firstRepeat)
+                                                                gsap.set(char, {
+                                                                    "--opa": 0,
+                                                                });
                                                             firstRepeat = false;
                                                         },
                                                     })
                                                     .fromTo(
                                                         char,
                                                         { opacity: 1 },
-                                                        { opacity: 0, delay: (i + 1) * 0.04 },
-                                                        "<"
+                                                        {
+                                                            opacity: 0,
+                                                            delay:
+                                                                (i + 1) * 0.04,
+                                                        },
+                                                        "<",
                                                     );
-                                            });
-                                        });
-                                    },
+                                            },
+                                        );
+                                    });
                                 },
-                            })
+                            },
+                        })
                             .fromTo(
                                 el?.querySelector(`.${s.wrapper}`)!,
                                 {
@@ -407,7 +507,7 @@ const ProjectImages = (props: { data: { projects: Project[] } }) => {
                                 {
                                     yPercent: 0,
                                     xPercent: 0,
-                                }
+                                },
                             )
                             .fromTo(
                                 el?.querySelector("img")!,
@@ -419,12 +519,12 @@ const ProjectImages = (props: { data: { projects: Project[] } }) => {
                                     yPercent: 0,
                                     xPercent: 0,
                                 },
-                                0
+                                0,
                             );
                     });
                 });
         },
-        { scope: scrollContainer, dependencies: [container, scrollContainer] }
+        { scope: scrollContainer, dependencies: [container, scrollContainer] },
     );
 
     return (
@@ -432,7 +532,9 @@ const ProjectImages = (props: { data: { projects: Project[] } }) => {
             <motion.section className={`${styles.project_wrapper}`}>
                 <div className={styles.scrollView} ref={scrollContainer}>
                     <BackgroundTitle title={StaticContent.BACKGRUND_TITLE} />
-                    <ViewAllProjectsButton buttonText={StaticContent.HYPERLINK_BUTTON} />
+                    <ViewAllProjectsButton
+                        buttonText={StaticContent.HYPERLINK_BUTTON}
+                    />
                     <ProjectsHorizontalCarousel
                         imageContainers={imgContainers.current}
                         data={{ projects: props.data.projects }}

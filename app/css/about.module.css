@@ -1,13 +1,13 @@
 .main {
-  width: 100%;
+    width: 100%;
 }
 
 .video_container {
-  padding: 0 6vh;
+    padding: 0 6vh;
 }
 
 .video {
-  width: 100%;
-  height: auto;
-  border-radius: 40px;
+    width: 100%;
+    height: auto;
+    border-radius: 40px;
 }

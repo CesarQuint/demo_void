@@ -1,18 +1,18 @@
 .container {
-  padding: 6vh;
-  width: 100%;
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: center;
-  flex-direction: column;
-  flex-wrap: nowrap;
+    padding: 6vh;
+    width: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    flex-direction: column;
+    flex-wrap: nowrap;
 
-  @media (min-width: 768px) {
-    padding: 10vh 6vh;
-  }
+    @media (min-width: 768px) {
+        padding: 10vh 6vh;
+    }
 }
 
 .video {
-  width: 100%;
-  border-radius: 40px;
+    width: 100%;
+    border-radius: 40px;
 }

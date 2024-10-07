@@ -1,77 +1,77 @@
 .hero_container {
-  display: flex;
-  flex-flow: column;
-  align-items: center;
-  justify-content: center;
-  background-color: black;
-  height: 100vh;
-  position: relative;
-  overflow: hidden;
-  opacity: 0;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
 }
 
 .hero_wrapper {
-  position: absolute;
-  width: 100%;
-  top: 35%;
-  z-index: 10;
-  display: flex;
-  flex-flow: column;
-  align-items: center;
-  position: relative;
-  width: 95%;
-  transition: all 1s;
+    position: absolute;
+    width: 100%;
+    top: 35%;
+    z-index: 10;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    position: relative;
+    width: 95%;
+    transition: all 1s;
 }
 
 .hero_image {
-  width: inherit;
-  height: auto;
-  border-radius: 50%;
-  transition: all 1s;
+    width: inherit;
+    height: auto;
+    border-radius: 50%;
+    transition: all 1s;
 }
 
 .presentation_text {
-  position: absolute;
-  top: 30%;
-  width: 90%;
-  margin: auto;
-  font-size: 1.3rem;
-  display: flex;
-  flex-flow: column nowrap;
+    position: absolute;
+    top: 30%;
+    width: 90%;
+    margin: auto;
+    font-size: 1.3rem;
+    display: flex;
+    flex-flow: column nowrap;
 }
 
 .left_text {
-  text-align: left;
+    text-align: left;
 }
 
 .right_text {
-  text-align: right;
+    text-align: right;
 }
 
 .arrow {
-  position: absolute;
-  z-index: 10;
-  bottom: 30px;
-  width: 5vh;
-  height: 5vh;
-  border-left: 1px solid white;
-  border-bottom: 1px solid white;
-  rotate: 315deg;
+    position: absolute;
+    z-index: 10;
+    bottom: 30px;
+    width: 5vh;
+    height: 5vh;
+    border-left: 1px solid white;
+    border-bottom: 1px solid white;
+    rotate: 315deg;
 }
 
 .arrow:hover {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 /* Media Part */
 @media (min-width: 590px) {
-  .hero_wrapper {
-    width: 60%;
-    transition: all 1s;
-    top: 45%;
-  }
+    .hero_wrapper {
+        width: 60%;
+        transition: all 1s;
+        top: 45%;
+    }
 
-  .presentation_text {
-    width: 60%;
-  }
+    .presentation_text {
+        width: 60%;
+    }
 }

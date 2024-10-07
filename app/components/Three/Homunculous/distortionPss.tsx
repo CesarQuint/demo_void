@@ -6,47 +6,47 @@ import { ShaderPass } from "three-stdlib";
 extend({ ShaderPass });
 
 type DistortionPassProps = {
-  enabled?: boolean;
-  progress?: number;
-  scale?: number;
+    enabled?: boolean;
+    progress?: number;
+    scale?: number;
 };
 
 export const DistortionPass: React.FC<DistortionPassProps> = ({
-  enabled = true,
-  progress = 1,
-  scale = 1,
+    enabled = true,
+    progress = 1,
+    scale = 1,
 }) => {
-  const distortionRef = useRef<ShaderPass>(null);
+    const distortionRef = useRef<ShaderPass>(null);
 
-  const shader = useMemo(() => {
-    return new THREE.ShaderMaterial({
-      uniforms: {
-        tDiffuse: { value: null },
-        u_time: { value: 0 },
-        u_progress: { value: progress },
-        u_scale: { value: scale },
-      },
-      vertexShader,
-      fragmentShader,
+    const shader = useMemo(() => {
+        return new THREE.ShaderMaterial({
+            uniforms: {
+                tDiffuse: { value: null },
+                u_time: { value: 0 },
+                u_progress: { value: progress },
+                u_scale: { value: scale },
+            },
+            vertexShader,
+            fragmentShader,
+        });
+    }, [progress, scale]);
+
+    useFrame(() => {
+        if (enabled) {
+            distortionRef.current!.uniforms.u_time.value += 0.01;
+        }
     });
-  }, [progress, scale]);
 
-  useFrame(() => {
-    if (enabled) {
-      distortionRef.current!.uniforms.u_time.value += 0.01;
-    }
-  });
-
-  return (
-    <shaderPass
-      ref={distortionRef}
-      attach={"pass"}
-      args={[shader]}
-      enabled={enabled}
-      uniforms-u_progress-value={progress}
-      uniforms-u_scale-value={scale}
-    />
-  );
+    return (
+        <shaderPass
+            ref={distortionRef}
+            attach={"pass"}
+            args={[shader]}
+            enabled={enabled}
+            uniforms-u_progress-value={progress}
+            uniforms-u_scale-value={scale}
+        />
+    );
 };
 
 // Shaders (vertex and fragment)

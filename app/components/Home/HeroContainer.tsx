@@ -32,7 +32,7 @@ const HeroContainer = (props: Props) => {
         {
             scope: containerHeroRef,
             dependencies: [isIntersecting],
-        }
+        },
     );
 
     const handleScroll = () => {
@@ -46,7 +46,8 @@ const HeroContainer = (props: Props) => {
         return (
             <motion.section
                 ref={containerHeroRef}
-                className={`${styles.hero_container}`}>
+                className={`${styles.hero_container}`}
+            >
                 <h1>Loading...</h1>
             </motion.section>
         );
@@ -55,13 +56,22 @@ const HeroContainer = (props: Props) => {
     return (
         <motion.section
             ref={containerHeroRef}
-            className={`${styles.hero_container}`}>
+            className={`${styles.hero_container}`}
+        >
             <motion.div className={`${styles.hero_wrapper}`}>
                 <motion.p className={`${styles.presentation_text}`}>
-                    <span className={`${styles.left_text}`}>Conceptualizamos,</span>
-                    <span className={`${styles.right_text}`}>dirigimos y producimos</span>
-                    <span className={`${styles.left_text}`}>experiencias artísticas</span>
-                    <span className={`${styles.right_text}`}>museográficas</span>
+                    <span className={`${styles.left_text}`}>
+                        Conceptualizamos,
+                    </span>
+                    <span className={`${styles.right_text}`}>
+                        dirigimos y producimos
+                    </span>
+                    <span className={`${styles.left_text}`}>
+                        experiencias artísticas
+                    </span>
+                    <span className={`${styles.right_text}`}>
+                        museográficas
+                    </span>
                     <span className={`${styles.left_text}`}>y comerciales</span>
                     <span className={`${styles.right_text}`}>
                         a través de tecnología.
@@ -74,18 +84,20 @@ const HeroContainer = (props: Props) => {
                     handleScroll();
                 }}
                 ref={arrowRef}
-                className={`${styles.arrow}`}>
-            </motion.span>
+                className={`${styles.arrow}`}
+            ></motion.span>
             <CustomCursor containerRef={containerHeroRef} />
             <Canvas style={{ height: "100vh" }}>
-                <DisplacementGeometry settings={{
-                    grid: true,
-                    glow: 0.15,
-                    columns: 10,
-                    orb_size: 0.5,
-                    contrast: 5.0,
-                    easing_factor: 0.05,
-                }} />
+                <DisplacementGeometry
+                    settings={{
+                        grid: true,
+                        glow: 0.15,
+                        columns: 10,
+                        orb_size: 0.5,
+                        contrast: 5.0,
+                        easing_factor: 0.05,
+                    }}
+                />
             </Canvas>
         </motion.section>
     );

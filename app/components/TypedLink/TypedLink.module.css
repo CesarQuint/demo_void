@@ -1,14 +1,14 @@
 .link {
-  & :global(.char) {
-    position: relative;
-		display: inline-block;
+    & :global(.char) {
+        position: relative;
+        display: inline-block;
 
-    &::after {
-      content: '';
-			inset: 0;
-      position: absolute;
-      background: currentColor;
-      opacity: var(--opa, 0);
+        &::after {
+            content: "";
+            inset: 0;
+            position: absolute;
+            background: currentColor;
+            opacity: var(--opa, 0);
+        }
     }
-  }
 }

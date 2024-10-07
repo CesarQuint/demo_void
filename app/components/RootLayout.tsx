@@ -7,12 +7,12 @@ import { usePathname } from "next/navigation";
 import NavBar from "./navBar";
 
 export default function Template({ children }: { children: React.ReactNode }) {
-  const pathname = usePathname();
+    const pathname = usePathname();
 
-  return (
-    <>
-      <NavBar />
-      <AnimatePresence mode="wait">{children}</AnimatePresence>
-    </>
-  );
+    return (
+        <>
+            <NavBar />
+            <AnimatePresence mode="wait">{children}</AnimatePresence>
+        </>
+    );
 }

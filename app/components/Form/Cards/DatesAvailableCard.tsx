@@ -13,139 +13,157 @@ import dynamic from "next/dynamic";
 const Calendar = dynamic(() => import("react-calendar"), { ssr: false });
 
 interface CustomCardProps {
-  cardRef: RefObject<HTMLDivElement>;
-  clickHandler: (ref: RefObject<HTMLDivElement>) => void;
-  returnHandler: () => void;
+    cardRef: RefObject<HTMLDivElement>;
+    clickHandler: (ref: RefObject<HTMLDivElement>) => void;
+    returnHandler: () => void;
 }
 
 const formatShortWeekday = (locale: string | undefined, date: Date): string => {
-  const weekdays = ["D", "L", "M", "M", "J", "V", "S"];
-  return weekdays[date.getDay()];
+    const weekdays = ["D", "L", "M", "M", "J", "V", "S"];
+    return weekdays[date.getDay()];
 };
 
 export const DatesAvailableCard: React.FC<CustomCardProps> = ({
-  cardRef,
-  clickHandler,
-  returnHandler,
+    cardRef,
+    clickHandler,
+    returnHandler,
 }) => {
-  const [selectedDates, setSelectedDates] = React.useState<
-    Date | [Date, Date] | null
-  >(null);
+    const [selectedDates, setSelectedDates] = React.useState<
+        Date | [Date, Date] | null
+    >(null);
 
-  const handleDateChange = (value: Value) => {
-    console.log("Selected date(s):", value);
-    setSelectedDates(value as Date | [Date, Date]);
-  };
-  return (
-    <Card
-      ref={cardRef}
-      scale={0.92}
-      top={10}
-      left={
-        <>
-          <section className={styles.left_first}>
-            <p>05</p>
-            <div className={styles.return_button_top}>
-              <ReturnButtons returnHandler={returnHandler} />
-            </div>
-          </section>
-          <section className={styles.left_second}>
-            <h2 className={styles.title}>Información del evento</h2>
-          </section>
-          <section className={styles.left_third}>
-            <p className={styles.warning}>
-              Las preguntas marcadas con * son obligatorias.
-            </p>
-          </section>
-        </>
-      }
-      right={
-        <>
-          <section
-            style={{ justifyContent: "flex-end" }}
-            className={styles.right_first}
-          >
-            <ReturnButtons returnHandler={returnHandler} />
-          </section>
-          <section className={styles.right_second}>
-            <div className={styles.calendar_flex}>
-              <section className={styles.dates_flex}>
-                <h4>
-                  Disponibilidad de fechas
-                  <p style={{ display: "inline", color: "red", margin: 0 }}>
-                    *
-                  </p>
-                </h4>
-                <div className={styles.input_date_flex}>
-                  <section className={styles.imput_text_date}>
-                    <label htmlFor="">
-                      Fecha de Inicio
-                      <p style={{ display: "inline", color: "red", margin: 0 }}>
-                        *
-                      </p>
-                    </label>
-                    <input
-                      value={
-                        Array.isArray(selectedDates)
-                          ? selectedDates[0].toLocaleDateString() // Format the date as desired
-                          : "--/--/----"
-                      }
-                      readOnly={true}
-                      className={styles.input_date}
-                      type="text"
-                      name=""
-                      id=""
-                    />
-                  </section>
-                  <section className={styles.imput_text_date}>
-                    <label htmlFor="">
-                      Fecha de Finalizacion
-                      <p style={{ display: "inline", color: "red", margin: 0 }}>
-                        *
-                      </p>
-                    </label>
-                    <input
-                      value={
-                        Array.isArray(selectedDates)
-                          ? selectedDates[1].toLocaleDateString() // Format the date as desired
-                          : "--/--/----"
-                      }
-                      readOnly={true}
-                      className={styles.input_date}
-                      type="text"
-                      name=""
-                      id=""
-                    />
-                  </section>
-                </div>
-              </section>
-              <section className={styles.calendar_wrapper}>
-                <div className={styles.calendar_container}>
-                  <Calendar
-                    className="calender-body"
-                    formatShortWeekday={formatShortWeekday}
-                    selectRange={true}
-                    onChange={(e) => {
-                      handleDateChange(e);
-                    }}
-                    value={selectedDates}
-                  />
-                </div>
-              </section>
-            </div>
-          </section>
-          <section
-            style={{ justifyContent: "flex-end" }}
-            className={styles.right_third}
-          >
-            <ContinueButtons
-              clickHandler={() => {
-                clickHandler(cardRef);
-              }}
-            />
-          </section>
-        </>
-      }
-    />
-  );
+    const handleDateChange = (value: Value) => {
+        console.log("Selected date(s):", value);
+        setSelectedDates(value as Date | [Date, Date]);
+    };
+    return (
+        <Card
+            ref={cardRef}
+            scale={0.92}
+            top={10}
+            left={
+                <>
+                    <section className={styles.left_first}>
+                        <p>05</p>
+                        <div className={styles.return_button_top}>
+                            <ReturnButtons returnHandler={returnHandler} />
+                        </div>
+                    </section>
+                    <section className={styles.left_second}>
+                        <h2 className={styles.title}>Información del evento</h2>
+                    </section>
+                    <section className={styles.left_third}>
+                        <p className={styles.warning}>
+                            Las preguntas marcadas con * son obligatorias.
+                        </p>
+                    </section>
+                </>
+            }
+            right={
+                <>
+                    <section
+                        style={{ justifyContent: "flex-end" }}
+                        className={styles.right_first}
+                    >
+                        <ReturnButtons returnHandler={returnHandler} />
+                    </section>
+                    <section className={styles.right_second}>
+                        <div className={styles.calendar_flex}>
+                            <section className={styles.dates_flex}>
+                                <h4>
+                                    Disponibilidad de fechas
+                                    <p
+                                        style={{
+                                            display: "inline",
+                                            color: "red",
+                                            margin: 0,
+                                        }}
+                                    >
+                                        *
+                                    </p>
+                                </h4>
+                                <div className={styles.input_date_flex}>
+                                    <section className={styles.imput_text_date}>
+                                        <label htmlFor="">
+                                            Fecha de Inicio
+                                            <p
+                                                style={{
+                                                    display: "inline",
+                                                    color: "red",
+                                                    margin: 0,
+                                                }}
+                                            >
+                                                *
+                                            </p>
+                                        </label>
+                                        <input
+                                            value={
+                                                Array.isArray(selectedDates)
+                                                    ? selectedDates[0].toLocaleDateString() // Format the date as desired
+                                                    : "--/--/----"
+                                            }
+                                            readOnly={true}
+                                            className={styles.input_date}
+                                            type="text"
+                                            name=""
+                                            id=""
+                                        />
+                                    </section>
+                                    <section className={styles.imput_text_date}>
+                                        <label htmlFor="">
+                                            Fecha de Finalizacion
+                                            <p
+                                                style={{
+                                                    display: "inline",
+                                                    color: "red",
+                                                    margin: 0,
+                                                }}
+                                            >
+                                                *
+                                            </p>
+                                        </label>
+                                        <input
+                                            value={
+                                                Array.isArray(selectedDates)
+                                                    ? selectedDates[1].toLocaleDateString() // Format the date as desired
+                                                    : "--/--/----"
+                                            }
+                                            readOnly={true}
+                                            className={styles.input_date}
+                                            type="text"
+                                            name=""
+                                            id=""
+                                        />
+                                    </section>
+                                </div>
+                            </section>
+                            <section className={styles.calendar_wrapper}>
+                                <div className={styles.calendar_container}>
+                                    <Calendar
+                                        className="calender-body"
+                                        formatShortWeekday={formatShortWeekday}
+                                        selectRange={true}
+                                        onChange={(e) => {
+                                            handleDateChange(e);
+                                        }}
+                                        value={selectedDates}
+                                    />
+                                </div>
+                            </section>
+                        </div>
+                    </section>
+                    <section
+                        style={{ justifyContent: "flex-end" }}
+                        className={styles.right_third}
+                    >
+                        <ContinueButtons
+                            clickHandler={() => {
+                                clickHandler(cardRef);
+                            }}
+                        />
+                    </section>
+                </>
+            }
+        />
+    );
 };

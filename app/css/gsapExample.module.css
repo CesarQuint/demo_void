@@ -1,43 +1,43 @@
 .main {
-  display: block;
+    display: block;
 }
 
 .container {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  padding: 0 2vh;
-  min-height: 25vh;
-  border: 2px solid white;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0 2vh;
+    min-height: 25vh;
+    border: 2px solid white;
 }
 
 .box {
-  width: 100px;
-  height: 100px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  font-weight: 600;
-  margin: 10px;
-  background-color: aqua;
+    width: 100px;
+    height: 100px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-weight: 600;
+    margin: 10px;
+    background-color: aqua;
 }
 
 .circle {
-  width: 100px;
-  height: 100px;
-  border-radius: 99%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  font-weight: 600;
-  margin: 10px;
-  background-color: blue;
+    width: 100px;
+    height: 100px;
+    border-radius: 99%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-weight: 600;
+    margin: 10px;
+    background-color: blue;
 }
 
 .good {
-  padding: 2vh;
-  background-color: burlywood;
+    padding: 2vh;
+    background-color: burlywood;
 }

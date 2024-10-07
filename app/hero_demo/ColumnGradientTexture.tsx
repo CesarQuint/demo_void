@@ -1,4 +1,4 @@
-import { ShaderMaterial, Vector2 } from 'three';
+import { ShaderMaterial, Vector2 } from "three";
 
 const VRTX_SAHDER = `
 varying vec2 vUv;
@@ -50,12 +50,16 @@ void main() {
 }
 `;
 
-export const ColumnGradientMaterial = (width: number, height: number, columns: number) => {
+export const ColumnGradientMaterial = (
+    width: number,
+    height: number,
+    columns: number,
+) => {
     return new ShaderMaterial({
         uniforms: {
             columns: { value: columns },
             uMouse: { value: new Vector2() },
-            uResolution: { value: new Vector2(width, height) }
+            uResolution: { value: new Vector2(width, height) },
         },
         vertexShader: VRTX_SAHDER,
         fragmentShader: FRAG_SHADER,

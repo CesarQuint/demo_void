@@ -17,7 +17,8 @@ const Brief = () => {
             <motion.div className={styles.description}>
                 <p className={styles.title}>¿Tienes un Brief?</p>
                 <p className={styles.text}>
-                    Contesta nuestro formulario y te contactaremos para tu proyecto.
+                    Contesta nuestro formulario y te contactaremos para tu
+                    proyecto.
                 </p>
             </motion.div>
             <motion.div className={styles.buttons_wrapper}>

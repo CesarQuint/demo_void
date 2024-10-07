@@ -1,15 +1,23 @@
-import { DataTexture, ShaderMaterial, RGBFormat, FloatType, NearestFilter, Vector4 } from "three";
-import { Size, Viewport, useFrame, useThree } from '@react-three/fiber';
+import {
+    DataTexture,
+    ShaderMaterial,
+    RGBFormat,
+    FloatType,
+    NearestFilter,
+    Vector4,
+} from "three";
+import { Size, Viewport, useFrame, useThree } from "@react-three/fiber";
 import { useTexture } from "@react-three/drei";
 import { useMemo, useRef, useEffect } from "react";
 
-const TEXTURE_IMG = 'https://images.unsplash.com/photo-1620121692029-d088224ddc74?q=80&w=1920';
+const TEXTURE_IMG =
+    "https://images.unsplash.com/photo-1620121692029-d088224ddc74?q=80&w=1920";
 
 type DisplacementMaterialProps = {
-    size: number,
-    strength: number,
-    relaxation: number,
-}
+    size: number;
+    strength: number;
+    relaxation: number;
+};
 
 const VRTX_SAHDER = `
     varying vec2 vUv;
@@ -43,11 +51,22 @@ const FRAG_SHADER = `
     }
 `;
 
-const clamp = (num: number, min: number, max: number) => Math.max(min, Math.min(num, max));
+const clamp = (num: number, min: number, max: number) =>
+    Math.max(min, Math.min(num, max));
 
-type TextureProperties = { texture: DataTexture, pointer: { x: number, y: number }, material_props: DisplacementMaterialProps, size: Size };
+type TextureProperties = {
+    texture: DataTexture;
+    pointer: { x: number; y: number };
+    material_props: DisplacementMaterialProps;
+    size: Size;
+};
 
-const updateDataTexture = ({ texture, pointer, material_props: { size, strength, relaxation }, size: { width, height } }: TextureProperties): DataTexture => {
+const updateDataTexture = ({
+    texture,
+    pointer,
+    material_props: { size, strength, relaxation },
+    size: { width, height },
+}: TextureProperties): DataTexture => {
     const data = texture.image.data;
 
     for (let i = 0; i < data.length; i += 3) {
@@ -62,7 +81,8 @@ const updateDataTexture = ({ texture, pointer, material_props: { size, strength,
 
     for (let i = 0; i < size; i++) {
         for (let j = 0; j < size; j++) {
-            const distance = ((gridMouseX - i) ** 2) / aspect + (gridMouseY - j) ** 2;
+            const distance =
+                (gridMouseX - i) ** 2 / aspect + (gridMouseY - j) ** 2;
             const maxDistSq = maxDist ** 2;
 
             if (distance < maxDistSq) {
@@ -81,10 +101,20 @@ const updateDataTexture = ({ texture, pointer, material_props: { size, strength,
     return texture;
 };
 
-export const DisplacementMaterial: React.FC<DisplacementMaterialProps> = (props: DisplacementMaterialProps) => {
+export const DisplacementMaterial: React.FC<DisplacementMaterialProps> = (
+    props: DisplacementMaterialProps,
+) => {
     const { size } = useThree();
     const texture = useTexture(TEXTURE_IMG);
-    const dataTextureRef = useRef(new DataTexture(new Float32Array(Math.pow(props.size, 2) * 3), size.width, size.height, RGBFormat, FloatType));
+    const dataTextureRef = useRef(
+        new DataTexture(
+            new Float32Array(Math.pow(props.size, 2) * 3),
+            size.width,
+            size.height,
+            RGBFormat,
+            FloatType,
+        ),
+    );
 
     useEffect(() => {
         const dataTexture = dataTextureRef.current;
@@ -92,13 +122,12 @@ export const DisplacementMaterial: React.FC<DisplacementMaterialProps> = (props:
         dataTexture.needsUpdate = true;
     }, [props.size]);
 
-
     useFrame((state, delta) => {
         updateDataTexture({
             texture: dataTextureRef.current,
             pointer: state.pointer,
             material_props: props,
-            size
+            size,
         });
 
         material.uniforms.u_time.value += delta;
@@ -116,7 +145,6 @@ export const DisplacementMaterial: React.FC<DisplacementMaterialProps> = (props:
             fragmentShader: FRAG_SHADER,
         });
     }, [texture]);
-
 
     return (
         <mesh material={material}>

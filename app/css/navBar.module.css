@@ -1,144 +1,144 @@
 .nav_container {
-  position: sticky;
-  top: 0;
-  justify-content: space-between;
-  max-width: 76vw;
-  padding: 20px 32px;
-  border-radius: 40px;
-  margin: 40px auto;
+    position: sticky;
+    top: 0;
+    justify-content: space-between;
+    max-width: 76vw;
+    padding: 20px 32px;
+    border-radius: 40px;
+    margin: 40px auto;
 
-  background: rgba(255, 255, 255, 0.08);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(120, 120, 120, 0.4);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(120, 120, 120, 0.4);
 
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
 
-  @media (max-width: 768px) {
-    max-width: 90vw;
-  }
+    @media (max-width: 768px) {
+        max-width: 90vw;
+    }
 }
 
 .top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .nav_btn {
-  all: unset;
-  width: 100px;
-  height: 17px;
-  position: relative;
-  cursor: pointer;
+    all: unset;
+    width: 100px;
+    height: 17px;
+    position: relative;
+    cursor: pointer;
 
-  & .line1,
-  & .line2 {
-    position: absolute;
-    left: 0;
-    /* top: 50%; */
-    width: 100%;
-    height: 2px;
-    background: #fff;
-    transform-origin: 0;
-  }
+    & .line1,
+    & .line2 {
+        position: absolute;
+        left: 0;
+        /* top: 50%; */
+        width: 100%;
+        height: 2px;
+        background: #fff;
+        transform-origin: 0;
+    }
 
-  & .line1 {
-    top: 0;
-  }
-  & .line2 {
-    bottom: 0;
-  }
+    & .line1 {
+        top: 0;
+    }
+    & .line2 {
+        bottom: 0;
+    }
 }
 
 .links {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  font-size: 2rem;
-  text-transform: uppercase;
-  font-weight: bold;
-  text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    font-size: 2rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    text-align: center;
 
-  opacity: 0;
-  height: 0;
-  pointer-events: none;
+    opacity: 0;
+    height: 0;
+    pointer-events: none;
 
-  & a:last-child {
-    margin-top: 20px;
-  }
+    & a:last-child {
+        margin-top: 20px;
+    }
 }
 
 .linksMb {
-  display: none;
+    display: none;
 }
 
 .langs {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  font-size: 1.25rem;
-  pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    font-size: 1.25rem;
+    pointer-events: none;
 
-  opacity: 0;
-  height: 0;
+    opacity: 0;
+    height: 0;
 
-  & button {
-    cursor: pointer;
-    background: none;
-    border: none;
-    font-size: unset;
+    & button {
+        cursor: pointer;
+        background: none;
+        border: none;
+        font-size: unset;
 
-    &:last-child {
-      margin-bottom: 54px;
+        &:last-child {
+            margin-bottom: 54px;
+        }
     }
-  }
 }
 
 .image_logo:hover {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 @media (min-width: 720px) {
-  .nav_container {
-    flex-direction: row;
-  }
-
-  .links,
-  .langs,
-  .nav_btn {
-    display: none;
-  }
-
-  .linksMb {
-    display: flex;
-    align-items: center;
-    gap: 50px;
-    font-weight: 200;
-    letter-spacing: -0.05em;
-    text-transform: uppercase;
-    color: #fff;
-
-    .writeUs {
-      display: flex;
-      margin-left: -25px;
-
-      .writeUsTxt,
-      .writeUsIcon {
-        color: #000;
-        background: #fff;
-        border-radius: 2rem;
-      }
-      .writeUsTxt {
-        padding: 0.75rem 1rem;
-      }
-      .writeUsIcon {
-        width: 2.625rem;
-        aspect-ratio: 1;
-        display: grid;
-        place-items: center;
-      }
+    .nav_container {
+        flex-direction: row;
     }
-  }
+
+    .links,
+    .langs,
+    .nav_btn {
+        display: none;
+    }
+
+    .linksMb {
+        display: flex;
+        align-items: center;
+        gap: 50px;
+        font-weight: 200;
+        letter-spacing: -0.05em;
+        text-transform: uppercase;
+        color: #fff;
+
+        .writeUs {
+            display: flex;
+            margin-left: -25px;
+
+            .writeUsTxt,
+            .writeUsIcon {
+                color: #000;
+                background: #fff;
+                border-radius: 2rem;
+            }
+            .writeUsTxt {
+                padding: 0.75rem 1rem;
+            }
+            .writeUsIcon {
+                width: 2.625rem;
+                aspect-ratio: 1;
+                display: grid;
+                place-items: center;
+            }
+        }
+    }
 }

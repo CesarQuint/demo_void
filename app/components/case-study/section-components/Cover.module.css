@@ -7,10 +7,10 @@
     justify-content: flex-end;
     padding-bottom: 0;
 
-  @media (max-width: 700px) {
-      width: initial;
-      gap: 4vh;
-  }
+    @media (max-width: 700px) {
+        width: initial;
+        gap: 4vh;
+    }
 }
 
 .title {

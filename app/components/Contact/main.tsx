@@ -6,13 +6,13 @@ import Form from "./Form";
 import Brief from "./Brief";
 
 const Main = () => {
-  return (
-    <motion.section className={styles.main}>
-      <Whatsapp />
-      <Brief />
-      <Form />
-    </motion.section>
-  );
+    return (
+        <motion.section className={styles.main}>
+            <Whatsapp />
+            <Brief />
+            <Form />
+        </motion.section>
+    );
 };
 
 export default Main;

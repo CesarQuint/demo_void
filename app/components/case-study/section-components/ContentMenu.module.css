@@ -34,7 +34,7 @@
 }
 
 .menuItem > a::before {
-    content: '';
+    content: "";
     position: absolute;
     top: -10px;
     left: 0;
@@ -83,7 +83,7 @@
 }
 
 .subMenuItem::after {
-    content: '';
+    content: "";
     position: absolute;
     width: 100%;
     transform: scaleX(0);

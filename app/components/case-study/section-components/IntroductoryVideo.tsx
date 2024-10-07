@@ -1,7 +1,9 @@
-import { Project } from "../../../Strapi/interfaces/Entities/Project"
-import styles from './IntroductoryVideo.module.css';
+import { Project } from "../../../Strapi/interfaces/Entities/Project";
+import styles from "./IntroductoryVideo.module.css";
 
-type CaseStudyVideoProps = { data: Project['attributes']['Case_Study_Video']['data'] }
+type CaseStudyVideoProps = {
+    data: Project["attributes"]["Case_Study_Video"]["data"];
+};
 
 const CaseStudyVideo: React.FC<CaseStudyVideoProps> = ({ data }) => (
     <section>
@@ -10,7 +12,10 @@ const CaseStudyVideo: React.FC<CaseStudyVideoProps> = ({ data }) => (
                 autoPlay={true}
                 muted={true}
                 className={styles.video}
-                src={process.env.NEXT_PUBLIC_STRAPI_MEDIA_URL + data.attributes.url}
+                src={
+                    process.env.NEXT_PUBLIC_STRAPI_MEDIA_URL +
+                    data.attributes.url
+                }
                 controls={true}
             />
         </div>

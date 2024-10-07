@@ -1,5 +1,5 @@
 .main {
-  width: 100%;
+    width: 100%;
 }
 
 .section {
@@ -11,7 +11,7 @@
 .heading {
     text-transform: uppercase;
     text-align: center;
-    font-family: 'panchang';
+    font-family: "panchang";
     font-size: 2rem;
     padding-bottom: 2rem;
     font-weight: 200;
@@ -44,56 +44,52 @@
 }
 
 .cover::before {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 10;
-  height: 50%;
-  background: linear-gradient(
-    to top,
-    rgba(0, 0, 0, 0.7),
-    rgba(0, 0, 0, 0)
-  );
-  pointer-events: none;
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    height: 50%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
+    pointer-events: none;
 }
 
 .contents {
-  position: absolute;
-  color: white;
-  z-index: 15;
-  bottom: 2vh;
+    position: absolute;
+    color: white;
+    z-index: 15;
+    bottom: 2vh;
 
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  gap: 1vh;
-  font-family: Panchang;
-  padding: 0 3rem;
-  cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 1vh;
+    font-family: Panchang;
+    padding: 0 3rem;
+    cursor: pointer;
 }
 
 .steps {
-  display: flex;
-  flex-flow: row nowrap;
-  gap: 10px;
-  width: 100%;
-  margin: auto;
-  height: 10px;
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 10px;
+    width: 100%;
+    margin: auto;
+    height: 10px;
 }
 
 .step {
-  transition: all 0.5s;
-  width: 100%;
-  height: 5px;
-  border-radius: 40px;
-  margin: 1rem 0;
-  background-color: grey;
+    transition: all 0.5s;
+    width: 100%;
+    height: 5px;
+    border-radius: 40px;
+    margin: 1rem 0;
+    background-color: grey;
 
-  &:hover {
-    cursor: pointer;
-  }
+    &:hover {
+        cursor: pointer;
+    }
 }
 
 .activeStep {
@@ -101,11 +97,11 @@
 }
 
 @media (min-width: 700px) {
-  .steps {
-    width: 30%;
-  }
+    .steps {
+        width: 30%;
+    }
 
-  .step {
-    height: 4px;
-  }
+    .step {
+        height: 4px;
+    }
 }

@@ -15,7 +15,7 @@
 }
 
 .code {
-    font-family: 'input-mono';
+    font-family: "input-mono";
     background-color: #f5f5f5;
     padding: 2px 4px;
     border-radius: 4px;
@@ -31,7 +31,7 @@
 }
 
 .link::after {
-    content: '';
+    content: "";
     position: absolute;
     width: 100%;
     transform: scaleX(0);
@@ -54,7 +54,7 @@
 }
 
 .innertext {
-    font-family: 'graphie';
+    font-family: "graphie";
     font-weight: 100;
     white-space: pre-wrap;
 }

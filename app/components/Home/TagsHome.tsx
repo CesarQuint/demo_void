@@ -10,7 +10,8 @@ const TagsHome = () => {
                 width: "100%",
                 boxSizing: "border-box",
                 position: "relative",
-            }}>
+            }}
+        >
             <Tags contentArr={about_us_tags} />
         </motion.div>
     );

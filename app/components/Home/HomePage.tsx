@@ -3,7 +3,14 @@
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { motion, usePresence, useAnimate, Spring, animate as animation, AnimationSequence } from "framer-motion";
+import {
+    motion,
+    usePresence,
+    useAnimate,
+    Spring,
+    animate as animation,
+    AnimationSequence,
+} from "framer-motion";
 
 import styles from "./pageImage.module.css";
 import useWindow from "../../utils/hooks/useWindow";
@@ -172,7 +179,10 @@ function HomePage(props: Props) {
                     <Footer />
                 </>
             ) : (
-                <LoadingComponent height="100vh" loadingProgress={loadingProgress} />
+                <LoadingComponent
+                    height="100vh"
+                    loadingProgress={loadingProgress}
+                />
             )}
         </motion.div>
     );
