@@ -1,6 +1,6 @@
-import { useMemo, useState } from 'react';
-import { ThreeEvent, useFrame, useThree } from '@react-three/fiber';
-import { ShaderMaterial, Vector2 } from 'three';
+import { useMemo, useState } from "react";
+import { ThreeEvent, useFrame, useThree } from "@react-three/fiber";
+import { ShaderMaterial, Vector2 } from "three";
 
 const VRTX_SHADER = `
     varying vec2 vUv;
@@ -85,65 +85,86 @@ const FRAG_SHADER = `
 `;
 
 type DisplacementGeometrySettings = {
-  easing_factor: number;
-  orb_size: number;
-  contrast: number;
-  columns: number;
-  glow: number;
-  grid: boolean;
-}
+    easing_factor: number;
+    orb_size: number;
+    contrast: number;
+    columns: number;
+    glow: number;
+    grid: boolean;
+};
 
-export const DisplacementGeometry: React.FC<{ settings: DisplacementGeometrySettings }> = ({ settings: { contrast, columns, glow, easing_factor, orb_size, grid } }) => {
-  const { viewport, size } = useThree();
+export const DisplacementGeometry: React.FC<{
+    settings: DisplacementGeometrySettings;
+}> = ({
+    settings: { contrast, columns, glow, easing_factor, orb_size, grid },
+}) => {
+    const { viewport, size } = useThree();
 
-  const [currentMouse, setCurrentMouse] = useState(new Vector2());
-  const [targetMouse, setTargetMouse] = useState(new Vector2());
+    const [currentMouse, setCurrentMouse] = useState(new Vector2());
+    const [targetMouse, setTargetMouse] = useState(new Vector2());
 
-  const shaderMaterial = useMemo(() => new ShaderMaterial({
-    uniforms: {
-      u_time: { value: 0 },
-      u_mouse: { value: new Vector2() },
-      u_mouse_velocity: { value: new Vector2() },
-      u_resolution: { value: new Vector2(size.width * viewport.dpr, size.height * viewport.dpr) },
-      u_orb_size: { value: orb_size },
-      u_contrast: { value: contrast },
-      u_columns: { value: columns },
-      u_glow: { value: glow },
-      u_grid_toggle: { value: grid }
-    },
-    vertexShader: VRTX_SHADER,
-    fragmentShader: FRAG_SHADER,
-  }), [viewport, size, columns, glow, orb_size, contrast, grid]);
+    const shaderMaterial = useMemo(
+        () =>
+            new ShaderMaterial({
+                uniforms: {
+                    u_time: { value: 0 },
+                    u_mouse: { value: new Vector2() },
+                    u_mouse_velocity: { value: new Vector2() },
+                    u_resolution: {
+                        value: new Vector2(
+                            size.width * viewport.dpr,
+                            size.height * viewport.dpr,
+                        ),
+                    },
+                    u_orb_size: { value: orb_size },
+                    u_contrast: { value: contrast },
+                    u_columns: { value: columns },
+                    u_glow: { value: glow },
+                    u_grid_toggle: { value: grid },
+                },
+                vertexShader: VRTX_SHADER,
+                fragmentShader: FRAG_SHADER,
+            }),
+        [viewport, size, columns, glow, orb_size, contrast, grid],
+    );
 
-  const handlePointerMove = (event: ThreeEvent<PointerEvent>) => {
-    if (event.intersections.length > 0) {
-      const uv = event.intersections[0].uv;
+    const handlePointerMove = (event: ThreeEvent<PointerEvent>) => {
+        if (event.intersections.length > 0) {
+            const uv = event.intersections[0].uv;
 
-      if (uv) {
-        const normalizedMouseX = uv.x * 2 - 1;
-        const normalizedMouseY = uv.y * 2 - 1;
-        setTargetMouse(new Vector2(normalizedMouseX, normalizedMouseY));
-      }
-    }
-  };
+            if (uv) {
+                const normalizedMouseX = uv.x * 2 - 1;
+                const normalizedMouseY = uv.y * 2 - 1;
+                setTargetMouse(new Vector2(normalizedMouseX, normalizedMouseY));
+            }
+        }
+    };
 
-  useFrame((state) => {
-    // Smoothly update the current mouse position
-    setCurrentMouse(new Vector2(
-      currentMouse.x + (targetMouse.x - currentMouse.x) * easing_factor,
-      currentMouse.y + (targetMouse.y - currentMouse.y) * easing_factor
-    ));
+    useFrame((state) => {
+        // Smoothly update the current mouse position
+        setCurrentMouse(
+            new Vector2(
+                currentMouse.x +
+                    (targetMouse.x - currentMouse.x) * easing_factor,
+                currentMouse.y +
+                    (targetMouse.y - currentMouse.y) * easing_factor,
+            ),
+        );
 
-    shaderMaterial.uniforms.u_mouse.value.set(currentMouse.x, currentMouse.y);
-    shaderMaterial.uniforms.u_time.value = state.clock.getElapsedTime();
-  });
+        shaderMaterial.uniforms.u_mouse.value.set(
+            currentMouse.x,
+            currentMouse.y,
+        );
+        shaderMaterial.uniforms.u_time.value = state.clock.getElapsedTime();
+    });
 
-  return (
-    <mesh
-      scale={[viewport.width, viewport.height, 1]}
-      onPointerMove={handlePointerMove}>
-      <planeGeometry args={[1, 1, 1, 1]} />
-      <primitive object={shaderMaterial} />
-    </mesh>
-  );
+    return (
+        <mesh
+            scale={[viewport.width, viewport.height, 1]}
+            onPointerMove={handlePointerMove}
+        >
+            <planeGeometry args={[1, 1, 1, 1]} />
+            <primitive object={shaderMaterial} />
+        </mesh>
+    );
 };

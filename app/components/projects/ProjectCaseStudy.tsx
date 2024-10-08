@@ -7,17 +7,26 @@ import s from "./ProjectCaseStudy.module.css";
 import { ScrollTrigger, Draggable } from "gsap/all";
 import RelatedProyectsCarrousel from "../../components/About/RelatedProyectsCarrousel";
 import GalleryCarousel from "../../components/case-study/section-components/Gallery";
-import { ContentSectionName, Project } from "../../Strapi/interfaces/Entities/Project";
+import {
+    ContentSectionName,
+    Project,
+} from "../../Strapi/interfaces/Entities/Project";
 import CaseStudyWrapper from "../../components/Horizontal/CaseStudyWrapper";
 import Cover from "../../components/case-study/section-components/Cover";
-import ContentSections, { ContentSectionsProps } from "../../components/case-study/section-components/ContentSections";
-import ContentMenu, { sectionHasContent } from "../../components/case-study/section-components/ContentMenu";
+import ContentSections, {
+    ContentSectionsProps,
+} from "../../components/case-study/section-components/ContentSections";
+import ContentMenu, {
+    sectionHasContent,
+} from "../../components/case-study/section-components/ContentMenu";
 import Introduction from "../../components/case-study/section-components/Introduction";
 import CaseStudyVideo from "../../components/case-study/section-components/IntroductoryVideo";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger, Draggable);
 
-export default function ProjectCaseStudy(props: { data: { project: Project, related: Project[] } }) {
+export default function ProjectCaseStudy(props: {
+    data: { project: Project; related: Project[] };
+}) {
     const [isMobile, setIsMobile] = useState(false);
     const container = useRef<HTMLElement>(null);
     const scrollContainer = useRef<HTMLDivElement>(null);
@@ -25,7 +34,7 @@ export default function ProjectCaseStudy(props: { data: { project: Project, rela
 
     const project = props.data.project;
 
-    const PROJECT_CONTENTS: ContentSectionsProps['data'] = [
+    const PROJECT_CONTENTS: ContentSectionsProps["data"] = [
         {
             name: ContentSectionName.CONCEPTUALIZATION,
             data: project.attributes[ContentSectionName.CONCEPTUALIZATION],
@@ -47,43 +56,46 @@ export default function ProjectCaseStudy(props: { data: { project: Project, rela
 
         handleResize();
 
-        window.addEventListener('resize', handleResize);
+        window.addEventListener("resize", handleResize);
 
         return () => {
-            window.removeEventListener('resize', handleResize);
+            window.removeEventListener("resize", handleResize);
         };
     }, []);
 
-    useGSAP(() => {
-        if (isMobile) return;
+    useGSAP(
+        () => {
+            if (isMobile) return;
 
-        tl.current = gsap
-            .timeline({
-                defaults: {
-                    ease: "none",
-                },
-                scrollTrigger: {
-                    trigger: container.current,
-                    pin: true,
-                    scrub: 0.01,
-                    fastScrollEnd: true,
-                    preventOverlaps: true,
-                    end: `${scrollContainer.current!.scrollWidth} bottom`,
-                },
-            })
-            .to(
-                scrollContainer.current,
-                {
-                    x: container.current!.clientWidth,
-                    xPercent: -100,
-                },
-                0
-            );
+            tl.current = gsap
+                .timeline({
+                    defaults: {
+                        ease: "none",
+                    },
+                    scrollTrigger: {
+                        trigger: container.current,
+                        pin: true,
+                        scrub: 0.01,
+                        fastScrollEnd: true,
+                        preventOverlaps: true,
+                        end: `${scrollContainer.current!.scrollWidth} bottom`,
+                    },
+                })
+                .to(
+                    scrollContainer.current,
+                    {
+                        x: container.current!.clientWidth,
+                        xPercent: -100,
+                    },
+                    0,
+                );
 
-        return () => {
-            if (tl.current) tl.current.kill();
-        };
-    }, { scope: container, dependencies: [isMobile] });
+            return () => {
+                if (tl.current) tl.current.kill();
+            };
+        },
+        { scope: container, dependencies: [isMobile] },
+    );
 
     return (
         <CaseStudyWrapper>
@@ -101,11 +113,16 @@ export default function ProjectCaseStudy(props: { data: { project: Project, rela
                         <ContentMenu data={project} />
                         <Introduction
                             data={{
-                                intro: project.attributes[ContentSectionName.INTRODUCTION],
+                                intro: project.attributes[
+                                    ContentSectionName.INTRODUCTION
+                                ],
                                 location: project.attributes.Location,
                                 eventDate: project.attributes.EventDate,
-                            }} />
-                        <CaseStudyVideo data={project.attributes.Case_Study_Video.data} />
+                            }}
+                        />
+                        <CaseStudyVideo
+                            data={project.attributes.Case_Study_Video.data}
+                        />
                         <ContentSections data={PROJECT_CONTENTS} />
                         <GalleryCarousel data={project.attributes} />
                         <RelatedProyectsCarrousel data={props.data.related} />

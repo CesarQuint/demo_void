@@ -1,112 +1,112 @@
 .main {
-  width: 100%;
+    width: 100%;
 }
 
 .tags_wrapper {
-  color: #101010;
-  padding: 3vh 2vh;
+    color: #101010;
+    padding: 3vh 2vh;
 }
 
 .tags_container {
-  position: relative;
-  height: fit-content;
-  flex-direction: column;
-  display: flex;
-  margin-top: 4vh;
+    position: relative;
+    height: fit-content;
+    flex-direction: column;
+    display: flex;
+    margin-top: 4vh;
 }
 
 .tag {
-  min-height: 40vh;
-  padding: 2rem;
-  border-radius: 15px;
-  display: flex;
-  flex-flow: column nowrap;
-  color: #fff;
-  background: #101010;
-  border: 2px solid #fff;
-  transform-origin: bottom;
-  will-change: transform;
-  align-items: center;
+    min-height: 40vh;
+    padding: 2rem;
+    border-radius: 15px;
+    display: flex;
+    flex-flow: column nowrap;
+    color: #fff;
+    background: #101010;
+    border: 2px solid #fff;
+    transform-origin: bottom;
+    will-change: transform;
+    align-items: center;
 
-  &:nth-child(n + 1) {
-    position: absolute;
-  }
+    &:nth-child(n + 1) {
+        position: absolute;
+    }
 }
 
 .left_content {
-  width: 100%;
-  text-align: center;
+    width: 100%;
+    text-align: center;
 }
 
 .image {
-  width: 50%;
-  height: auto;
+    width: 50%;
+    height: auto;
 }
 
 .right_content {
-  width: 100%;
-  display: flex;
-  flex-flow: column nowrap;
-  gap: 4vh;
+    width: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 4vh;
 }
 
 .left_content h4 {
-  font-family: "Panchang";
-  font-size: 7rem;
-  text-align: center;
+    font-family: "Panchang";
+    font-size: 7rem;
+    text-align: center;
 }
 
 .right_numeral {
-  font-family: "Panchang";
+    font-family: "Panchang";
 }
 
 .title {
-  font-family: Panchang;
-  font-size: 1rem;
-  color: #fff;
-  margin-bottom: 1rem;
+    font-family: Panchang;
+    font-size: 1rem;
+    color: #fff;
+    margin-bottom: 1rem;
 }
 
 .right_text_content p {
-  font-family: Graphie;
-  display: flex;
-  flex-flow: column nowrap;
-  gap: 2vh;
-  font-size: 1.4rem;
-  color: #d1d1d1;
+    font-family: Graphie;
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 2vh;
+    font-size: 1.4rem;
+    color: #d1d1d1;
 }
 
 .image_wrapper {
-  text-align: center;
+    text-align: center;
 }
 
 /* Media Part */
 @media (min-width: 768px) {
-  .title {
-    font-size: 1.5rem;
-    margin-bottom: 0;
-  }
-  .tags_wrapper {
-    color: #101010;
-    padding: 3vh 6vh;
-  }
-  .tag {
-    padding: 2rem 3.5rem;
-    flex-flow: row;
-  }
+    .title {
+        font-size: 1.5rem;
+        margin-bottom: 0;
+    }
+    .tags_wrapper {
+        color: #101010;
+        padding: 3vh 6vh;
+    }
+    .tag {
+        padding: 2rem 3.5rem;
+        flex-flow: row;
+    }
 
-  .right_content {
-    width: 60%;
-    justify-content: center;
-  }
+    .right_content {
+        width: 60%;
+        justify-content: center;
+    }
 
-  .left_content h4 {
-    font-family: "Panchang";
-    font-size: 9rem;
-    text-align: center;
-  }
+    .left_content h4 {
+        font-family: "Panchang";
+        font-size: 9rem;
+        text-align: center;
+    }
 
-  .left_content {
-    width: 40%;
-  }
+    .left_content {
+        width: 40%;
+    }
 }

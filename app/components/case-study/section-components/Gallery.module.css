@@ -1,7 +1,7 @@
 .heading {
     text-transform: uppercase;
     text-align: center;
-    font-family: 'panchang';
+    font-family: "panchang";
     font-size: 2rem;
     margin-bottom: 2rem;
     font-weight: 200;
@@ -12,9 +12,9 @@
     padding: 2rem 0;
     overflow: hidden;
 
-    @media(max-width: 768px) {
-      max-width: 100vw;
-      overflow-x: hidden;
+    @media (max-width: 768px) {
+        max-width: 100vw;
+        overflow-x: hidden;
     }
 }
 
@@ -23,9 +23,9 @@
     align-items: center;
     cursor: grab;
 
-    @media(max-width: 768px) {
-      flex-wrap: nowrap;
-      max-width: 100%;
+    @media (max-width: 768px) {
+        flex-wrap: nowrap;
+        max-width: 100%;
     }
 }
 
@@ -46,26 +46,26 @@
 }
 
 .thumbnails {
-  display: flex;
-  justify-content: center;
-  cursor: grab;
-  width: 100%;
+    display: flex;
+    justify-content: center;
+    cursor: grab;
+    width: 100%;
 
-  @media (max-width: 768px) {
-    justify-content: flex-start;
-    overflow-x: auto;
-  }
+    @media (max-width: 768px) {
+        justify-content: flex-start;
+        overflow-x: auto;
+    }
 }
 
 .thumbnail {
-  width: 100px;
-  height: 75px;
-  margin: 0 10px;
-  object-fit: cover;
-  cursor: pointer;
-  border-radius: 10px;
+    width: 100px;
+    height: 75px;
+    margin: 0 10px;
+    object-fit: cover;
+    cursor: pointer;
+    border-radius: 10px;
 
-  @media (max-width: 768px) {
-      flex-shrink: 0;
-  }
+    @media (max-width: 768px) {
+        flex-shrink: 0;
+    }
 }

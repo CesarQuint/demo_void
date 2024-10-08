@@ -1,5 +1,5 @@
-import { notFound } from 'next/navigation';
-import { ProjectsView } from '../components/projects/ProjectsView';
+import { notFound } from "next/navigation";
+import { ProjectsView } from "../components/projects/ProjectsView";
 import { getCategoriesData } from "../Strapi/RestAPI/ProjectsProvider";
 
 export default async function Page() {
@@ -8,4 +8,4 @@ export default async function Page() {
     if (!CATEGORIES) return notFound();
 
     return <ProjectsView data={{ categories: CATEGORIES.data }} />;
-};
+}

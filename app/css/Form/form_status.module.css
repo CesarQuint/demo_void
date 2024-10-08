@@ -1,19 +1,19 @@
 .main {
-  padding: 0 6vh 4vh;
-  @media (min-width: 700px) {
     padding: 0 6vh 4vh;
-  }
+    @media (min-width: 700px) {
+        padding: 0 6vh 4vh;
+    }
 }
 
 .status_flex {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: center;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
 }
 
 .number {
-  font-size: medium;
-  @media (min-width: 700px) {
-    font-size: xx-large;
-  }
+    font-size: medium;
+    @media (min-width: 700px) {
+        font-size: xx-large;
+    }
 }

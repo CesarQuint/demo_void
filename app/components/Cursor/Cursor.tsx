@@ -1,111 +1,120 @@
-'use client'
+"use client";
 
-import { useId, useRef } from 'react'
-import { gsap } from 'gsap'
-import { useGSAP } from '@gsap/react'
+import { useId, useRef } from "react";
+import { gsap } from "gsap";
+import { useGSAP } from "@gsap/react";
 
-import useMouse from '../../utils/hooks/useMouse'
-import s from './Cursor.module.css'
+import useMouse from "../../utils/hooks/useMouse";
+import s from "./Cursor.module.css";
 
 export default function Cursor() {
-    const container = useRef<HTMLDivElement>(null)
-    const mouse = useMouse()
+    const container = useRef<HTMLDivElement>(null);
+    const mouse = useMouse();
 
     //#region position
 
-    const verticalLineRef = useRef<SVGSVGElement>(null)
-    const horizontalLineRef = useRef<SVGSVGElement>(null)
+    const verticalLineRef = useRef<SVGSVGElement>(null);
+    const horizontalLineRef = useRef<SVGSVGElement>(null);
 
     useGSAP(
         () => {
-            const pos = { x: 0, y: 0 }
-            const amt = 0.15
-            let renderId = 0
-            const xTo = gsap.quickSetter(verticalLineRef.current, 'x', 'px')
-            const yTo = gsap.quickSetter(horizontalLineRef.current, 'y', 'px')
+            const pos = { x: 0, y: 0 };
+            const amt = 0.15;
+            let renderId = 0;
+            const xTo = gsap.quickSetter(verticalLineRef.current, "x", "px");
+            const yTo = gsap.quickSetter(horizontalLineRef.current, "y", "px");
 
             function render() {
-                pos.x = gsap.utils.interpolate(pos.x, mouse.x, amt)
-                pos.y = gsap.utils.interpolate(pos.y, mouse.y, amt)
-                xTo(pos.x)
-                yTo(pos.y)
-                renderId = window.requestAnimationFrame(render)
+                pos.x = gsap.utils.interpolate(pos.x, mouse.x, amt);
+                pos.y = gsap.utils.interpolate(pos.y, mouse.y, amt);
+                xTo(pos.x);
+                yTo(pos.y);
+                renderId = window.requestAnimationFrame(render);
             }
 
             function firstRender(ev: MouseEvent) {
-                pos.x = ev.x
-                pos.y = ev.y
+                pos.x = ev.x;
+                pos.y = ev.y;
 
                 gsap.to([horizontalLineRef.current, verticalLineRef.current], {
                     duration: 0.9,
-                    ease: 'Power3.easeOut',
+                    ease: "Power3.easeOut",
                     opacity: 1,
-                })
+                });
 
-                renderId = window.requestAnimationFrame(render)
+                renderId = window.requestAnimationFrame(render);
             }
 
-            window.addEventListener('mousemove', firstRender, { once: true })
+            window.addEventListener("mousemove", firstRender, { once: true });
             return () => {
-                window.removeEventListener('mousemove', firstRender)
-                window.cancelAnimationFrame(renderId)
-            }
+                window.removeEventListener("mousemove", firstRender);
+                window.cancelAnimationFrame(renderId);
+            };
         },
         { scope: container },
-    )
+    );
 
     //#endregion
 
     //#region wave
 
-    const verticalFilterId = useId()
-    const horizontalFilterId = useId()
-    const verticalFeTurbulenceRef = useRef<SVGFETurbulenceElement>(null)
-    const horizontalFeTurbulenceRef = useRef<SVGFETurbulenceElement>(null)
+    const verticalFilterId = useId();
+    const horizontalFilterId = useId();
+    const verticalFeTurbulenceRef = useRef<SVGFETurbulenceElement>(null);
+    const horizontalFeTurbulenceRef = useRef<SVGFETurbulenceElement>(null);
 
     useGSAP(
         () => {
-            const state = { frequency: 0 }
+            const state = { frequency: 0 };
             const tl = gsap
                 .timeline({
                     paused: true,
                     onUpdate: () => {
-                        horizontalFeTurbulenceRef.current!.setAttribute('baseFrequency', `${state.frequency}`)
-                        verticalFeTurbulenceRef.current!.setAttribute('baseFrequency', `${state.frequency}`)
+                        horizontalFeTurbulenceRef.current!.setAttribute(
+                            "baseFrequency",
+                            `${state.frequency}`,
+                        );
+                        verticalFeTurbulenceRef.current!.setAttribute(
+                            "baseFrequency",
+                            `${state.frequency}`,
+                        );
                     },
                 })
                 .to(state, {
                     duration: 0.5,
-                    ease: 'power1',
+                    ease: "power1",
                     startAt: { frequency: 1 },
                     frequency: 0,
-                })
+                });
 
             function enter() {
-                tl.restart()
+                tl.restart();
             }
             function leave() {
-                tl.progress(1).kill()
+                tl.progress(1).kill();
             }
 
             function handleHover(ev: MouseEvent) {
-                const target = ev.target as HTMLElement
-                if (target.matches('a')) enter()
+                const target = ev.target as HTMLElement;
+                if (target.matches("a")) enter();
             }
             function handleBlur(ev: MouseEvent) {
-                const target = ev.target as HTMLElement
-                if (target.matches('a')) leave()
+                const target = ev.target as HTMLElement;
+                if (target.matches("a")) leave();
             }
 
-            window.addEventListener('mouseover', handleHover)
-            window.addEventListener('mouseout', handleBlur)
+            window.addEventListener("mouseover", handleHover);
+            window.addEventListener("mouseout", handleBlur);
             return () => {
-                window.removeEventListener('mouseover', handleHover)
-                window.removeEventListener('mouseout', handleBlur)
-            }
+                window.removeEventListener("mouseover", handleHover);
+                window.removeEventListener("mouseout", handleBlur);
+            };
         },
-        { scope: container, dependencies: [horizontalFilterId, verticalFilterId] },
-    )
+        {
+            scope: container,
+            dependencies: [horizontalFilterId, verticalFilterId],
+        },
+    );
 
     //#endregion
 
@@ -119,7 +128,14 @@ export default function Cursor() {
                 filter={`url(#${horizontalFilterId})`}
             >
                 <defs>
-                    <filter id={horizontalFilterId} x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox">
+                    <filter
+                        id={horizontalFilterId}
+                        x="-50%"
+                        y="-50%"
+                        width="200%"
+                        height="200%"
+                        filterUnits="objectBoundingBox"
+                    >
                         <feTurbulence
                             ref={horizontalFeTurbulenceRef}
                             type="fractalNoise"
@@ -157,7 +173,14 @@ export default function Cursor() {
                 filter={`url(#${verticalFilterId})`}
             >
                 <defs>
-                    <filter id={verticalFilterId} x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox">
+                    <filter
+                        id={verticalFilterId}
+                        x="-50%"
+                        y="-50%"
+                        width="200%"
+                        height="200%"
+                        filterUnits="objectBoundingBox"
+                    >
                         <feTurbulence
                             ref={verticalFeTurbulenceRef}
                             type="fractalNoise"
@@ -187,5 +210,5 @@ export default function Cursor() {
                 />
             </svg>
         </div>
-    )
+    );
 }

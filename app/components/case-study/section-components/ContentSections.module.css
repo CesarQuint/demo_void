@@ -1,52 +1,63 @@
 .contentSection {
-    padding: 0 3.5rem;
-    font-family: Graphie;
-    display: flex;
-    flex-flow: column nowrap;
-    gap: 3vh;
-    padding: 0 3vw;
+  padding: 0 3.5rem;
+  font-family: Graphie;
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 3vh;
+  padding: 0 3vw;
 
-    @media (max-width: 768px) {
-        width: 100%;
-    }
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 }
 
 .title {
-    font-weight: 300;
-    font-size: 2rem;
-    margin-bottom: 1rem;
-    text-transform: uppercase;
+  font-weight: 300;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
 }
 
 .innerContent {
-    overflow: scroll;
-    position: relative;
-    display: flex;
-    align-items: flex-start;
+  overflow: scroll;
+  position: relative;
+  display: flex;
+  align-items: flex-start;
 
-    @media (max-width: 768px) {
-        display: block;
-    }
+  @media (max-width: 768px) {
+    display: block;
+  }
 }
 
 .sideMenu {
-    color: white;
-    padding: 2rem;
-    position: sticky;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    display: flex;
-    flex-direction: column;
+  color: white;
+  padding: 2rem;
+  position: sticky;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .menuList {
-    width: 300px;
+  width: 300px;
+  @media (max-width: 768px) {
+    overflow: scroll;
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 2vw;
+  }
 }
 
 .sideMenuItem {
-    margin: 0.8rem 0;
-    cursor: pointer;
+  margin: 0.8rem 0;
+  cursor: pointer;
+  @media (max-width: 768px) {
+    position: relative;
+    padding: 0 2vw;
+    display: inline;
+  }
 }
 
 .sideMenuItem::after {
@@ -64,41 +75,45 @@
 }
 
 .sideMenuItem:hover::after {
-    transform: scaleX(1);
-    transform-origin: bottom left;
+  transform: scaleX(1);
+  transform-origin: bottom left;
 }
 
 .sideMenuItem span {
-    position: absolute;
-    display: inline;
-    text-transform: uppercase;
-    text-decoration: none;
-    color: white;
-    transition: transform 0.2s ease-out;
-    text-wrap: nowrap;
+  position: absolute;
+  display: inline;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: white;
+  transition: transform 0.2s ease-out;
+  text-wrap: nowrap;
+
+  @media (max-width: 768px) {
+    position: relative;
+  }
 }
 
 .sideMenuItem::marker {
-    content: "▶ ";
+  content: "▶ ";
 }
 
 .sideMenuItem:hover::marker {
-    color: black;
+  color: black;
 }
 
 .sideMenuItem:hover span {
-    transform: translateX(15px);
-    color: black;
+  transform: translateX(15px);
+  color: black;
 }
 
 .content {
-    flex-grow: 1;
-    padding: 2rem;
-    overflow-y: auto;
+  flex-grow: 1;
+  padding: 2rem;
+  overflow-y: auto;
 }
 
 .scrollable-content {
-    height: 100%;
-    max-height: 100%;
-    overflow-y: scroll;
+  height: 100%;
+  max-height: 100%;
+  overflow-y: scroll;
 }

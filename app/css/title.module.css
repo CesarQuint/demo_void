@@ -1,68 +1,68 @@
 /* Include your CSS styling here */
 /* Example CSS based on the provided styles */
 .body {
-  margin: 0;
-  --color-text: #fff;
-  --color-bg: black;
-  --font-size-xl: 26vw;
-  --font-family: "Arial", sans-serif;
-  --font-weight: 900;
-  --content-offset: 20vh;
-  --color-rep-text: var(--color-text);
-  --color-rep-bg: var(--color-bg);
-  color: var(--color-text);
-  background-color: var(--color-bg);
-  height: 100%;
-  width: 100%;
+    margin: 0;
+    --color-text: #fff;
+    --color-bg: black;
+    --font-size-xl: 26vw;
+    --font-family: "Arial", sans-serif;
+    --font-weight: 900;
+    --content-offset: 20vh;
+    --color-rep-text: var(--color-text);
+    --color-rep-bg: var(--color-bg);
+    color: var(--color-text);
+    background-color: var(--color-bg);
+    height: 100%;
+    width: 100%;
 
-  scroll-behavior: smooth;
+    scroll-behavior: smooth;
 }
 
 .content {
-  overflow: hidden;
-  display: flex;
-  justify-content: flex-end;
-  height: 100%;
-  flex-direction: column;
-  align-items: center;
-  scroll-behavior: smooth;
+    overflow: hidden;
+    display: flex;
+    justify-content: flex-end;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    scroll-behavior: smooth;
 }
 
 .content__title {
-  font-size: var(--font-size-xl);
-  margin: 0;
-  display: grid;
-  font-family: var(--font-family);
-  font-weight: var(--font-weight);
-  color: var(--color-rep-text);
-  cursor: default;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+    font-size: var(--font-size-xl);
+    margin: 0;
+    display: grid;
+    font-family: var(--font-family);
+    font-weight: var(--font-weight);
+    color: var(--color-rep-text);
+    cursor: default;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .text_rep {
-  width: 100%;
-  color: var(--color-rep-text);
-  padding: 0;
-  overflow: hidden;
-  will-change: transform;
+    width: 100%;
+    color: var(--color-rep-text);
+    padding: 0;
+    overflow: hidden;
+    will-change: transform;
 }
 
 .image_logo {
-  height: 18vw;
-  padding: 0;
-  transition: all 1s;
-  margin-top: 5px;
-  width: 100%;
-  overflow: hidden;
+    height: 18vw;
+    padding: 0;
+    transition: all 1s;
+    margin-top: 5px;
+    width: 100%;
+    overflow: hidden;
 }
 
 @media screen and (min-width: 768px) {
-  .image_logo {
-    height: 19vw;
-    padding: 0;
-    width: 100%;
-  }
+    .image_logo {
+        height: 19vw;
+        padding: 0;
+        width: 100%;
+    }
 }

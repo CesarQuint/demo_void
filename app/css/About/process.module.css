@@ -1,20 +1,20 @@
 .main {
-  width: 100%;
+    width: 100%;
 }
 
 .title {
-  font-family: "Panchang";
-  font-size: 2rem;
-  text-align: center;
-  margin-bottom: 3vh;
+    font-family: "Panchang";
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 3vh;
 }
 
 .gif_wrapper {
-  padding: 0 6vh;
+    padding: 0 6vh;
 }
 
 .image_gif {
-  width: 100%;
-  height: auto;
-  border-radius: 40px;
+    width: 100%;
+    height: auto;
+    border-radius: 40px;
 }

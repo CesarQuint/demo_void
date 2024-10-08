@@ -1,22 +1,21 @@
-import styles from './Cover.module.css';
-import { Project } from '../../../Strapi/interfaces/Entities/Project';
+import styles from "./Cover.module.css";
+import { Project } from "../../../Strapi/interfaces/Entities/Project";
 
 type CoverProps = {
     data: {
-        image: Project['attributes']['Cover']['data'],
-        title: Project['attributes']['Title'],
-        subtitle: Project['attributes']['Subtitle'],
-        category: Project['attributes']['Category'],
-    }
+        image: Project["attributes"]["Cover"]["data"];
+        title: Project["attributes"]["Title"];
+        subtitle: Project["attributes"]["Subtitle"];
+        category: Project["attributes"]["Category"];
+    };
 };
 
-const Cover: React.FC<CoverProps> = ({ data }) =>
-(
+const Cover: React.FC<CoverProps> = ({ data }) => (
     <section
         style={{
             backgroundSize: "cover",
             backgroundPosition: "center",
-            backgroundImage: `url(${process.env.NEXT_PUBLIC_STRAPI_BASE_URL + data.image.attributes.formats.large.url})`,
+            backgroundImage: `url(${process.env.NEXT_PUBLIC_STRAPI_MEDIA_URL + data.image.attributes.formats.large.url})`,
         }}
         className={styles.cover}
     >

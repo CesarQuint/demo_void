@@ -1,16 +1,16 @@
 import { Entity } from "./Entity";
-import { Category } from "./Category"
+import { Category } from "./Category";
 import { ImageContent } from "./ImageFormat";
 
 import { ContentData } from "../../../components/case-study/section-components/ContentSections";
 
 export enum ContentSectionName {
-    INTRODUCTION = 'Introduction',
-    CONCEPTUALIZATION = 'Conceptualization',
-    DEVELOPMENT = 'Development',
-    PRODUCTION = 'Production',
-    RESULTS = 'Results',
-    CREDITS = 'Credits',
+    INTRODUCTION = "Introduction",
+    CONCEPTUALIZATION = "Conceptualization",
+    DEVELOPMENT = "Development",
+    PRODUCTION = "Production",
+    RESULTS = "Results",
+    CREDITS = "Credits",
 }
 
 export interface Project extends Entity {
@@ -19,8 +19,13 @@ export interface Project extends Entity {
         slug: string;
         EventDate: string;
         Subtitle: string;
-        Cover: { data: { id: number, attributes: ImageContent } };
-        Case_Study_Video: { data: { id: number, attributes: Omit<ImageContent, 'formats'> & { formats: null } } }
+        Cover: { data: { id: number; attributes: ImageContent } };
+        Case_Study_Video: {
+            data: {
+                id: number;
+                attributes: Omit<ImageContent, "formats"> & { formats: null };
+            };
+        };
         Category: { data: Category };
         Location: string;
 
@@ -31,4 +36,4 @@ export interface Project extends Entity {
         [ContentSectionName.RESULTS]: ContentData | null;
         [ContentSectionName.CREDITS]: ContentData | null;
     };
-};
+}

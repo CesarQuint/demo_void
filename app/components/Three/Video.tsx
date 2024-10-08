@@ -408,12 +408,12 @@
 // "use client";
 import React, { useRef, useState } from "react";
 import {
-  Canvas,
-  extend,
-  useFrame,
-  useThree,
-  ThreeEvent,
-  useLoader,
+    Canvas,
+    extend,
+    useFrame,
+    useThree,
+    ThreeEvent,
+    useLoader,
 } from "@react-three/fiber";
 import { shaderMaterial } from "@react-three/drei";
 import * as THREE from "three";
@@ -477,16 +477,16 @@ const fragmentShader = `
 
 // Define the shader material with chromatic aberration
 const RippleShaderMaterial = shaderMaterial(
-  {
-    time: 1,
-    mousePositions: Array(10).fill(new THREE.Vector2(0.5, 0.5)),
-    mouseTimes: Array(10).fill(5),
-    resolution: new THREE.Vector2(window.innerWidth, window.innerHeight),
-    tMap: null,
-    rippleStrength: 10,
-  },
-  vertexShader,
-  fragmentShader
+    {
+        time: 1,
+        mousePositions: Array(10).fill(new THREE.Vector2(0.5, 0.5)),
+        mouseTimes: Array(10).fill(5),
+        resolution: new THREE.Vector2(window.innerWidth, window.innerHeight),
+        tMap: null,
+        rippleStrength: 10,
+    },
+    vertexShader,
+    fragmentShader,
 );
 
 // Extend the shader material
@@ -494,115 +494,120 @@ extend({ RippleShaderMaterial });
 
 // Declare JSX intrinsic elements
 declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      rippleShaderMaterial: {
-        time: number;
-        mousePositions: THREE.Vector2[];
-        mouseTimes: number[];
-        resolution: THREE.Vector2;
-        tMap: THREE.Texture | null;
-        rippleStrength: number;
-        ref: React.RefObject<THREE.ShaderMaterial>;
-      };
+    namespace JSX {
+        interface IntrinsicElements {
+            rippleShaderMaterial: {
+                time: number;
+                mousePositions: THREE.Vector2[];
+                mouseTimes: number[];
+                resolution: THREE.Vector2;
+                tMap: THREE.Texture | null;
+                rippleStrength: number;
+                ref: React.RefObject<THREE.ShaderMaterial>;
+            };
+        }
     }
-  }
 }
 
 // Ripple component
 const Ripple: React.FC = () => {
-  const materialRef = useRef<THREE.ShaderMaterial>(null);
-  const { clock, size } = useThree();
-  const [mousePositions, setMousePositions] = useState<Array<THREE.Vector2>>(
-    Array(10).fill(new THREE.Vector2(0.5, 0.5))
-  );
-  const [mouseTimes, setMouseTimes] = useState<Array<number>>(
-    Array(10).fill(0)
-  );
-  const [hover, setHover] = useState(false);
-  const [rippleStrength, setRippleStrength] = useState(0);
-  const texture = useLoader(
-    TextureLoader,
-    "https://imgs.search.brave.com/WXkybweeXYP4Nu43tKQWANiwllLt1uGdS1sr-DCYoHU/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTA3/MTIwNDEzNi9waG90/by9jdXRlLWJlbmdh/bC1mdW5ueS1jYXQt/cGxheWluZy5qcGc_/cz02MTJ4NjEyJnc9/MCZrPTIwJmM9NGVK/Zks1UXAwYzM2b3Y2/LUNxSzhDZzZFcUxt/YXZySldQZ1RrY3NK/LVd3ST0" // Replace with your image URL
-  );
+    const materialRef = useRef<THREE.ShaderMaterial>(null);
+    const { clock, size } = useThree();
+    const [mousePositions, setMousePositions] = useState<Array<THREE.Vector2>>(
+        Array(10).fill(new THREE.Vector2(0.5, 0.5)),
+    );
+    const [mouseTimes, setMouseTimes] = useState<Array<number>>(
+        Array(10).fill(0),
+    );
+    const [hover, setHover] = useState(false);
+    const [rippleStrength, setRippleStrength] = useState(0);
+    const texture = useLoader(
+        TextureLoader,
+        "https://imgs.search.brave.com/WXkybweeXYP4Nu43tKQWANiwllLt1uGdS1sr-DCYoHU/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTA3/MTIwNDEzNi9waG90/by9jdXRlLWJlbmdh/bC1mdW5ueS1jYXQt/cGxheWluZy5qcGc_/cz02MTJ4NjEyJnc9/MCZrPTIwJmM9NGVK/Zks1UXAwYzM2b3Y2/LUNxSzhDZzZFcUxt/YXZySldQZ1RrY3NK/LVd3ST0", // Replace with your image URL
+    );
 
-  // Handle pointer move event
-  const onPointerMove = (event: ThreeEvent<PointerEvent>) => {
-    if (event.intersections.length > 0) {
-      const uv = event.intersections[0].uv;
-      if (uv) {
-        const elapsedTime = clock.getElapsedTime();
-        const lastMouseTime = mouseTimes[mouseTimes.length - 1];
+    // Handle pointer move event
+    const onPointerMove = (event: ThreeEvent<PointerEvent>) => {
+        if (event.intersections.length > 0) {
+            const uv = event.intersections[0].uv;
+            if (uv) {
+                const elapsedTime = clock.getElapsedTime();
+                const lastMouseTime = mouseTimes[mouseTimes.length - 1];
 
-        // Only update if the elapsed time since the last update is greater than a threshold (e.g., 0.1 seconds)
-        if (elapsedTime - lastMouseTime > 0.01) {
-          const newMousePositions = mousePositions
-            .slice(1)
-            .concat([new THREE.Vector2(uv.x, uv.y)]);
-          const newMouseTimes = mouseTimes.slice(1).concat([elapsedTime]);
-          setMousePositions(newMousePositions);
-          setMouseTimes(newMouseTimes);
+                // Only update if the elapsed time since the last update is greater than a threshold (e.g., 0.1 seconds)
+                if (elapsedTime - lastMouseTime > 0.01) {
+                    const newMousePositions = mousePositions
+                        .slice(1)
+                        .concat([new THREE.Vector2(uv.x, uv.y)]);
+                    const newMouseTimes = mouseTimes
+                        .slice(1)
+                        .concat([elapsedTime]);
+                    setMousePositions(newMousePositions);
+                    setMouseTimes(newMouseTimes);
+                }
+            }
         }
-      }
-    }
-  };
+    };
 
-  // Handle pointer over event
-  const onPointerOver = () => setHover(true);
+    // Handle pointer over event
+    const onPointerOver = () => setHover(true);
 
-  // Handle pointer out event
-  const onPointerOut = () => setHover(false);
+    // Handle pointer out event
+    const onPointerOut = () => setHover(false);
 
-  // Update shader uniforms every frame
-  useFrame(() => {
-    if (materialRef.current) {
-      materialRef.current.uniforms.time.value = clock.getElapsedTime();
-      materialRef.current.uniforms.mousePositions.value = mousePositions;
-      materialRef.current.uniforms.mouseTimes.value = mouseTimes;
-      materialRef.current.uniforms.resolution.value.set(
-        size.width,
-        size.height
-      );
-      materialRef.current.uniforms.tMap.value = texture;
-      materialRef.current.uniforms.rippleStrength.value = rippleStrength;
-    }
+    // Update shader uniforms every frame
+    useFrame(() => {
+        if (materialRef.current) {
+            materialRef.current.uniforms.time.value = clock.getElapsedTime();
+            materialRef.current.uniforms.mousePositions.value = mousePositions;
+            materialRef.current.uniforms.mouseTimes.value = mouseTimes;
+            materialRef.current.uniforms.resolution.value.set(
+                size.width,
+                size.height,
+            );
+            materialRef.current.uniforms.tMap.value = texture;
+            materialRef.current.uniforms.rippleStrength.value = rippleStrength;
+        }
 
-    // Gradually increase or decrease rippleStrength
-    if (hover && rippleStrength < 1) {
-      setRippleStrength((prev) => Math.min(prev + 0.009, 1));
-    } else if (!hover && rippleStrength > 0) {
-      setRippleStrength((prev) => Math.max(prev - 0.009, 0));
-    }
-  });
+        // Gradually increase or decrease rippleStrength
+        if (hover && rippleStrength < 1) {
+            setRippleStrength((prev) => Math.min(prev + 0.009, 1));
+        } else if (!hover && rippleStrength > 0) {
+            setRippleStrength((prev) => Math.max(prev - 0.009, 0));
+        }
+    });
 
-  return (
-    <mesh
-      onPointerMove={onPointerMove}
-      onPointerOver={onPointerOver}
-      onPointerOut={onPointerOut}>
-      <planeGeometry args={[11, 6]} />
-      <rippleShaderMaterial
-        ref={materialRef}
-        time={0}
-        mousePositions={mousePositions}
-        mouseTimes={mouseTimes}
-        resolution={new THREE.Vector2(window.innerWidth, window.innerHeight)}
-        tMap={texture}
-        rippleStrength={rippleStrength}
-      />
-    </mesh>
-  );
+    return (
+        <mesh
+            onPointerMove={onPointerMove}
+            onPointerOver={onPointerOver}
+            onPointerOut={onPointerOut}
+        >
+            <planeGeometry args={[11, 6]} />
+            <rippleShaderMaterial
+                ref={materialRef}
+                time={0}
+                mousePositions={mousePositions}
+                mouseTimes={mouseTimes}
+                resolution={
+                    new THREE.Vector2(window.innerWidth, window.innerHeight)
+                }
+                tMap={texture}
+                rippleStrength={rippleStrength}
+            />
+        </mesh>
+    );
 };
 
 // Video component
 const Video: React.FC = () => {
-  return (
-    <div className={css.scene}>
-      <Canvas className={css.canvas}>
-        <Ripple />
-      </Canvas>
-    </div>
-  );
+    return (
+        <div className={css.scene}>
+            <Canvas className={css.canvas}>
+                <Ripple />
+            </Canvas>
+        </div>
+    );
 };
 
 export default Video;

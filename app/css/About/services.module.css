@@ -1,33 +1,33 @@
 .main {
-  padding: 6vh;
+    padding: 6vh;
 }
 
 .title {
-  font-family: "Panchang";
-  font-size: 2rem;
-  text-align: center;
+    font-family: "Panchang";
+    font-size: 2rem;
+    text-align: center;
 }
 
 .related_projects {
-  display: flex;
-  flex-flow: column nowrap;
-  gap: 4vh;
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 4vh;
 }
 
 .related_projects h2 {
-  text-align: center;
-  font-family: "Panchang";
-  font-weight: 100;
-  font-size: 2rem;
+    text-align: center;
+    font-family: "Panchang";
+    font-weight: 100;
+    font-size: 2rem;
 }
 
 /* Media Part */
 @media (min-width: 768px) {
-  .title {
-    font-size: 3rem;
-  }
+    .title {
+        font-size: 3rem;
+    }
 
-  .related_projects h2 {
-    font-size: 3rem;
-  }
+    .related_projects h2 {
+        font-size: 3rem;
+    }
 }
