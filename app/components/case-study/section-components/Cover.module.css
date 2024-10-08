@@ -1,67 +1,73 @@
 .cover {
-    flex-shrink: 0;
-    height: 100vh;
-    width: 100vw;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding-bottom: 0;
+  flex-shrink: 0;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-bottom: 0;
 
-    @media (max-width: 700px) {
-        width: initial;
-        gap: 4vh;
-    }
+  @media (max-width: 700px) {
+      width: initial;
+      gap: 4vh;
+  }
 }
 
 .title {
-    text-transform: uppercase;
-    color: #fff;
-    margin: 0 3.5rem;
+  text-transform: uppercase;
+  color: #fff;
+  margin: 0 3.5rem;
+
+  & h1 {
+    font-family: "Panchang";
+    font-weight: 400;
+    font-size: 7.5rem;
+    line-height: 1.2;
+  }
+
+  & h2 {
+    font-family: "input-mono";
+    font-weight: 300;
+    font-size: 2rem;
+    line-height: 1.18;
+    letter-spacing: -0.05em;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
 
     & h1 {
-        font-family: "Panchang";
-        font-weight: 400;
-        font-size: 7.5rem;
-        line-height: 1.2;
+      font-size: 2rem;
     }
 
     & h2 {
-        font-family: "input-mono";
-        font-weight: 300;
-        font-size: 2rem;
-        line-height: 1.18;
-        letter-spacing: -0.05em;
+      font-size: 1rem;
+      line-height: 1.2rem;
     }
-
-    @media (max-width: 768px) {
-        font-size: 1rem;
-
-        & h1 {
-            font-size: 2rem;
-        }
-
-        & h2 {
-            font-size: 1rem;
-            line-height: 1.2rem;
-        }
-    }
+  }
 }
 
 .tags {
-    padding: 0 0 5rem;
-    display: flex;
+  padding: 0 0 5rem;
+  display: flex;
+  justify-content: space-between;
+
+  .tag {
+    font-family: "input-mono";
+    font-weight: 400;
+    line-height: 1.16;
+    padding: 0.8rem 1.5rem;
+    border: 1px solid #fff;
+    border-radius: 2rem;
+  }
+
+  @media (max-width: 700px) {
+    margin: 0;
     justify-content: space-between;
-
-    .tag {
-        font-family: "input-mono";
-        font-weight: 400;
-        line-height: 1.16;
-        padding: 0.8rem 1.5rem;
-        border: 1px solid #fff;
-        border-radius: 2rem;
-    }
-
-    @media (max-width: 700px) {
-        margin: 0;
-    }
+    gap: 2vh;
+    flex-direction: column;
+  }
+  .tag {
+    width: fit-content;
+  }
 }
