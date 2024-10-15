@@ -36,7 +36,7 @@ const BackgroundTitle = (props: { title: string }) => (
 
 const ViewAllProjectsButton = (props: { buttonText: string }) => (
     <div className={styles.line}>
-        <Link className={styles.viewAll} href="/proyectos">
+        <Link className={styles.viewAll} href="/projects">
             {props.buttonText.toUpperCase()}
         </Link>
     </div>
@@ -115,14 +115,13 @@ export const ProjectElement = (props: {
 }) => {
     const { setNavigationEvent } = useNavigation();
 
-    function goTo(href: string) {
-        setNavigationEvent({ state: true, href });
-    }
-
     return (
         <div
-            onClick={(e) => {
-                goTo(`/projects/${props.data.project.attributes.slug}`);
+            onClick={() => {
+                setNavigationEvent({
+                    href: `/projects/${props.data.project.attributes.slug}`,
+                    state: true,
+                });
             }}
             className={styles.imgBox}
             style={{ "--column": props.idx + 1 } as React.CSSProperties}
