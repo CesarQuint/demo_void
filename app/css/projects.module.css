@@ -9,8 +9,9 @@
 @media (max-width: 700px) {
     .scrollView {
         display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 0 1.875rem;
+        grid-template-columns: 1fr;
+        grid-auto-rows: auto;
+        grid-gap: 1.875rem 0;
         padding: 0 1.25rem;
 
         .title {
@@ -38,17 +39,17 @@
                 width: 100%;
             }
         }
+    }
 
-        & .imgBox {
-            grid-row: calc(var(--column) + 1) / span 1;
+    .scrollView .imgBox {
+        --column: calc(var(--column) % 2);
+        width: 80vw;
+        justify-self: start;
+        margin: 0 0 1.875rem 0;
+    }
 
-            &:nth-of-type(odd) {
-                grid-column: 1 / span 1;
-            }
-            &:nth-of-type(even) {
-                grid-column: 2 / span 1;
-            }
-        }
+    .scrollView .imgBox:nth-child(odd) {
+        justify-self: end;
     }
 }
 
