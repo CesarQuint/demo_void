@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React, { useRef } from "react";
+import React, { useRef, MouseEvent } from "react";
 import { motion } from "framer-motion";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -13,7 +13,7 @@ import styles from "../../css/projects.module.css";
 import s from "../ScrollImg/ScrollImg.module.css";
 
 import { Project } from "../../Strapi/interfaces/Entities/Project";
-import Link from "next/link";
+import TypedLink from "../TypedLink/TypedLink";
 
 const CHARS = "!#$%&*+,-:;<=>@^_abcdefghijklmnopqrstuvwxyz";
 
@@ -34,11 +34,34 @@ const BackgroundTitle = (props: { title: string }) => (
     </h3>
 );
 
-const ViewAllProjectsButton = (props: { buttonText: string }) => (
+const ViewAllProjectsButton = (props: {
+    buttonText: string;
+    action: (e: MouseEvent) => void;
+}) => (
     <div className={styles.line}>
-        <Link className={styles.viewAll} href="/projects">
-            {props.buttonText.toUpperCase()}
-        </Link>
+        <TypedLink href="/projects" onClick={props.action}>
+            <div className={styles.viewAll}>
+                <span className={styles.viewAllText}>
+                    {props.buttonText.toUpperCase()}
+                </span>
+                <span className={styles.viewAllCircle}>
+                    <Image
+                        alt="arrow"
+                        loading="lazy"
+                        width="1000"
+                        height="1000"
+                        decoding="async"
+                        data-nimg="1"
+                        src="/_next/static/media/wArrow.462f0480.svg"
+                        style={{
+                            color: "transparent",
+                            height: "1rem",
+                            width: "1rem",
+                        }}
+                    />
+                </span>
+            </div>
+        </TypedLink>
     </div>
 );
 
@@ -526,6 +549,8 @@ const ProjectImages = (props: { data: { projects: Project[] } }) => {
         { scope: scrollContainer, dependencies: [container, scrollContainer] },
     );
 
+    const { setNavigationEvent } = useNavigation();
+
     return (
         <motion.div ref={container}>
             <motion.section className={`${styles.project_wrapper}`}>
@@ -533,6 +558,12 @@ const ProjectImages = (props: { data: { projects: Project[] } }) => {
                     <BackgroundTitle title={StaticContent.BACKGRUND_TITLE} />
                     <ViewAllProjectsButton
                         buttonText={StaticContent.HYPERLINK_BUTTON}
+                        action={() =>
+                            setNavigationEvent({
+                                href: "/projects",
+                                state: true,
+                            })
+                        }
                     />
                     <ProjectsHorizontalCarousel
                         imageContainers={imgContainers.current}
