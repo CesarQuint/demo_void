@@ -1,7 +1,11 @@
 import Image from "next/image";
-import TypedLink from "../TypedLink/TypedLink";
+import dynamic from "next/dynamic";
 import { useNavigation } from "@/app/utils/navigationContext";
 import styles from "./NavButton.module.css";
+
+const TypedLink = dynamic(() => import("../TypedLink/TypedLink"), {
+    ssr: false,
+});
 
 export interface NavButtonProps {
     className?: string;
@@ -33,10 +37,7 @@ const NavButton: React.FC<NavButtonProps> = (props: NavButtonProps) => {
                             height="1000"
                             decoding="async"
                             data-nimg="1"
-                            src={
-                                props.icon ??
-                                "/_next/static/media/wArrow.462f0480.svg"
-                            }
+                            src={props.icon ?? "images/wArrow.svg"}
                             style={{
                                 color: "transparent",
                                 height: "1rem",

@@ -4,22 +4,18 @@ import styles from "../css/footer.module.css";
 import Title from "./title";
 import dynamic from "next/dynamic";
 import { useNavigation } from "../utils/navigationContext";
-import { useRouter } from "next/navigation";
 
 const Timer = dynamic(() => import("./Timer"), { ssr: false });
 
 const TypedLink = dynamic(() => import("./TypedLink/TypedLink"), {
     ssr: false,
 });
-import Image from "next/image";
-import arrow from "../../public/images/wArrow.svg";
 import NavButton from "./buttons/NavButton";
 
 type Props = { state?: boolean };
 
 const Footer = (props: Props) => {
     const { setNavigationEvent } = useNavigation();
-    const router = useRouter();
 
     function goTo(
         e: React.MouseEvent<HTMLAnchorElement | MouseEvent>,
