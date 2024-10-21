@@ -8,12 +8,12 @@ import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
 import Splitting from "splitting";
 import { useNavigation } from "../../utils/navigationContext";
+import NavButton from "../buttons/NavButton";
 
 import styles from "../../css/projects.module.css";
 import s from "../ScrollImg/ScrollImg.module.css";
 
 import { Project } from "../../Strapi/interfaces/Entities/Project";
-import TypedLink from "../TypedLink/TypedLink";
 
 const CHARS = "!#$%&*+,-:;<=>@^_abcdefghijklmnopqrstuvwxyz";
 
@@ -32,37 +32,6 @@ const BackgroundTitle = (props: { title: string }) => (
             {props.title.split(" ")[1]?.toUpperCase()}
         </span>
     </h3>
-);
-
-const ViewAllProjectsButton = (props: {
-    buttonText: string;
-    action: (e: MouseEvent) => void;
-}) => (
-    <div className={styles.line}>
-        <TypedLink href="/projects" onClick={props.action}>
-            <div className={styles.viewAll}>
-                <span className={styles.viewAllText}>
-                    {props.buttonText.toUpperCase()}
-                </span>
-                <span className={styles.viewAllCircle}>
-                    <Image
-                        alt="arrow"
-                        loading="lazy"
-                        width="1000"
-                        height="1000"
-                        decoding="async"
-                        data-nimg="1"
-                        src="/_next/static/media/wArrow.462f0480.svg"
-                        style={{
-                            color: "transparent",
-                            height: "1rem",
-                            width: "1rem",
-                        }}
-                    />
-                </span>
-            </div>
-        </TypedLink>
-    </div>
 );
 
 export const ProjectElementContent = (props: {
@@ -549,21 +518,15 @@ const ProjectImages = (props: { data: { projects: Project[] } }) => {
         { scope: scrollContainer, dependencies: [container, scrollContainer] },
     );
 
-    const { setNavigationEvent } = useNavigation();
-
     return (
         <motion.div ref={container}>
             <motion.section className={`${styles.project_wrapper}`}>
                 <div className={styles.scrollView} ref={scrollContainer}>
                     <BackgroundTitle title={StaticContent.BACKGRUND_TITLE} />
-                    <ViewAllProjectsButton
-                        buttonText={StaticContent.HYPERLINK_BUTTON}
-                        action={() =>
-                            setNavigationEvent({
-                                href: "/projects",
-                                state: true,
-                            })
-                        }
+                    <NavButton
+                        className={styles.line}
+                        href="/projects"
+                        text={StaticContent.HYPERLINK_BUTTON}
                     />
                     <ProjectsHorizontalCarousel
                         imageContainers={imgContainers.current}
