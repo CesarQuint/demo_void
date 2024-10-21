@@ -1,7 +1,11 @@
 import Image from "next/image";
-import TypedLink from "../TypedLink/TypedLink";
+import dynamic from "next/dynamic";
 import { useNavigation } from "@/app/utils/navigationContext";
 import styles from "./NavButton.module.css";
+
+const TypedLink = dynamic(() => import("../TypedLink/TypedLink"), {
+    ssr: false,
+});
 
 export interface NavButtonProps {
     className?: string;
