@@ -33,10 +33,7 @@ const NavButton: React.FC<NavButtonProps> = (props: NavButtonProps) => {
                             height="1000"
                             decoding="async"
                             data-nimg="1"
-                            src={
-                                props.icon ??
-                                "/_next/static/media/wArrow.462f0480.svg"
-                            }
+                            src={props.icon ?? "images/wArrow.svg"}
                             style={{
                                 color: "transparent",
                                 height: "1rem",
