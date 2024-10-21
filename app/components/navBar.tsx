@@ -1,5 +1,5 @@
 "use client";
-import React, { MouseEvent, useRef, useState, useEffect } from "react";
+import React, { MouseEvent, useRef, useState } from "react";
 import Link from "next/link";
 import { useNavigation } from "../utils/navigationContext";
 import styles from "../css/navBar.module.css";
@@ -216,11 +216,6 @@ const NavBar = () => {
                         <span className={styles.writeUsTxt}>Escribenos</span>
                         <span className={styles.writeUsIcon}>+</span>
                     </Link>
-                </div>
-
-                <div className={styles.langs}>
-                    {/* <button>Español</button>
-          <button>English</button> */}
                 </div>
             </section>
         </header>
