@@ -65,15 +65,6 @@
         cursor: pointer;
     }
 }
-.btn_1 {
-    padding: 1vh 2vw !important;
-    border-radius: 40px;
-}
-
-.btn_2 {
-    padding: 0.5rem;
-    border-radius: 100%;
-}
 
 .contact_button_area_wrapper {
     display: flex;
