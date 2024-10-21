@@ -1,0 +1,25 @@
+.NavButton {
+    display: flex;
+    align-items: center;
+}
+
+.NavButtonText {
+    padding: 1rem 1rem;
+    color: #000;
+    background: #fff;
+    border-radius: 2rem;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+}
+
+.NavButtonCircle {
+    width: 60px;
+    height: 60px;
+    background-color: #fff;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
