@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import styles from "../css/footer.module.css";
 import Title from "./title";
-// import Timer from "./Timer";
 import dynamic from "next/dynamic";
 import { useNavigation } from "../utils/navigationContext";
 import { useRouter } from "next/navigation";
@@ -14,6 +13,7 @@ const TypedLink = dynamic(() => import("./TypedLink/TypedLink"), {
 });
 import Image from "next/image";
 import arrow from "../../public/images/wArrow.svg";
+import NavButton from "./buttons/NavButton";
 
 type Props = { state?: boolean };
 
@@ -50,35 +50,7 @@ const Footer = (props: Props) => {
                                 ¿Quieres empezar un nuevo proyecto?
                             </p>
                             <section className={`${styles.about_buttons}`}>
-                                <button
-                                    onClick={() => {
-                                        router.push(
-                                            "mailto:CONTACTO@VOIDXR.STUDIO",
-                                        );
-                                    }}
-                                    className={`${styles.btn_1}`}
-                                >
-                                    ESCRIBENOS
-                                </button>
-                                <button
-                                    onClick={() => {
-                                        router.push(
-                                            "mailto:CONTACTO@VOIDXR.STUDIO",
-                                        );
-                                    }}
-                                    className={`${styles.btn_2}`}
-                                >
-                                    <Image
-                                        style={{
-                                            height: "1rem",
-                                            width: "1rem",
-                                        }}
-                                        src={arrow}
-                                        width={1000}
-                                        height={1000}
-                                        alt="arrow"
-                                    />
-                                </button>
+                                <NavButton href="/contact" text="ESCRÍBENOS" />
                             </section>
                         </div>
                         <a href="mailto:CONTACTO@VOIDXR.STUDIO">

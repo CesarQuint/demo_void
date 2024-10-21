@@ -1,19 +1,19 @@
 "use client";
 
 import Image from "next/image";
-import React, { useRef } from "react";
+import React, { useRef, MouseEvent } from "react";
 import { motion } from "framer-motion";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
 import Splitting from "splitting";
 import { useNavigation } from "../../utils/navigationContext";
+import NavButton from "../buttons/NavButton";
 
 import styles from "../../css/projects.module.css";
 import s from "../ScrollImg/ScrollImg.module.css";
 
 import { Project } from "../../Strapi/interfaces/Entities/Project";
-import Link from "next/link";
 
 const CHARS = "!#$%&*+,-:;<=>@^_abcdefghijklmnopqrstuvwxyz";
 
@@ -32,14 +32,6 @@ const BackgroundTitle = (props: { title: string }) => (
             {props.title.split(" ")[1]?.toUpperCase()}
         </span>
     </h3>
-);
-
-const ViewAllProjectsButton = (props: { buttonText: string }) => (
-    <div className={styles.line}>
-        <Link className={styles.viewAll} href="/proyectos">
-            {props.buttonText.toUpperCase()}
-        </Link>
-    </div>
 );
 
 export const ProjectElementContent = (props: {
@@ -115,14 +107,13 @@ export const ProjectElement = (props: {
 }) => {
     const { setNavigationEvent } = useNavigation();
 
-    function goTo(href: string) {
-        setNavigationEvent({ state: true, href });
-    }
-
     return (
         <div
-            onClick={(e) => {
-                goTo(`/projects/${props.data.project.attributes.slug}`);
+            onClick={() => {
+                setNavigationEvent({
+                    href: `/projects/${props.data.project.attributes.slug}`,
+                    state: true,
+                });
             }}
             className={styles.imgBox}
             style={{ "--column": props.idx + 1 } as React.CSSProperties}
@@ -532,8 +523,10 @@ const ProjectImages = (props: { data: { projects: Project[] } }) => {
             <motion.section className={`${styles.project_wrapper}`}>
                 <div className={styles.scrollView} ref={scrollContainer}>
                     <BackgroundTitle title={StaticContent.BACKGRUND_TITLE} />
-                    <ViewAllProjectsButton
-                        buttonText={StaticContent.HYPERLINK_BUTTON}
+                    <NavButton
+                        className={styles.line}
+                        href="/projects"
+                        text={StaticContent.HYPERLINK_BUTTON}
                     />
                     <ProjectsHorizontalCarousel
                         imageContainers={imgContainers.current}
