@@ -155,7 +155,7 @@ const mapProjectDataToMenuItems = (project: Project): MenuItemData[] =>
 
 const findNameFromIndex = (idx: number) =>
     Object.entries(ContentSectionTitles).find(
-        ([key, item]) => item.index === idx,
+        ([_, item]) => item.index === idx,
     )?.[0];
 
 const MenuItem: React.FC<{
