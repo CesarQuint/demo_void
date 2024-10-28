@@ -86,21 +86,23 @@ const Section: React.FC<SectionProps> = ({ data: content }) => {
 
             {!!headings.length && (
                 <div className={styles.innerContent}>
-                    <div className={styles.sideMenu}>
-                        <ul className={styles.menuList}>
-                            {headings.map((heading, idx) => (
-                                <li
-                                    key={idx}
-                                    className={styles.sideMenuItem}
-                                    onClick={() =>
-                                        setActiveSection(heading.index)
-                                    }
-                                >
-                                    <span>{heading.title}</span>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
+                    {headings.length > 1 && (
+                        <div className={styles.sideMenu}>
+                            <ul className={styles.menuList}>
+                                {headings.map((heading, idx) => (
+                                    <li
+                                        key={idx}
+                                        className={styles.sideMenuItem}
+                                        onClick={() =>
+                                            setActiveSection(heading.index)
+                                        }
+                                    >
+                                        <span>{heading.title}</span>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    )}
 
                     <div className={styles.content}>
                         {content.data && (
