@@ -5,7 +5,9 @@ import Code, { CodeProps } from "../content-components/content-types/Code";
 import Paragraph, {
     ParagraphProps,
 } from "../content-components/content-types/Paragraph";
-import Image, { ImageProps } from "../content-components/content-types/Image";
+import ContentImage, {
+    ImageProps,
+} from "../content-components/content-types/Image";
 import Heading, {
     HeadingProps,
 } from "../content-components/content-types/Heading";
@@ -54,7 +56,7 @@ const ContentSwitch = (
         case "quote":
             return <Quote data={content} key={idx} />;
         case "image":
-            return <Image data={content} key={idx} />;
+            return <ContentImage data={content} key={idx} />;
         default:
             throw new TypeError("Unexpected content type");
     }
