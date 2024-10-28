@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Project } from "../../../Strapi/interfaces/Entities/Project";
 import { ContentSectionName } from "../../../Strapi/interfaces/Entities/Project";
 import Code, { CodeProps } from "../content-components/content-types/Code";
