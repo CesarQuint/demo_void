@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import NavBar from "./components/navBar";
 import Template from "./components/RootLayout";
 import { NavigationProvider } from "./utils/navigationContext";
+import SmoothScrolling from "./components/ReactLenis";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -44,9 +44,11 @@ export default function RootLayout({
                 />
             </head>
             <body className={inter.className}>
-                <NavigationProvider>
-                    <Template>{children}</Template>
-                </NavigationProvider>
+                <SmoothScrolling>
+                    <NavigationProvider>
+                        <Template>{children}</Template>
+                    </NavigationProvider>
+                </SmoothScrolling>
             </body>
         </html>
     );
