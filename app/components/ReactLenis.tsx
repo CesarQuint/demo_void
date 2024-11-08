@@ -7,11 +7,7 @@ function SmoothScrolling({ children }: { children: React.ReactNode }) {
         <ReactLenis
             root
             options={{
-                lerp: 0.015, // Lower value makes it more responsive
-                duration: 1.2, // Slightly lower duration for quicker easing
-                syncTouch: true,
-                syncTouchLerp: 0.02, // Increase to smoothen touch gestures
-                touchInertiaMultiplier: 15, // Slightly reduced inertia
+                wheelMultiplier: 0.5,
                 easing: function easeOutCirc(x: number): number {
                     return Math.sqrt(1 - Math.pow(x - 1, 2));
                 },
