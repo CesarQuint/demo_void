@@ -1,7 +1,12 @@
-import React, { RefObject, useState } from "react";
+import React, { RefObject, useContext, useState } from "react";
 import styles from "../../../css/Form/form.module.css"; // Adjust the import based on your structure
-import { ContinueButtons, ReturnButtons } from "../FormCards";
+import { ContinueButtons, ReturnButtons } from "../components/Buttons";
 import { Card } from "../CardTemplate";
+import { FormContext } from "../Context/ContextForm";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(useGSAP);
 
 interface CustomCardProps {
     cardRef: RefObject<HTMLDivElement>;
@@ -61,7 +66,51 @@ export const EventDurationCard: React.FC<CustomCardProps> = ({
     clickHandler,
     returnHandler,
 }) => {
-    const [duration, setDuration] = useState("00:00");
+    const { duration, setDuration } = useContext(FormContext);
+
+    const { contextSafe } = useGSAP();
+
+    const shakeAnimation = contextSafe(
+        (ref: React.RefObject<HTMLDivElement>) => {
+            const tl = gsap.timeline({
+                repeat: 1,
+                ease: "elastic.inOut(1,0.3)",
+            });
+            tl.to(ref.current, { x: "-1%", duration: 0.08 })
+                .to(ref.current, { x: "1%", duration: 0.08 })
+                .to(ref.current, { x: "-1%", duration: 0.08 })
+                .to(ref.current, { x: "1%", duration: 0.08 })
+                .to(ref.current, { x: "-1%", duration: 0.08 })
+                .to(ref.current, { x: "0", duration: 0.08 });
+        }
+    );
+
+    function setErrorClass(key: string) {
+        const input = document.getElementById(`${key}_field`);
+        const label = document.getElementById(`${key}_label`);
+        input?.classList.add(`${styles.invalid_field}`);
+        label?.classList.add(`${styles.invalid_label}`);
+        shakeAnimation(cardRef);
+    }
+
+    function removeWarnings(key: string) {
+        const input = document.getElementById(`${key}_field`);
+        const label = document.getElementById(`${key}_label`);
+        if (label && label.classList.contains(`${styles.invalid_label}`)) {
+            label.innerHTML = label.innerHTML.split("*")[0];
+            input?.classList.remove(`${styles.invalid_field}`);
+            label?.classList.remove(`${styles.invalid_label}`);
+        }
+    }
+
+    const handleNext = () => {
+        if (duration == "00:00") {
+            setErrorClass("duration");
+            return;
+        }
+
+        clickHandler(cardRef);
+    };
 
     return (
         <Card
@@ -95,11 +144,12 @@ export const EventDurationCard: React.FC<CustomCardProps> = ({
                         <ReturnButtons returnHandler={returnHandler} />
                     </section>
                     <section className={styles.right_second}>
-                        <h1>Duración del Contenido</h1>
-                        <section className="duration">
+                        <h1 id="duration_label">Duración del Contenido</h1>
+                        <section className="duration" id="duration_field">
                             <CustomTimePicker
                                 value={duration}
                                 onChange={(value) => {
+                                    removeWarnings("duration");
                                     setDuration(value);
                                 }}
                             />
@@ -111,7 +161,7 @@ export const EventDurationCard: React.FC<CustomCardProps> = ({
                     >
                         <ContinueButtons
                             clickHandler={() => {
-                                clickHandler(cardRef);
+                                handleNext();
                             }}
                         />
                     </section>
