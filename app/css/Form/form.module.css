@@ -333,3 +333,12 @@
     border: none;
     border-radius: 10px;
 }
+
+.invalid_field {
+    border-color: rgb(203, 81, 81);
+    color: rgb(203, 81, 81);
+}
+
+.invalid_label {
+    color: rgb(203, 81, 81);
+}
