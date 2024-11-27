@@ -1,7 +1,7 @@
 import React, { RefObject, useState } from "react";
 import Image from "next/image";
 import styles from "../../../css/Form/form.module.css"; // Adjust the import based on your structure
-import { ContinueButtons, ReturnButtons } from "../FormCards";
+import { ContinueButtons, ReturnButtons } from "../components/Buttons";
 import { Card } from "../CardTemplate";
 import TimePicker from "react-time-picker";
 import "react-clock/dist/Clock.css";
