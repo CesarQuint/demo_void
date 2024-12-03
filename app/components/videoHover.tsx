@@ -4,11 +4,8 @@ import { motion } from "framer-motion";
 import styles from "../css/video.hover.module.css";
 import gsap from "gsap";
 import eyeIcon from "../../public/images/EyeIcon.png";
-import { log } from "console";
-
-//TODO : Work in the restart of the animation at out
-//TODO: Kill Propertly the animations
-//! Deprecated
+import pauseIcon from "../../public/images/pause.png";
+import useWindow from "../utils/hooks/useWindow";
 
 const VideoHover: React.FC = () => {
     const videoRef = useRef<HTMLVideoElement>(null);
@@ -17,20 +14,24 @@ const VideoHover: React.FC = () => {
     const [playTriggered, setPlayTtriggered] = useState<boolean>(false);
     const [isScrolling, setIsScrolling] = useState<boolean>(false);
     const scrollTimeout = useRef<NodeJS.Timeout | null>(null);
+    const windowStatus = useWindow();
 
     const handlePlay = () => {
         if (videoRef.current) {
             videoRef.current.play();
-            videoRef.current.controls = true;
-            gsap.to(playButtonRef.current, { opacity: 0, display: "none" });
+            setPlayTtriggered(true);
         }
-        setPlayTtriggered(true);
     };
 
-    const handlePause = () => {};
+    const handlePause = () => {
+        if (videoRef.current) {
+            videoRef.current.pause();
+            setPlayTtriggered(false);
+        }
+    };
 
     useEffect(() => {
-        if (containerRef.current !== null && !playTriggered) {
+        if (containerRef.current !== null) {
             let xTo: any, yTo: any;
 
             const tlHalo = gsap.timeline({
@@ -57,30 +58,46 @@ const VideoHover: React.FC = () => {
             };
 
             let a: any = null;
-            const handleMouseEnter = () => {
-                // Create quickTo functions for x and y properties
-                xTo = gsap.quickTo(playButtonRef.current, "x", {
-                    duration: 0.4,
-                    ease: "power3",
-                });
+            const handleMouseEnter = (e: MouseEvent) => {
+                const rect = containerRef.current?.getBoundingClientRect();
+                if (rect && playButtonRef.current) {
+                    // Calculate initial position of the play button relative to the container
+                    const x =
+                        e.clientX -
+                        rect.left -
+                        playButtonRef.current.offsetWidth / 2;
+                    const y =
+                        e.clientY -
+                        rect.top -
+                        playButtonRef.current.offsetHeight / 2;
 
-                yTo = gsap.quickTo(playButtonRef.current, "y", {
-                    duration: 0.4,
-                    ease: "power3",
-                });
+                    // Immediately position the play button
+                    gsap.set(playButtonRef.current, { x, y });
 
-                if (isScrolling === false)
-                    a = gsap.to(playButtonRef.current, {
-                        opacity: 1,
-                        duration: 1,
+                    // Create quickTo functions for smooth animations
+                    xTo = gsap.quickTo(playButtonRef.current, "x", {
+                        duration: 0.4,
+                        ease: "power3",
                     });
 
-                tlHalo.play();
+                    yTo = gsap.quickTo(playButtonRef.current, "y", {
+                        duration: 0.4,
+                        ease: "power3",
+                    });
 
-                containerRef.current?.addEventListener(
-                    "mousemove",
-                    handleMouseMove,
-                );
+                    if (!isScrolling) {
+                        a = gsap.to(playButtonRef.current, {
+                            opacity: 1,
+                            duration: 1,
+                        });
+                    }
+
+                    tlHalo.play();
+                    containerRef.current?.addEventListener(
+                        "mousemove",
+                        handleMouseMove
+                    );
+                }
             };
 
             const handleMouseLeave = () => {
@@ -90,36 +107,36 @@ const VideoHover: React.FC = () => {
                 tlHalo?.kill();
                 containerRef.current?.removeEventListener(
                     "mousemove",
-                    handleMouseMove,
+                    handleMouseMove
                 );
             };
 
             containerRef.current?.addEventListener(
                 "mouseenter",
-                handleMouseEnter,
+                handleMouseEnter
             );
             containerRef.current?.addEventListener(
                 "mouseleave",
-                handleMouseLeave,
+                handleMouseLeave
             );
 
             return () => {
                 containerRef.current?.removeEventListener(
                     "mouseenter",
-                    handleMouseEnter,
+                    handleMouseEnter
                 );
                 containerRef.current?.removeEventListener(
                     "mousemove",
-                    handleMouseMove,
+                    handleMouseMove
                 );
                 containerRef.current?.removeEventListener(
                     "mouseleave",
-                    handleMouseLeave,
+                    handleMouseLeave
                 );
                 tlHalo.kill();
             };
         }
-    }, [playTriggered]);
+    }, []);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -129,7 +146,7 @@ const VideoHover: React.FC = () => {
             }
             scrollTimeout.current = setTimeout(() => {
                 setIsScrolling(false);
-            }, 200); // Adjust the timeout duration as needed
+            }, 200);
         };
 
         window.addEventListener("scroll", handleScroll);
@@ -148,12 +165,14 @@ const VideoHover: React.FC = () => {
                 <motion.div
                     className={styles.play_button}
                     ref={playButtonRef}
-                    onClick={handlePlay}
+                    onClick={() => {
+                        !playTriggered ? handlePlay() : handlePause();
+                    }}
                     style={{ cursor: "pointer" }}
                 >
                     <Image
                         className={`${styles.eye_video}`}
-                        src={eyeIcon}
+                        src={!playTriggered ? eyeIcon : pauseIcon}
                         alt="Eye"
                     />
                     <span className={`${styles.halo}`}></span>
@@ -161,9 +180,13 @@ const VideoHover: React.FC = () => {
                 <video
                     onPause={handlePause}
                     className={`${styles.video}`}
+                    controls={windowStatus.innerWidth <= 700 && true}
                     ref={videoRef}
-                    controls={playTriggered}
-                    src="/videos/cdmx.mp4"
+                    src={
+                        windowStatus.innerWidth >= 700
+                            ? "https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/videos/voidxr-demo-eyecandy-home.mp4"
+                            : "https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/videos/voidxr-demo-eyecandy-home-mobile.mp4"
+                    }
                 >
                     Your browser does not support the video tag.
                 </video>

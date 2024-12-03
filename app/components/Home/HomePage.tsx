@@ -22,6 +22,7 @@ import ProcessHome from "./ProcessHome";
 import HeroContainer from "./HeroContainer";
 import PreFooterLink from "../PreFooterLink";
 import LoadingComponent from "../LoadingComponent";
+import VideoHover from "../videoHover";
 
 import { Project } from "../../Strapi/interfaces/Entities/Project";
 
@@ -157,19 +158,7 @@ function HomePage(props: Props) {
             {requestFullfilled ? (
                 <>
                     <HeroContainer />
-                    <motion.div className={styles.video_container}>
-                        <video
-                            autoPlay={true}
-                            muted={true}
-                            className={styles.video}
-                            src={
-                                windowStatus.innerWidth >= 700
-                                    ? "https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/videos/voidxr-demo-eyecandy-home.mp4"
-                                    : "https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/videos/voidxr-demo-eyecandy-home-mobile.mp4"
-                            }
-                            controls={true}
-                        />
-                    </motion.div>
+                    <VideoHover />
                     <ProjectImages data={{ projects: props.data.projects }} />
                     <ProcessHome />
                     <TagsHome />
