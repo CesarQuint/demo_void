@@ -211,7 +211,7 @@ export const ContactCard: React.FC<CustomCardProps> = ({
                                             changeInput(e, "email");
                                         }}
                                         className={styles.input_white}
-                                        type="text"
+                                        type="email"
                                         name=""
                                         id="email_field"
                                     />
