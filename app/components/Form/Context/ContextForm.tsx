@@ -57,6 +57,8 @@ interface FormContextProps {
     setSelectedSchedule: React.Dispatch<
         React.SetStateAction<ScheduleDataProps>
     >;
+    direction: string;
+    setDirection: React.Dispatch<React.SetStateAction<string>>;
     lookingForProjectData: LookingForProjectProps;
     setLookingForProjectData: React.Dispatch<
         React.SetStateAction<LookingForProjectProps>
@@ -92,6 +94,12 @@ const defaultContext: FormContextProps = {
     setEventLocation: () => {
         throw new Error(
             "setEventLocation function must be overridden in a Provider"
+        );
+    },
+    direction: "",
+    setDirection: () => {
+        throw new Error(
+            "setDirection function must be overridden in a Provider"
         );
     },
     selectedDates: null,
@@ -189,11 +197,17 @@ export const FormDataProvider = ({
     const [extraInformation, setExtraInformation] =
         useState<ExtraInformationProps>(defaultContext.extraInformation);
 
+    const [direction, setDirection] = useState<string>(
+        defaultContext.direction
+    );
+
     return (
         <FormContext.Provider
             value={{
                 contactData,
                 setContactData,
+                direction,
+                setDirection,
                 eventLocation,
                 setEventLocation,
                 selectedDates,
