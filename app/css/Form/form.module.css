@@ -186,6 +186,22 @@
     }
 }
 
+.input_white_direction {
+    width: 80%;
+    background-color: #ededed;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    transition: border-bottom-color 0.3s ease;
+    color: black;
+
+    padding: 1vh;
+
+    &:focus-visible {
+        border-bottom: #1b1b1b;
+    }
+}
+
 /*Place region*/
 
 .input_form {
@@ -198,6 +214,13 @@
     display: inline-flex;
     flex-direction: row;
     gap: 1vw;
+}
+
+.input_place_direction {
+    display: inline-flex;
+    flex-direction: row;
+    gap: 1vw;
+    width: 80%;
 }
 
 /*Type of project region */
