@@ -1,9 +1,8 @@
-import React, { RefObject } from "react";
-import Image from "next/image";
+import React, { RefObject, useContext } from "react";
 import styles from "../../../css/Form/form.module.css"; // Adjust the import based on your structure
-import { ContinueButtons, ReturnButtons } from "../FormCards";
+import { ContinueButtons, ReturnButtons } from "../components/Buttons";
 import { Card } from "../CardTemplate";
-import arrow from "../../../../public/images/wArrow.svg"; // Adjust the import based on your structure
+import { FormContext } from "../Context/ContextForm";
 
 interface CustomCardProps {
     cardRef: RefObject<HTMLDivElement>;
@@ -16,6 +15,13 @@ export const ExtraInformationCard: React.FC<CustomCardProps> = ({
     clickHandler,
     returnHandler,
 }) => {
+    const { extraInformation, setExtraInformation } = useContext(FormContext);
+
+    const submitFunction = () => {
+        //! Add funtion to parse and submit form
+        clickHandler(cardRef);
+    };
+
     return (
         <Card
             ref={cardRef}
@@ -62,18 +68,36 @@ export const ExtraInformationCard: React.FC<CustomCardProps> = ({
                                     <div className={styles.input_place}>
                                         <input
                                             type="radio"
-                                            name="area"
-                                            id="inside"
-                                            value="inside"
+                                            name="vip"
+                                            id="vipYes"
+                                            value="yes"
+                                            checked={
+                                                extraInformation.vip === true
+                                            }
+                                            onChange={() => {
+                                                setExtraInformation((prev) => ({
+                                                    ...prev,
+                                                    vip: !extraInformation.vip,
+                                                }));
+                                            }}
                                         />
                                         <label htmlFor="">Si</label>
                                     </div>
                                     <div className={styles.input_place}>
                                         <input
                                             type="radio"
-                                            name="area"
-                                            id="inside"
-                                            value="inside"
+                                            name="vip"
+                                            id="vipNo"
+                                            value="no"
+                                            checked={
+                                                extraInformation.vip === false
+                                            }
+                                            onChange={() => {
+                                                setExtraInformation((prev) => ({
+                                                    ...prev,
+                                                    vip: !extraInformation.vip,
+                                                }));
+                                            }}
                                         />
                                         <label htmlFor="">No</label>
                                     </div>
@@ -94,18 +118,40 @@ export const ExtraInformationCard: React.FC<CustomCardProps> = ({
                                     <div className={styles.input_place}>
                                         <input
                                             type="radio"
-                                            name="area"
-                                            id="inside"
-                                            value="inside"
+                                            name="layout"
+                                            id="layoutYes"
+                                            value="yes"
+                                            checked={
+                                                extraInformation.layoutProvided ===
+                                                true
+                                            }
+                                            onChange={() => {
+                                                setExtraInformation((prev) => ({
+                                                    ...prev,
+                                                    layoutProvided:
+                                                        !extraInformation.layoutProvided,
+                                                }));
+                                            }}
                                         />
                                         <label htmlFor="">Si</label>
                                     </div>
                                     <div className={styles.input_place}>
                                         <input
                                             type="radio"
-                                            name="area"
-                                            id="inside"
-                                            value="inside"
+                                            name="layout"
+                                            id="layoutNo"
+                                            value="no"
+                                            checked={
+                                                extraInformation.layoutProvided ===
+                                                false
+                                            }
+                                            onChange={() => {
+                                                setExtraInformation((prev) => ({
+                                                    ...prev,
+                                                    layoutProvided:
+                                                        !extraInformation.layoutProvided,
+                                                }));
+                                            }}
                                         />
                                         <label htmlFor="">No</label>
                                     </div>
@@ -118,8 +164,9 @@ export const ExtraInformationCard: React.FC<CustomCardProps> = ({
                         className={styles.right_third}
                     >
                         <ContinueButtons
+                            text="TERMINAR"
                             clickHandler={() => {
-                                clickHandler(cardRef);
+                                submitFunction();
                             }}
                         />
                     </section>

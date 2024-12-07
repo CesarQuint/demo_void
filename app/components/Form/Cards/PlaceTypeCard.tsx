@@ -1,9 +1,9 @@
-import React, { RefObject } from "react";
-import Image from "next/image";
-import styles from "../../../css/Form/form.module.css"; // Adjust the import based on your structure
-import { ContinueButtons, ReturnButtons } from "../FormCards";
+import React, { RefObject, useContext } from "react";
+
+import styles from "../../../css/Form/form.module.css";
+import { ContinueButtons, ReturnButtons } from "../components/Buttons";
 import { Card } from "../CardTemplate";
-import arrow from "../../../../public/images/wArrow.svg"; // Adjust the import based on your structure
+import { FormContext, EventLocation } from "../Context/ContextForm";
 
 interface CustomCardProps {
     cardRef: RefObject<HTMLDivElement>;
@@ -16,6 +16,8 @@ export const PlaceTypeCard: React.FC<CustomCardProps> = ({
     clickHandler,
     returnHandler,
 }) => {
+    const { eventLocation, setEventLocation } = useContext(FormContext);
+
     return (
         <Card
             ref={cardRef}
@@ -67,7 +69,11 @@ export const PlaceTypeCard: React.FC<CustomCardProps> = ({
                                     type="radio"
                                     name="area"
                                     id="inside"
-                                    value="inside"
+                                    value="INSIDE"
+                                    checked={eventLocation === "INSIDE"}
+                                    onChange={(e) =>
+                                        setEventLocation(EventLocation.INSIDE)
+                                    }
                                 />
                             </div>
                             <div className={styles.input_place}>
@@ -76,7 +82,11 @@ export const PlaceTypeCard: React.FC<CustomCardProps> = ({
                                     type="radio"
                                     name="area"
                                     id="outside"
-                                    value="outside"
+                                    value="OUTSIDE"
+                                    checked={eventLocation === "OUTSIDE"}
+                                    onChange={(e) =>
+                                        setEventLocation(EventLocation.OUTSIDE)
+                                    }
                                 />
                             </div>
                         </form>

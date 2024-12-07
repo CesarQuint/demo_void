@@ -1,9 +1,12 @@
-import React, { RefObject } from "react";
-import Image from "next/image";
-import styles from "../../../css/Form/form.module.css"; // Adjust the import based on your structure
-import { ContinueButtons, ReturnButtons } from "../FormCards";
+import React, { RefObject, useContext } from "react";
+import styles from "../../../css/Form/form.module.css";
+import { ContinueButtons, ReturnButtons } from "../components/Buttons";
 import { Card } from "../CardTemplate";
-import arrow from "../../../../public/images/wArrow.svg"; // Adjust the import based on your structure
+import { FormContext } from "../Context/ContextForm";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(useGSAP);
 
 interface CustomCardProps {
     cardRef: RefObject<HTMLDivElement>;
@@ -16,6 +19,71 @@ export const ContactCard: React.FC<CustomCardProps> = ({
     clickHandler,
     returnHandler,
 }) => {
+    const { contactData, setContactData } = useContext(FormContext);
+
+    const { contextSafe } = useGSAP();
+
+    const shakeAnimation = contextSafe(
+        (ref: React.RefObject<HTMLDivElement>) => {
+            const tl = gsap.timeline({
+                repeat: 1,
+                ease: "elastic.inOut(1,0.3)",
+            });
+            tl.to(ref.current, { x: "-1%", duration: 0.08 })
+                .to(ref.current, { x: "1%", duration: 0.08 })
+                .to(ref.current, { x: "-1%", duration: 0.08 })
+                .to(ref.current, { x: "1%", duration: 0.08 })
+                .to(ref.current, { x: "-1%", duration: 0.08 })
+                .to(ref.current, { x: "0", duration: 0.08 });
+        }
+    );
+
+    function fielValidator(key: string, value: string) {
+        if (value.length <= 1) {
+            const input = document.getElementById(`${key}_field`);
+            const label = document.getElementById(`${key}_label`);
+            input?.classList.add(`${styles.invalid_field}`);
+            label?.classList.add(`${styles.invalid_label}`);
+            shakeAnimation(cardRef);
+            return false;
+        }
+        return true;
+    }
+
+    function removeWarnings(key: string) {
+        const input = document.getElementById(`${key}_field`);
+        const label = document.getElementById(`${key}_label`);
+        if (label && label.classList.contains(`${styles.invalid_label}`)) {
+            label.innerHTML = label.innerHTML.split("*")[0];
+            input?.classList.remove(`${styles.invalid_field}`);
+            label?.classList.remove(`${styles.invalid_label}`);
+        }
+    }
+
+    const handleNext = () => {
+        let result = new Array();
+
+        for (const [key, value] of Object.entries(contactData)) {
+            result = [...result, fielValidator(key, value)];
+        }
+        if (result.includes(false)) {
+            return;
+        }
+
+        clickHandler(cardRef);
+    };
+
+    const changeInput = (
+        e: React.ChangeEvent<HTMLInputElement>,
+        key: string
+    ) => {
+        removeWarnings(key);
+        setContactData((prev) => ({
+            ...prev,
+            [key]: e.target.value,
+        }));
+    };
+
     return (
         <Card
             ref={cardRef}
@@ -51,7 +119,7 @@ export const ContactCard: React.FC<CustomCardProps> = ({
                         <form className={styles.contact}>
                             <div className={styles.contact_column}>
                                 <section className={styles.imput_text}>
-                                    <label htmlFor="">
+                                    <label htmlFor="" id="name_label">
                                         Nombre
                                         <p
                                             style={{
@@ -64,14 +132,18 @@ export const ContactCard: React.FC<CustomCardProps> = ({
                                         </p>
                                     </label>
                                     <input
+                                        value={contactData.name}
+                                        onChange={(e) => {
+                                            changeInput(e, "name");
+                                        }}
                                         className={styles.input_white}
                                         type="text"
                                         name=""
-                                        id=""
+                                        id="name_field"
                                     />
                                 </section>
                                 <section className={styles.imput_text}>
-                                    <label htmlFor="">
+                                    <label htmlFor="" id="phoneNumber_label">
                                         Teléfono
                                         <p
                                             style={{
@@ -84,16 +156,20 @@ export const ContactCard: React.FC<CustomCardProps> = ({
                                         </p>
                                     </label>
                                     <input
+                                        value={contactData.phoneNumber}
+                                        onChange={(e) => {
+                                            changeInput(e, "phoneNumber");
+                                        }}
                                         className={styles.input_white}
                                         type="text"
                                         name=""
-                                        id=""
+                                        id="phoneNumber_field"
                                     />
                                 </section>
                             </div>
                             <div className={styles.contact_column}>
                                 <section className={styles.imput_text}>
-                                    <label htmlFor="">
+                                    <label htmlFor="" id="company_label">
                                         Organización
                                         <p
                                             style={{
@@ -106,14 +182,18 @@ export const ContactCard: React.FC<CustomCardProps> = ({
                                         </p>
                                     </label>
                                     <input
+                                        value={contactData.company}
+                                        onChange={(e) => {
+                                            changeInput(e, "company");
+                                        }}
                                         className={styles.input_white}
                                         type="text"
                                         name=""
-                                        id=""
+                                        id="company_field"
                                     />
                                 </section>
                                 <section className={styles.imput_text}>
-                                    <label htmlFor="">
+                                    <label htmlFor="" id="email_label">
                                         Email
                                         <p
                                             style={{
@@ -126,10 +206,14 @@ export const ContactCard: React.FC<CustomCardProps> = ({
                                         </p>
                                     </label>
                                     <input
+                                        value={contactData.email}
+                                        onChange={(e) => {
+                                            changeInput(e, "email");
+                                        }}
                                         className={styles.input_white}
-                                        type="text"
+                                        type="email"
                                         name=""
-                                        id=""
+                                        id="email_field"
                                     />
                                 </section>
                             </div>
@@ -141,7 +225,7 @@ export const ContactCard: React.FC<CustomCardProps> = ({
                     >
                         <ContinueButtons
                             clickHandler={() => {
-                                clickHandler(cardRef);
+                                handleNext();
                             }}
                         />
                     </section>

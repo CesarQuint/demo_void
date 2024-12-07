@@ -1,7 +1,7 @@
 import React, { RefObject } from "react";
 import Image from "next/image";
 import styles from "../../../css/Form/form.module.css"; // Adjust the import based on your structure
-import { ContinueButtons } from "../FormCards";
+import { ContinueButtons, ReturnButtons } from "../components/Buttons";
 import { Card } from "../CardTemplate";
 import arrow from "../../../../public/images/wArrow.svg"; // Adjust the import based on your structure
 

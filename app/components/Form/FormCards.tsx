@@ -2,10 +2,6 @@ import React, { RefObject, useRef } from "react";
 import styles from "../../css/Form/form.module.css";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import Image from "next/image";
-import arrow from "../../../public/images/wArrow.svg";
-import wArrow from "../../../public/images/arrow.svg";
-import { Card } from "./CardTemplate";
 
 import { WelcomeCard } from "./Cards/CardWelcome";
 import { ContactCard } from "./Cards/CardContact";
@@ -18,6 +14,10 @@ import { DatesAvailableCard } from "./Cards/DatesAvailableCard";
 import { ScheduleCard } from "./Cards/ScheduleCard";
 import { EventDurationCard } from "./Cards/EventDurationCard";
 import { LocationCard } from "./Cards/LocationCard";
+
+import { ContinueButtons, ReturnButtons } from "./components/Buttons";
+import { FormDataProvider } from "./Context/ContextForm";
+import { useNavigation } from "@/app/utils/navigationContext";
 
 gsap.registerPlugin(useGSAP);
 
@@ -75,78 +75,6 @@ const FareWellCard = React.forwardRef<
 
 FareWellCard.displayName = "FareWellCard";
 
-export const ReturnButtons = ({
-    returnHandler,
-}: {
-    returnHandler: () => void;
-}) => {
-    return (
-        <>
-            <button
-                onClick={() => {
-                    returnHandler();
-                }}
-                className={styles.white_button}
-            >
-                <Image
-                    style={{
-                        width: "2vw",
-                        height: "2vh",
-                        backgroundColor: " #ededed",
-                        transform: "rotate(180deg)",
-                    }}
-                    width={1000}
-                    height={1000}
-                    src={arrow}
-                    alt="arrow"
-                />
-            </button>
-            <button
-                onClick={() => {
-                    returnHandler();
-                }}
-                className={styles.white_button}
-            >
-                REGRESAR
-            </button>
-        </>
-    );
-};
-
-export const ContinueButtons = ({
-    clickHandler,
-}: {
-    clickHandler: () => void;
-}) => {
-    return (
-        <>
-            <button
-                onClick={() => clickHandler()}
-                style={{ padding: "1rem", borderRadius: "40px" }}
-                className={styles.black_button}
-            >
-                CONTINUAR
-            </button>
-            <button
-                onClick={() => clickHandler()}
-                style={{
-                    padding: "10px",
-                    borderRadius: "50%",
-                }}
-                className={styles.black_button}
-            >
-                <Image
-                    className={styles.arrow_button}
-                    width={1000}
-                    height={1000}
-                    src={wArrow}
-                    alt="arrow"
-                />
-            </button>
-        </>
-    );
-};
-
 export default function FormCards() {
     const card1 = useRef<HTMLDivElement>(null);
     const card2 = useRef<HTMLDivElement>(null);
@@ -179,6 +107,7 @@ export default function FormCards() {
     let animatedCards = new CardsStack([]);
 
     const { contextSafe } = useGSAP();
+    const { setNavigationEvent } = useNavigation();
 
     const clickHandler = contextSafe((ref: React.RefObject<HTMLDivElement>) => {
         gsap.to(ref.current, {
@@ -225,122 +154,140 @@ export default function FormCards() {
     });
 
     return (
-        <section className={styles.main}>
-            <div className={styles.cards_container}>
-                <FareWellCard
-                    justify="center"
-                    ref={card12}
-                    scale={0.78}
-                    top={10}
-                    fullcard={
-                        <>
-                            <section style={{ justifyContent: "flex-end" }}>
-                                <ReturnButtons returnHandler={returnHandler} />
-                            </section>
-                            <section
-                                style={{ alignItems: "center" }}
-                                className={styles.right_second}
-                            >
-                                <h2>¡Gracias!</h2>
-                                <h4>
-                                    Nos contactaremos contigo lo antes posible.
-                                </h4>
-                            </section>
-                            <section
-                                style={{ justifyContent: "flex-end" }}
-                                className={styles.right_third}
-                            >
-                                <ContinueButtons clickHandler={() => {}} />
-                            </section>
-                        </>
-                    }
-                />
-                <ExtraInformationCard
-                    cardRef={card11}
-                    clickHandler={() => clickHandler(card11)}
-                    returnHandler={() => {
-                        returnHandler();
-                    }}
-                />
+        <FormDataProvider>
+            <section className={styles.main}>
+                <div className={styles.cards_container}>
+                    <FareWellCard
+                        justify="center"
+                        ref={card12}
+                        scale={0.78}
+                        top={10}
+                        fullcard={
+                            <>
+                                <section style={{ justifyContent: "flex-end" }}>
+                                    <ReturnButtons
+                                        returnHandler={returnHandler}
+                                    />
+                                </section>
+                                <section
+                                    style={{ alignItems: "center" }}
+                                    className={styles.right_second}
+                                >
+                                    <h2>¡Gracias!</h2>
+                                    <h4>
+                                        Nos contactaremos contigo lo antes
+                                        posible.
+                                    </h4>
+                                </section>
+                                <section
+                                    style={{ justifyContent: "flex-end" }}
+                                    className={styles.right_third}
+                                >
+                                    <ContinueButtons
+                                        text="IR AL HOME"
+                                        clickHandler={() => {
+                                            setNavigationEvent({
+                                                state: true,
+                                                href: "/",
+                                            });
+                                        }}
+                                    />
+                                </section>
+                            </>
+                        }
+                    />
+                    <ExtraInformationCard
+                        cardRef={card11}
+                        clickHandler={clickHandler}
+                        returnHandler={() => {
+                            returnHandler();
+                        }}
+                    />
 
-                <ComplemetarySystemsCard
-                    cardRef={card10}
-                    clickHandler={() => clickHandler(card10)}
-                    returnHandler={() => {
-                        returnHandler();
-                    }}
-                />
+                    <ComplemetarySystemsCard
+                        cardRef={card10}
+                        clickHandler={clickHandler}
+                        returnHandler={() => {
+                            returnHandler();
+                        }}
+                    />
 
-                <AboutYourProjectCard
-                    cardRef={card9}
-                    clickHandler={() => clickHandler(card9)}
-                    returnHandler={() => {
-                        returnHandler();
-                    }}
-                />
+                    <AboutYourProjectCard
+                        cardRef={card9}
+                        clickHandler={clickHandler}
+                        returnHandler={() => {
+                            returnHandler();
+                        }}
+                    />
 
-                <EventDurationCard
-                    cardRef={card8}
-                    clickHandler={() => clickHandler(card8)}
-                    returnHandler={() => {
-                        returnHandler();
-                    }}
-                />
+                    <EventDurationCard
+                        cardRef={card8}
+                        clickHandler={clickHandler}
+                        returnHandler={() => {
+                            returnHandler();
+                        }}
+                    />
 
-                <LookingForProjectCard
-                    cardRef={card7}
-                    clickHandler={() => clickHandler(card7)}
-                    returnHandler={() => {
-                        returnHandler();
-                    }}
-                />
+                    <LookingForProjectCard
+                        cardRef={card7}
+                        clickHandler={clickHandler}
+                        returnHandler={() => {
+                            returnHandler();
+                        }}
+                    />
 
-                <ScheduleCard
-                    cardRef={card6}
-                    clickHandler={() => clickHandler(card6)}
-                    returnHandler={() => {
-                        returnHandler();
-                    }}
-                />
+                    <ScheduleCard
+                        cardRef={card6}
+                        clickHandler={clickHandler}
+                        returnHandler={() => {
+                            returnHandler();
+                        }}
+                    />
 
-                <DatesAvailableCard
-                    cardRef={card5}
-                    clickHandler={() => clickHandler(card5)}
-                    returnHandler={() => {
-                        returnHandler();
-                    }}
-                />
+                    <DatesAvailableCard
+                        cardRef={card5}
+                        clickHandler={clickHandler}
+                        returnHandler={() => {
+                            returnHandler();
+                        }}
+                    />
 
-                <LocationCard
-                    cardRef={card4}
-                    clickHandler={() => clickHandler(card4)}
-                    returnHandler={() => {
-                        returnHandler();
-                    }}
-                />
+                    <LocationCard
+                        cardRef={card4}
+                        clickHandler={clickHandler}
+                        returnHandler={() => {
+                            returnHandler();
+                        }}
+                    />
 
-                <PlaceTypeCard
-                    cardRef={card3}
-                    clickHandler={() => clickHandler(card3)}
-                    returnHandler={() => {
-                        returnHandler();
-                    }}
-                />
+                    <PlaceTypeCard
+                        cardRef={card3}
+                        clickHandler={clickHandler}
+                        returnHandler={() => {
+                            returnHandler();
+                        }}
+                    />
 
-                <ContactCard
-                    cardRef={card2}
-                    clickHandler={() => clickHandler(card2)}
-                    returnHandler={() => {
-                        returnHandler();
-                    }}
-                />
+                    <ContactCard
+                        cardRef={card2}
+                        clickHandler={clickHandler}
+                        returnHandler={() => {
+                            returnHandler();
+                        }}
+                    />
 
-                <WelcomeCard
-                    cardRef={card1}
-                    clickHandler={() => clickHandler(card1)}
-                    returnHandler={() => {}}
-                />
-            </div>
-        </section>
+                    <WelcomeCard
+                        cardRef={card1}
+                        clickHandler={clickHandler}
+                        returnHandler={() => {
+                            setNavigationEvent({
+                                state: true,
+                                href: "/",
+                            });
+                        }}
+                    />
+                </div>
+            </section>
+        </FormDataProvider>
     );
 }
