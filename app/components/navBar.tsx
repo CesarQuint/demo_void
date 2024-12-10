@@ -48,13 +48,18 @@ const NavBar = () => {
                     .to(`.${styles.line2}`, { rotate: "-8.5deg" }, 0)
                     .set(
                         [`.${styles.links}`, `.${styles.langs}`],
-                        { height: "auto", pointerEvents: "all", opacity: 1 },
-                        0,
+                        {
+                            height: "auto",
+                            pointerEvents: "all",
+                            opacity: 1,
+                            paddingTop: "20vh",
+                        },
+                        0
                     )
                     .set(`.${styles.links} .char`, { opacity: 0 }, 0);
             });
         },
-        { scope: container },
+        { scope: container }
     );
 
     const lastScrollY = useRef(0);
