@@ -38,7 +38,7 @@ export default function Tabs({ tabs }: Props) {
                 tl.set(`.${s.line}`, { width: "100%", xPercent: 0 }, 0).to(
                     titles,
                     {},
-                    0,
+                    0
                 );
             } else {
                 tl.set(`.${s.line}`, { width: `${100 / tabs.length}%` }, 0)
@@ -46,7 +46,7 @@ export default function Tabs({ tabs }: Props) {
                     .set(titles, { xPercent: 0 }, 0);
             }
         },
-        { scope: container, dependencies: [currentTab, windowStatus] },
+        { scope: container, dependencies: [currentTab, windowStatus] }
     );
 
     return (
@@ -55,7 +55,9 @@ export default function Tabs({ tabs }: Props) {
                 <div className={s.options}>
                     {tabs.map((tab, i) => (
                         <h3
-                            className={`${s.title} ${i === currentTab ? s.active : ""}`}
+                            className={`${s.title} ${
+                                i === currentTab ? s.active : ""
+                            }`}
                             key={i}
                             onClick={() => setCurrentTab(i)}
                         >
@@ -71,15 +73,10 @@ export default function Tabs({ tabs }: Props) {
                 {tabs.map((tab, i) => (
                     <div
                         key={i}
-                        className={`${s.tab} ${i === currentTab ? s.active : ""}`}
+                        className={`${s.tab} ${
+                            i === currentTab ? s.active : ""
+                        }`}
                     >
-                        <p className={s.text_content}>
-                            {tab.content.map((txt, i) => (
-                                <Fragment key={i}>
-                                    <span>{txt}</span>
-                                </Fragment>
-                            ))}
-                        </p>
                         <Image
                             className={s.images}
                             src={tab.icon}
@@ -87,6 +84,13 @@ export default function Tabs({ tabs }: Props) {
                             height={1000}
                             alt="icon image"
                         />
+                        <p className={s.text_content}>
+                            {tab.content.map((txt, i) => (
+                                <Fragment key={i}>
+                                    <span>{txt}</span>
+                                </Fragment>
+                            ))}
+                        </p>
                     </div>
                 ))}
             </div>
@@ -94,7 +98,9 @@ export default function Tabs({ tabs }: Props) {
                 {tabs.map((_, i) => (
                     <button
                         key={i}
-                        className={`${s.step} ${i === currentTab ? s.active : ""}`}
+                        className={`${s.step} ${
+                            i === currentTab ? s.active : ""
+                        }`}
                         onClick={() => setCurrentTab(i)}
                     ></button>
                 ))}
