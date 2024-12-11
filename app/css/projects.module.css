@@ -61,7 +61,7 @@
 
     .scrollView .imgBox {
         --column: calc(var(--column) % 2);
-        width: 80vw;
+        width: -webkit-fill-available;
         justify-self: start;
         margin: 0 0 1.875rem 0;
     }

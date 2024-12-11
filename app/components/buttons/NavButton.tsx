@@ -40,8 +40,8 @@ const NavButton: React.FC<NavButtonProps> = (props: NavButtonProps) => {
                             src={props.icon ?? "images/wArrow.svg"}
                             style={{
                                 color: "transparent",
-                                height: "1rem",
-                                width: "1rem",
+                                height: "2rem",
+                                width: "2rem",
                             }}
                         />
                     </span>

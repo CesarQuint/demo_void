@@ -1,11 +1,5 @@
 "use client";
-import React, {
-    Dispatch,
-    SetStateAction,
-    useEffect,
-    useRef,
-    useState,
-} from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import styles from "../css/tags.module.css";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -38,7 +32,7 @@ const TagsContent = (props: TagsContentProps) => {
     if (windowStatus && windowStatus.innerWidth < 768) {
         return (
             <>
-                <section>
+                <section className={`${styles.mobile_head}`}>
                     <p className={styles.right_numeral}>{props.number}</p>
                     <h5 className={styles.title}>{props.title}</h5>
                 </section>
@@ -154,10 +148,10 @@ const Tags = (props: Props) => {
                         {
                             borderColor: gsap.getProperty(
                                 tags[i],
-                                "borderColor",
+                                "borderColor"
                             ),
                         },
-                        0,
+                        0
                     );
             }
 
@@ -171,7 +165,7 @@ const Tags = (props: Props) => {
                 container,
                 imgLoad,
             ],
-        },
+        }
     );
 
     return (

@@ -39,7 +39,7 @@
 }
 
 .image {
-    width: 50%;
+    width: 85%;
     height: auto;
 }
 
@@ -58,13 +58,22 @@
 
 .right_numeral {
     font-family: "Panchang";
+    font-weight: 900;
 }
 
 .title {
     font-family: Panchang;
-    font-size: 1rem;
+    font-size: 1.3rem;
+    font-weight: 300;
+    letter-spacing: 0.5vw;
     color: #fff;
     margin-bottom: 1rem;
+}
+
+.right_text_content {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 2vh;
 }
 
 .right_text_content p {
@@ -80,12 +89,24 @@
     text-align: center;
 }
 
+.mobile_head {
+    width: 100%;
+}
+
 /* Media Part */
 @media (min-width: 768px) {
     .title {
-        font-size: 1.5rem;
+        font-size: 2rem;
+        letter-spacing: normal;
+        font-weight: 700;
         margin-bottom: 0;
     }
+
+    .right_numeral {
+        font-family: "Panchang";
+        font-weight: 300;
+    }
+
     .tags_wrapper {
         color: #101010;
         padding: 3vh 6vh;
@@ -98,6 +119,11 @@
     .right_content {
         width: 60%;
         justify-content: center;
+    }
+
+    .image {
+        width: 50%;
+        height: auto;
     }
 
     .left_content h4 {

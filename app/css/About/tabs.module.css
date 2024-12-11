@@ -14,14 +14,14 @@
 .header {
     display: flex;
     position: relative;
-    margin: 2rem 0 5.5rem;
+    margin: 2rem 0 2rem;
     padding-bottom: 0.5rem;
 
     .title {
         font-family: Panchang;
-        font-size: 1rem;
+        font-size: 1.1rem;
         line-height: 1.8;
-        text-align: center;
+        text-align: left;
         text-transform: uppercase;
         font-weight: 300;
 
@@ -48,6 +48,7 @@
     }
 
     @media (min-width: 700px) {
+        margin: 2rem 0 5.5rem;
         font-size: 1.25rem;
         gap: 3.75rem;
 
@@ -139,12 +140,13 @@
 }
 
 .images {
-    padding-top: 5vh;
     object-fit: contain;
+    padding-bottom: 4rem;
     width: 100%;
     height: auto;
 
     @media (min-width: 700px) {
+        padding-top: 5vh;
         width: 50%;
     }
 }
