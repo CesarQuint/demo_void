@@ -1,9 +1,13 @@
-import React, { RefObject } from "react";
-import Image from "next/image";
+import React, { RefObject, useContext } from "react";
 import styles from "../../../css/Form/form.module.css"; // Adjust the import based on your structure
-import { ContinueButtons, ReturnButtons } from "../FormCards";
+import { ContinueButtons, ReturnButtons } from "../components/Buttons";
 import { Card } from "../CardTemplate";
-import arrow from "../../../../public/images/wArrow.svg"; // Adjust the import based on your structure
+import { FormContext } from "../Context/ContextForm";
+
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(useGSAP);
 
 interface CustomCardProps {
     cardRef: RefObject<HTMLDivElement>;
@@ -16,6 +20,54 @@ export const AboutYourProjectCard: React.FC<CustomCardProps> = ({
     clickHandler,
     returnHandler,
 }) => {
+    const { userExperience, setUserExperience } = useContext(FormContext);
+
+    const { contextSafe } = useGSAP();
+
+    const shakeAnimation = contextSafe(
+        (ref: React.RefObject<HTMLDivElement>) => {
+            const tl = gsap.timeline({
+                repeat: 1,
+                ease: "elastic.inOut(1,0.3)",
+            });
+            tl.to(ref.current, { x: "-1%", duration: 0.08 })
+                .to(ref.current, { x: "1%", duration: 0.08 })
+                .to(ref.current, { x: "-1%", duration: 0.08 })
+                .to(ref.current, { x: "1%", duration: 0.08 })
+                .to(ref.current, { x: "-1%", duration: 0.08 })
+                .to(ref.current, { x: "0", duration: 0.08 });
+        }
+    );
+
+    function setErrorClass(key: string) {
+        const input = document.getElementById(`${key}_field`);
+        const label = document.getElementById(`${key}_label`);
+        if (label && !label.classList.contains(`${styles.invalid_label}`))
+            label.innerHTML = label.innerHTML + " *";
+        input?.classList.add(`${styles.invalid_field}`);
+        label?.classList.add(`${styles.invalid_label}`);
+        shakeAnimation(cardRef);
+    }
+
+    function removeWarnings(key: string) {
+        const input = document.getElementById(`${key}_field`);
+        const label = document.getElementById(`${key}_label`);
+        if (label && label.classList.contains(`${styles.invalid_label}`)) {
+            label.innerHTML = label.innerHTML.split("*")[0];
+            input?.classList.remove(`${styles.invalid_field}`);
+            label?.classList.remove(`${styles.invalid_label}`);
+        }
+    }
+
+    const handleNext = () => {
+        if (userExperience.length < 2) {
+            setErrorClass("userExperience");
+            return;
+        }
+
+        clickHandler(cardRef);
+    };
+
     return (
         <Card
             ref={cardRef}
@@ -50,15 +102,20 @@ export const AboutYourProjectCard: React.FC<CustomCardProps> = ({
                     <section className={styles.right_second}>
                         <form>
                             <div className={styles.journey}>
-                                <label>
+                                <label id="userExperience_label">
                                     ¿Puedes describir la experiencia de usuario
                                     o user journey?
                                 </label>
                                 <textarea
+                                    value={userExperience}
+                                    onChange={(e) => {
+                                        removeWarnings("userExperience");
+                                        setUserExperience(e.target.value);
+                                    }}
                                     className={styles.text_area}
                                     placeholder="Text"
                                     name=""
-                                    id=""
+                                    id="userExperience_field"
                                 ></textarea>
                             </div>
                         </form>
@@ -69,7 +126,7 @@ export const AboutYourProjectCard: React.FC<CustomCardProps> = ({
                     >
                         <ContinueButtons
                             clickHandler={() => {
-                                clickHandler(cardRef);
+                                handleNext();
                             }}
                         />
                     </section>

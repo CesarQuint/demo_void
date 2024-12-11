@@ -1,9 +1,10 @@
-import React, { RefObject } from "react";
+import React, { RefObject, useContext } from "react";
 import Image from "next/image";
 import styles from "../../../css/Form/form.module.css"; // Adjust the import based on your structure
-import { ContinueButtons, ReturnButtons } from "../FormCards";
+import { ContinueButtons, ReturnButtons } from "../components/Buttons";
 import { Card } from "../CardTemplate";
 import arrow from "../../../../public/images/wArrow.svg"; // Adjust the import based on your structure
+import { FormContext, LookingForProjectOptions } from "../Context/ContextForm";
 
 interface CustomCardProps {
     cardRef: RefObject<HTMLDivElement>;
@@ -16,6 +17,9 @@ export const LookingForProjectCard: React.FC<CustomCardProps> = ({
     clickHandler,
     returnHandler,
 }) => {
+    const { lookingForProjectData, setLookingForProjectData } =
+        useContext(FormContext);
+
     return (
         <Card
             ref={cardRef}
@@ -74,6 +78,18 @@ export const LookingForProjectCard: React.FC<CustomCardProps> = ({
                                         name="area"
                                         id="inside"
                                         value="inside"
+                                        checked={
+                                            lookingForProjectData.option ==
+                                            LookingForProjectOptions.FACADE_MAPPING
+                                        }
+                                        onChange={(e) =>
+                                            setLookingForProjectData(
+                                                (prev) => ({
+                                                    ...prev,
+                                                    option: LookingForProjectOptions.FACADE_MAPPING,
+                                                })
+                                            )
+                                        }
                                     />
                                     <label htmlFor="">
                                         Mapping sobre fachada
@@ -85,6 +101,18 @@ export const LookingForProjectCard: React.FC<CustomCardProps> = ({
                                         name="area"
                                         id="outside"
                                         value="outside"
+                                        checked={
+                                            lookingForProjectData.option ==
+                                            LookingForProjectOptions.IMMERSIVE_EXPERIENCE
+                                        }
+                                        onChange={(e) =>
+                                            setLookingForProjectData(
+                                                (prev) => ({
+                                                    ...prev,
+                                                    option: LookingForProjectOptions.IMMERSIVE_EXPERIENCE,
+                                                })
+                                            )
+                                        }
                                     />
                                     <label htmlFor="">
                                         Experiencia inmersiva
@@ -96,11 +124,60 @@ export const LookingForProjectCard: React.FC<CustomCardProps> = ({
                                         name="area"
                                         id="outside"
                                         value="outside"
+                                        checked={
+                                            lookingForProjectData.option ==
+                                            LookingForProjectOptions.BRAND_ACTIVATION
+                                        }
+                                        onChange={(e) =>
+                                            setLookingForProjectData(
+                                                (prev) => ({
+                                                    ...prev,
+                                                    option: LookingForProjectOptions.BRAND_ACTIVATION,
+                                                })
+                                            )
+                                        }
                                     />
                                     <label htmlFor="">
                                         Activación de marca
                                     </label>
                                 </div>
+                                <div className={styles.input_place}>
+                                    <input
+                                        type="radio"
+                                        name="area"
+                                        id="outside"
+                                        value="outside"
+                                        checked={
+                                            lookingForProjectData.option ==
+                                            LookingForProjectOptions.OTHER
+                                        }
+                                        onChange={(e) =>
+                                            setLookingForProjectData(
+                                                (prev) => ({
+                                                    ...prev,
+                                                    option: LookingForProjectOptions.OTHER,
+                                                })
+                                            )
+                                        }
+                                    />
+                                    <label htmlFor="">Otro</label>
+                                </div>
+                                {lookingForProjectData.option ==
+                                    LookingForProjectOptions.OTHER && (
+                                    <input
+                                        type="text"
+                                        className={styles.input_white}
+                                        placeholder="...."
+                                        onChange={(e) => {
+                                            setLookingForProjectData(
+                                                (prev) => ({
+                                                    ...prev,
+                                                    description: e.target.value,
+                                                })
+                                            );
+                                        }}
+                                    ></input>
+                                )}
                             </section>
                             <section className={styles.project_column}>
                                 <div className={styles.input_place}>
@@ -109,9 +186,21 @@ export const LookingForProjectCard: React.FC<CustomCardProps> = ({
                                         name="area"
                                         id="inside"
                                         value="inside"
+                                        checked={
+                                            lookingForProjectData.option ==
+                                            LookingForProjectOptions.LIVE_SHOW_MAPPING
+                                        }
+                                        onChange={(e) =>
+                                            setLookingForProjectData(
+                                                (prev) => ({
+                                                    ...prev,
+                                                    option: LookingForProjectOptions.LIVE_SHOW_MAPPING,
+                                                })
+                                            )
+                                        }
                                     />
                                     <label htmlFor="">
-                                        Mapping sobre fachada
+                                        Mapping para show en vivo
                                     </label>
                                 </div>
                                 <div className={styles.input_place}>
@@ -120,9 +209,21 @@ export const LookingForProjectCard: React.FC<CustomCardProps> = ({
                                         name="area"
                                         id="outside"
                                         value="outside"
+                                        checked={
+                                            lookingForProjectData.option ==
+                                            LookingForProjectOptions.MUSEUM_INSTALLATION
+                                        }
+                                        onChange={(e) =>
+                                            setLookingForProjectData(
+                                                (prev) => ({
+                                                    ...prev,
+                                                    option: LookingForProjectOptions.MUSEUM_INSTALLATION,
+                                                })
+                                            )
+                                        }
                                     />
                                     <label htmlFor="">
-                                        Experiencia inmersiva
+                                        Instalación para museo
                                     </label>
                                 </div>
                                 <div className={styles.input_place}>
@@ -131,9 +232,21 @@ export const LookingForProjectCard: React.FC<CustomCardProps> = ({
                                         name="area"
                                         id="outside"
                                         value="outside"
+                                        checked={
+                                            lookingForProjectData.option ==
+                                            LookingForProjectOptions.CUSTOM_EXPERIENCE
+                                        }
+                                        onChange={(e) =>
+                                            setLookingForProjectData(
+                                                (prev) => ({
+                                                    ...prev,
+                                                    option: LookingForProjectOptions.CUSTOM_EXPERIENCE,
+                                                })
+                                            )
+                                        }
                                     />
                                     <label htmlFor="">
-                                        Activación de marca
+                                        Experiencia personalizada
                                     </label>
                                 </div>
                             </section>

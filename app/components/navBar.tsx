@@ -22,7 +22,6 @@ const NavBar = () => {
     const linkRedirect = useRef("");
     const toggleTl = useRef<gsap.core.Timeline | null>(null);
     const { setNavigationEvent } = useNavigation();
-    const router = useRouter();
     const windowInfo = useWindow();
 
     const { contextSafe } = useGSAP(
@@ -54,6 +53,7 @@ const NavBar = () => {
                             opacity: 1,
                             paddingTop: "20vh",
                         },
+
                         0
                     )
                     .set(`.${styles.links} .char`, { opacity: 0 }, 0);
@@ -70,7 +70,6 @@ const NavBar = () => {
 
             if (container.current) {
                 if (currentScrollY > lastScrollY.current) {
-                    // Scrolling down
                     gsap.to(container.current, {
                         y: "-100%",
                         duration: 0.5,
@@ -107,8 +106,6 @@ const NavBar = () => {
     });
 
     function goTo(e: MouseEvent, href: string) {
-        console.log("click");
-
         e.preventDefault();
 
         if (
