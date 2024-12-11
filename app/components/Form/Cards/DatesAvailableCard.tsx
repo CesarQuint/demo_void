@@ -1,14 +1,18 @@
 "use client";
-import React, { RefObject } from "react";
-import Image from "next/image";
+import React, { RefObject, useContext } from "react";
 import styles from "../../../css/Form/form.module.css"; // Adjust the import based on your structure
-import { ContinueButtons, ReturnButtons } from "../FormCards";
+import { ContinueButtons, ReturnButtons } from "../components/Buttons";
 import { Card } from "../CardTemplate";
 
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(useGSAP);
+
 import { Value } from "react-calendar/dist/cjs/shared/types";
-import { Range } from "react-calendar/dist/cjs/shared/types";
 
 import dynamic from "next/dynamic";
+import { FormContext } from "../Context/ContextForm";
 
 const Calendar = dynamic(() => import("react-calendar"), { ssr: false });
 
@@ -28,14 +32,59 @@ export const DatesAvailableCard: React.FC<CustomCardProps> = ({
     clickHandler,
     returnHandler,
 }) => {
-    const [selectedDates, setSelectedDates] = React.useState<
-        Date | [Date, Date] | null
-    >(null);
+    const { selectedDates, setSelectedDates } = useContext(FormContext);
+
+    const { contextSafe } = useGSAP();
+
+    const shakeAnimation = contextSafe(
+        (ref: React.RefObject<HTMLDivElement>) => {
+            const tl = gsap.timeline({
+                repeat: 1,
+                ease: "elastic.inOut(1,0.3)",
+            });
+            tl.to(ref.current, { x: "-1%", duration: 0.08 })
+                .to(ref.current, { x: "1%", duration: 0.08 })
+                .to(ref.current, { x: "-1%", duration: 0.08 })
+                .to(ref.current, { x: "1%", duration: 0.08 })
+                .to(ref.current, { x: "-1%", duration: 0.08 })
+                .to(ref.current, { x: "0", duration: 0.08 });
+        }
+    );
+
+    function setErrorClass(key: string) {
+        const input = document.getElementById(`${key}_field`);
+        const label = document.getElementById(`${key}_label`);
+        input?.classList.add(`${styles.invalid_field}`);
+        label?.classList.add(`${styles.invalid_label}`);
+        shakeAnimation(cardRef);
+    }
+
+    function removeWarnings(key: string) {
+        const input = document.getElementById(`${key}_field`);
+        const label = document.getElementById(`${key}_label`);
+        if (label && label.classList.contains(`${styles.invalid_label}`)) {
+            label.innerHTML = label.innerHTML.split("*")[0];
+            input?.classList.remove(`${styles.invalid_field}`);
+            label?.classList.remove(`${styles.invalid_label}`);
+        }
+    }
+
+    const handleNext = () => {
+        if (selectedDates == null) {
+            setErrorClass("startDate");
+            setErrorClass("endDate");
+            return;
+        }
+
+        clickHandler(cardRef);
+    };
 
     const handleDateChange = (value: Value) => {
-        console.log("Selected date(s):", value);
+        removeWarnings("startDate");
+        removeWarnings("endDate");
         setSelectedDates(value as Date | [Date, Date]);
     };
+
     return (
         <Card
             ref={cardRef}
@@ -84,7 +133,7 @@ export const DatesAvailableCard: React.FC<CustomCardProps> = ({
                                 </h4>
                                 <div className={styles.input_date_flex}>
                                     <section className={styles.imput_text_date}>
-                                        <label htmlFor="">
+                                        <label htmlFor="" id="startDate_label">
                                             Fecha de Inicio
                                             <p
                                                 style={{
@@ -106,11 +155,11 @@ export const DatesAvailableCard: React.FC<CustomCardProps> = ({
                                             className={styles.input_date}
                                             type="text"
                                             name=""
-                                            id=""
+                                            id="startDate_field"
                                         />
                                     </section>
                                     <section className={styles.imput_text_date}>
-                                        <label htmlFor="">
+                                        <label htmlFor="" id="endDate_label">
                                             Fecha de Finalizacion
                                             <p
                                                 style={{
@@ -132,7 +181,7 @@ export const DatesAvailableCard: React.FC<CustomCardProps> = ({
                                             className={styles.input_date}
                                             type="text"
                                             name=""
-                                            id=""
+                                            id="endDate_field"
                                         />
                                     </section>
                                 </div>
@@ -158,7 +207,7 @@ export const DatesAvailableCard: React.FC<CustomCardProps> = ({
                     >
                         <ContinueButtons
                             clickHandler={() => {
-                                clickHandler(cardRef);
+                                handleNext();
                             }}
                         />
                     </section>

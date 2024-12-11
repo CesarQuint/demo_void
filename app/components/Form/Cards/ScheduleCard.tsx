@@ -1,11 +1,12 @@
 "use client";
-import React, { RefObject, useState } from "react";
+import React, { RefObject, useContext, useState } from "react";
 import Image from "next/image";
 import styles from "../../../css/Form/form.module.css"; // Adjust the import based on your structure
-import { ContinueButtons, ReturnButtons } from "../FormCards";
+import { ContinueButtons, ReturnButtons } from "../components/Buttons";
 import { Card } from "../CardTemplate";
 import TimePicker from "react-time-picker";
 import "react-clock/dist/Clock.css";
+import { FormContext } from "../Context/ContextForm";
 
 interface CustomCardProps {
     cardRef: RefObject<HTMLDivElement>;
@@ -20,6 +21,8 @@ export const ScheduleCard: React.FC<CustomCardProps> = ({
 }) => {
     const [startDate, setStartDate] = useState("08:00");
     const [endDate, setEndDate] = useState("16:00");
+
+    const { selectedSchedule, setSelectedSchedule } = useContext(FormContext);
 
     return (
         <Card
@@ -69,10 +72,13 @@ export const ScheduleCard: React.FC<CustomCardProps> = ({
                                     </p>
                                 </label>
                                 <TimePicker
-                                    value={startDate}
+                                    value={selectedSchedule.startHour}
                                     format="HH:mm"
                                     onChange={(e) => {
-                                        setStartDate(e as string);
+                                        setSelectedSchedule((prev) => ({
+                                            ...prev,
+                                            startHour: e as string,
+                                        }));
                                     }}
                                     clearIcon={null}
                                     disableClock={true}
@@ -93,9 +99,12 @@ export const ScheduleCard: React.FC<CustomCardProps> = ({
                                 </label>
                                 <TimePicker
                                     format="HH:mm"
-                                    value={endDate}
+                                    value={selectedSchedule.endHour}
                                     onChange={(e) => {
-                                        setEndDate(e as string);
+                                        setSelectedSchedule((prev) => ({
+                                            ...prev,
+                                            endHour: e as string,
+                                        }));
                                     }}
                                     clearIcon={null}
                                     disableClock={true}

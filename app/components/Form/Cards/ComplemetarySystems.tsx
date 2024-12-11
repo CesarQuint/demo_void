@@ -1,9 +1,10 @@
-import React, { RefObject } from "react";
+import React, { RefObject, useContext } from "react";
 import Image from "next/image";
 import styles from "../../../css/Form/form.module.css"; // Adjust the import based on your structure
-import { ContinueButtons, ReturnButtons } from "../FormCards";
+import { ContinueButtons, ReturnButtons } from "../components/Buttons";
 import { Card } from "../CardTemplate";
 import arrow from "../../../../public/images/wArrow.svg"; // Adjust the import based on your structure
+import { FormContext } from "../Context/ContextForm";
 
 interface CustomCardProps {
     cardRef: RefObject<HTMLDivElement>;
@@ -16,6 +17,9 @@ export const ComplemetarySystemsCard: React.FC<CustomCardProps> = ({
     clickHandler,
     returnHandler,
 }) => {
+    const { complementarySystems, setComplementarySystems } =
+        useContext(FormContext);
+
     return (
         <Card
             ref={cardRef}
@@ -65,20 +69,48 @@ export const ComplemetarySystemsCard: React.FC<CustomCardProps> = ({
                                     <div className={styles.input_place}>
                                         <input
                                             type="radio"
-                                            name="area"
-                                            id="inside"
-                                            value="inside"
+                                            name="addAudioSystems"
+                                            id="addAudioSystemsYes"
+                                            value="yes"
+                                            checked={
+                                                complementarySystems.addAudioSystems ===
+                                                true
+                                            }
+                                            onChange={() => {
+                                                setComplementarySystems(
+                                                    (prev) => ({
+                                                        ...prev,
+                                                        addAudioSystems: true,
+                                                    })
+                                                );
+                                            }}
                                         />
-                                        <label htmlFor="">Si</label>
+                                        <label htmlFor="addAudioSystemsYes">
+                                            Si
+                                        </label>
                                     </div>
                                     <div className={styles.input_place}>
                                         <input
                                             type="radio"
-                                            name="area"
-                                            id="inside"
-                                            value="inside"
+                                            name="addAudioSystems"
+                                            id="addAudioSystemsNo"
+                                            value="no"
+                                            checked={
+                                                complementarySystems.addAudioSystems ===
+                                                false
+                                            }
+                                            onChange={() => {
+                                                setComplementarySystems(
+                                                    (prev) => ({
+                                                        ...prev,
+                                                        addAudioSystems: false,
+                                                    })
+                                                );
+                                            }}
                                         />
-                                        <label htmlFor="">No</label>
+                                        <label htmlFor="addAudioSystemsNo">
+                                            No
+                                        </label>
                                     </div>
                                 </section>
                             </div>
@@ -97,20 +129,48 @@ export const ComplemetarySystemsCard: React.FC<CustomCardProps> = ({
                                     <div className={styles.input_place}>
                                         <input
                                             type="radio"
-                                            name="area"
-                                            id="inside"
-                                            value="inside"
+                                            name="addLightSystems"
+                                            id="addLightSystemsYes"
+                                            value="yes"
+                                            checked={
+                                                complementarySystems.addLightSystem ===
+                                                true
+                                            }
+                                            onChange={() => {
+                                                setComplementarySystems(
+                                                    (prev) => ({
+                                                        ...prev,
+                                                        addLightSystem: true,
+                                                    })
+                                                );
+                                            }}
                                         />
-                                        <label htmlFor="">Si</label>
+                                        <label htmlFor="addLightSystemsYes">
+                                            Si
+                                        </label>
                                     </div>
                                     <div className={styles.input_place}>
                                         <input
                                             type="radio"
-                                            name="area"
-                                            id="inside"
-                                            value="inside"
+                                            name="addLightSystems"
+                                            id="addLightSystemsNo"
+                                            value="no"
+                                            checked={
+                                                complementarySystems.addLightSystem ===
+                                                false
+                                            }
+                                            onChange={() => {
+                                                setComplementarySystems(
+                                                    (prev) => ({
+                                                        ...prev,
+                                                        addLightSystem: false,
+                                                    })
+                                                );
+                                            }}
                                         />
-                                        <label htmlFor="">No</label>
+                                        <label htmlFor="addLightSystemsNo">
+                                            No
+                                        </label>
                                     </div>
                                 </section>
                             </div>
