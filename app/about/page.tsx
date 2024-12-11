@@ -18,9 +18,7 @@ import Process from "../components/About/Process";
 import Services from "../components/About/Services";
 import Footer from "../components/footer";
 import PreFooterLink from "../components/PreFooterLink";
-
-//! Temporal
-
+import VideoHover from "../components/videoHover";
 type Props = {};
 
 const transitionSpringPhysics: Spring = {
@@ -117,15 +115,7 @@ const About = (props: Props) => {
                 className="courtain"
             />
             <Welcome />
-            <motion.div className={styles.video_container}>
-                <video
-                    autoPlay={true}
-                    muted={true}
-                    className={styles.video}
-                    src="https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/videos/voidxr-demo-processes.mp4"
-                    controls={true}
-                />
-            </motion.div>
+            <VideoHover />
             <Services />
             <Manifest />
             <Process />
