@@ -32,7 +32,7 @@ const HeroContainer = (props: Props) => {
         {
             scope: containerHeroRef,
             dependencies: [isIntersecting],
-        },
+        }
     );
 
     const handleScroll = () => {
@@ -60,22 +60,18 @@ const HeroContainer = (props: Props) => {
         >
             <motion.div className={`${styles.hero_wrapper}`}>
                 <motion.p className={`${styles.presentation_text}`}>
-                    <span className={`${styles.left_text}`}>
-                        Conceptualizamos,
-                    </span>
-                    <span className={`${styles.right_text}`}>
+                    <span>Conceptualizamos,</span>
+                    <span className={`${styles.tw_percent}`}>
                         dirigimos y producimos
                     </span>
-                    <span className={`${styles.left_text}`}>
+                    <span style={{ paddingLeft: "30%" }}>
                         experiencias artísticas
                     </span>
-                    <span className={`${styles.right_text}`}>
+                    <span className={`${styles.tw_percent}`}>
                         museográficas
                     </span>
-                    <span className={`${styles.left_text}`}>y comerciales</span>
-                    <span className={`${styles.right_text}`}>
-                        a través de tecnología.
-                    </span>
+                    <span style={{ paddingLeft: "40%" }}>y comerciales</span>
+                    <span>a través de tecnología.</span>
                 </motion.p>
             </motion.div>
 
