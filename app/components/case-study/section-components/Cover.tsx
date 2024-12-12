@@ -18,7 +18,8 @@ const Cover: React.FC<CoverProps> = ({ data }) => (
             backgroundImage: `url(${
                 process.env.NEXT_PUBLIC_STRAPI_MEDIA_URL +
                 data.image.attributes.formats.large.url
-            })`,
+            }), linear-gradient(to top, rgba(0, 0, 0, 35%), rgba(0, 0, 0, 0))`,
+            backgroundBlendMode: "multiply",
         }}
         className={styles.cover}
     >
