@@ -32,7 +32,7 @@ const ImageThree: React.FC<ImageProps> = ({ videoRef }) => {
 
     useEffect(() => {
         const handleResize = () => {
-            const scaleFactor = 1.3; // Adjust for 90% coverage
+            const scaleFactor = 1.4; // Adjust for 90% coverage
             const width = (scaleFactor * window.innerWidth) / 100;
             const height = (scaleFactor * window.innerHeight) / 100;
             setDimensions({ width, height });
@@ -199,20 +199,6 @@ const Page: React.FC = () => {
         };
     }, []);
 
-    const handlePlay = () => {
-        if (videoRef.current) {
-            videoRef.current.play();
-            setPlayTtriggered(true);
-        }
-    };
-
-    const handlePause = () => {
-        if (videoRef.current) {
-            videoRef.current.pause();
-            setPlayTtriggered(false);
-        }
-    };
-
     // End Hover area
 
     const handleVideoToggle = () => {
@@ -220,9 +206,11 @@ const Page: React.FC = () => {
             if (videoRef.current.paused) {
                 videoRef.current.play();
                 audioRef.current.play(); // Play the audio when the video plays
+                setPlayTtriggered(true);
             } else {
                 videoRef.current.pause();
                 audioRef.current.pause(); // Pause the audio when the video pauses
+                setPlayTtriggered(false);
             }
         }
     };
@@ -247,7 +235,23 @@ const Page: React.FC = () => {
 
     return (
         <div>
-            <div onClick={handleVideoToggle} style={{ cursor: "pointer" }}>
+            <div
+                ref={containerRef}
+                onClick={handleVideoToggle}
+                style={{ cursor: "pointer" }}
+            >
+                <div
+                    className={styles.play_button}
+                    ref={playButtonRef}
+                    style={{ cursor: "pointer" }}
+                >
+                    <Image
+                        className={`${styles.eye_video}`}
+                        src={!playTriggered ? eyeIcon : pauseIcon}
+                        alt="Eye"
+                    />
+                    <span className={`${styles.halo}`}></span>
+                </div>
                 <audio ref={audioRef} src="/videos/cdmx.mp4" />
                 <Canvas
                     style={{
@@ -264,9 +268,6 @@ const Page: React.FC = () => {
                     </EffectComposer>
                 </Canvas>
             </div>
-            <section>
-                <VideoHover />
-            </section>
         </div>
     );
 };
