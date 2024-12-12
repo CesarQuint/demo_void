@@ -44,6 +44,7 @@
     justify-content: space-between;
 }
 .links {
+    width: max-content;
     display: flex;
     flex-flow: column nowrap;
     align-items: flex-start;
