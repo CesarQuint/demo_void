@@ -182,6 +182,11 @@ const VideoHover: React.FC = () => {
                     className={`${styles.video}`}
                     controls={windowStatus.innerWidth <= 700 && true}
                     ref={videoRef}
+                    poster={
+                        windowStatus.innerWidth >= 700
+                            ? "https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/thumbnails/VOIDXR%20DEMO%20EYECANDY%20Thumbnail.png"
+                            : "https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/thumbnails/VOIDXR%20DEMO%20EYECANDY%20Thumbnail%20movil.png"
+                    }
                     src={
                         windowStatus.innerWidth >= 700
                             ? "https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/videos/voidxr-demo-eyecandy-home.mp4"
