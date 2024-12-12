@@ -21,6 +21,7 @@ import ContentMenu, {
 } from "../../components/case-study/section-components/ContentMenu";
 import Introduction from "../../components/case-study/section-components/Introduction";
 import CaseStudyVideo from "../../components/case-study/section-components/IntroductoryVideo";
+import useWindow from "@/app/utils/hooks/useWindow";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger, Draggable);
 
@@ -31,6 +32,7 @@ export default function ProjectCaseStudy(props: {
     const container = useRef<HTMLElement>(null);
     const scrollContainer = useRef<HTMLDivElement>(null);
     const tl = useRef<gsap.core.Timeline | null>(null);
+    const windowStatus = useWindow();
 
     const project = props.data.project;
 
@@ -50,6 +52,10 @@ export default function ProjectCaseStudy(props: {
     ].filter((section) => sectionHasContent(project)(section.name));
 
     useEffect(() => {
+        const windH = windowStatus.innerWidth;
+
+        if (windH <= 768) setIsMobile(true);
+
         const handleResize = () => {
             setIsMobile(window.innerWidth <= 768);
         };
@@ -61,10 +67,12 @@ export default function ProjectCaseStudy(props: {
         return () => {
             window.removeEventListener("resize", handleResize);
         };
-    }, []);
+    }, [windowStatus]);
 
     useGSAP(
         () => {
+            console.log(isMobile);
+
             if (isMobile) return;
 
             tl.current = gsap
@@ -87,14 +95,14 @@ export default function ProjectCaseStudy(props: {
                         x: container.current!.clientWidth,
                         xPercent: -100,
                     },
-                    0,
+                    0
                 );
 
             return () => {
                 if (tl.current) tl.current.kill();
             };
         },
-        { scope: container, dependencies: [isMobile] },
+        { scope: container, dependencies: [isMobile] }
     );
 
     return (
