@@ -52,7 +52,11 @@
         font-size: 1.25rem;
         gap: 3.75rem;
 
-        .title,
+        .title {
+            text-align: center;
+            width: auto;
+            flex: 1;
+        }
         .line {
             width: auto;
             flex: 1;
