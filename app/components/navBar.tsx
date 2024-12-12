@@ -69,14 +69,18 @@ const NavBar = () => {
             const currentScrollY = window.scrollY;
 
             if (container.current) {
-                if (currentScrollY > lastScrollY.current) {
+                if (
+                    currentScrollY > lastScrollY.current &&
+                    currentScrollY > 0
+                ) {
+                    // Scrolling down and not at the top of the page
                     gsap.to(container.current, {
                         y: "-100%",
                         duration: 0.5,
                         ease: "power2.out",
                     });
                 } else {
-                    // Scrolling up
+                    // Scrolling up or at the top of the page
                     gsap.to(container.current, {
                         y: "0%",
                         duration: 0.5,
@@ -94,7 +98,7 @@ const NavBar = () => {
         return () => {
             window.removeEventListener("scroll", handleScroll);
         };
-    }, {});
+    }, []);
 
     const toggleMenu = contextSafe(() => {
         if (windowInfo.innerWidth > 0 && windowInfo.innerWidth < 700) {
