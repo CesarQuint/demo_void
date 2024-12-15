@@ -4,13 +4,13 @@ import { Fluid } from "@whatisjery/react-fluid-distortion";
 import { EffectComposer } from "@react-three/postprocessing";
 import { Canvas } from "@react-three/fiber";
 import { useVideoTexture } from "@react-three/drei";
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
 import Image from "next/image";
-import VideoHover from "../components/videoHover";
-import styles from "../css/video.hover.module.css";
-import eyeIcon from "../../public/images/EyeIcon.png";
-import pauseIcon from "../../public/images/pause.png";
+import styles from "../../css/video.hover.module.css";
+import eyeIcon from "../../../public/images/EyeIcon.png";
+import pauseIcon from "../../../public/images/pause.png";
 import gsap from "gsap";
+import { ShaderMaterial } from "three";
 
 type ImageProps = {
     videoRef: React.MutableRefObject<HTMLVideoElement | null>;
@@ -32,21 +32,56 @@ const ImageThree: React.FC<ImageProps> = ({ videoRef }) => {
 
     useEffect(() => {
         const handleResize = () => {
-            const scaleFactor = 1.4; // Adjust for 90% coverage
+            const scaleFactor = 1.6;
             const width = (scaleFactor * window.innerWidth) / 100;
             const height = (scaleFactor * window.innerHeight) / 100;
             setDimensions({ width, height });
         };
 
-        // Set initial dimensions
         handleResize();
 
-        // Update on resize
         window.addEventListener("resize", handleResize);
         return () => {
             window.removeEventListener("resize", handleResize);
         };
     }, []);
+
+    const material = useMemo(() => {
+        return new ShaderMaterial({
+            uniforms: {
+                u_texture: { value: texture },
+                u_radius: { value: 0.06 }, // Adjust for corner rounding
+            },
+            vertexShader: `
+                varying vec2 vUv;
+
+                void main() {
+                    vUv = uv;
+                    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                }
+            `,
+            fragmentShader: `
+                varying vec2 vUv;
+                uniform sampler2D u_texture;
+                uniform float u_radius;
+
+                void main() {
+                    vec2 uv = vUv - 0.5;
+                    uv *= 2.0;
+
+                    // Calculate distance from the center
+                    float distance = length(max(abs(uv) - vec2(1.0 - u_radius), 0.0));
+                    
+                    // Discard pixels outside the rounded rectangle
+                    if (distance > u_radius) {
+                        discard;
+                    }
+
+                    gl_FragColor = texture2D(u_texture, vUv);
+                }
+            `,
+        });
+    }, [texture]);
 
     return (
         <mesh position-z={-4}>
@@ -54,12 +89,12 @@ const ImageThree: React.FC<ImageProps> = ({ videoRef }) => {
                 args={[dimensions.width, dimensions.height, 20, 20]}
                 attach="geometry"
             />
-            <meshBasicMaterial map={texture} color="#c4b4d2" />
+            <primitive object={material} attach="material" />
         </mesh>
     );
 };
 
-const Page: React.FC = () => {
+const ThreedVideoDistortion: React.FC = () => {
     const videoRef = useRef<HTMLVideoElement | null>(null);
     const audioRef = useRef<HTMLAudioElement | null>(null); // Add an audio reference
 
@@ -234,13 +269,13 @@ const Page: React.FC = () => {
     }, []);
 
     return (
-        <div>
+        <div style={{ paddingTop: "15vh" }}>
             <div
                 ref={containerRef}
                 onClick={handleVideoToggle}
                 style={{ cursor: "pointer" }}
             >
-                <div
+                {/* <div
                     className={styles.play_button}
                     ref={playButtonRef}
                     style={{ cursor: "pointer" }}
@@ -251,7 +286,7 @@ const Page: React.FC = () => {
                         alt="Eye"
                     />
                     <span className={`${styles.halo}`}></span>
-                </div>
+                </div> */}
                 <audio ref={audioRef} src="/videos/cdmx.mp4" />
                 <Canvas
                     style={{
@@ -264,7 +299,17 @@ const Page: React.FC = () => {
                 >
                     <ImageThree videoRef={videoRef} />
                     <EffectComposer>
-                        <Fluid fluidColor={"#000"} />
+                        <Fluid
+                            intensity={4.0}
+                            force={1.0}
+                            distortion={0.8}
+                            curl={4.0}
+                            swirl={8}
+                            blend={5}
+                            fluidColor={"#0080FF"}
+                            pressure={0.8}
+                            densityDissipation={0.96}
+                        />
                     </EffectComposer>
                 </Canvas>
             </div>
@@ -272,4 +317,4 @@ const Page: React.FC = () => {
     );
 };
 
-export default Page;
+export default ThreedVideoDistortion;

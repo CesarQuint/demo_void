@@ -25,6 +25,8 @@ import LoadingComponent from "../LoadingComponent";
 import VideoHover from "../videoHover";
 
 import { Project } from "../../Strapi/interfaces/Entities/Project";
+import ThreedVideoDistortion from "./ThreeVideoDistortion";
+import TestFluidRelative from "./TestFluidRelative";
 
 const ProjectImages = dynamic(() => import("./ProjectImages"), {
     ssr: false,
@@ -158,7 +160,8 @@ function HomePage(props: Props) {
             {requestFullfilled ? (
                 <>
                     <HeroContainer />
-                    <VideoHover />
+                    {/* <ThreedVideoDistortion /> */}
+                    <TestFluidRelative />
                     <ProjectImages data={{ projects: props.data.projects }} />
                     <ProcessHome />
                     <TagsHome />
