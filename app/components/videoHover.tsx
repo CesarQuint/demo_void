@@ -18,7 +18,6 @@ const VideoHover: React.FC = () => {
 
     const handlePlay = () => {
         if (videoRef.current) {
-            console.log("here");
             videoRef.current.play();
             setPlayTtriggered(true);
         }
@@ -47,8 +46,6 @@ const VideoHover: React.FC = () => {
                 height: "18vh",
                 opacity: 0,
             });
-
-            console.log(windowStatus.innerWidth);
 
             if (windowStatus.innerWidth <= 425 && windowStatus.innerWidth > 0) {
                 gsap.to(playButtonRef.current, {
@@ -111,7 +108,7 @@ const VideoHover: React.FC = () => {
                     tlHalo.play();
                     containerRef.current?.addEventListener(
                         "mousemove",
-                        handleMouseMove
+                        handleMouseMove,
                     );
                 }
             };
@@ -123,31 +120,31 @@ const VideoHover: React.FC = () => {
                 tlHalo?.kill();
                 containerRef.current?.removeEventListener(
                     "mousemove",
-                    handleMouseMove
+                    handleMouseMove,
                 );
             };
 
             containerRef.current?.addEventListener(
                 "mouseenter",
-                handleMouseEnter
+                handleMouseEnter,
             );
             containerRef.current?.addEventListener(
                 "mouseleave",
-                handleMouseLeave
+                handleMouseLeave,
             );
 
             return () => {
                 containerRef.current?.removeEventListener(
                     "mouseenter",
-                    handleMouseEnter
+                    handleMouseEnter,
                 );
                 containerRef.current?.removeEventListener(
                     "mousemove",
-                    handleMouseMove
+                    handleMouseMove,
                 );
                 containerRef.current?.removeEventListener(
                     "mouseleave",
-                    handleMouseLeave
+                    handleMouseLeave,
                 );
                 tlHalo.kill();
             };
