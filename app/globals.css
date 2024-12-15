@@ -120,6 +120,7 @@ header {
     top: 0px;
     left: 0px;
     z-index: 100;
+    will-change: transform;
 }
 
 a {

@@ -47,6 +47,19 @@ const VideoHover: React.FC = () => {
                 opacity: 0,
             });
 
+            if (windowStatus.innerWidth <= 425 && windowStatus.innerWidth > 0) {
+                gsap.to(playButtonRef.current, {
+                    x: "32vw",
+                    y: "30vh",
+                    opacity: 1,
+                    duration: 1,
+                });
+
+                return () => {
+                    tlHalo.kill();
+                };
+            }
+
             const handleMouseMove = (e: MouseEvent) => {
                 const rect = containerRef.current?.getBoundingClientRect();
                 const playButton =
@@ -95,7 +108,7 @@ const VideoHover: React.FC = () => {
                     tlHalo.play();
                     containerRef.current?.addEventListener(
                         "mousemove",
-                        handleMouseMove
+                        handleMouseMove,
                     );
                 }
             };
@@ -107,36 +120,36 @@ const VideoHover: React.FC = () => {
                 tlHalo?.kill();
                 containerRef.current?.removeEventListener(
                     "mousemove",
-                    handleMouseMove
+                    handleMouseMove,
                 );
             };
 
             containerRef.current?.addEventListener(
                 "mouseenter",
-                handleMouseEnter
+                handleMouseEnter,
             );
             containerRef.current?.addEventListener(
                 "mouseleave",
-                handleMouseLeave
+                handleMouseLeave,
             );
 
             return () => {
                 containerRef.current?.removeEventListener(
                     "mouseenter",
-                    handleMouseEnter
+                    handleMouseEnter,
                 );
                 containerRef.current?.removeEventListener(
                     "mousemove",
-                    handleMouseMove
+                    handleMouseMove,
                 );
                 containerRef.current?.removeEventListener(
                     "mouseleave",
-                    handleMouseLeave
+                    handleMouseLeave,
                 );
                 tlHalo.kill();
             };
         }
-    }, []);
+    }, [windowStatus]);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -172,7 +185,11 @@ const VideoHover: React.FC = () => {
                 >
                     <Image
                         className={`${styles.eye_video}`}
-                        src={!playTriggered ? eyeIcon : pauseIcon}
+                        src={
+                            windowStatus.innerWidth > 425 && playTriggered
+                                ? pauseIcon
+                                : eyeIcon
+                        }
                         alt="Eye"
                     />
                     <span className={`${styles.halo}`}></span>
@@ -180,7 +197,7 @@ const VideoHover: React.FC = () => {
                 <video
                     onPause={handlePause}
                     className={`${styles.video}`}
-                    controls={windowStatus.innerWidth <= 700 && true}
+                    controls={false}
                     ref={videoRef}
                     poster={
                         "https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/thumbnails/VOIDXR%20DEMO%20EYECANDY%20Thumbnail%20movil.png"

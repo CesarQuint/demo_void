@@ -1,4 +1,5 @@
 .nav_container {
+    will-change: transform;
     position: sticky;
     top: 0;
     justify-content: flex-start;
@@ -55,10 +56,10 @@
 .links {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    font-size: 2rem;
+    gap: 10px;
+    font-size: 1.7rem;
     text-transform: uppercase;
-    font-weight: bold;
+    font-weight: 100;
     text-align: left;
 
     opacity: 0;
@@ -66,7 +67,7 @@
     pointer-events: none;
 
     & a:last-child {
-        margin-top: 20px;
+        margin-top: 6vh;
     }
 }
 
