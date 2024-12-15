@@ -1,6 +1,6 @@
 "use client";
 
-import { Fluid } from "@whatisjery/react-fluid-distortion";
+import { Fluid } from "../../fluid-lib/Fluid";
 import { EffectComposer } from "@react-three/postprocessing";
 import { Canvas } from "@react-three/fiber";
 import { useVideoTexture } from "@react-three/drei";
@@ -275,7 +275,7 @@ const ThreedVideoDistortion: React.FC = () => {
                 onClick={handleVideoToggle}
                 style={{ cursor: "pointer" }}
             >
-                {/* <div
+                <div
                     className={styles.play_button}
                     ref={playButtonRef}
                     style={{ cursor: "pointer" }}
@@ -286,7 +286,7 @@ const ThreedVideoDistortion: React.FC = () => {
                         alt="Eye"
                     />
                     <span className={`${styles.halo}`}></span>
-                </div> */}
+                </div>
                 <audio ref={audioRef} src="/videos/cdmx.mp4" />
                 <Canvas
                     style={{
@@ -301,14 +301,16 @@ const ThreedVideoDistortion: React.FC = () => {
                     <EffectComposer>
                         <Fluid
                             intensity={4.0}
-                            force={1.0}
-                            distortion={0.8}
-                            curl={4.0}
-                            swirl={8}
+                            force={1.2}
+                            distortion={0.84}
+                            curl={2.0}
+                            swirl={4}
                             blend={5}
                             fluidColor={"#0080FF"}
-                            pressure={0.8}
-                            densityDissipation={0.96}
+                            pressure={0.92}
+                            densityDissipation={0.9}
+                            velocityDissipation={1.0}
+                            radius={0.2}
                         />
                     </EffectComposer>
                 </Canvas>
