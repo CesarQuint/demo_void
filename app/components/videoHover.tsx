@@ -18,6 +18,7 @@ const VideoHover: React.FC = () => {
 
     const handlePlay = () => {
         if (videoRef.current) {
+            console.log("here");
             videoRef.current.play();
             setPlayTtriggered(true);
         }
@@ -46,6 +47,21 @@ const VideoHover: React.FC = () => {
                 height: "18vh",
                 opacity: 0,
             });
+
+            console.log(windowStatus.innerWidth);
+
+            if (windowStatus.innerWidth <= 425 && windowStatus.innerWidth > 0) {
+                gsap.to(playButtonRef.current, {
+                    x: "32vw",
+                    y: "30vh",
+                    opacity: 1,
+                    duration: 1,
+                });
+
+                return () => {
+                    tlHalo.kill();
+                };
+            }
 
             const handleMouseMove = (e: MouseEvent) => {
                 const rect = containerRef.current?.getBoundingClientRect();
@@ -136,7 +152,7 @@ const VideoHover: React.FC = () => {
                 tlHalo.kill();
             };
         }
-    }, []);
+    }, [windowStatus]);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -172,7 +188,11 @@ const VideoHover: React.FC = () => {
                 >
                     <Image
                         className={`${styles.eye_video}`}
-                        src={!playTriggered ? eyeIcon : pauseIcon}
+                        src={
+                            windowStatus.innerWidth > 425 && playTriggered
+                                ? pauseIcon
+                                : eyeIcon
+                        }
                         alt="Eye"
                     />
                     <span className={`${styles.halo}`}></span>
@@ -180,7 +200,7 @@ const VideoHover: React.FC = () => {
                 <video
                     onPause={handlePause}
                     className={`${styles.video}`}
-                    controls={windowStatus.innerWidth <= 700 && true}
+                    controls={false}
                     ref={videoRef}
                     poster={
                         windowStatus.innerWidth >= 700
