@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { forwardRef, useEffect, useRef, useState } from "react";
 import { Project } from "../../../Strapi/interfaces/Entities/Project";
 import { ContentSectionName } from "../../../Strapi/interfaces/Entities/Project";
 import Code, { CodeProps } from "../content-components/content-types/Code";
@@ -19,6 +19,11 @@ import {
     SubIndexData,
 } from "./ContentMenu";
 import styles from "./ContentSections.module.css";
+import gsap from "gsap";
+import { Observer } from "gsap/all";
+import { ScrollTrigger, ScrollToPlugin } from "gsap/all";
+
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 export type ContentData = Array<
     | CodeProps["data"]
@@ -38,7 +43,7 @@ export type ContentSectionsProps = {
     }[];
 };
 
-type SectionProps = { data: ContentSectionsProps["data"][0] };
+type SectionProps = { ref: () => void; data: ContentSectionsProps["data"][0] };
 
 const ContentSwitch = (
     content: ContentData[0],
@@ -65,26 +70,31 @@ const ContentSwitch = (
 const ContentSection: React.FC<{ data: ContentData }> = ({ data }) =>
     data.map((content, idx) => ContentSwitch(content, idx));
 
-const Section: React.FC<SectionProps> = ({ data: content }) => {
-    const [activeSection, setActiveSection] = useState(0);
-    const contentChunks: ContentData[] = chunkArrayEveryHeading(
-        content.data ?? [],
-    );
-    const headings: SubIndexData[] = contentChunks
-        .map((chunk): ContentData[0] => chunk[0])
-        .map((content) => mapToSubIndexData([content]))
-        .map(([subindex], idx) => ({
-            index: idx,
-            title: subindex?.title ?? "introducción",
-        }));
+const Section = forwardRef<HTMLDivElement, SectionProps>(
+    ({ data: content }, ref) => {
+        const [activeSection, setActiveSection] = useState(0);
+        const contentChunks: ContentData[] = chunkArrayEveryHeading(
+            content.data ?? [],
+        );
 
-    return (
-        <section id={content.name} className={styles.contentSection}>
-            <h1 className={styles.title}>
-                {ContentSectionTitles[content.name].title}
-            </h1>
+        const headings: SubIndexData[] = contentChunks
+            .map((chunk): ContentData[0] => chunk[0])
+            .map((content) => mapToSubIndexData([content]))
+            .map(([subindex], idx) => ({
+                index: idx,
+                title: subindex?.title ?? "introducción",
+            }));
 
-            {!!headings.length && (
+        return (
+            <section
+                ref={ref}
+                id={content.name}
+                className={styles.contentSection}
+            >
+                <h1 className={styles.title}>
+                    {ContentSectionTitles[content.name].title}
+                </h1>
+
                 <div className={styles.innerContent}>
                     {headings.length > 1 && (
                         <div className={styles.sideMenu}>
@@ -112,15 +122,95 @@ const Section: React.FC<SectionProps> = ({ data: content }) => {
                         )}
                     </div>
                 </div>
-            )}
-        </section>
-    );
-};
+            </section>
+        );
+    },
+);
 
-const ContentSections: React.FC<ContentSectionsProps> = ({ data }) =>
-    data
+Section.displayName = "Section";
+
+const ContentSections: React.FC<ContentSectionsProps> = ({ data }) => {
+    const observerRef = useRef<Observer>();
+    const sectionsRef = useRef<HTMLDivElement[]>([]);
+    const scrollTweenRef = useRef<gsap.core.Tween | null>();
+
+    useEffect(() => {
+        // Check if we're in the browser environment
+        if (typeof window === "undefined") return;
+
+        const sections = sectionsRef.current;
+
+        if (ScrollTrigger.isTouch === 1) {
+            observerRef.current = ScrollTrigger.normalizeScroll(true);
+        }
+
+        const goToSection = (index: number) => {
+            scrollTweenRef.current = gsap.to(window, {
+                scrollTo: {
+                    y: index * window.innerHeight,
+                    autoKill: false,
+                },
+                onStart: () => {
+                    if (observerRef.current) {
+                        observerRef.current.disable();
+                        observerRef.current.enable();
+                    }
+                },
+                duration: 1,
+                onComplete: () => (scrollTweenRef.current = null),
+                overwrite: true,
+            });
+        };
+
+        sections.forEach((panel, i) => {
+            ScrollTrigger.create({
+                trigger: panel,
+                start: "top bottom",
+                end: "+=199%",
+                onToggle: (self) => {
+                    if (self.isActive && !scrollTweenRef.current)
+                        goToSection(i);
+                },
+            });
+        });
+
+        ScrollTrigger.create({
+            start: 0,
+            end: "max",
+            snap: 1 / (sections.length - 1),
+        });
+
+        const handleTouchStart = (e: Event) => {
+            if (scrollTweenRef.current) {
+                e.preventDefault();
+                e.stopImmediatePropagation();
+            }
+        };
+
+        document.addEventListener("touchstart", handleTouchStart, {
+            capture: true,
+            passive: false,
+        });
+
+        return () => {
+            document.removeEventListener("touchstart", handleTouchStart);
+            ScrollTrigger.killAll();
+            if (observerRef.current) observerRef.current.kill();
+        };
+    }, []);
+
+    return data
         .filter((content) => Boolean(content.data))
-        .map((content) => Section({ data: content }));
+        .map((content, idx) => (
+            <Section
+                key={idx}
+                ref={(el: HTMLDivElement) =>
+                    void (sectionsRef.current[idx] = el)
+                }
+                data={content}
+            />
+        ));
+};
 
 const chunkArrayEveryHeading = (content: ContentData): ContentData[] =>
     content.reduce(
