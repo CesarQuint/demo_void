@@ -17,7 +17,7 @@ type ImageProps = {
 };
 
 const ImageThree: React.FC<ImageProps> = ({ videoRef }) => {
-    const texture = useVideoTexture("/videos/cdmx.mp4", {
+    const texture = useVideoTexture("/videos/voidxr-demo-eyecandy-home.mp4", {
         muted: true,
     });
 
@@ -287,7 +287,10 @@ const ThreedVideoDistortion: React.FC = () => {
                     />
                     <span className={`${styles.halo}`}></span>
                 </div>
-                <audio ref={audioRef} src="/videos/cdmx.mp4" />
+                <audio
+                    ref={audioRef}
+                    src="/videos/voidxr-demo-eyecandy-home.mp4"
+                />
                 <Canvas
                     style={{
                         top: 0,
