@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect } from "react";
 import useWindow from "@/app/utils/hooks/useWindow";
 import VideoHover from "./videoHover";
@@ -7,13 +8,13 @@ const VideoDispatcher = () => {
     const windowStatus = useWindow();
     useEffect(() => {}, [windowStatus.innerWidth]);
     return (
-        <>
-            {windowStatus.innerWidth >= 428 ? (
+        <div>
+            {windowStatus.innerWidth >= 428 && windowStatus.innerWidth !== 0 ? (
                 <ThreedVideoDistortion />
             ) : (
                 <VideoHover />
             )}
-        </>
+        </div>
     );
 };
 
