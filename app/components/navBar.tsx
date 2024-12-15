@@ -51,7 +51,7 @@ const NavBar = () => {
                             height: "auto",
                             pointerEvents: "all",
                             opacity: 1,
-                            paddingTop: "20vh",
+                            paddingTop: "25vh",
                         },
 
                         0
@@ -76,14 +76,14 @@ const NavBar = () => {
                     // Scrolling down and not at the top of the page
                     gsap.to(container.current, {
                         y: "-100%",
-                        duration: 0.5,
+
                         ease: "power2.out",
                     });
                 } else {
                     // Scrolling up or at the top of the page
                     gsap.to(container.current, {
                         y: "0%",
-                        duration: 0.5,
+
                         ease: "power2.out",
                     });
                 }
