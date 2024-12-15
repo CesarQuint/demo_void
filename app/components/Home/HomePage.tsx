@@ -22,11 +22,10 @@ import ProcessHome from "./ProcessHome";
 import HeroContainer from "./HeroContainer";
 import PreFooterLink from "../PreFooterLink";
 import LoadingComponent from "../LoadingComponent";
-import VideoHover from "../videoHover";
 
 import { Project } from "../../Strapi/interfaces/Entities/Project";
-import ThreedVideoDistortion from "./ThreeVideoDistortion";
-import TestFluidRelative from "./TestFluidRelative";
+
+import VideoDispatcher from "./VideoDispatcher";
 
 const ProjectImages = dynamic(() => import("./ProjectImages"), {
     ssr: false,
@@ -160,8 +159,8 @@ function HomePage(props: Props) {
             {requestFullfilled ? (
                 <>
                     <HeroContainer />
-                    {/* <ThreedVideoDistortion /> */}
-                    <TestFluidRelative />
+                    <div style={{ height: "16vh" }}></div>
+                    <VideoDispatcher />
                     <ProjectImages data={{ projects: props.data.projects }} />
                     <ProcessHome />
                     <TagsHome />
