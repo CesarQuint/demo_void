@@ -15,16 +15,14 @@ const page = () => {
     useGSAP(
         () => {
             const panels = gsap.utils.toArray(`.${s.panel}`);
-
             gsap.to(panels, {
                 ease: "none",
                 scrollTrigger: {
                     trigger: ".container",
-                    pin: true,
-                    scrub: 1,
                     snap: {
                         snapTo: 1 / (panels.length - 1),
-                        duration: 1,
+                        duration: 0.2,
+                        delay: 0.01,
                     },
                     // base vertical scrolling on how wide the container is so it feels more natural.
                 },
