@@ -71,8 +71,6 @@ export default function ProjectCaseStudy(props: {
 
     useGSAP(
         () => {
-            console.log(isMobile);
-
             if (isMobile) return;
 
             tl.current = gsap
