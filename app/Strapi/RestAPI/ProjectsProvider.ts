@@ -23,7 +23,13 @@ export async function getProjectsData(): Promise<Response<Project[]>> {
         path: "/api/projects",
         parameters: {
             sort: { property: "EventDate", order: "desc" },
-            fields: ["Title", "EventDate", "Subtitle", "slug"],
+            fields: [
+                "Title",
+                "EventDate",
+                "Subtitle",
+                "slug",
+                "AsFullCaseStudy",
+            ],
             populate: ["Cover", "Category"],
         },
     });
@@ -40,7 +46,13 @@ export async function getProjectsByCategory({
         path: "/api/projects",
         parameters: {
             sort: { property: "EventDate", order: "desc" },
-            fields: ["Title", "EventDate", "Subtitle", "slug"],
+            fields: [
+                "Title",
+                "EventDate",
+                "Subtitle",
+                "slug",
+                "AsFullCaseStudy",
+            ],
             filters: [
                 { key: ["Category", "slug"], value: slug, operator: "$eqi" },
             ],
