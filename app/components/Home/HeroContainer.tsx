@@ -37,7 +37,7 @@ const HeroContainer = (props: Props) => {
 
     const handleScroll = () => {
         window.scrollTo({
-            top: window.innerHeight,
+            top: window.innerHeight * 1.3,
             behavior: "smooth",
         });
     };
