@@ -17,9 +17,13 @@ type ImageProps = {
 };
 
 const ImageThree: React.FC<ImageProps> = ({ videoRef }) => {
-    const texture = useVideoTexture("/videos/voidxr-demo-eyecandy-home.mp4", {
-        muted: true,
-    });
+    const texture = useVideoTexture(
+        "https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/videos/voidxr-demo-eyecandy-home.mp4",
+        {
+            muted: true,
+            crossOrigin: "anonymous",
+        }
+    );
 
     const [dimensions, setDimensions] = useState({ width: 1, height: 1 });
 
@@ -289,7 +293,8 @@ const ThreedVideoDistortion: React.FC = () => {
                 </div>
                 <audio
                     ref={audioRef}
-                    src="/videos/voidxr-demo-eyecandy-home.mp4"
+                    src="https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/videos/voidxr-demo-eyecandy-home.mp4"
+                    crossOrigin="anonymous"
                 />
                 <Canvas
                     style={{

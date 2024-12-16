@@ -28,7 +28,8 @@
         "**/*.ts",
         "**/*.tsx",
         ".next/types/**/*.ts",
-        "shaders.d.ts"
+        "shaders.d.ts",
+        "app/components/Home/api/VideoFetcher.tsx"
     ],
     "exclude": ["node_modules"]
 }
