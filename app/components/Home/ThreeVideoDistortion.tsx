@@ -2,7 +2,7 @@
 
 import { Fluid } from "../../fluid-lib/Fluid";
 import { EffectComposer } from "@react-three/postprocessing";
-import { Canvas } from "@react-three/fiber";
+import { Canvas, useThree } from "@react-three/fiber";
 import { useVideoTexture } from "@react-three/drei";
 import { useEffect, useRef, useState, useMemo } from "react";
 import Image from "next/image";
@@ -11,6 +11,8 @@ import eyeIcon from "../../../public/images/EyeIcon.png";
 import pauseIcon from "../../../public/images/pause.png";
 import gsap from "gsap";
 import { ShaderMaterial } from "three";
+import { PerspectiveCamera, OrthographicCamera } from "three";
+import useWindow from "@/app/utils/hooks/useWindow";
 
 type ImageProps = {
     videoRef: React.MutableRefObject<HTMLVideoElement | null>;
@@ -25,6 +27,10 @@ const ImageThree: React.FC<ImageProps> = ({ videoRef }) => {
         }
     );
 
+    const widndowStatus = useWindow();
+
+    const { camera, size } = useThree();
+
     const [dimensions, setDimensions] = useState({ width: 1, height: 1 });
 
     useEffect(() => {
@@ -35,11 +41,36 @@ const ImageThree: React.FC<ImageProps> = ({ videoRef }) => {
     }, [texture, videoRef]);
 
     useEffect(() => {
+        if (widndowStatus.innerWidth == 0) return;
         const handleResize = () => {
-            const scaleFactor = 1.6;
-            const width = (scaleFactor * window.innerWidth) / 100;
-            const height = (scaleFactor * window.innerHeight) / 100;
-            setDimensions({ width, height });
+            let planeWidth, planeHeight;
+
+            // Check if the camera is a PerspectiveCamera
+            if (camera instanceof PerspectiveCamera) {
+                const fov = camera.fov * (Math.PI / 180); // Convert FoV from degrees to radians
+                const distance = 5; // You can adjust this depending on the desired distance from the camera
+                const visibleHeight = 2 * Math.tan(fov / 2) * distance;
+                const aspectRatio = size.width / size.height;
+                planeWidth = visibleHeight * aspectRatio;
+
+                // Adjust the plane's width and height based on 85% width of viewport
+                const widthPercentage = 1.68; // 85% of viewport width
+                planeWidth = widthPercentage * planeWidth;
+                planeHeight =
+                    planeWidth /
+                    (texture?.image?.videoWidth / texture?.image?.videoHeight);
+            } else if (camera instanceof OrthographicCamera) {
+                // For OrthographicCamera, calculate the width and height based on camera's view box
+                const aspectRatio = size.width / size.height;
+                planeWidth = camera.right - camera.left;
+                planeHeight = planeWidth / aspectRatio;
+                planeWidth = 0.85 * planeWidth; // Adjust for 85% of width
+            }
+
+            setDimensions({
+                width: planeWidth!,
+                height: planeHeight!,
+            });
         };
 
         handleResize();
@@ -48,7 +79,7 @@ const ImageThree: React.FC<ImageProps> = ({ videoRef }) => {
         return () => {
             window.removeEventListener("resize", handleResize);
         };
-    }, []);
+    }, [widndowStatus.innerWidth]);
 
     const material = useMemo(() => {
         return new ShaderMaterial({
