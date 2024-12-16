@@ -1,0 +1,23 @@
+.panel {
+    width: 100vw;
+    height: 100vh;
+}
+
+.one {
+    background-color: red;
+}
+.two {
+    background-color: purple;
+}
+.three {
+    background-color: gree;
+}
+.four {
+    background-color: grey;
+}
+.five {
+    background-color: yellow;
+}
+.six {
+    background-color: blue;
+}
