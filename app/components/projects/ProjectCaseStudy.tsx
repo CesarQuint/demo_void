@@ -95,14 +95,14 @@ export default function ProjectCaseStudy(props: {
                         x: container.current!.clientWidth,
                         xPercent: -100,
                     },
-                    0
+                    0,
                 );
 
             return () => {
                 if (tl.current) tl.current.kill();
             };
         },
-        { scope: container, dependencies: [isMobile] }
+        { scope: container, dependencies: [isMobile] },
     );
 
     return (
