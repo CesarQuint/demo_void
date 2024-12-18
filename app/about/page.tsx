@@ -18,7 +18,7 @@ import Process from "../components/About/Process";
 import Services from "../components/About/Services";
 import Footer from "../components/footer";
 import PreFooterLink from "../components/PreFooterLink";
-import VideoHover from "../components/videoHover";
+import VideoDispatcher from "../components/Home/VideoDispatcher";
 type Props = {};
 
 const transitionSpringPhysics: Spring = {
@@ -115,7 +115,7 @@ const About = (props: Props) => {
                 className="courtain"
             />
             <Welcome />
-            <VideoHover />
+            <VideoDispatcher />
             <Services />
             <Manifest />
             <Process />

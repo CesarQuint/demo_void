@@ -1,5 +1,6 @@
 .main {
     width: 100%;
+    will-change: "transform";
 }
 
 .tags_wrapper {
