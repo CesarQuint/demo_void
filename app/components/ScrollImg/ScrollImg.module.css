@@ -36,12 +36,22 @@
     font-size: 1.25em;
 }
 
+.tagWrapper {
+    display: flex;
+    gap: 10px;
+}
+
 .tag {
     font-family: "graphie";
     padding: 0.5rem 1rem;
     border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 5rem;
     font-size: 0.75rem;
+}
+
+.caseStudyTag {
+    background-color: #fff;
+    color: #000;
 }
 
 .second {
@@ -54,12 +64,12 @@
 }
 
 @media (max-width: 700px) {
-    .tag {
+    .tagWrapper {
         align-self: flex-start;
     }
 }
 @media (min-width: 700px) {
-    .tag {
+    .tagWrapper {
         position: absolute;
         right: 0;
     }
