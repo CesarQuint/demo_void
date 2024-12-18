@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import styles from "../css/video.hover.module.css";
+import styles from "../../css/video.hover.module.css";
 import gsap from "gsap";
-import eyeIcon from "../../public/images/EyeIcon.png";
-import pauseIcon from "../../public/images/pause.png";
-import useWindow from "../utils/hooks/useWindow";
+import eyeIcon from "../../../public/images/EyeIcon.png";
+import pauseIcon from "../../../public/images/pause.png";
+import useWindow from "../../utils/hooks/useWindow";
 
 const VideoHover: React.FC = () => {
     const videoRef = useRef<HTMLVideoElement>(null);
@@ -26,6 +26,8 @@ const VideoHover: React.FC = () => {
     const handlePause = () => {
         if (videoRef.current) {
             videoRef.current.pause();
+            console.log("paused");
+
             setPlayTtriggered(false);
         }
     };
@@ -47,8 +49,8 @@ const VideoHover: React.FC = () => {
                 opacity: 0,
             });
 
-            if (windowStatus.innerWidth <= 425 && windowStatus.innerWidth > 0) {
-                gsap.to(playButtonRef.current, {
+            if (windowStatus.innerWidth <= 430 && windowStatus.innerWidth > 0) {
+                gsap.set(playButtonRef.current, {
                     x: "32vw",
                     y: "30vh",
                     opacity: 1,
@@ -108,7 +110,7 @@ const VideoHover: React.FC = () => {
                     tlHalo.play();
                     containerRef.current?.addEventListener(
                         "mousemove",
-                        handleMouseMove,
+                        handleMouseMove
                     );
                 }
             };
@@ -120,36 +122,36 @@ const VideoHover: React.FC = () => {
                 tlHalo?.kill();
                 containerRef.current?.removeEventListener(
                     "mousemove",
-                    handleMouseMove,
+                    handleMouseMove
                 );
             };
 
             containerRef.current?.addEventListener(
                 "mouseenter",
-                handleMouseEnter,
+                handleMouseEnter
             );
             containerRef.current?.addEventListener(
                 "mouseleave",
-                handleMouseLeave,
+                handleMouseLeave
             );
 
             return () => {
                 containerRef.current?.removeEventListener(
                     "mouseenter",
-                    handleMouseEnter,
+                    handleMouseEnter
                 );
                 containerRef.current?.removeEventListener(
                     "mousemove",
-                    handleMouseMove,
+                    handleMouseMove
                 );
                 containerRef.current?.removeEventListener(
                     "mouseleave",
-                    handleMouseLeave,
+                    handleMouseLeave
                 );
                 tlHalo.kill();
             };
         }
-    }, [windowStatus]);
+    }, [windowStatus, playTriggered]);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -175,39 +177,36 @@ const VideoHover: React.FC = () => {
     return (
         <motion.div className={`${styles.video_container}`}>
             <motion.div className={styles.video_wrapper} ref={containerRef}>
-                <motion.div
-                    className={styles.play_button}
-                    ref={playButtonRef}
-                    onClick={() => {
-                        !playTriggered ? handlePlay() : handlePause();
-                    }}
-                    style={{ cursor: "pointer" }}
-                >
-                    <Image
-                        className={`${styles.eye_video}`}
-                        src={
-                            windowStatus.innerWidth > 425 && playTriggered
-                                ? pauseIcon
-                                : eyeIcon
-                        }
-                        alt="Eye"
-                    />
-                    <span className={`${styles.halo}`}></span>
-                </motion.div>
+                {!playTriggered && (
+                    <motion.div
+                        className={styles.play_button}
+                        ref={playButtonRef}
+                        onClick={() => {
+                            handlePlay();
+                        }}
+                        style={{ cursor: "pointer" }}
+                    >
+                        <Image
+                            className={`${styles.eye_video}`}
+                            src={eyeIcon}
+                            alt="Eye"
+                        />
+                        <span className={`${styles.halo}`}></span>
+                    </motion.div>
+                )}
+
                 <video
                     onPause={handlePause}
                     className={`${styles.video}`}
-                    controls={false}
+                    controls={
+                        windowStatus.innerWidth <= 430 ? playTriggered : false
+                    }
                     ref={videoRef}
                     poster={
-                        windowStatus.innerWidth >= 700
-                            ? "https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/thumbnails/VOIDXR%20DEMO%20EYECANDY%20Thumbnail.png"
-                            : "https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/thumbnails/VOIDXR%20DEMO%20EYECANDY%20Thumbnail%20movil.png"
+                        "https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/thumbnails/VOIDXR%20DEMO%20EYECANDY%20Thumbnail%20movil.png"
                     }
                     src={
-                        windowStatus.innerWidth >= 700
-                            ? "https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/videos/voidxr-demo-eyecandy-home.mp4"
-                            : "https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/videos/voidxr-demo-eyecandy-home-mobile.mp4"
+                        "https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/videos/voidxr-demo-eyecandy-home-mobile.mp4"
                     }
                 >
                     Your browser does not support the video tag.
