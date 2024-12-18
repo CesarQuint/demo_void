@@ -7,6 +7,7 @@ type CoverProps = {
         title: Project["attributes"]["Title"];
         subtitle: Project["attributes"]["Subtitle"];
         category: Project["attributes"]["Category"];
+        asFullCaseStudy: Project["attributes"]["AsFullCaseStudy"];
     };
 };
 
@@ -29,8 +30,16 @@ const Cover: React.FC<CoverProps> = ({ data }) => (
             <div className={styles.tags}>
                 <h2>{data.subtitle}</h2>
 
-                <div className={styles.tag}>
-                    {data.category.data.attributes.Name}
+                <div className={styles.tagsWrapper}>
+                    <div className={styles.tag}>
+                        {data.category.data.attributes.Name}
+                    </div>
+
+                    {data.asFullCaseStudy && (
+                        <div className={styles.tag + " " + styles.caseStudyTag}>
+                            {"caso de estudio".toUpperCase()}
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

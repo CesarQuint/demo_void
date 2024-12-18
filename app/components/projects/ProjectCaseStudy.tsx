@@ -115,6 +115,7 @@ export default function ProjectCaseStudy(props: {
                             title: project.attributes.Title,
                             subtitle: project.attributes.Subtitle,
                             category: project.attributes.Category,
+                            asFullCaseStudy: project.attributes.AsFullCaseStudy,
                         }}
                     />
                     <div className={s.wrapper}>
