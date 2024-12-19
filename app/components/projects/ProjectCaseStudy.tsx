@@ -95,14 +95,14 @@ export default function ProjectCaseStudy(props: {
                         x: container.current!.clientWidth,
                         xPercent: -100,
                     },
-                    0
+                    0,
                 );
 
             return () => {
                 if (tl.current) tl.current.kill();
             };
         },
-        { scope: container, dependencies: [isMobile] }
+        { scope: container, dependencies: [isMobile] },
     );
 
     return (
@@ -115,6 +115,7 @@ export default function ProjectCaseStudy(props: {
                             title: project.attributes.Title,
                             subtitle: project.attributes.Subtitle,
                             category: project.attributes.Category,
+                            asFullCaseStudy: project.attributes.AsFullCaseStudy,
                         }}
                     />
                     <div className={s.wrapper}>

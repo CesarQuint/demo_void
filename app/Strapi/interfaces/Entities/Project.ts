@@ -26,8 +26,10 @@ export interface Project extends Entity {
                 attributes: Omit<ImageContent, "formats"> & { formats: null };
             };
         };
+        AsFullCaseStudy: boolean;
         Category: { data: Category };
         Location: string;
+        AsFullCaseStudy: boolean;
 
         [ContentSectionName.INTRODUCTION]: string;
         [ContentSectionName.CONCEPTUALIZATION]: ContentData | null;

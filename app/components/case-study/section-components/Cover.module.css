@@ -54,6 +54,11 @@
     display: flex;
     justify-content: space-between;
 
+    .tagsWrapper {
+        display: flex;
+        gap: 10px;
+    }
+
     .tag {
         background-color: #000000a4;
         font-family: "input-mono";
@@ -64,12 +69,18 @@
         border-radius: 2rem;
     }
 
+    .caseStudyTag {
+        background-color: #fff;
+        color: #000;
+    }
+
     @media (max-width: 700px) {
         margin: 0;
         justify-content: space-between;
         gap: 2vh;
         flex-direction: column;
     }
+
     .tag {
         width: fit-content;
     }

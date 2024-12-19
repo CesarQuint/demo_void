@@ -352,6 +352,9 @@ export default function ProjectsSectionView(props: {
                                                     .attributes.Name,
                                             description:
                                                 project.attributes.Subtitle,
+                                            asFullCaseStudy:
+                                                project.attributes
+                                                    .AsFullCaseStudy,
                                         }}
                                     />
                                 </figure>
