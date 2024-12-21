@@ -29,7 +29,6 @@ export interface Project extends Entity {
         AsFullCaseStudy: boolean;
         Category: { data: Category };
         Location: string;
-        AsFullCaseStudy: boolean;
 
         [ContentSectionName.INTRODUCTION]: string;
         [ContentSectionName.CONCEPTUALIZATION]: ContentData | null;
