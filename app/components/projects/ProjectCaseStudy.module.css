@@ -53,3 +53,29 @@
         }
     }
 }
+
+.panel {
+    display: initial;
+}
+
+.one {
+    content: "";
+}
+.two {
+    content: "";
+}
+.three {
+    content: "";
+}
+.four {
+    content: "";
+}
+.five {
+    content: "";
+}
+.six {
+    content: "";
+}
+.seven {
+    content: "";
+}
