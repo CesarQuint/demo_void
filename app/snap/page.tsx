@@ -1,5 +1,7 @@
 "use client";
+
 import React, { useEffect, useRef, useState } from "react";
+
 import s from "./snap.module.css";
 
 import gsap from "gsap";
