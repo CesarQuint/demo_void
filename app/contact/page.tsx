@@ -14,7 +14,6 @@ import styles from "../css/about.module.css";
 
 import Main from "../components/Contact/main";
 import Footer from "../components/footer";
-import PreFooterLink from "../components/PreFooterLink";
 
 type Props = {};
 
@@ -112,7 +111,6 @@ const Contact = (props: Props) => {
                 className="courtain"
             />
             <Main />
-
             <Footer />
         </motion.div>
     );
