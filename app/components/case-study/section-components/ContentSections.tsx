@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, Dispatch, SetStateAction } from "react";
 import { Project } from "../../../Strapi/interfaces/Entities/Project";
 import { ContentSectionName } from "../../../Strapi/interfaces/Entities/Project";
 import Code, { CodeProps } from "../content-components/content-types/Code";
@@ -20,11 +20,15 @@ import styles from "./ContentSections.module.css";
 import s from "../../projects/ProjectCaseStudy.module.css";
 import { useLenis } from "@studio-freight/react-lenis";
 
-export const useScrollArea = () => {
+export const useScrollArea = (
+    functionalScrolling: boolean,
+    isScrolling: boolean
+) => {
     const lenis = useLenis();
     const scrollAreaRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
+        if (functionalScrolling || isScrolling) return;
         if (!scrollAreaRef.current || !lenis) return;
 
         const element = scrollAreaRef.current;
@@ -32,21 +36,20 @@ export const useScrollArea = () => {
         const handleWheel = (e: WheelEvent) => {
             const isScrollable = element.scrollHeight > element.clientHeight;
 
-            const isAtTop = element.scrollTop === 0;
-            const isAtBottom =
-                element.scrollTop + element.clientHeight >=
-                element.scrollHeight;
-
             if (isScrollable) {
-                if ((isAtTop && e.deltaY < 0) || (isAtBottom && e.deltaY > 0)) {
-                    // Allow parent scroll at edges
-                    return;
-                }
-
-                // Prevent parent scroll and handle local scroll
+                e.preventDefault();
                 e.stopPropagation();
                 lenis.stop();
-                element.scrollTop += e.deltaY;
+
+                // Calculate new scroll position
+                const newScrollTop = element.scrollTop + e.deltaY;
+                const maxScroll = element.scrollHeight - element.clientHeight;
+
+                // Clamp scroll position between 0 and maxScroll
+                element.scrollTop = Math.max(
+                    0,
+                    Math.min(newScrollTop, maxScroll)
+                );
             }
         };
 
@@ -67,7 +70,7 @@ export const useScrollArea = () => {
             element.removeEventListener("mouseleave", handleMouseLeave);
             element.removeEventListener("wheel", handleWheel);
         };
-    }, [lenis]);
+    }, [lenis, functionalScrolling]);
 
     return scrollAreaRef;
 };
@@ -84,13 +87,21 @@ export type ContentData = Array<
 export type ContentSectionData = Project["attributes"][ContentSectionName];
 
 export type ContentSectionsProps = {
+    tags: string[];
+    functionalScrolling: boolean;
+    isScrolling: boolean;
     data: {
         data: ContentData | null;
         name: ContentSectionName;
     }[];
 };
 
-type SectionProps = { data: ContentSectionsProps["data"][0] };
+type SectionProps = {
+    tag: string;
+    isScrolling: boolean;
+    data: ContentSectionsProps["data"][0];
+    functionalScrolling: boolean;
+};
 
 const ContentSwitch = (
     content: ContentData[0],
@@ -117,8 +128,13 @@ const ContentSwitch = (
 const ContentSection: React.FC<{ data: ContentData }> = ({ data }) =>
     data.map((content, idx) => ContentSwitch(content, idx));
 
-const Section: React.FC<SectionProps> = ({ data: content }) => {
-    const scrollAreaRef = useScrollArea();
+const Section: React.FC<SectionProps> = ({
+    tag,
+    data: content,
+    functionalScrolling,
+    isScrolling,
+}) => {
+    const scrollAreaRef = useScrollArea(functionalScrolling, isScrolling);
     const [activeSection, setActiveSection] = useState(0);
     const contentChunks: ContentData[] = chunkArrayEveryHeading(
         content.data ?? []
@@ -133,6 +149,7 @@ const Section: React.FC<SectionProps> = ({ data: content }) => {
 
     return (
         <div className={`${s.panel}`}>
+            <span className={`${s[tag]}`}></span>
             <section id={content.name} className={styles.contentSection}>
                 <h1 className={styles.title}>
                     {ContentSectionTitles[content.name].title}
@@ -170,10 +187,22 @@ const Section: React.FC<SectionProps> = ({ data: content }) => {
     );
 };
 
-const ContentSections: React.FC<ContentSectionsProps> = ({ data }) =>
+const ContentSections: React.FC<ContentSectionsProps> = ({
+    tags,
+    data,
+    functionalScrolling,
+    isScrolling,
+}) =>
     data
         .filter((content) => Boolean(content.data))
-        .map((content) => Section({ data: content }));
+        .map((content, idx) => {
+            return Section({
+                data: content,
+                functionalScrolling,
+                isScrolling,
+                tag: tags[idx],
+            });
+        });
 
 const chunkArrayEveryHeading = (content: ContentData): ContentData[] =>
     content.reduce(
