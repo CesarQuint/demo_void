@@ -11,7 +11,6 @@ const Main = () => {
     return (
         <motion.section className={styles.main}>
             <ToastContainer autoClose={3000} draggablePercent={50} />
-            <Whatsapp />
             <Brief />
             <Form />
         </motion.section>
