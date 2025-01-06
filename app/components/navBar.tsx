@@ -9,6 +9,7 @@ import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import useWindow from "../utils/hooks/useWindow";
 import dynamic from "next/dynamic";
+import wArrow from "../../public/images/wArrow.svg";
 
 const TypedLink = dynamic(() => import("./TypedLink/TypedLink"), {
     ssr: false,
@@ -220,7 +221,15 @@ const NavBar = () => {
                         className={styles.writeUs}
                     >
                         <span className={styles.writeUsTxt}>Escribenos</span>
-                        <span className={styles.writeUsIcon}>+</span>
+                        <span className={styles.writeUsIcon}>
+                            <Image
+                                className={styles.arrow_button}
+                                width={1000}
+                                height={1000}
+                                src={wArrow}
+                                alt="arrow"
+                            />
+                        </span>
                     </Link>
                 </div>
             </section>
