@@ -29,7 +29,7 @@ const RelatedProyectsCarrousel = (props: Props) => {
 
     return (
         !!props.data.length && (
-            <section>
+            <section className={`${styles.main}`}>
                 <h2 className={styles.heading}>Proyectos Relacionados</h2>
                 <div className={styles.section}>
                     <div className={styles.container}>
@@ -97,7 +97,7 @@ const ProjectThumbnails: React.FC<{
                     className={styles.contents}
                     onClick={() =>
                         setNavigationEvent(
-                            "/projects/" + project.attributes.slug,
+                            "/projects/" + project.attributes.slug
                         )
                     }
                 >
