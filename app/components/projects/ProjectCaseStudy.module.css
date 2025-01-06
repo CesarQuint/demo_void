@@ -15,11 +15,14 @@
     display: grid;
     height: 100vh;
     box-sizing: border-box;
-    grid-auto-flow: column;
+
     width: fit-content;
 
+    @media (min-width: 768px) {
+        grid-auto-flow: column;
+    }
+
     @media (max-width: 768px) {
-        display: block;
         height: auto;
         width: 100vw;
     }
@@ -31,7 +34,6 @@
     grid-auto-flow: column;
     width: fit-content;
     padding-top: 3rem;
-    margin-top: var(--tags-size);
 
     & section {
         width: 100vw;
@@ -43,7 +45,7 @@
 
     @media (max-width: 768px) {
         display: block;
-        width: 100%;
+        width: inherit;
         height: auto;
         padding: 1rem;
 
