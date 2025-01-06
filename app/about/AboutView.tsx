@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useEffect } from "react";
 import { useNavigation } from "../utils/navigationContext";
 import {
@@ -19,7 +20,11 @@ import Services from "../components/About/Services";
 import Footer from "../components/footer";
 import PreFooterLink from "../components/PreFooterLink";
 import VideoDispatcher from "../components/Home/VideoDispatcher";
-type Props = {};
+import { Category } from "@/app/Strapi/interfaces/Entities/Category";
+
+type Props = {
+    categories: Category[];
+};
 
 const transitionSpringPhysics: Spring = {
     type: "spring",
@@ -28,7 +33,7 @@ const transitionSpringPhysics: Spring = {
     damping: 2,
 };
 
-const About = (props: Props) => {
+export const AboutView = (props: Props) => {
     const { navigationEvent } = useNavigation();
     const pathname = usePathname();
     const [isPresent, safeToRemove] = usePresence();
@@ -116,7 +121,7 @@ const About = (props: Props) => {
             />
             <Welcome />
             <VideoDispatcher />
-            <Services />
+            <Services categories={props.categories} />
             <Manifest />
             <Process />
             <PreFooterLink href="/projects" text="PROYECTOS" />
@@ -124,5 +129,3 @@ const About = (props: Props) => {
         </motion.div>
     );
 };
-
-export default About;
