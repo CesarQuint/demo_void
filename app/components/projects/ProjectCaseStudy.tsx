@@ -22,6 +22,8 @@ import ContentMenu, {
 import Introduction from "../../components/case-study/section-components/Introduction";
 import CaseStudyVideo from "../../components/case-study/section-components/IntroductoryVideo";
 import useWindow from "@/app/utils/hooks/useWindow";
+import { useLenis } from "@studio-freight/react-lenis";
+import { mapAttributesToContentImages } from "../case-study/section-components/utils/imageStatus";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger, Draggable);
 
@@ -33,8 +35,15 @@ export default function ProjectCaseStudy(props: {
     const scrollContainer = useRef<HTMLDivElement>(null);
     const tl = useRef<gsap.core.Timeline | null>(null);
     const windowStatus = useWindow();
+    const [panels, setPanels] = useState<HTMLElement[]>([]);
+    const [scrollableFromDoc, setScrollableFromDoc] = useState<number>(0);
+    const [clientVisibleHeight, setClientVisibleHeight] = useState<number>(0);
+    const lenis = useLenis();
+    const [currIndx, setCurrIndx] = useState<number>(0);
+    const [isScrolling, setIsScrolling] = useState<boolean>(false);
 
     const project = props.data.project;
+    const imagesContent = mapAttributesToContentImages(project.attributes);
 
     const PROJECT_CONTENTS: ContentSectionsProps["data"] = [
         {
@@ -50,6 +59,79 @@ export default function ProjectCaseStudy(props: {
             data: project.attributes[ContentSectionName.PRODUCTION],
         },
     ].filter((section) => sectionHasContent(project)(section.name));
+
+    // Populate panels after the DOM is rendered
+    useEffect(() => {
+        const panelElements = gsap.utils.toArray(
+            `.${s.panel}`
+        ) as HTMLElement[];
+        setPanels(panelElements);
+    }, []);
+
+    useEffect(() => {
+        if (
+            windowStatus.innerWidth >= 1024 &&
+            lenis &&
+            panels.length > 0 &&
+            scrollableFromDoc !== 0 &&
+            clientVisibleHeight !== 0
+        ) {
+            const availableScroll =
+                (scrollableFromDoc - clientVisibleHeight) / (panels.length - 1);
+
+            const handleScroll = (e: any) => {
+                if (isScrolling) return;
+
+                const scrollPosition = window.scrollY;
+                const maxScroll = scrollableFromDoc - clientVisibleHeight;
+
+                // Prevent scroll handling when at the extremes
+                if (scrollPosition <= 0 || scrollPosition >= maxScroll) return;
+
+                const nextIndx =
+                    e.direction === 1
+                        ? Math.min(currIndx + 1, panels.length - 1)
+                        : Math.max(currIndx - 1, 0);
+
+                if (nextIndx !== currIndx) {
+                    let scrollPx = availableScroll * nextIndx;
+
+                    if (nextIndx == panels.length - 1) {
+                        scrollPx = scrollPx - 1;
+                    }
+
+                    setIsScrolling(true);
+                    lenis.stop();
+                    lenis.scrollTo(scrollPx, {
+                        force: true,
+                        lock: true,
+                        onComplete: () => {
+                            setCurrIndx(nextIndx);
+                            setTimeout(() => {
+                                setIsScrolling(false);
+                                lenis.start();
+                            }, 300);
+                        },
+                    });
+                }
+            };
+
+            lenis.on("scroll", handleScroll);
+
+            return () => {
+                lenis.off("scroll", handleScroll);
+            };
+        }
+    }, [
+        windowStatus,
+        isMobile,
+        lenis,
+        panels,
+        currIndx,
+        isScrolling,
+        scrollableFromDoc,
+        clientVisibleHeight,
+    ]);
 
     useEffect(() => {
         const windH = windowStatus.innerWidth;
@@ -81,10 +163,19 @@ export default function ProjectCaseStudy(props: {
                     scrollTrigger: {
                         trigger: container.current,
                         pin: true,
+                        once: true,
                         scrub: 0.01,
                         fastScrollEnd: true,
                         preventOverlaps: true,
                         end: `${scrollContainer.current!.scrollWidth} bottom`,
+                        onEnter: () => {
+                            setScrollableFromDoc(
+                                document.documentElement.scrollHeight
+                            );
+                            setClientVisibleHeight(
+                                document.documentElement.clientHeight
+                            );
+                        },
                     },
                 })
                 .to(
@@ -103,36 +194,96 @@ export default function ProjectCaseStudy(props: {
         { scope: container, dependencies: [isMobile] }
     );
 
+    const handleMoveToSection = (indx: number) => {
+        console.log(indx);
+
+        // if (
+        //     !lenis ||
+        //     !panels.length ||
+        //     scrollableFromDoc === 0 ||
+        //     clientVisibleHeight === 0
+        // )
+        //     return;
+        // const availableScroll =
+        //     (scrollableFromDoc - clientVisibleHeight) / (panels.length - 1);
+
+        // let scrollPx = availableScroll * indx;
+
+        // if (indx == panels.length - 1) {
+        //     scrollPx = scrollPx - 1;
+        // }
+        // setIsScrolling(true);
+        // lenis.stop();
+        // lenis.scrollTo(scrollPx, {
+        //     force: true,
+        //     lock: true,
+        //     onComplete: () => {
+        //         setCurrIndx(indx);
+        //         setTimeout(() => {
+        //             setIsScrolling(false);
+        //             lenis.start();
+        //         }, 300);
+        //     },
+        // });
+    };
+
     return (
         <CaseStudyWrapper>
             <main ref={container} className={s.main}>
                 <div ref={scrollContainer} className={s.scrollContainer}>
-                    <Cover
-                        data={{
-                            image: project.attributes.Cover.data,
-                            title: project.attributes.Title,
-                            subtitle: project.attributes.Subtitle,
-                            category: project.attributes.Category,
-                        }}
-                    />
-                    <div className={s.wrapper}>
-                        <ContentMenu data={project} />
-                        <Introduction
+                    <div className={`${s.panel}`}>
+                        <Cover
                             data={{
-                                intro: project.attributes[
-                                    ContentSectionName.INTRODUCTION
-                                ],
-                                location: project.attributes.Location,
-                                eventDate: project.attributes.EventDate,
+                                image: project.attributes.Cover.data,
+                                title: project.attributes.Title,
+                                subtitle: project.attributes.Subtitle,
+                                category: project.attributes.Category,
                             }}
                         />
-                        <CaseStudyVideo
-                            data={project.attributes.Case_Study_Video.data}
-                        />
-                        <ContentSections data={PROJECT_CONTENTS} />
-                        <GalleryCarousel data={project.attributes} />
-                        <RelatedProyectsCarrousel data={props.data.related} />
                     </div>
+                    <div className={`${s.panel}`}>
+                        <ContentMenu
+                            handleMoveToSection={handleMoveToSection}
+                            data={project}
+                        />
+                    </div>
+                    {project.attributes[ContentSectionName.INTRODUCTION] && (
+                        <div className={`${s.panel}`}>
+                            <Introduction
+                                data={{
+                                    intro: project.attributes[
+                                        ContentSectionName.INTRODUCTION
+                                    ],
+                                    location: project.attributes.Location,
+                                    eventDate: project.attributes.EventDate,
+                                }}
+                            />
+                        </div>
+                    )}
+
+                    {project.attributes.Case_Study_Video.data && (
+                        <div className={`${s.panel}`}>
+                            <CaseStudyVideo
+                                data={project.attributes.Case_Study_Video.data}
+                            />
+                        </div>
+                    )}
+
+                    <ContentSections data={PROJECT_CONTENTS} />
+
+                    {imagesContent.length > 0 && (
+                        <div className={`${s.panel}`}>
+                            <GalleryCarousel data={project.attributes} />
+                        </div>
+                    )}
+
+                    {props.data.related.length > 0 && (
+                        <div className={`${s.panel}`}>
+                            <RelatedProyectsCarrousel
+                                data={props.data.related}
+                            />
+                        </div>
+                    )}
                 </div>
             </main>
         </CaseStudyWrapper>
