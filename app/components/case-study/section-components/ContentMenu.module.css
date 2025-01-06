@@ -1,7 +1,7 @@
 .container {
     display: flex;
     align-items: center;
-    padding: 0 5vw !important;
+    padding: 10vh 5vw !important;
 
     @media (max-width: 768px) {
         height: 100vh;
@@ -16,6 +16,7 @@
     margin: 0;
     padding: 0;
     width: 100%;
+    overflow: hidden;
 }
 
 .menuItem {
@@ -78,7 +79,7 @@
 }
 
 .subMenuItem {
-    width: 50vw;
+    width: 44vw;
     padding: 0.5rem 0;
 }
 

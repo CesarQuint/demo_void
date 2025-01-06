@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Project } from "../../../Strapi/interfaces/Entities/Project";
 import { ContentSectionName } from "../../../Strapi/interfaces/Entities/Project";
 import Code, { CodeProps } from "../content-components/content-types/Code";
@@ -17,6 +17,60 @@ import {
     SubIndexData,
 } from "./ContentMenu";
 import styles from "./ContentSections.module.css";
+import s from "../../projects/ProjectCaseStudy.module.css";
+import { useLenis } from "@studio-freight/react-lenis";
+
+export const useScrollArea = () => {
+    const lenis = useLenis();
+    const scrollAreaRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (!scrollAreaRef.current || !lenis) return;
+
+        const element = scrollAreaRef.current;
+
+        const handleWheel = (e: WheelEvent) => {
+            const isScrollable = element.scrollHeight > element.clientHeight;
+
+            const isAtTop = element.scrollTop === 0;
+            const isAtBottom =
+                element.scrollTop + element.clientHeight >=
+                element.scrollHeight;
+
+            if (isScrollable) {
+                if ((isAtTop && e.deltaY < 0) || (isAtBottom && e.deltaY > 0)) {
+                    // Allow parent scroll at edges
+                    return;
+                }
+
+                // Prevent parent scroll and handle local scroll
+                e.stopPropagation();
+                lenis.stop();
+                element.scrollTop += e.deltaY;
+            }
+        };
+
+        const handleMouseEnter = () => {
+            element.addEventListener("wheel", handleWheel, { passive: false });
+        };
+
+        const handleMouseLeave = () => {
+            element.removeEventListener("wheel", handleWheel);
+            lenis.start();
+        };
+
+        element.addEventListener("mouseenter", handleMouseEnter);
+        element.addEventListener("mouseleave", handleMouseLeave);
+
+        return () => {
+            element.removeEventListener("mouseenter", handleMouseEnter);
+            element.removeEventListener("mouseleave", handleMouseLeave);
+            element.removeEventListener("wheel", handleWheel);
+        };
+    }, [lenis]);
+
+    return scrollAreaRef;
+};
 
 export type ContentData = Array<
     | CodeProps["data"]
@@ -40,7 +94,7 @@ type SectionProps = { data: ContentSectionsProps["data"][0] };
 
 const ContentSwitch = (
     content: ContentData[0],
-    idx: number,
+    idx: number
 ): React.JSX.Element => {
     switch (content.type) {
         case "code":
@@ -64,9 +118,10 @@ const ContentSection: React.FC<{ data: ContentData }> = ({ data }) =>
     data.map((content, idx) => ContentSwitch(content, idx));
 
 const Section: React.FC<SectionProps> = ({ data: content }) => {
+    const scrollAreaRef = useScrollArea();
     const [activeSection, setActiveSection] = useState(0);
     const contentChunks: ContentData[] = chunkArrayEveryHeading(
-        content.data ?? [],
+        content.data ?? []
     );
     const headings: SubIndexData[] = contentChunks
         .map((chunk): ContentData[0] => chunk[0])
@@ -77,39 +132,41 @@ const Section: React.FC<SectionProps> = ({ data: content }) => {
         }));
 
     return (
-        <section id={content.name} className={styles.contentSection}>
-            <h1 className={styles.title}>
-                {ContentSectionTitles[content.name].title}
-            </h1>
+        <div className={`${s.panel}`}>
+            <section id={content.name} className={styles.contentSection}>
+                <h1 className={styles.title}>
+                    {ContentSectionTitles[content.name].title}
+                </h1>
 
-            {!!headings.length && (
-                <div className={styles.innerContent}>
-                    <div className={styles.sideMenu}>
-                        <ul className={styles.menuList}>
-                            {headings.map((heading, idx) => (
-                                <li
-                                    key={idx}
-                                    className={styles.sideMenuItem}
-                                    onClick={() =>
-                                        setActiveSection(heading.index)
-                                    }
-                                >
-                                    <span>{heading.title}</span>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
+                {!!headings.length && (
+                    <div className={styles.innerContent}>
+                        <div className={styles.sideMenu}>
+                            <ul className={styles.menuList}>
+                                {headings.map((heading, idx) => (
+                                    <li
+                                        key={idx}
+                                        className={styles.sideMenuItem}
+                                        onClick={() =>
+                                            setActiveSection(heading.index)
+                                        }
+                                    >
+                                        <span>{heading.title}</span>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
 
-                    <div className={styles.content}>
-                        {content.data && (
-                            <ContentSection
-                                data={contentChunks[activeSection]}
-                            />
-                        )}
+                        <div ref={scrollAreaRef} className={styles.content}>
+                            {content.data && (
+                                <ContentSection
+                                    data={contentChunks[activeSection]}
+                                />
+                            )}
+                        </div>
                     </div>
-                </div>
-            )}
-        </section>
+                )}
+            </section>
+        </div>
     );
 };
 
@@ -126,7 +183,7 @@ const chunkArrayEveryHeading = (content: ContentData): ContentData[] =>
                 : acc[acc.length - 1].push(curr),
             acc
         ),
-        [[]],
+        [[]]
     );
 
 export default ContentSections;

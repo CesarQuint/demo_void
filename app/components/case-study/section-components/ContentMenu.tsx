@@ -21,7 +21,7 @@ type MenuItemData = {
     subIndexes?: SubIndexData[];
 };
 
-type MenuProps = { data: Project };
+type MenuProps = { data: Project; handleMoveToSection: (indx: number) => void };
 
 type ContentSectionItems = Record<ContentSectionName | "gallery", MenuItemData>;
 
@@ -60,7 +60,7 @@ const paragraphIsNotEmpty = (paragraph: ParagraphProps["data"]): boolean =>
     paragraph.children.reduce(
         (prev, curr) =>
             prev || (curr.type === "text" ? !!curr.text.length : true),
-        false,
+        false
     );
 
 const contentArrayIsNotEmpty = (content: ContentData): boolean =>
@@ -68,7 +68,7 @@ const contentArrayIsNotEmpty = (content: ContentData): boolean =>
         (prev, curr) =>
             prev ||
             (curr.type === "paragraph" ? paragraphIsNotEmpty(curr) : true),
-        false,
+        false
     );
 
 const contentStringIsNotEmpty = (content: string | null): boolean =>
@@ -80,18 +80,18 @@ export const sectionHasContent =
         Array.isArray(project.attributes[section])
             ? contentArrayIsNotEmpty(project.attributes[section] as ContentData)
             : contentStringIsNotEmpty(
-                  project.attributes[section] as string | null,
+                  project.attributes[section] as string | null
               );
 
 export const mapToSubIndexData = (
-    section: ContentSectionData,
+    section: ContentSectionData
 ): SubIndexData[] => {
     const isSubindexEmpty = typeof section === "string" || section === null;
     if (isSubindexEmpty) return [];
 
     const reduceHeadingProps = (
         prev: HeadingProps["data"][],
-        curr: HeadingProps["data"],
+        curr: HeadingProps["data"]
     ): HeadingProps["data"][] => {
         if (prev.length === 0 || curr.level < prev[0].level) {
             return [curr];
@@ -112,7 +112,7 @@ export const mapToSubIndexData = (
 
     const mapToSubindex = (
         heading: HeadingProps["data"],
-        idx: number,
+        idx: number
     ): SubIndexData => ({
         index: idx,
         title: heading.children.reduce(reduceChildrenToString, ""),
@@ -121,7 +121,7 @@ export const mapToSubIndexData = (
     const HEADINGS = section
         .filter(
             (content: ContentData[0]): content is HeadingProps["data"] =>
-                content.type === "heading",
+                content.type === "heading"
         )
         .reduce(reduceHeadingProps, [])
         .map(mapToSubindex);
@@ -134,7 +134,7 @@ export const isInContentSection = (key: string): key is ContentSectionName =>
 
 const mapToProjectSection = (
     section: ContentSectionName,
-    data: ContentSectionData,
+    data: ContentSectionData
 ): MenuItemData => ({
     index: ContentSectionTitles[section].index,
     title: ContentSectionTitles[section].title,
@@ -155,19 +155,23 @@ const mapProjectDataToMenuItems = (project: Project): MenuItemData[] =>
 
 const findNameFromIndex = (idx: number) =>
     Object.entries(ContentSectionTitles).find(
-        ([key, item]) => item.index === idx,
+        ([key, item]) => item.index === idx
     )?.[0];
 
 const MenuItem: React.FC<{
+    handleMoveToSection: (indx: number) => void;
     idx: number;
     item: MenuItemData;
     activeIndex: number | null;
     setActiveIndex: (index: number | null) => void;
-}> = ({ idx, item, activeIndex, setActiveIndex }) => (
+}> = ({ idx, item, activeIndex, setActiveIndex, handleMoveToSection }) => (
     <li
         key={idx}
         className={styles.menuItem}
         onMouseEnter={() => setActiveIndex(idx)}
+        onClick={() => {
+            handleMoveToSection(idx + 2);
+        }}
         onMouseLeave={() => setActiveIndex(null)}
     >
         <a href={"#" + findNameFromIndex(idx)}>
@@ -176,7 +180,9 @@ const MenuItem: React.FC<{
         </a>
         {item.subIndexes && (
             <ul
-                className={`${styles.subMenu} ${activeIndex === idx ? styles.active : ""}`}
+                className={`${styles.subMenu} ${
+                    activeIndex === idx ? styles.active : ""
+                }`}
             >
                 {item.subIndexes.map((subItem, subIndex) => (
                     <li key={subIndex} className={styles.subMenuItem}>
@@ -188,7 +194,13 @@ const MenuItem: React.FC<{
     </li>
 );
 
-const ContentMenu: React.FC<MenuProps> = ({ data }) => {
+const ContentMenu: React.FC<MenuProps> = ({
+    data,
+    handleMoveToSection,
+}: {
+    data: Project;
+    handleMoveToSection: (indx: number) => void;
+}) => {
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
     const items = mapProjectDataToMenuItems(data);
     items.push(ContentSectionTitles.gallery);
@@ -198,6 +210,7 @@ const ContentMenu: React.FC<MenuProps> = ({ data }) => {
             <ul className={styles.menu}>
                 {items.map((item, index) => (
                     <MenuItem
+                        handleMoveToSection={handleMoveToSection}
                         key={index}
                         idx={index}
                         item={item}

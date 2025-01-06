@@ -1,20 +1,29 @@
+.main {
+    height: -webkit-fill-available;
+    padding: 10vh 5vw;
+    width: inherit;
+}
+
 .heading {
     text-transform: uppercase;
     text-align: center;
     font-family: "panchang";
     font-size: 2rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     font-weight: 200;
 }
 
 .container {
     position: relative;
-    padding: 2rem 0;
     overflow: hidden;
+    height: -webkit-fill-available;
+    width: 70%;
+    margin: auto;
 
     @media (max-width: 768px) {
         max-width: 100vw;
         overflow-x: hidden;
+        width: 100%;
     }
 }
 
