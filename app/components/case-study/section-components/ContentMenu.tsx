@@ -21,7 +21,11 @@ type MenuItemData = {
     subIndexes?: SubIndexData[];
 };
 
-type MenuProps = { data: Project; handleMoveToSection: (indx: number) => void };
+type MenuProps = {
+    tags: string[];
+    data: Project;
+    handleMoveToSection: (indx: number, midx: string) => void;
+};
 
 type ContentSectionItems = Record<ContentSectionName | "gallery", MenuItemData>;
 
@@ -159,7 +163,7 @@ const findNameFromIndex = (idx: number) =>
     )?.[0];
 
 const MenuItem: React.FC<{
-    handleMoveToSection: (indx: number) => void;
+    handleMoveToSection: (indx: number, midx: string) => void;
     idx: number;
     item: MenuItemData;
     activeIndex: number | null;
@@ -170,7 +174,7 @@ const MenuItem: React.FC<{
         className={styles.menuItem}
         onMouseEnter={() => setActiveIndex(idx)}
         onClick={() => {
-            handleMoveToSection(idx + 2);
+            handleMoveToSection(idx > 0 ? idx + 3 : idx + 2, item.title);
         }}
         onMouseLeave={() => setActiveIndex(null)}
     >
@@ -199,7 +203,7 @@ const ContentMenu: React.FC<MenuProps> = ({
     handleMoveToSection,
 }: {
     data: Project;
-    handleMoveToSection: (indx: number) => void;
+    handleMoveToSection: (indx: number, idx: string) => void;
 }) => {
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
     const items = mapProjectDataToMenuItems(data);
