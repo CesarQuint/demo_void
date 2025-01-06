@@ -23,7 +23,10 @@ import Introduction from "../../components/case-study/section-components/Introdu
 import CaseStudyVideo from "../../components/case-study/section-components/IntroductoryVideo";
 import useWindow from "@/app/utils/hooks/useWindow";
 import { useLenis } from "@studio-freight/react-lenis";
-import { mapAttributesToContentImages } from "../case-study/section-components/utils/imageStatus";
+import {
+    mapAttributesToContentImages,
+    mapProjectDataToMenuItems,
+} from "../case-study/section-components/utils/imageStatus";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger, Draggable);
 
@@ -41,9 +44,14 @@ export default function ProjectCaseStudy(props: {
     const lenis = useLenis();
     const [currIndx, setCurrIndx] = useState<number>(0);
     const [isScrolling, setIsScrolling] = useState<boolean>(false);
+    const [functionalScrolling, setFunctionalScrolling] =
+        useState<boolean>(false);
 
     const project = props.data.project;
     const imagesContent = mapAttributesToContentImages(project.attributes);
+    const tagsMobile = mapProjectDataToMenuItems(project).map(
+        (pro) => pro.title
+    );
 
     const PROJECT_CONTENTS: ContentSectionsProps["data"] = [
         {
@@ -80,6 +88,8 @@ export default function ProjectCaseStudy(props: {
                 (scrollableFromDoc - clientVisibleHeight) / (panels.length - 1);
 
             const handleScroll = (e: any) => {
+                if (functionalScrolling) return;
+
                 if (isScrolling) return;
 
                 const scrollPosition = window.scrollY;
@@ -131,6 +141,7 @@ export default function ProjectCaseStudy(props: {
         isScrolling,
         scrollableFromDoc,
         clientVisibleHeight,
+        functionalScrolling,
     ]);
 
     useEffect(() => {
@@ -194,37 +205,43 @@ export default function ProjectCaseStudy(props: {
         { scope: container, dependencies: [isMobile] }
     );
 
-    const handleMoveToSection = (indx: number) => {
-        console.log(indx);
+    const handleMoveToSection = (indx: number, midx: string) => {
+        if (
+            !lenis ||
+            !panels.length ||
+            scrollableFromDoc === 0 ||
+            clientVisibleHeight === 0
+        )
+            return;
 
-        // if (
-        //     !lenis ||
-        //     !panels.length ||
-        //     scrollableFromDoc === 0 ||
-        //     clientVisibleHeight === 0
-        // )
-        //     return;
-        // const availableScroll =
-        //     (scrollableFromDoc - clientVisibleHeight) / (panels.length - 1);
+        const availableScroll =
+            (scrollableFromDoc - clientVisibleHeight) / (panels.length - 1);
 
-        // let scrollPx = availableScroll * indx;
+        console.log(tagsMobile[tagsMobile.indexOf(midx)]);
 
-        // if (indx == panels.length - 1) {
-        //     scrollPx = scrollPx - 1;
-        // }
-        // setIsScrolling(true);
-        // lenis.stop();
-        // lenis.scrollTo(scrollPx, {
-        //     force: true,
-        //     lock: true,
-        //     onComplete: () => {
-        //         setCurrIndx(indx);
-        //         setTimeout(() => {
-        //             setIsScrolling(false);
-        //             lenis.start();
-        //         }, 300);
-        //     },
-        // });
+        let scrollPx = availableScroll * indx;
+
+        if (indx == panels.length - 1) {
+            scrollPx = scrollPx - 1;
+        }
+        setFunctionalScrolling(true);
+        setIsScrolling(true);
+        lenis.stop();
+        lenis.scrollTo(
+            isMobile ? `.${s[tagsMobile[tagsMobile.indexOf(midx)]]}` : scrollPx,
+            {
+                force: true,
+                lock: true,
+                onComplete: () => {
+                    setCurrIndx(indx);
+                    setTimeout(() => {
+                        setIsScrolling(false);
+                        setFunctionalScrolling(false);
+                        lenis.start();
+                    }, 300);
+                },
+            }
+        );
     };
 
     return (
@@ -243,12 +260,14 @@ export default function ProjectCaseStudy(props: {
                     </div>
                     <div className={`${s.panel}`}>
                         <ContentMenu
+                            tags={tagsMobile}
                             handleMoveToSection={handleMoveToSection}
                             data={project}
                         />
                     </div>
                     {project.attributes[ContentSectionName.INTRODUCTION] && (
                         <div className={`${s.panel}`}>
+                            <span className={`${s[tagsMobile[0]]}`}></span>
                             <Introduction
                                 data={{
                                     intro: project.attributes[
@@ -269,7 +288,12 @@ export default function ProjectCaseStudy(props: {
                         </div>
                     )}
 
-                    <ContentSections data={PROJECT_CONTENTS} />
+                    <ContentSections
+                        tags={tagsMobile.slice(1, 4)}
+                        isScrolling={isScrolling}
+                        functionalScrolling={functionalScrolling}
+                        data={PROJECT_CONTENTS}
+                    />
 
                     {imagesContent.length > 0 && (
                         <div className={`${s.panel}`}>
