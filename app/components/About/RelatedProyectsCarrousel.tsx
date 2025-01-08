@@ -10,7 +10,7 @@ const TRANSITION_CONFIG: Transition = {
     ease: "easeInOut",
 };
 
-type Props = { data: Project[] };
+type Props = { data: Project[]; className?: string };
 
 const RelatedProyectsCarrousel = (props: Props) => {
     const [selectedStep, setSelectedStep] = useState(0);
@@ -30,7 +30,7 @@ const RelatedProyectsCarrousel = (props: Props) => {
 
     return (
         !!props.data.length && (
-            <section>
+            <section className={props.className}>
                 <h2 className={styles.heading}>Proyectos Relacionados</h2>
                 <div className={styles.section}>
                     <div className={styles.container}>
