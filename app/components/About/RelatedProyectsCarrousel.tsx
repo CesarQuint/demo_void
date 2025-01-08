@@ -10,9 +10,9 @@ const TRANSITION_CONFIG: Transition = {
     ease: "easeInOut",
 };
 
-type Props = { data: Project[]; className?: string };
+type RelatedProjectsCarouselProps = { data: Project[]; className?: string };
 
-const RelatedProyectsCarrousel = (props: Props) => {
+const RelatedProjectsCarousel = (props: RelatedProjectsCarouselProps) => {
     const [selectedStep, setSelectedStep] = useState(0);
     const dragX = useMotionValue(0);
     const { setNavigationEvent } = useNavigation();
@@ -143,4 +143,4 @@ const StepButtons: React.FC<{
     </div>
 );
 
-export default RelatedProyectsCarrousel;
+export default RelatedProjectsCarousel;
