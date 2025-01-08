@@ -1,9 +1,13 @@
-import { getCategoriesData } from "../Strapi/RestAPI/ProjectsProvider";
+import {
+    getCategoriesData,
+    getProjectsData,
+} from "../Strapi/RestAPI/ProjectsProvider";
 import { notFound } from "next/navigation";
 import { AboutView } from "./AboutView";
 
 export default async function Page() {
     const categories = await getCategoriesData();
-    if (!categories) return notFound();
-    return <AboutView categories={categories.data} />;
+    const projects = await getProjectsData();
+    if (!categories || !projects) return notFound();
+    return <AboutView categories={categories.data} projects={projects.data} />;
 }

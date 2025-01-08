@@ -21,8 +21,10 @@ import Footer from "../components/footer";
 import PreFooterLink from "../components/PreFooterLink";
 import VideoDispatcher from "../components/Home/VideoDispatcher";
 import { Category } from "@/app/Strapi/interfaces/Entities/Category";
+import { Project } from "../Strapi/interfaces/Entities/Project";
 
 type Props = {
+    projects: Project[];
     categories: Category[];
 };
 
@@ -121,7 +123,7 @@ export const AboutView = (props: Props) => {
             />
             <Welcome />
             <VideoDispatcher />
-            <Services categories={props.categories} />
+            <Services categories={props.categories} projects={props.projects} />
             <Manifest />
             <Process />
             <PreFooterLink href="/projects" text="PROYECTOS" />
