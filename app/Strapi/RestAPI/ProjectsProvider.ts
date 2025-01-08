@@ -68,6 +68,9 @@ export async function getProjectDetails({
 }
 
 export async function getCategoriesData(): Promise<Response<Category[]>> {
-    const req = new StrapiRequest({ path: "/api/categories" });
+    const req = new StrapiRequest({
+        path: "/api/categories",
+        parameters: { populate: ["IconImage"] },
+    });
     return sendFetchCommand<Category[]>(req);
 }
