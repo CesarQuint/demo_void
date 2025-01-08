@@ -17,7 +17,7 @@ const RelatedProjectsCarousel = (props: RelatedProjectsCarouselProps) => {
     const dragX = useMotionValue(0);
     const { setNavigationEvent } = useNavigation();
 
-    const DRAG_BUFFER = 50;
+    const DRAG_BUFFER = 20;
 
     const onDragEnd = () => {
         const x = dragX.get();
