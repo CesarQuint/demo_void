@@ -5,8 +5,9 @@ import { Project } from "../../Strapi/interfaces/Entities/Project";
 import { useNavigation } from "../../utils/navigationContext";
 
 const TRANSITION_CONFIG: Transition = {
-    type: "spring",
-    bounce: 0.2,
+    type: "tween",
+    duration: 0.4,
+    ease: "easeInOut",
 };
 
 type Props = { data: Project[] };
