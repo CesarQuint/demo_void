@@ -130,7 +130,7 @@ const StepButtons: React.FC<{
         {Array(length)
             .fill(null)
             .map((_, idx) => (
-                <button
+                <span
                     key={idx}
                     onClick={() => setIndex(idx)}
                     className={
