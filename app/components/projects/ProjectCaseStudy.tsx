@@ -50,7 +50,7 @@ export default function ProjectCaseStudy(props: {
     const project = props.data.project;
     const imagesContent = mapAttributesToContentImages(project.attributes);
     const tagsMobile = mapProjectDataToMenuItems(project).map(
-        (pro) => pro.title,
+        (pro) => pro.title
     );
 
     const PROJECT_CONTENTS: ContentSectionsProps["data"] = [
@@ -71,7 +71,7 @@ export default function ProjectCaseStudy(props: {
     // Populate panels after the DOM is rendered
     useEffect(() => {
         const panelElements = gsap.utils.toArray(
-            `.${s.panel}`,
+            `.${s.panel}`
         ) as HTMLElement[];
         setPanels(panelElements);
     }, []);
@@ -181,10 +181,10 @@ export default function ProjectCaseStudy(props: {
                         end: `${scrollContainer.current!.scrollWidth} bottom`,
                         onEnter: () => {
                             setScrollableFromDoc(
-                                document.documentElement.scrollHeight,
+                                document.documentElement.scrollHeight
                             );
                             setClientVisibleHeight(
-                                document.documentElement.clientHeight,
+                                document.documentElement.clientHeight
                             );
                         },
                     },
@@ -195,14 +195,14 @@ export default function ProjectCaseStudy(props: {
                         x: container.current!.clientWidth,
                         xPercent: -100,
                     },
-                    0,
+                    0
                 );
 
             return () => {
                 if (tl.current) tl.current.kill();
             };
         },
-        { scope: container, dependencies: [isMobile] },
+        { scope: container, dependencies: [isMobile] }
     );
 
     const handleMoveToSection = (indx: number, midx: string) => {
@@ -240,7 +240,7 @@ export default function ProjectCaseStudy(props: {
                         lenis.start();
                     }, 300);
                 },
-            },
+            }
         );
     };
 
