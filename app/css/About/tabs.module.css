@@ -169,8 +169,9 @@
 .images {
     object-fit: contain;
     padding-bottom: 4rem;
-    width: 100%;
+    width: 72%;
     height: auto;
+    margin: auto;
 
     @media (min-width: 700px) {
         padding-top: 5vh;
