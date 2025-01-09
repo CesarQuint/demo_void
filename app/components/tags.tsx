@@ -89,11 +89,10 @@ const TagsContent = (props: TagsContentProps) => {
 };
 
 const Tags = (props: Props) => {
-    const windowStatus = useWindow();
     const [imgLoad, setImageLoad] = useState(false);
     const { navigationEvent, setNavigationEvent } = useNavigation();
 
-    const { isIntersecting, ref: container } = useIntersectionObserver("0px");
+    const { ref: container } = useIntersectionObserver("0px");
 
     useGSAP(
         () => {
@@ -148,10 +147,10 @@ const Tags = (props: Props) => {
                         {
                             borderColor: gsap.getProperty(
                                 tags[i],
-                                "borderColor"
+                                "borderColor",
                             ),
                         },
-                        0
+                        0,
                     );
             }
 
@@ -165,7 +164,7 @@ const Tags = (props: Props) => {
                 container,
                 imgLoad,
             ],
-        }
+        },
     );
 
     return (
