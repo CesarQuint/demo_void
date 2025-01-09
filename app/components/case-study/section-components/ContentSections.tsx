@@ -70,7 +70,7 @@ export const useScrollArea = (
             element.removeEventListener("mouseleave", handleMouseLeave);
             element.removeEventListener("wheel", handleWheel);
         };
-    }, [lenis, functionalScrolling]);
+    }, [lenis, functionalScrolling, isScrolling]);
 
     return scrollAreaRef;
 };
