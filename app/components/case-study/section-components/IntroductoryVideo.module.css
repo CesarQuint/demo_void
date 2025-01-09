@@ -22,3 +22,17 @@
         width: fit-content;
     }
 }
+
+.mobileVideo {
+    display: initial;
+    @media (min-width: 768px) {
+        display: none;
+    }
+}
+
+.desktopVideo {
+    display: none;
+    @media (min-width: 768px) {
+        display: initial;
+    }
+}
