@@ -251,6 +251,8 @@ export default function ProjectCaseStudy(props: {
                     <div className={`${s.panel}`}>
                         <Cover
                             data={{
+                                asFullCaseStudy:
+                                    project.attributes.AsFullCaseStudy,
                                 image: project.attributes.Cover.data,
                                 title: project.attributes.Title,
                                 subtitle: project.attributes.Subtitle,
