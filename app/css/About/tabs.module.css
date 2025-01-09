@@ -12,7 +12,7 @@
     cursor: grab;
 }
 
-.header {
+.titles {
     display: flex;
     position: relative;
     margin: 2rem 0 2rem;
