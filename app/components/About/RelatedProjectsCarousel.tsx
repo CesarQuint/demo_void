@@ -104,7 +104,7 @@ const ProjectThumbnails: React.FC<{
                     className={styles.contents}
                     onClick={() =>
                         setNavigationEvent(
-                            "/projects/" + project.attributes.slug
+                            "/projects/" + project.attributes.slug,
                         )
                     }
                 >
