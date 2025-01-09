@@ -1,5 +1,7 @@
-import React from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
+"use client";
+
+import React, { useRef } from "react";
+import { Swiper, SwiperClass, SwiperSlide, SwiperRef } from "swiper/react";
 import { FreeMode, EffectCoverflow } from "swiper/modules";
 
 import "swiper/css";
@@ -15,9 +17,28 @@ type AnimatedStackedCardsProps = {
 };
 
 const AnimatedStackedCards = (props: AnimatedStackedCardsProps) => {
+    const swiperRef = useRef<SwiperRef>(null);
+
+    const handleSwiperEvents = (swiper: SwiperClass) => {
+        if (swiper.isEnd && swiper.swipeDirection === "next") {
+            window.scrollBy({
+                top: window.innerHeight,
+                behavior: "smooth",
+            });
+        }
+
+        if (swiper.isBeginning && swiper.swipeDirection === "prev") {
+            window.scrollBy({
+                top: -window.innerHeight,
+                behavior: "smooth",
+            });
+        }
+    };
+
     return (
         <div className={styles.main}>
             <Swiper
+                ref={swiperRef}
                 direction="vertical"
                 slidesPerView="auto"
                 freeMode
@@ -33,6 +54,7 @@ const AnimatedStackedCards = (props: AnimatedStackedCardsProps) => {
                     slideShadows: false,
                 }}
                 className={styles.swiper}
+                onTouchEnd={(swiper) => handleSwiperEvents(swiper)}
             >
                 {props.content.map((content, i) => (
                     <SwiperSlide key={i} className={styles.tag}>
