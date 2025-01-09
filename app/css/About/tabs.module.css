@@ -22,14 +22,17 @@
     z-index: 10;
 
     .title {
-        font-family: Panchang;
+        opacity: 0.6;
+        font-family: "input-mono";
         font-size: 1.1rem;
-        line-height: 1.8;
+        line-height: 2.5;
         text-align: left;
         text-transform: uppercase;
         font-weight: 300;
+        flex: content;
 
         &.active {
+            opacity: 1;
             font-weight: 700;
         }
 
