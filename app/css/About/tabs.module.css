@@ -103,6 +103,10 @@
         text-align: center;
     }
 
+    .text_content {
+        white-space: pre-wrap;
+    }
+
     @media (min-width: 700px) {
         padding: unset;
         flex-direction: row-reverse;
