@@ -1,0 +1,108 @@
+.cardWrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.left_content {
+    width: 100%;
+    text-align: center;
+}
+
+.image {
+    width: 85%;
+    height: auto;
+}
+
+.right_content {
+    width: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 4vh;
+}
+
+.left_content h4 {
+    font-family: "Panchang";
+    font-size: 7rem;
+    text-align: center;
+}
+
+.right_numeral {
+    font-family: "Panchang";
+    font-weight: 900;
+}
+
+.title {
+    font-family: Panchang;
+    font-size: 4.6vw;
+    font-weight: 300;
+    letter-spacing: 0.5vw;
+    color: #fff;
+    margin-bottom: 1rem;
+}
+
+.right_text_content {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 2vh;
+}
+
+.right_text_content p {
+    font-family: Graphie;
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 2vh;
+    font-size: larger;
+    color: #d1d1d1;
+}
+
+.image_wrapper {
+    text-align: center;
+}
+
+.mobile_head {
+    width: 100%;
+}
+
+/* Media Part */
+@media (min-width: 768px) {
+    .title {
+        font-size: 2rem;
+        letter-spacing: normal;
+        font-weight: 700;
+        margin-bottom: 0;
+    }
+
+    .right_numeral {
+        font-family: "Panchang";
+        font-weight: 300;
+    }
+
+    .tags_wrapper {
+        color: #101010;
+        padding: 3vh 6vh;
+    }
+    .tag {
+        padding: 2rem 3.5rem;
+        flex-flow: row;
+    }
+
+    .right_content {
+        width: 60%;
+        justify-content: center;
+    }
+
+    .image {
+        width: 50%;
+        height: auto;
+    }
+
+    .left_content h4 {
+        font-family: "Panchang";
+        font-size: 9rem;
+        text-align: center;
+    }
+
+    .left_content {
+        width: 40%;
+    }
+}
