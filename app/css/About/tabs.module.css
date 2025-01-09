@@ -14,9 +14,12 @@
 
 .titles {
     display: flex;
-    position: relative;
-    margin: 2rem 0 2rem;
-    padding-bottom: 0.5rem;
+    position: sticky;
+    top: 0;
+    background-color: #000;
+    margin: 4rem 0;
+    border-bottom: solid 1px #606060;
+    z-index: 10;
 
     .title {
         font-family: Panchang;
@@ -49,9 +52,9 @@
     }
 
     @media (min-width: 700px) {
-        margin: 2rem 0 5.5rem;
+        margin: 2rem 0;
         font-size: 1.25rem;
-        gap: 3.75rem;
+        border-bottom: none;
 
         .title {
             text-align: center;
