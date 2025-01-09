@@ -23,7 +23,7 @@ const TRANSITION_CONFIG: Transition = {
 type GalleryProps = { data: Project["attributes"] };
 
 const filterImageData = (
-    section: Project["attributes"][ContentSectionName],
+    section: Project["attributes"][ContentSectionName]
 ): ImageProps["data"][] =>
     Array.isArray(section)
         ? section.filter((i): i is ImageProps["data"] => i.type === "image")
@@ -35,7 +35,7 @@ const mapToImageData =
         filterImageData(attributes[section]);
 
 const mapAttributesToContentImages = (
-    attributes: Project["attributes"],
+    attributes: Project["attributes"]
 ): ImageProps["data"][] =>
     Object.keys(attributes)
         .filter(isInContentSection)
@@ -68,7 +68,7 @@ const GalleryCarousel: React.FC<GalleryProps> = ({ data }) => {
 
     return (
         !!IMAGES.length && (
-            <section id="gallery">
+            <section id="gallery" className={styles.main}>
                 <h2 className={styles.heading}>Galería</h2>
                 <div className={styles.container}>
                     <motion.div
@@ -109,7 +109,10 @@ const Images: React.FC<{
             <motion.div
                 key={idx}
                 style={{
-                    backgroundImage: `url(${process.env.NEXT_PUBLIC_STRAPI_MEDIA_URL + chooseFormat(i.image).url})`,
+                    backgroundImage: `url(${
+                        process.env.NEXT_PUBLIC_STRAPI_MEDIA_URL +
+                        chooseFormat(i.image).url
+                    })`,
                 }}
                 animate={{
                     scale: activeIdx === idx ? 0.95 : 0.85,

@@ -1,0 +1,37 @@
+.main {
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.container {
+    display: flex;
+    width: fit-content;
+    flex-flow: row nowrap;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.panel {
+    width: 100vw;
+    height: 100vh;
+    display: inline;
+}
+
+.one {
+    background-color: red;
+    padding-top: 6vh;
+}
+.two {
+    background-color: purple;
+}
+.three {
+    background-color: gree;
+}
+.four {
+    background-color: grey;
+}
+.five {
+    background-color: yellow;
+}
+.six {
+    background-color: blue;
+}

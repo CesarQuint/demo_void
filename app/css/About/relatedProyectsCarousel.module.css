@@ -1,68 +1,72 @@
 .main {
-    width: 100%;
+    height: 100vh;
+    padding: 10vh 5vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .section {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    display: flex;
+    align-items: center;
+    flex: start;
+
+    @media (min-width: 700px) {
+        justify-content: center;
+    }
 }
 
 .heading {
-    text-transform: uppercase;
     text-align: center;
-    font-family: 'panchang';
+    font-family: "panchang";
     font-size: 2rem;
     padding-bottom: 2rem;
-    font-weight: 200;
+    font-weight: 300;
 }
 
 .container {
-  width: 50vw;
-  position: relative;
-  margin-bottom: 5vh;
-  @media (max-width: 700px) {
-    width: 75vw;
-  }
+    width: 50vw;
+    position: relative;
+
+    @media (max-width: 700px) {
+        width: 75vw;
+    }
 }
 
 .carousel {
-  display: flex;
-  align-items: center;
-  cursor: grab;
+    display: flex;
+    align-items: center;
+    cursor: grab;
 }
 
 .carousel:active {
-  cursor: grabbing;
+    cursor: grabbing;
 }
 
 .cover {
-  aspect-ratio: 16 / 9;
-  width: 100%;
-  flex-shrink: 0;
-  border-radius: 1.5rem;
-  object-fit: cover;
-  background-size: cover;
-  background-position: center;
-  @media (max-width: 700px) {
-    height: 35vh;
-  }
+    aspect-ratio: 16 / 9;
+    width: 100%;
+    flex-shrink: 0;
+    border-radius: 20px;
+    object-fit: cover;
+    background-size: cover;
+    background-position: center;
+
+    @media (max-width: 700px) {
+        height: 35vh;
+    }
 }
 
 .cover::before {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 10;
-  height: 50%;
-  background: linear-gradient(
-    to top,
-    rgba(0, 0, 0, 0.7),
-    rgba(0, 0, 0, 0)
-  );
-  pointer-events: none;
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    height: 50%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
+    pointer-events: none;
 }
 
 .contents {
@@ -71,30 +75,33 @@
     z-index: 15;
     bottom: 2vh;
 
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  gap: 1vh;
-  font-family: Panchang;
-  padding: 0 3rem;
-  cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 1vh;
+    font-family: Panchang;
+    padding: 0 3rem;
+    cursor: pointer;
 }
 
 .steps {
     display: flex;
     flex-flow: row nowrap;
     gap: 10px;
-    width: 100%;
+    width: 80%;
     margin: auto;
     height: 10px;
+
+    @media (max-width: 700px) {
+        width: 50%;
+    }
 }
 
 .step {
     transition: all 0.5s;
     width: 100%;
-    height: 5px;
-    border-radius: 40px;
-    margin: 1rem 0;
+    height: 2px;
+    border-radius: 20px;
     background-color: grey;
 
     &:hover {
@@ -103,15 +110,11 @@
 }
 
 .activeStep {
-  background-color: white;
+    background-color: white;
 }
 
 @media (min-width: 700px) {
     .steps {
         width: 30%;
-    }
-
-    .step {
-        height: 4px;
     }
 }

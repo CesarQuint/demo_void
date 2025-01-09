@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useEffect } from "react";
 import { useNavigation } from "../utils/navigationContext";
 import {
@@ -12,10 +13,20 @@ import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 import styles from "../css/about.module.css";
 
-import Main from "../components/Contact/main";
+import Welcome from "../components/About/Welcome";
+import Manifest from "../components/About/Manifest";
+import Process from "../components/About/Process";
+import Services from "../components/About/Services";
 import Footer from "../components/footer";
+import PreFooterLink from "../components/PreFooterLink";
+import VideoDispatcher from "../components/Home/VideoDispatcher";
+import { Category } from "@/app/Strapi/interfaces/Entities/Category";
+import { Project } from "../Strapi/interfaces/Entities/Project";
 
-type Props = {};
+type Props = {
+    projects: Project[];
+    categories: Category[];
+};
 
 const transitionSpringPhysics: Spring = {
     type: "spring",
@@ -24,7 +35,7 @@ const transitionSpringPhysics: Spring = {
     damping: 2,
 };
 
-const Contact = (props: Props) => {
+export const AboutView = (props: Props) => {
     const { navigationEvent } = useNavigation();
     const pathname = usePathname();
     const [isPresent, safeToRemove] = usePresence();
@@ -110,10 +121,13 @@ const Contact = (props: Props) => {
                 transition={transitionSpringPhysics}
                 className="courtain"
             />
-            <Main />
+            <Welcome />
+            <VideoDispatcher />
+            <Services categories={props.categories} projects={props.projects} />
+            <Manifest />
+            <Process />
+            <PreFooterLink href="/projects" text="PROYECTOS" />
             <Footer />
         </motion.div>
     );
 };
-
-export default Contact;

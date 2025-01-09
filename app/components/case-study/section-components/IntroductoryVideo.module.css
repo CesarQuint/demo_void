@@ -9,10 +9,16 @@
 
     @media (min-width: 768px) {
         padding: 10vh 6vh;
+        height: 100vh;
     }
 }
 
 .video {
-    width: 100%;
     border-radius: 40px;
+    width: inherit;
+    height: -webkit-fill-available;
+    margin: auto;
+    @media (min-width: 768px) {
+        width: fit-content;
+    }
 }
