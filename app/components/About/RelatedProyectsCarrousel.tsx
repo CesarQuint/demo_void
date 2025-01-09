@@ -118,7 +118,7 @@ const ProjectThumbnails: React.FC<{
                     >
                         {project.attributes.Title}
                     </h3>
-                    <p style={{ textTransform: "uppercase" }}>
+                    <p style={{ textTransform: "uppercase", lineHeight: 1.2 }}>
                         {project.attributes.Subtitle}
                     </p>
                 </div>
