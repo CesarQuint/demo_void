@@ -208,7 +208,7 @@ const ProjectImages = (props: { data: { projects: Project[] } }) => {
                             },
                             0
                         )
-                        .to(line, { xPercent: -100 }, 0);
+                        .to(line, { xPercent: -105 }, 0);
 
                     imgContainers.current.forEach((el) => {
                         gsap.timeline({
