@@ -16,16 +16,18 @@ import useWindow from "@/app/utils/hooks/useWindow";
 
 type ImageProps = {
     videoRef: React.MutableRefObject<HTMLVideoElement | null>;
+    sourceVideo?: string;
 };
 
-const ImageThree: React.FC<ImageProps> = ({ videoRef }) => {
-    const texture = useVideoTexture(
-        "https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/videos/voidxr-demo-eyecandy-home.mp4",
-        {
-            muted: true,
-            crossOrigin: "anonymous",
-        }
-    );
+const ImageThree: React.FC<ImageProps> = ({ videoRef, sourceVideo }) => {
+    const src =
+        sourceVideo ??
+        "https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/videos/voidxr-demo-eyecandy-home.mp4";
+
+    const texture = useVideoTexture(src, {
+        muted: true,
+        crossOrigin: "anonymous",
+    });
 
     const widndowStatus = useWindow();
 
@@ -54,7 +56,7 @@ const ImageThree: React.FC<ImageProps> = ({ videoRef }) => {
                 planeWidth = visibleHeight * aspectRatio;
 
                 // Adjust the plane's width and height based on 85% width of viewport
-                const widthPercentage = 1.68; // 85% of viewport width
+                const widthPercentage = sourceVideo ? 1.4 : 1.68; // 85% of viewport width
                 planeWidth = widthPercentage * planeWidth;
                 planeHeight =
                     planeWidth /
@@ -129,7 +131,15 @@ const ImageThree: React.FC<ImageProps> = ({ videoRef }) => {
     );
 };
 
-const ThreedVideoDistortion: React.FC = () => {
+interface ThreeVideoDistortionInterface {
+    sourceVideo?: string;
+}
+
+const ThreedVideoDistortion: React.FC<ThreeVideoDistortionInterface> = ({
+    sourceVideo,
+}: {
+    sourceVideo?: string;
+}) => {
     const videoRef = useRef<HTMLVideoElement | null>(null);
     const audioRef = useRef<HTMLAudioElement | null>(null); // Add an audio reference
 
@@ -139,6 +149,10 @@ const ThreedVideoDistortion: React.FC = () => {
     const containerRef = useRef<HTMLDivElement>(null);
     const scrollTimeout = useRef<NodeJS.Timeout | null>(null);
     const playButtonRef = useRef<HTMLDivElement>(null);
+
+    const src =
+        sourceVideo ??
+        "https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/videos/voidxr-demo-eyecandy-home.mp4";
 
     useEffect(() => {
         if (containerRef.current !== null) {
@@ -304,7 +318,7 @@ const ThreedVideoDistortion: React.FC = () => {
     }, []);
 
     return (
-        <div style={{ paddingTop: "15vh" }}>
+        <div style={sourceVideo ? {} : { paddingTop: "15vh" }}>
             <div
                 ref={containerRef}
                 onClick={handleVideoToggle}
@@ -322,11 +336,7 @@ const ThreedVideoDistortion: React.FC = () => {
                     />
                     <span className={`${styles.halo}`}></span>
                 </div>
-                <audio
-                    ref={audioRef}
-                    src="https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/videos/voidxr-demo-eyecandy-home.mp4"
-                    crossOrigin="anonymous"
-                />
+                <audio ref={audioRef} src={src} crossOrigin="anonymous" />
                 <Canvas
                     style={{
                         top: 0,
@@ -336,7 +346,7 @@ const ThreedVideoDistortion: React.FC = () => {
                         background: "#000000",
                     }}
                 >
-                    <ImageThree videoRef={videoRef} />
+                    <ImageThree sourceVideo={sourceVideo} videoRef={videoRef} />
                     <EffectComposer>
                         <Fluid
                             intensity={4.0}
