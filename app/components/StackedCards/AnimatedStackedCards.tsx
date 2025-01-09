@@ -37,6 +37,7 @@ const AnimatedStackedCards = (props: AnimatedStackedCardsProps) => {
 
     return (
         <div className={styles.main}>
+            <span className={styles.gradientTop} />
             <Swiper
                 ref={swiperRef}
                 direction="vertical"
@@ -69,6 +70,7 @@ const AnimatedStackedCards = (props: AnimatedStackedCardsProps) => {
                     </SwiperSlide>
                 ))}
             </Swiper>
+            <span className={styles.gradientBottom} />
         </div>
     );
 };
