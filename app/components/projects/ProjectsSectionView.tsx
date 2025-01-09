@@ -296,6 +296,10 @@ export default function ProjectsSectionView(props: {
 
     return (
         <motion.div>
+            <p className={styles.about}>
+                Partiendo del arte y con la tecnología como base, creamos
+                experiencias que detonan sensaciones y emocionan a las personas.
+            </p>
             <motion.section className={styles.nav_container}>
                 <motion.nav className={styles.selector}>
                     <CategoryTabs
@@ -306,11 +310,6 @@ export default function ProjectsSectionView(props: {
                 </motion.nav>
             </motion.section>
             <motion.div ref={container}>
-                <p className={styles.about}>
-                    Partiendo del arte y con la tecnología como base, creamos
-                    experiencias que detonan sensaciones y emocionan a las
-                    personas.
-                </p>
                 <motion.section className={`${styles.project_wrapper}`}>
                     <div className={styles.scrollView} ref={scrollContainer}>
                         {projects.map((project, i) => (
