@@ -24,9 +24,10 @@ const AnimatedStackedCards = (props: AnimatedStackedCardsProps) => {
                 spaceBetween={20}
                 effect="coverflow"
                 modules={[FreeMode, EffectCoverflow]}
+                centeredSlides={true}
                 coverflowEffect={{
-                    rotate: 0,
-                    stretch: 200,
+                    rotate: -50,
+                    stretch: 50,
                     depth: 300,
                     modifier: 1,
                     slideShadows: false,
