@@ -40,13 +40,12 @@
 
 /* Media Part */
 @media (min-width: 768px) {
-    .manifest_container {
-        width: 70%;
-    }
     .manifest_container h2 {
         font-size: 3rem;
     }
+
     .manifest_more_info {
+        width: 70%;
         line-height: 3vh;
     }
 
