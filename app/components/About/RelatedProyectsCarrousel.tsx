@@ -65,14 +65,14 @@ const RelatedProjectsCarousel = (props: RelatedProjectsCarouselProps) => {
                                 }
                             />
                         </motion.div>
-
-                        <StepButtons
-                            index={selectedStep}
-                            length={props.data.length}
-                            setIndex={setSelectedStep}
-                        />
                     </div>
                 </div>
+
+                <StepButtons
+                    index={selectedStep}
+                    length={props.data.length}
+                    setIndex={setSelectedStep}
+                />
             </section>
         )
     );
