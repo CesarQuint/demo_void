@@ -5,18 +5,23 @@ import { Project } from "../../Strapi/interfaces/Entities/Project";
 import { useNavigation } from "../../utils/navigationContext";
 
 const TRANSITION_CONFIG: Transition = {
-    type: "spring",
-    bounce: 0.2,
+    type: "tween",
+    duration: 0.4,
+    ease: "easeInOut",
 };
 
-type Props = { data: Project[] };
+type RelatedProjectsCarouselProps = {
+    data: Project[];
+    className?: string;
+    titleClassName?: string;
+};
 
-const RelatedProyectsCarrousel = (props: Props) => {
+const RelatedProjectsCarousel = (props: RelatedProjectsCarouselProps) => {
     const [selectedStep, setSelectedStep] = useState(0);
     const dragX = useMotionValue(0);
     const { setNavigationEvent } = useNavigation();
 
-    const DRAG_BUFFER = 50;
+    const DRAG_BUFFER = 20;
 
     const onDragEnd = () => {
         const x = dragX.get();
@@ -29,8 +34,10 @@ const RelatedProyectsCarrousel = (props: Props) => {
 
     return (
         !!props.data.length && (
-            <section className={`${styles.main}`}>
-                <h2 className={styles.heading}>Proyectos Relacionados</h2>
+            <section className={props.className}>
+                <h2 className={props.titleClassName ?? styles.heading}>
+                    Proyectos Relacionados
+                </h2>
                 <div className={styles.section}>
                     <div className={styles.container}>
                         <motion.div
@@ -58,14 +65,14 @@ const RelatedProyectsCarrousel = (props: Props) => {
                                 }
                             />
                         </motion.div>
-
-                        <StepButtons
-                            index={selectedStep}
-                            length={props.data.length}
-                            setIndex={setSelectedStep}
-                        />
                     </div>
                 </div>
+
+                <StepButtons
+                    index={selectedStep}
+                    length={props.data.length}
+                    setIndex={setSelectedStep}
+                />
             </section>
         )
     );
@@ -111,7 +118,7 @@ const ProjectThumbnails: React.FC<{
                     >
                         {project.attributes.Title}
                     </h3>
-                    <p style={{ textTransform: "uppercase" }}>
+                    <p style={{ textTransform: "uppercase", lineHeight: 1.2 }}>
                         {project.attributes.Subtitle}
                     </p>
                 </div>
@@ -129,7 +136,7 @@ const StepButtons: React.FC<{
         {Array(length)
             .fill(null)
             .map((_, idx) => (
-                <button
+                <span
                     key={idx}
                     onClick={() => setIndex(idx)}
                     className={
@@ -142,4 +149,4 @@ const StepButtons: React.FC<{
     </div>
 );
 
-export default RelatedProyectsCarrousel;
+export default RelatedProjectsCarousel;

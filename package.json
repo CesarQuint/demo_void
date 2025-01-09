@@ -35,6 +35,7 @@
         "react-use-scroll-snap": "^1.0.0",
         "sharp": "^0.33.5",
         "splitting": "^1.1.0",
+        "swiper": "^11.2.0",
         "three": "^0.165.0",
         "three-stdlib": "^2.30.3",
         "typescript": "^5.6.2"

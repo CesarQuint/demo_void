@@ -1,24 +1,51 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import styles from "../../css/About/services.module.css";
-import Tabs from "./Tabs";
-import { about_us_tabs } from "../../constants/tabs_text";
+import { SwiperCategoryTabs } from "./SwiperCategoryTabs";
+import { Project } from "@/app/Strapi/interfaces/Entities/Project";
+import { Category } from "@/app/Strapi/interfaces/Entities/Category";
+import RelatedProjectsCarousel from "./RelatedProjectsCarousel";
 
-type Props = {};
+type ServicesProps = {
+    projects: Project[];
+    categories: Category[];
+};
 
-const Services = (props: Props) => {
+const Services = (props: ServicesProps) => {
+    const [activeCategory, setActiveCategory] = useState<number>(0);
+    const [projects, setProjects] = useState<Project[]>([]);
+
+    useEffect(() => {
+        const matchProjectCategory = (project: Project) =>
+            project.attributes.Category.data.id ===
+            props.categories[activeCategory].id;
+
+        const filterProjects = () =>
+            props.projects.filter((project) => matchProjectCategory(project));
+
+        setProjects(filterProjects());
+    }, [props.projects, props.categories, activeCategory]);
+
     return (
-        <motion.section className={styles.main}>
-            <div>
-                <h2 className={styles.title}>SERVICIOS</h2>
-            </div>
+        <motion.section>
+            <h2 className={styles.title}>Servicios</h2>
 
-            <Tabs tabs={about_us_tabs} />
-
-            <div className={styles.related_projects}>
-                {/* <h2>Proyectos relacionados</h2> */}
-                {/* <RelatedProyectsCarrousel data={} /> */}
-            </div>
+            {!!props.categories.length && (
+                <>
+                    <SwiperCategoryTabs
+                        categories={props.categories}
+                        activeCategory={activeCategory}
+                        setActiveCategory={setActiveCategory}
+                    />
+                    <RelatedProjectsCarousel
+                        titleClassName={styles.relatedProjectsTitle}
+                        className={styles.related_projects}
+                        data={projects}
+                    />
+                </>
+            )}
         </motion.section>
     );
 };

@@ -3,31 +3,36 @@
 }
 
 .title {
+    text-transform: uppercase;
     font-family: "Panchang";
     font-size: 2rem;
     text-align: center;
+    margin-bottom: 5rem;
 }
 
 .related_projects {
     display: flex;
     flex-flow: column nowrap;
-    gap: 4vh;
+    gap: 2vh;
+    overflow-x: hidden;
 }
 
-.related_projects h2 {
-    text-align: center;
-    font-family: "Panchang";
+.relatedProjectsTitle {
+    margin: 0 1rem;
+    text-transform: uppercase;
+    text-align: left;
+    font-family: "input-mono";
     font-weight: 100;
-    font-size: 2rem;
+    font-size: 1rem;
+
+    @media (min-width: 768px) {
+        font-size: 2.5rem;
+    }
 }
 
 /* Media Part */
 @media (min-width: 768px) {
     .title {
-        font-size: 3rem;
-    }
-
-    .related_projects h2 {
         font-size: 3rem;
     }
 }
