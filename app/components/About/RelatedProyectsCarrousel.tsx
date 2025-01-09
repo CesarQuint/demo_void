@@ -10,7 +10,11 @@ const TRANSITION_CONFIG: Transition = {
     ease: "easeInOut",
 };
 
-type RelatedProjectsCarouselProps = { data: Project[]; className?: string };
+type RelatedProjectsCarouselProps = {
+    data: Project[];
+    className?: string;
+    titleClassName?: string;
+};
 
 const RelatedProjectsCarousel = (props: RelatedProjectsCarouselProps) => {
     const [selectedStep, setSelectedStep] = useState(0);
@@ -31,7 +35,9 @@ const RelatedProjectsCarousel = (props: RelatedProjectsCarouselProps) => {
     return (
         !!props.data.length && (
             <section className={props.className}>
-                <h2 className={styles.heading}>Proyectos Relacionados</h2>
+                <h2 className={props.titleClassName ?? styles.heading}>
+                    Proyectos Relacionados
+                </h2>
                 <div className={styles.section}>
                     <div className={styles.container}>
                         <motion.div
