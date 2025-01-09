@@ -8,8 +8,11 @@
 }
 
 .manifest_container h2 {
-    font-family: "Panchang";
-    font-size: 1.8rem;
+    text-align: center;
+    font-family: "panchang";
+    font-size: 2rem;
+    padding-bottom: 2rem;
+    font-weight: 700;
 }
 
 .manifest_more_info {
