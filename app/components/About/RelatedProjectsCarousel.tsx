@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Transition, motion, useMotionValue } from "framer-motion";
 import styles from "../../css/About/relatedProyectsCarousel.module.css";
 import { Project } from "../../Strapi/interfaces/Entities/Project";
@@ -31,6 +31,10 @@ const RelatedProjectsCarousel = (props: RelatedProjectsCarouselProps) => {
             setSelectedStep((pv) => pv - 1);
         }
     };
+
+    useEffect(() => {
+        setSelectedStep(0);
+    }, [props.data]);
 
     return (
         !!props.data.length && (
