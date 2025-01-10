@@ -39,9 +39,9 @@ const RelatedProjectsCarousel = (props: RelatedProjectsCarouselProps) => {
     return (
         !!props.data.length && (
             <section className={props.className ?? styles.main}>
-                <h2 className={props.titleClassName ?? styles.heading}>
+                <h3 className={props.titleClassName ?? styles.heading}>
                     Proyectos Relacionados
-                </h2>
+                </h3>
                 <div className={styles.section}>
                     <div className={styles.container}>
                         <motion.div
