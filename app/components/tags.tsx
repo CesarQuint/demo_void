@@ -22,7 +22,6 @@ type TagsContentProps = {
     number: string;
     title: string;
     content: string[];
-    setImageLoaded: Dispatch<SetStateAction<boolean>>;
 };
 
 const TagsContent: React.FC<TagsContentProps> = (props) => {
@@ -37,9 +36,6 @@ const TagsContent: React.FC<TagsContentProps> = (props) => {
                 </section>
                 <section className={styles.image_wrapper}>
                     <Image
-                        onLoad={() => {
-                            props.setImageLoaded(true);
-                        }}
                         width={1000}
                         height={1000}
                         className={styles.image}
@@ -61,9 +57,6 @@ const TagsContent: React.FC<TagsContentProps> = (props) => {
             <>
                 <section className={styles.left_content}>
                     <Image
-                        onLoad={() => {
-                            props.setImageLoaded(true);
-                        }}
                         width={1000}
                         height={1000}
                         className={styles.image}
@@ -88,15 +81,12 @@ const TagsContent: React.FC<TagsContentProps> = (props) => {
 };
 
 const Tags: React.FC<Props> = (props: Props) => {
-    const [imgLoad, setImageLoad] = useState(false);
     const tagsRef = useRef<(HTMLDivElement | null)[]>([]);
     const { navigationEvent, setNavigationEvent } = useNavigation();
     const container = useRef<HTMLDivElement | null>(null);
 
     useGSAP(
         () => {
-            if (!imgLoad || !container.current) return;
-
             const tags = tagsRef.current.filter((el) => el !== null);
             const heights = tags.map((el) => el.offsetHeight);
             const space = 20;
@@ -161,7 +151,6 @@ const Tags: React.FC<Props> = (props: Props) => {
                 setNavigationEvent,
                 navigationEvent,
                 container,
-                imgLoad,
             ],
         },
     );
@@ -188,7 +177,6 @@ const Tags: React.FC<Props> = (props: Props) => {
                                 title={_.title}
                                 number={_.number}
                                 content={_.content}
-                                setImageLoaded={setImageLoad}
                             />
                         </div>
                     ))}
