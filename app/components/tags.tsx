@@ -10,7 +10,7 @@ import useWindow from "../utils/hooks/useWindow";
 import Image from "next/image";
 import { useNavigation } from "../utils/navigationContext";
 
-gsap.registerPlugin(useGSAP, ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger);
 
 type Props = {
     contentArr: AboutUsTag[];
