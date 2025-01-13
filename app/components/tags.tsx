@@ -25,7 +25,7 @@ type TagsContentProps = {
     setImageLoaded: Dispatch<SetStateAction<boolean>>;
 };
 
-const TagsContent = (props: TagsContentProps) => {
+const TagsContent: React.FC<TagsContentProps> = (props) => {
     const windowStatus = useWindow();
 
     if (windowStatus && windowStatus.innerWidth < 768) {
@@ -87,7 +87,7 @@ const TagsContent = (props: TagsContentProps) => {
     }
 };
 
-const Tags = (props: Props) => {
+const Tags: React.FC<Props> = (props: Props) => {
     const [imgLoad, setImageLoad] = useState(false);
     const tagsRef = useRef<(HTMLDivElement | null)[]>([]);
     const { navigationEvent, setNavigationEvent } = useNavigation();
