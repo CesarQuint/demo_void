@@ -8,7 +8,6 @@ import { useGSAP } from "@gsap/react";
 import { AboutUsTag } from "../constants/tags_text";
 import useWindow from "../utils/hooks/useWindow";
 import Image from "next/image";
-import { useIntersectionObserver } from "../utils/hooks/useIntersectionObserver";
 import { useNavigation } from "../utils/navigationContext";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
@@ -92,8 +91,7 @@ const Tags = (props: Props) => {
     const [imgLoad, setImageLoad] = useState(false);
     const tagsRef = useRef<(HTMLDivElement | null)[]>([]);
     const { navigationEvent, setNavigationEvent } = useNavigation();
-
-    const { ref: container } = useIntersectionObserver("0px");
+    const container = useRef<HTMLDivElement | null>(null);
 
     useGSAP(
         () => {
