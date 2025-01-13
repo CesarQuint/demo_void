@@ -90,6 +90,7 @@ const TagsContent = (props: TagsContentProps) => {
 
 const Tags = (props: Props) => {
     const [imgLoad, setImageLoad] = useState(false);
+    const tagsRef = useRef<(HTMLDivElement | null)[]>([]);
     const { navigationEvent, setNavigationEvent } = useNavigation();
 
     const { ref: container } = useIntersectionObserver("0px");
@@ -98,7 +99,7 @@ const Tags = (props: Props) => {
         () => {
             if (!imgLoad || !container.current) return;
 
-            const tags = gsap.utils.toArray<HTMLDivElement>(`.${styles.tag}`);
+            const tags = tagsRef.current.filter((el) => el !== null);
             const heights = tags.map((el) => el.offsetHeight);
             const space = 20;
 
@@ -167,6 +168,9 @@ const Tags = (props: Props) => {
         },
     );
 
+    const setTagsRefAt = (ref: HTMLDivElement | null, idx: number): void =>
+        void (tagsRef.current[idx] = ref);
+
     return (
         <motion.div className={`${styles.main}`}>
             <motion.div className={`${styles.tags_wrapper}`}>
@@ -175,7 +179,11 @@ const Tags = (props: Props) => {
                     ref={container}
                 >
                     {props.contentArr.map((_, i) => (
-                        <motion.div key={i} className={`${styles.tag}`}>
+                        <div
+                            key={i}
+                            className={`${styles.tag}`}
+                            ref={(el) => setTagsRefAt(el, i)}
+                        >
                             <TagsContent
                                 i={i}
                                 img={_.img}
@@ -184,7 +192,7 @@ const Tags = (props: Props) => {
                                 content={_.content}
                                 setImageLoaded={setImageLoad}
                             />
-                        </motion.div>
+                        </div>
                     ))}
                 </motion.section>
             </motion.div>
