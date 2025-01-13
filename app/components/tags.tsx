@@ -1,5 +1,5 @@
 "use client";
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { useRef } from "react";
 import styles from "../css/tags.module.css";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -64,7 +64,7 @@ const TagsContent: React.FC<TagsContentProps> = (props) => {
                         alt="image_card"
                     />
                 </section>
-                <article className={styles.right_content}>
+                <section className={styles.right_content}>
                     <section>
                         <p className={styles.right_numeral}>{props.number}</p>
                         <h5 className={styles.title}>{props.title}</h5>
@@ -74,7 +74,7 @@ const TagsContent: React.FC<TagsContentProps> = (props) => {
                             <p key={i}>{text}</p>
                         ))}
                     </div>
-                </article>
+                </section>
             </>
         );
     }
@@ -91,67 +91,66 @@ const Tags: React.FC<Props> = (props: Props) => {
             const heights = tags.map((el) => el.offsetHeight);
             const space = 20;
 
-            gsap.set(container.current, {
-                height: heights.reduce((s, h) => s + h + space, 0),
-            });
+            const calcContainerHeight = (): number =>
+                heights.reduce((s, h) => s + h + space, 0);
 
-            gsap.set(tags, {
-                top: (i, el) => heights[0] - el.offsetHeight + space * i,
-                zIndex: (i) => tags.length - i,
-                borderColor: (i) => `rgba(128, 128, 128, ${1 - i * 0.3})`,
-            });
+            function setTargets(tag: HTMLDivElement, idx: number): void {
+                const calcScale = (): number => 0.95 - idx * 0.04;
+                const calcZIndex = (): number => tags.length - idx;
+                const calcBorderColor = (): string =>
+                    `rgba(128, 128, 128, ${1 - idx * 0.3})`;
+                const calcDisplacement = (): number => space * idx;
 
-            gsap.set(tags.slice(1), { scale: (i) => 0.95 - i * 0.04 });
+                gsap.set(tag, {
+                    top: () => calcDisplacement(),
+                    scale: () => calcScale(),
+                    zIndex: () => calcZIndex(),
+                    borderColor: () => calcBorderColor(),
+                });
 
-            const positions = tags.map(() => ({ y: 0 }));
-            const loaded = tags.map(() => false);
-
-            function startScroll(i: number) {
-                if (loaded[i] || i === tags.length - 1) return;
-                loaded[i] = true;
-
-                const duration = Math.max(...heights);
-                const start = heights[0] / 2 + duration * i;
-                const y = positions[i].y + heights[i + 1];
-
-                gsap.timeline({
-                    defaults: {
-                        ease: "none",
-                    },
-                    scrollTrigger: {
-                        trigger: container.current,
-                        start: `${start} center`,
-                        end: `+=${duration} center`,
-                        // markers: true,
-                        scrub: 0,
-                        onLeave() {
-                            startScroll(i + 1);
-                        },
-                    },
-                })
-                    .to(tags[i + 1], { scale: 1 }, 0)
-                    .to(tags.slice(i + 1), { y: `+=${y}` }, 0)
-                    .to(
-                        tags[i + 1],
-                        {
-                            borderColor: gsap.getProperty(
-                                tags[i],
-                                "borderColor",
-                            ),
-                        },
-                        0,
-                    );
+                Array.from(tag.children).forEach((child) =>
+                    gsap.set(child, { opacity: () => 1 - idx * 1 }),
+                );
             }
 
-            startScroll(0);
+            function startScroll(tag: HTMLDivElement, idx: number): void {
+                const yFactor = heights
+                    .slice(0, idx)
+                    .reduce((p, c) => p + c + space, 0);
+
+                gsap.timeline({
+                    defaults: { ease: "none" },
+                    scrollTrigger: {
+                        trigger: container.current,
+                        start: `${heights[0]} 76%`,
+                        end: `+=${((heights[idx - 1] ?? 0) + space) * idx} 76%`,
+                        markers: true,
+                        scrub: 1,
+                        preventOverlaps: false,
+                        fastScrollEnd: false,
+                    },
+                })
+                    .to(
+                        tag,
+                        {
+                            y: yFactor,
+                            scale: 1,
+                            borderColor: `rgba(128, 128, 128, 1)`,
+                        },
+                        0,
+                    )
+                    .to(Array.from(tag.children), { opacity: 1 }, 0);
+            }
+
+            gsap.set(container.current, {
+                height: calcContainerHeight(),
+            });
+
+            tags.forEach((tag, i) => (setTargets(tag, i), startScroll(tag, i)));
         },
         {
             scope: container,
-            dependencies: [
-                setNavigationEvent,
-                navigationEvent,
-                container,
-            ],
+            dependencies: [setNavigationEvent, navigationEvent, container],
         },
     );
 
