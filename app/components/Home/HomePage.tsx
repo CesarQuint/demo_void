@@ -1,6 +1,5 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import {
@@ -22,14 +21,11 @@ import ProcessHome from "./ProcessHome";
 import HeroContainer from "./HeroContainer";
 import PreFooterLink from "../PreFooterLink";
 import LoadingComponent from "../LoadingComponent";
+import ProjectImages from "./ProjectImages";
 
 import { Project } from "../../Strapi/interfaces/Entities/Project";
 
 import VideoDispatcher from "./VideoDispatcher";
-
-const ProjectImages = dynamic(() => import("./ProjectImages"), {
-    ssr: false,
-});
 
 const transitionSpringPhysics: Spring = {
     type: "spring",
