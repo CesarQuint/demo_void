@@ -10,9 +10,9 @@ import {
     animate as animation,
     AnimationSequence,
 } from "framer-motion";
+import dynamic from "next/dynamic";
 
 import styles from "./pageImage.module.css";
-import useWindow from "../../utils/hooks/useWindow";
 import { useNavigation } from "../../utils/navigationContext";
 
 import Footer from "../footer";
@@ -21,11 +21,12 @@ import ProcessHome from "./ProcessHome";
 import HeroContainer from "./HeroContainer";
 import PreFooterLink from "../PreFooterLink";
 import LoadingComponent from "../LoadingComponent";
-import ProjectImages from "./ProjectImages";
 
 import { Project } from "../../Strapi/interfaces/Entities/Project";
 
 import VideoDispatcher from "./VideoDispatcher";
+
+const ProjectImages = dynamic(() => import("./ProjectImages"), { ssr: false });
 
 const transitionSpringPhysics: Spring = {
     type: "spring",
@@ -43,7 +44,6 @@ function HomePage(props: Props) {
     const pathname = usePathname();
     const { navigationEvent } = useNavigation();
     const router = useRouter();
-    const windowStatus = useWindow();
 
     const [loadingProgress, setLoadingProgress] = useState(0);
     const [requestFullfilled, setRequestFullfilled] = useState(false);

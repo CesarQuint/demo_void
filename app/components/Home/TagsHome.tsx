@@ -2,12 +2,11 @@ import React from "react";
 import AnimatedStackedCards from "../StackedCards/AnimatedStackedCards";
 import { about_us_tags } from "../../constants/tags_text";
 import { motion } from "framer-motion";
-import Tags from "../tags";
-import useWindow from "@/app/utils/hooks/useWindow";
+import dynamic from "next/dynamic";
+
+const Tags = dynamic(() => import("../tags"), { ssr: false });
 
 const TagsHome = () => {
-    const window = useWindow();
-
     return (
         <motion.div
             style={{

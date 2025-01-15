@@ -4,6 +4,7 @@ import "./globals.css";
 import Template from "./components/RootLayout";
 import { NavigationProvider } from "./utils/navigationContext";
 import SmoothScrolling from "./components/ReactLenis";
+import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,6 +22,12 @@ export default function RootLayout({
     return (
         <html lang="en">
             <head>
+                {/* Google tag (gtag.js) */}
+                <Script
+                    async
+                    src="https://www.googletagmanager.com/gtag/js?id=G-YQ8V32HMZE"
+                />
+                <Script src="./google.tag.js" />
                 <link
                     rel="stylesheet"
                     href="https://use.typekit.net/iqd6buu.css"

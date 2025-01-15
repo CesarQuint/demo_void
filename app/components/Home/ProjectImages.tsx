@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React, { useRef, MouseEvent } from "react";
+import React, { useRef } from "react";
 import { motion } from "framer-motion";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -203,10 +203,10 @@ const ProjectImages = (props: { data: { projects: Project[] } }) => {
                                 x: () =>
                                     -(
                                         title.offsetWidth -
-                                        document.body.offsetWidth
+                                        document.body.offsetWidth * 0.8
                                     ),
                             },
-                            0
+                            0,
                         )
                         .to(line, { xPercent: -105 }, 0);
 
@@ -251,7 +251,7 @@ const ProjectImages = (props: { data: { projects: Project[] } }) => {
                                                     {
                                                         opacity: 1,
                                                         delay: (i + 1) * 0.04,
-                                                    }
+                                                    },
                                                 )
                                                 .to(
                                                     char,
@@ -262,7 +262,7 @@ const ProjectImages = (props: { data: { projects: Project[] } }) => {
                                                             CHARS[
                                                                 Math.floor(
                                                                     Math.random() *
-                                                                        CHARS.length
+                                                                        CHARS.length,
                                                                 )
                                                             ],
                                                         onStart() {
@@ -278,7 +278,7 @@ const ProjectImages = (props: { data: { projects: Project[] } }) => {
                                                             firstRepeat = false;
                                                         },
                                                     },
-                                                    "<"
+                                                    "<",
                                                 )
                                                 .set(char, {
                                                     textContent:
@@ -310,7 +310,7 @@ const ProjectImages = (props: { data: { projects: Project[] } }) => {
                                                             CHARS[
                                                                 Math.floor(
                                                                     Math.random() *
-                                                                        CHARS.length
+                                                                        CHARS.length,
                                                                 )
                                                             ],
                                                         onStart() {
@@ -334,9 +334,9 @@ const ProjectImages = (props: { data: { projects: Project[] } }) => {
                                                             delay:
                                                                 (i + 1) * 0.04,
                                                         },
-                                                        "<"
+                                                        "<",
                                                     );
-                                            }
+                                            },
                                         );
                                     });
                                 },
@@ -351,7 +351,7 @@ const ProjectImages = (props: { data: { projects: Project[] } }) => {
                                 {
                                     yPercent: 0,
                                     xPercent: 0,
-                                }
+                                },
                             )
                             .fromTo(
                                 el?.querySelector("img")!,
@@ -363,7 +363,7 @@ const ProjectImages = (props: { data: { projects: Project[] } }) => {
                                     yPercent: 0,
                                     xPercent: 0,
                                 },
-                                0
+                                0,
                             );
                     });
 
@@ -412,7 +412,7 @@ const ProjectImages = (props: { data: { projects: Project[] } }) => {
                                                     {
                                                         opacity: 1,
                                                         delay: (i + 1) * 0.04,
-                                                    }
+                                                    },
                                                 )
                                                 .to(
                                                     char,
@@ -423,7 +423,7 @@ const ProjectImages = (props: { data: { projects: Project[] } }) => {
                                                             CHARS[
                                                                 Math.floor(
                                                                     Math.random() *
-                                                                        CHARS.length
+                                                                        CHARS.length,
                                                                 )
                                                             ],
                                                         onStart() {
@@ -439,7 +439,7 @@ const ProjectImages = (props: { data: { projects: Project[] } }) => {
                                                             firstRepeat = false;
                                                         },
                                                     },
-                                                    "<"
+                                                    "<",
                                                 )
                                                 .set(char, {
                                                     textContent:
@@ -471,7 +471,7 @@ const ProjectImages = (props: { data: { projects: Project[] } }) => {
                                                             CHARS[
                                                                 Math.floor(
                                                                     Math.random() *
-                                                                        CHARS.length
+                                                                        CHARS.length,
                                                                 )
                                                             ],
                                                         onStart() {
@@ -495,9 +495,9 @@ const ProjectImages = (props: { data: { projects: Project[] } }) => {
                                                             delay:
                                                                 (i + 1) * 0.04,
                                                         },
-                                                        "<"
+                                                        "<",
                                                     );
-                                            }
+                                            },
                                         );
                                     });
                                 },
@@ -512,7 +512,7 @@ const ProjectImages = (props: { data: { projects: Project[] } }) => {
                                 {
                                     yPercent: 0,
                                     xPercent: 0,
-                                }
+                                },
                             )
                             .fromTo(
                                 el?.querySelector("img")!,
@@ -524,12 +524,12 @@ const ProjectImages = (props: { data: { projects: Project[] } }) => {
                                     yPercent: 0,
                                     xPercent: 0,
                                 },
-                                0
+                                0,
                             );
                     });
                 });
         },
-        { scope: scrollContainer, dependencies: [container, scrollContainer] }
+        { scope: scrollContainer, dependencies: [container, scrollContainer] },
     );
 
     return (

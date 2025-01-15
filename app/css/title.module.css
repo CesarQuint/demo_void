@@ -3,7 +3,7 @@
 .body {
     margin: 0;
     --color-text: #fff;
-    --color-bg: black;
+    --color-bg: #0b0b0b;
     --font-size-xl: 26vw;
     --font-family: "Arial", sans-serif;
     --font-weight: 900;
@@ -48,18 +48,10 @@
 }
 
 .image_logo {
-    height: 18vw;
+    height: auto;
     padding: 0;
     transition: all 1s;
     margin-top: 5px;
     width: 100%;
     overflow: hidden;
-}
-
-@media screen and (min-width: 768px) {
-    .image_logo {
-        height: 19vw;
-        padding: 0;
-        width: 100%;
-    }
 }
