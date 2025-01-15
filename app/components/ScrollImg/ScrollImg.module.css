@@ -55,11 +55,9 @@
 }
 
 .second {
-    color: white;
     font-family: "Panchang";
     @media (min-width: 700px) {
         padding: 0 0 0 60vw;
-        font-size: 1.25em;
     }
 }
 
