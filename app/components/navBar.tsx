@@ -55,12 +55,12 @@ const NavBar = () => {
                             paddingTop: "25vh",
                         },
 
-                        0
+                        0,
                     )
                     .set(`.${styles.links} .char`, { opacity: 0 }, 0);
             });
         },
-        { scope: container }
+        { scope: container },
     );
 
     const lastScrollY = useRef(0);
