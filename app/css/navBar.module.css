@@ -6,7 +6,7 @@
     max-width: 76vw;
     padding: 20px 32px;
     border-radius: 40px;
-    margin: 40px auto 0;
+    margin: 28px auto 0;
 
     background: rgba(255, 255, 255, 0.08);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
@@ -57,7 +57,7 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
-    font-size: 1.7rem;
+    font-size: 1.3rem;
     text-transform: uppercase;
     font-weight: 100;
     text-align: left;
@@ -69,6 +69,11 @@
     & a:last-child {
         margin-top: 6vh;
     }
+}
+
+.navButton {
+    margin-top: 6rem;
+    font-size: 1.2rem;
 }
 
 .linksMb {

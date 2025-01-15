@@ -1,15 +1,13 @@
 "use client";
 import React, { MouseEvent, useRef, useState } from "react";
-import Link from "next/link";
 import { useNavigation } from "../utils/navigationContext";
 import styles from "../css/navBar.module.css";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import useWindow from "../utils/hooks/useWindow";
 import dynamic from "next/dynamic";
-import wArrow from "../../public/images/wArrow.svg";
+import NavButton from "./buttons/NavButton";
 
 const TypedLink = dynamic(() => import("./TypedLink/TypedLink"), {
     ssr: false,
@@ -43,7 +41,7 @@ const NavBar = () => {
                                 });
                         },
                     })
-                    .to(`.${styles.nav_container}`, { height: "90vh" }, 0)
+                    .to(`.${styles.nav_container}`, { height: "80vh" }, 0)
                     .to(`.${styles.line1}`, { rotate: "8.5deg" }, 0)
                     .to(`.${styles.line2}`, { rotate: "-8.5deg" }, 0)
                     .set(
@@ -55,12 +53,12 @@ const NavBar = () => {
                             paddingTop: "25vh",
                         },
 
-                        0
+                        0,
                     )
                     .set(`.${styles.links} .char`, { opacity: 0 }, 0);
             });
         },
-        { scope: container }
+        { scope: container },
     );
 
     const lastScrollY = useRef(0);
@@ -179,16 +177,11 @@ const NavBar = () => {
                                 Proyectos
                             </TypedLink>
 
-                            <TypedLink
-                                viewAnimate={true}
-                                hoverAnimate={false}
-                                onClick={(e) => {
-                                    goTo(e, "/contact");
-                                }}
-                                href="/contact"
-                            >
-                                Contacto
-                            </TypedLink>
+                            <NavButton
+                                className={styles.navButton}
+                                href={"/contact"}
+                                text="escríbenos"
+                            />
                         </>
                     )}
                 </div>
@@ -213,24 +206,7 @@ const NavBar = () => {
                     >
                         Proyectos
                     </TypedLink>
-                    <Link
-                        onClick={(e) => {
-                            goTo(e, "/contact");
-                        }}
-                        href="/contact"
-                        className={styles.writeUs}
-                    >
-                        <span className={styles.writeUsTxt}>Escribenos</span>
-                        <span className={styles.writeUsIcon}>
-                            <Image
-                                className={styles.arrow_button}
-                                width={1000}
-                                height={1000}
-                                src={wArrow}
-                                alt="arrow"
-                            />
-                        </span>
-                    </Link>
+                    <NavButton href={"/contact"} text="escríbenos" />
                 </div>
             </section>
         </header>

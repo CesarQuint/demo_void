@@ -13,7 +13,7 @@
     height: fit-content;
     flex-direction: column;
     display: flex;
-    margin-top: 4vh;
+    margin: 10vh 0;
 }
 
 .tag {

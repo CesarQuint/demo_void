@@ -32,7 +32,7 @@ const HeroContainer = (props: Props) => {
         {
             scope: containerHeroRef,
             dependencies: [isIntersecting],
-        }
+        },
     );
 
     const handleScroll = () => {
