@@ -10,6 +10,7 @@ import {
     animate as animation,
     AnimationSequence,
 } from "framer-motion";
+import dynamic from "next/dynamic";
 
 import styles from "./pageImage.module.css";
 import useWindow from "../../utils/hooks/useWindow";
@@ -21,11 +22,12 @@ import ProcessHome from "./ProcessHome";
 import HeroContainer from "./HeroContainer";
 import PreFooterLink from "../PreFooterLink";
 import LoadingComponent from "../LoadingComponent";
-import ProjectImages from "./ProjectImages";
 
 import { Project } from "../../Strapi/interfaces/Entities/Project";
 
 import VideoDispatcher from "./VideoDispatcher";
+
+const ProjectImages = dynamic(() => import("./ProjectImages"), { ssr: false });
 
 const transitionSpringPhysics: Spring = {
     type: "spring",
