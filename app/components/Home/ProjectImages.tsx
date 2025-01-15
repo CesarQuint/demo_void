@@ -203,7 +203,7 @@ const ProjectImages = (props: { data: { projects: Project[] } }) => {
                                 x: () =>
                                     -(
                                         title.offsetWidth -
-                                        document.body.offsetWidth
+                                        document.body.offsetWidth * 0.8
                                     ),
                             },
                             0
