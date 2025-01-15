@@ -13,7 +13,6 @@ import {
 import dynamic from "next/dynamic";
 
 import styles from "./pageImage.module.css";
-import useWindow from "../../utils/hooks/useWindow";
 import { useNavigation } from "../../utils/navigationContext";
 
 import Footer from "../footer";
@@ -45,7 +44,6 @@ function HomePage(props: Props) {
     const pathname = usePathname();
     const { navigationEvent } = useNavigation();
     const router = useRouter();
-    const windowStatus = useWindow();
 
     const [loadingProgress, setLoadingProgress] = useState(0);
     const [requestFullfilled, setRequestFullfilled] = useState(false);
