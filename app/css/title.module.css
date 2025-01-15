@@ -3,7 +3,7 @@
 .body {
     margin: 0;
     --color-text: #fff;
-    --color-bg: black;
+    --color-bg: #0b0b0b;
     --font-size-xl: 26vw;
     --font-family: "Arial", sans-serif;
     --font-weight: 900;

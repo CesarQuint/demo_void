@@ -104,10 +104,11 @@
 }
 
 html {
-    background-color: black;
+    background-color: #0b0b0b;
 }
+
 body {
-    background-color: black;
+    background-color: #0b0b0b;
     width: -webkit-fill-available;
     overflow-x: hidden;
     height: -webkit-fill-available;
