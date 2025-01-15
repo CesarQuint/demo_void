@@ -124,7 +124,7 @@ const Tags: React.FC<Props> = (props: Props) => {
                         trigger: container.current,
                         start: `${heights[0]} 76%`,
                         end: `+=${((heights[idx - 1] ?? 0) + space) * idx} 76%`,
-                        markers: true,
+                        markers: false,
                         scrub: 1,
                         preventOverlaps: false,
                         fastScrollEnd: false,
