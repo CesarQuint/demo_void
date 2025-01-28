@@ -1,162 +1,88 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef } from "react";
 import gsap from "gsap";
 import Image from "next/image";
 import styles from "../css/title.module.css";
-import { motion } from "framer-motion";
 import logo from "../../public/Logo-voidXR-negativo-footer_last.svg";
-import CustomEase from "gsap/CustomEase";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import { useIntersectionObserver } from "../utils/hooks/useIntersectionObserver";
 
 gsap.registerPlugin(ScrollTrigger);
-gsap.registerPlugin(CustomEase);
-gsap.registerPlugin(useGSAP);
 
-type Props = {};
-
-type TextLogoProps = {
-    position: number;
-    nameRef: string;
-    offset?: string;
-    margin?: number;
+const TextLogo: React.FC = () => {
+    return (
+        <div className={styles.text_rep}>
+            <Image className={styles.image_logo} src={logo} alt="voidxr-logo" />
+        </div>
+    );
 };
 
-const TextLogo = (props: TextLogoProps) => {
-    const imageRef = useRef<HTMLDivElement>(null);
-    const timelineRef = useRef<GSAPTimeline | null>(null);
-    const [imgLoaded, setImgLoaded] = useState(false);
-    const { isIntersecting, ref: containerRef } =
-        useIntersectionObserver("900px");
+type TitleProps = {
+    iterations?: number;
+};
+
+const Title = ({ iterations = 8 }: TitleProps) => {
+    const containerRef = useRef<HTMLDivElement | null>(null);
 
     useGSAP(
         () => {
-            if (isIntersecting) {
-                timelineRef.current?.kill();
+            const elems = Array.from(containerRef.current?.children ?? []);
+            if (elems.length === 0) return;
 
-                const tl = gsap.timeline({
+            const height = elems[0].clientHeight;
+
+            const calcTargetTop = (idx: number) =>
+                idx === 0 ? 0 : (2 * height * idx ** 2) / elems.length ** 2;
+
+            const calcContainerHeight = (): number =>
+                calcTargetTop(elems.length) * 1.125;
+
+            const calcYFactor = (idx: number): number =>
+                calcTargetTop(elems.length - 1) - calcTargetTop(idx) * 1.15;
+
+            function setTargets(idx: number, el: Element): void {
+                gsap.set(el, {
+                    top: calcTargetTop(idx),
+                    zIndex: idx,
+                });
+            }
+
+            function setAnimation(idx: number, el: Element): void {
+                gsap.timeline({
+                    defaults: { ease: "none" },
                     scrollTrigger: {
                         trigger: containerRef.current,
-                        start: `${props.offset} center`,
-                        end: "bottom center",
-                        scrub: 0,
+                        start: `${calcTargetTop(idx)} 35%`,
+                        end: `${calcTargetTop(elems.length - 1)} 35%`,
+                        markers: false,
+                        scrub: 2,
                     },
-                });
-
-                tl.to(imageRef.current, {
-                    marginTop: `+=${props.margin! + 1}px`,
-                    ease: "none",
-                });
-
-                timelineRef.current = tl;
-
-                return () => {
-                    timelineRef.current?.kill();
-                };
+                }).to(el, { y: calcYFactor(idx) }, 0);
             }
+
+            gsap.set(containerRef.current, {
+                height: calcContainerHeight(),
+            });
+
+            elems.forEach(
+                (el, idx) => (setTargets(idx, el), setAnimation(idx, el)),
+            );
         },
-        { scope: containerRef, dependencies: [isIntersecting, imgLoaded] },
+        {
+            scope: containerRef,
+            dependencies: [containerRef],
+        },
     );
 
     return (
-        <motion.div
-            ref={containerRef}
-            style={{ height: `${props.position}px`, willChange: "transform" }}
-            className={`${styles.text_rep}`}
-        >
-            <motion.div ref={imageRef}>
-                <Image
-                    onLoad={() => {
-                        setImgLoaded(true);
-                    }}
-                    className={`${styles.image_logo} ${props.nameRef}`}
-                    src={logo}
-                    alt="logo"
-                />
-            </motion.div>
-        </motion.div>
-    );
-};
-
-const Title = (props: Props) => {
-    const logoRef = useRef<HTMLDivElement>(null);
-    const [positions, setPositions] = useState<number[]>([]);
-    const [imgLoaded, setImgLoaded] = useState(false);
-
-    useEffect(() => {
-        if (logoRef.current !== null) {
-            const height = logoRef.current.clientHeight;
-            const newPositions = [];
-            for (let index = 1; index < 8; index++) {
-                let prop = index * 0.08;
-                let percentage = height * (0.7 - prop);
-                newPositions.push(percentage);
-            }
-            setPositions(newPositions);
-        }
-    }, []);
-
-    return (
-        <motion.div className={`${styles.body}`}>
-            <motion.div className={`${styles.content}`}>
-                {positions.length && (
-                    <>
-                        <TextLogo
-                            nameRef="one"
-                            position={positions[6]}
-                            margin={positions[6]}
-                            offset="top"
-                        />
-                        <TextLogo
-                            nameRef="two"
-                            position={positions[5]}
-                            margin={positions[5]}
-                            offset="-25%"
-                        />
-                        <TextLogo
-                            nameRef="three"
-                            position={positions[4]}
-                            margin={positions[4]}
-                            offset="-20%"
-                        />
-                        <TextLogo
-                            nameRef="four"
-                            position={positions[3]}
-                            margin={positions[3]}
-                            offset="-20%"
-                        />
-                        <TextLogo
-                            nameRef="five"
-                            position={positions[2]}
-                            margin={positions[2]}
-                            offset="-20%"
-                        />
-                        <TextLogo
-                            nameRef="six"
-                            position={positions[1]}
-                            margin={positions[1]}
-                            offset="-20%"
-                        />
-                        <TextLogo
-                            nameRef="seven"
-                            position={positions[0]}
-                            margin={positions[0]}
-                            offset="-20%"
-                        />
-                    </>
-                )}
-                <div ref={logoRef} className={`${styles.text_rep}`}>
-                    <Image
-                        onLoad={() => {
-                            setImgLoaded(true);
-                        }}
-                        className={`${styles.image_logo}`}
-                        src={logo}
-                        alt="logo"
-                    />
-                </div>
-            </motion.div>
-        </motion.div>
+        <div className={styles.body}>
+            <div ref={containerRef} className={styles.content}>
+                {Array(iterations)
+                    .fill(null)
+                    .map((_, idx) => (
+                        <TextLogo key={idx} />
+                    ))}
+            </div>
+        </div>
     );
 };
 
