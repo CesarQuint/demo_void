@@ -121,7 +121,7 @@ export function ProjectsView(props: { data: { categories: Category[] } }) {
                 loadState={() => setState(!state)}
             />
             <PreFooterLink href="/about" text="CONOCENOS" />
-            <Footer state={state} />
+            {state && <Footer />}
         </motion.div>
     );
 }
