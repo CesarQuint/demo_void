@@ -1,5 +1,3 @@
-/* Include your CSS styling here */
-/* Example CSS based on the provided styles */
 .body {
     margin: 0;
     --color-text: #fff;
@@ -14,15 +12,11 @@
     background-color: var(--color-bg);
     height: 100%;
     width: 100%;
+    overflow: hidden;
 }
 
 .content {
-    overflow: hidden;
-    display: flex;
-    justify-content: flex-end;
-    height: 100%;
-    flex-direction: column;
-    align-items: center;
+    position: relative;
 }
 
 .content__title {
@@ -40,6 +34,9 @@
 }
 
 .text_rep {
+    position: absolute;
+    top: 0;
+    height: auto;
     width: 100%;
     color: var(--color-rep-text);
     padding: 0;
@@ -48,6 +45,7 @@
 }
 
 .image_logo {
+    border-top: 2px solid var(--color-bg);
     height: auto;
     padding: 0;
     transition: all 1s;

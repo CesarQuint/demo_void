@@ -13,6 +13,7 @@
 }
 
 .text_container {
+    z-index: 100;
     display: flex;
     flex-flow: column nowrap;
     gap: 6vh;
