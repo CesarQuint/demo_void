@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import styles from "../css/footer.module.css";
-import Title from "./title";
 import dynamic from "next/dynamic";
 import { useNavigation } from "../utils/navigationContext";
 
+const Title = dynamic(() => import("./title"), { ssr: false });
 const Timer = dynamic(() => import("./Timer"), { ssr: false });
 
 const TypedLink = dynamic(() => import("./TypedLink/TypedLink"), {
@@ -32,7 +32,7 @@ const Footer = (props: Props) => {
         <motion.div className={`${styles.footer}`}>
             <motion.section className={`${styles.footer_flex}`}>
                 <motion.section style={{ width: "100%" }}>
-                    <Title />
+                    <Title iterations={8} />
                 </motion.section>
 
                 <motion.section className={` ${styles.text_container}`}>
