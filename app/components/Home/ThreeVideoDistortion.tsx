@@ -95,6 +95,7 @@ const ImageThree: React.FC<ImageProps> = ({ videoRef }) => {
                 }
             `,
             fragmentShader: `
+                precision highp float;
                 varying vec2 vUv;
                 uniform sampler2D u_texture;
                 uniform float u_radius;
@@ -111,7 +112,9 @@ const ImageThree: React.FC<ImageProps> = ({ videoRef }) => {
                         discard;
                     }
 
-                    gl_FragColor = texture2D(u_texture, vUv);
+                    vec4 color = texture2D(u_texture, vUv);
+                    color.rgb = pow(color.rgb, vec3(2.2));
+                    gl_FragColor = color;
                 }
             `,
         });
