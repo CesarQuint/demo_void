@@ -10,8 +10,7 @@ import styles from "../../css/video.hover.module.css";
 import eyeIcon from "../../../public/images/EyeIcon.png";
 import pauseIcon from "../../../public/images/pause.png";
 import gsap from "gsap";
-import { ShaderMaterial } from "three";
-import { PerspectiveCamera, OrthographicCamera } from "three";
+import { ShaderMaterial, PerspectiveCamera, OrthographicCamera } from "three";
 import useWindow from "@/app/utils/hooks/useWindow";
 
 type ImageProps = {
@@ -98,6 +97,7 @@ const ImageThree: React.FC<ImageProps> = ({ videoRef, sourceVideo }) => {
                 }
             `,
             fragmentShader: `
+                precision highp float;
                 varying vec2 vUv;
                 uniform sampler2D u_texture;
                 uniform float u_radius;
@@ -114,7 +114,9 @@ const ImageThree: React.FC<ImageProps> = ({ videoRef, sourceVideo }) => {
                         discard;
                     }
 
-                    gl_FragColor = texture2D(u_texture, vUv);
+                    vec4 color = texture2D(u_texture, vUv);
+                    color.rgb = pow(color.rgb, vec3(2.2));
+                    gl_FragColor = color;
                 }
             `,
         });
@@ -219,7 +221,7 @@ const ThreedVideoDistortion: React.FC<ThreeVideoDistortionInterface> = ({
                     tlHalo.play();
                     containerRef.current?.addEventListener(
                         "mousemove",
-                        handleMouseMove
+                        handleMouseMove,
                     );
                 }
             };
@@ -231,31 +233,31 @@ const ThreedVideoDistortion: React.FC<ThreeVideoDistortionInterface> = ({
                 tlHalo?.kill();
                 containerRef.current?.removeEventListener(
                     "mousemove",
-                    handleMouseMove
+                    handleMouseMove,
                 );
             };
 
             containerRef.current?.addEventListener(
                 "mouseenter",
-                handleMouseEnter
+                handleMouseEnter,
             );
             containerRef.current?.addEventListener(
                 "mouseleave",
-                handleMouseLeave
+                handleMouseLeave,
             );
 
             return () => {
                 containerRef.current?.removeEventListener(
                     "mouseenter",
-                    handleMouseEnter
+                    handleMouseEnter,
                 );
                 containerRef.current?.removeEventListener(
                     "mousemove",
-                    handleMouseMove
+                    handleMouseMove,
                 );
                 containerRef.current?.removeEventListener(
                     "mouseleave",
-                    handleMouseLeave
+                    handleMouseLeave,
                 );
                 tlHalo.kill();
             };
@@ -307,7 +309,7 @@ const ThreedVideoDistortion: React.FC<ThreeVideoDistortionInterface> = ({
                     audioRef.current &&
                     Math.abs(
                         videoRef!.current!.currentTime -
-                            audioRef.current.currentTime
+                            audioRef.current.currentTime,
                     ) > 0.1
                 ) {
                     audioRef.current.currentTime =

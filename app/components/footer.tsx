@@ -63,10 +63,9 @@ const Footer = (props: Props) => {
                             <p>
                                 Watteau 35, 03700
                                 <br /> Ciudad de México,
-                                <br /> CDMX
                             </p>
                         </div>
-                        <p>Void XR 2024®</p>
+                        <p>Void XR {new Date().getFullYear()}®</p>
                     </motion.div>
                     <motion.div
                         className={`${styles.flex_container}  ${styles.nav}`}
