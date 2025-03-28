@@ -11,8 +11,8 @@ export const OPTS = {
     densityDissipation: 0.96,
     velocityDissipation: 1.0,
 
-    fluidColor: '#3300ff',
-    backgroundColor: '#070410',
+    fluidColor: "#3300ff",
+    backgroundColor: "#0b0b0b",
 
     showBackground: true,
     rainbow: false,
