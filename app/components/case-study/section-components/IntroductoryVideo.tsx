@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Project } from "../../../Strapi/interfaces/Entities/Project";
 import styles from "./IntroductoryVideo.module.css";
-import ThreedVideoDistortion from "../../Home/ThreeVideoDistortion";
+import ThreedVideoDistortion from "../../ThreeVideoDistortion/ThreeVideoDistortion";
 import useWindow from "@/app/utils/hooks/useWindow";
 import { useEffect } from "react";
 
@@ -51,7 +51,7 @@ const CaseStudyVideo: React.FC<CaseStudyVideoProps> = ({ data }) => {
             </div>
             <div className={`${styles.desktopVideo}`}>
                 <ThreedVideoDistortion
-                    sourceVideo={
+                    source={
                         process.env.NEXT_PUBLIC_STRAPI_MEDIA_URL +
                         data.attributes.url
                     }

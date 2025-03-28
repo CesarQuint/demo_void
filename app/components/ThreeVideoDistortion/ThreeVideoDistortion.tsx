@@ -13,7 +13,7 @@ import ImageThree from "./ImageThree";
 
 interface ThreeVideoDistortionInterface {
     source: string;
-    thumbnail: string;
+    thumbnail?: string;
 }
 
 const ThreedVideoDistortion: React.FC<ThreeVideoDistortionInterface> = ({
