@@ -6,7 +6,7 @@ import { ShaderMaterial, OrthographicCamera, Vector2 } from "three";
 type ImageProps = {
     videoRef: React.MutableRefObject<HTMLVideoElement | null>;
     source: string;
-    thumbnailSrc: string;
+    thumbnailSrc?: string;
     isPlaying: boolean;
 };
 
@@ -20,7 +20,7 @@ const ImageThree: React.FC<ImageProps> = ({
         muted: true,
         crossOrigin: "anonymous",
     });
-    const thumbnailTexture = useVideoTexture(thumbnailSrc, {
+    const thumbnailTexture = useVideoTexture(thumbnailSrc ?? null, {
         muted: true,
         crossOrigin: "anonymous",
     });
@@ -56,6 +56,7 @@ const ImageThree: React.FC<ImageProps> = ({
             uniforms: {
                 u_texture: { value: texture },
                 u_thumbnailTexture: { value: thumbnailTexture },
+                u_hasThumbnail: { value: Boolean(thumbnailSrc) },
                 u_fade: { value: isPlaying },
                 u_radius: { value: 30.0 },
                 u_size: {
@@ -75,6 +76,7 @@ const ImageThree: React.FC<ImageProps> = ({
                 varying vec2 vUv;
                 uniform sampler2D u_texture;
                 uniform sampler2D u_thumbnailTexture;
+                uniform float u_hasThumbnail;
                 uniform float u_fade;
                 uniform float u_radius;
                 uniform vec2 u_size;
@@ -94,7 +96,7 @@ const ImageThree: React.FC<ImageProps> = ({
                     if (distance > 0.0) discard;
 
                     vec4 videoColor = texture2D(u_texture, vUv);
-                    vec4 thumbnailColor = texture2D(u_thumbnailTexture, vUv);
+                    vec4 thumbnailColor = mix(vec4(0.0, 0.0, 0.0, 0.0), texture2D(u_thumbnailTexture, vUv), u_hasThumbnail);
                     vec4 color = mix(thumbnailColor, videoColor, u_fade);
                     color.rgb = pow(color.rgb, vec3(2.2));
                     gl_FragColor = color;
