@@ -156,7 +156,7 @@ function HomePage(props: Props) {
                 <>
                     <HeroContainer />
                     <div style={{ height: "16vh" }}></div>
-                    <VideoDispatcher />
+                    <VideoDispatcher section="home" />
                     <ProjectImages data={{ projects: props.data.projects }} />
                     <ProcessHome />
                     <TagsHome />

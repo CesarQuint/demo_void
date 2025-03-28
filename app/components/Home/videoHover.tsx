@@ -4,10 +4,14 @@ import { motion } from "framer-motion";
 import styles from "../../css/video.hover.module.css";
 import gsap from "gsap";
 import eyeIcon from "../../../public/images/EyeIcon.png";
-import pauseIcon from "../../../public/images/pause.png";
 import useWindow from "../../utils/hooks/useWindow";
 
-const VideoHover: React.FC = () => {
+interface VideoHoverProps {
+    source: string;
+    thumbnail: string;
+}
+
+const VideoHover: React.FC<VideoHoverProps> = ({ source, thumbnail }) => {
     const videoRef = useRef<HTMLVideoElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
     const playButtonRef = useRef<HTMLDivElement>(null);
@@ -110,7 +114,7 @@ const VideoHover: React.FC = () => {
                     tlHalo.play();
                     containerRef.current?.addEventListener(
                         "mousemove",
-                        handleMouseMove
+                        handleMouseMove,
                     );
                 }
             };
@@ -122,31 +126,31 @@ const VideoHover: React.FC = () => {
                 tlHalo?.kill();
                 containerRef.current?.removeEventListener(
                     "mousemove",
-                    handleMouseMove
+                    handleMouseMove,
                 );
             };
 
             containerRef.current?.addEventListener(
                 "mouseenter",
-                handleMouseEnter
+                handleMouseEnter,
             );
             containerRef.current?.addEventListener(
                 "mouseleave",
-                handleMouseLeave
+                handleMouseLeave,
             );
 
             return () => {
                 containerRef.current?.removeEventListener(
                     "mouseenter",
-                    handleMouseEnter
+                    handleMouseEnter,
                 );
                 containerRef.current?.removeEventListener(
                     "mousemove",
-                    handleMouseMove
+                    handleMouseMove,
                 );
                 containerRef.current?.removeEventListener(
                     "mouseleave",
-                    handleMouseLeave
+                    handleMouseLeave,
                 );
                 tlHalo.kill();
             };
@@ -202,12 +206,8 @@ const VideoHover: React.FC = () => {
                         windowStatus.innerWidth <= 430 ? playTriggered : false
                     }
                     ref={videoRef}
-                    poster={
-                        "https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/thumbnails/VOIDXR%20DEMO%20EYECANDY%20Thumbnail%20movil.png"
-                    }
-                    src={
-                        "https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/videos/voidxr-demo-eyecandy-home-mobile.mp4"
-                    }
+                    poster={thumbnail}
+                    src={source}
                 >
                     Your browser does not support the video tag.
                 </video>
