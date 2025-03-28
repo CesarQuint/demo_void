@@ -103,7 +103,14 @@ const ImageThree: React.FC<ImageProps> = ({
                 }
             `,
         });
-    }, [size.width, size.height, texture, isPlaying, thumbnailTexture]);
+    }, [
+        size.width,
+        size.height,
+        texture,
+        isPlaying,
+        thumbnailTexture,
+        thumbnailSrc,
+    ]);
 
     return (
         <mesh position-z={-4}>
