@@ -122,7 +122,7 @@ export const AboutView = (props: Props) => {
                 className="courtain"
             />
             <Welcome />
-            <VideoDispatcher />
+            <VideoDispatcher section="about" />
             <Services categories={props.categories} projects={props.projects} />
             <Manifest />
             <Process />

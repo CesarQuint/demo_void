@@ -1,5 +1,6 @@
 import styles from "./Cover.module.css";
 import { Project } from "../../../Strapi/interfaces/Entities/Project";
+import TypedLink from "../../TypedLink/TypedLink";
 
 type CoverProps = {
     data: {
@@ -31,9 +32,15 @@ const Cover: React.FC<CoverProps> = ({ data }) => (
                 <h2>{data.subtitle}</h2>
 
                 <div className={styles.tagsWrapper}>
-                    <div className={styles.tag}>
-                        {data.category.data.attributes.Name}
-                    </div>
+                    <TypedLink
+                        href={
+                            "/projectos/" + data.category.data.attributes.slug
+                        }
+                    >
+                        <div className={styles.tag}>
+                            {data.category.data.attributes.Name}
+                        </div>
+                    </TypedLink>
 
                     {data.asFullCaseStudy && (
                         <div className={styles.tag + " " + styles.caseStudyTag}>

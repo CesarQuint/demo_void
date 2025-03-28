@@ -1,14 +1,14 @@
-import { createPortal, useFrame, useThree } from '@react-three/fiber';
-import { useCallback, useMemo, useRef } from 'react';
-import { Camera, Color, Mesh, Scene, Texture, Vector2, Vector3 } from 'three';
-import { ShaderPass } from 'three/examples/jsm/Addons.js';
-import { Effect as FluidEffect } from './effect/Fluid';
-import { useFBOs } from './hooks/useFBOs';
-import { useMaterials } from './hooks/useMaterials';
-import { Props } from './types';
-import { OPTS } from './constant';
-import { usePointer } from './hooks/usePointer';
-import { BlendFunction } from 'postprocessing';
+import { createPortal, useFrame, useThree } from "@react-three/fiber";
+import { useCallback, useMemo, useRef } from "react";
+import { Camera, Color, Mesh, Scene, Texture, Vector2, Vector3 } from "three";
+import { ShaderPass } from "three/examples/jsm/Addons.js";
+import { Effect as FluidEffect } from "./effect/Fluid";
+import { useFBOs } from "./hooks/useFBOs";
+import { useMaterials } from "./hooks/useMaterials";
+import { Props } from "./types";
+import { OPTS } from "./constant";
+import { usePointer } from "./hooks/usePointer";
+import { BlendFunction } from "postprocessing";
 
 type Uniforms = {
     uColor: Vector3 | Color;
@@ -70,7 +70,7 @@ export const Fluid = ({
         (name: keyof ReturnType<typeof useFBOs>) => {
             const target = FBOs[name];
 
-            if ('write' in target) {
+            if ("write" in target) {
                 gl.setRenderTarget(target.write);
                 gl.clear();
                 gl.render(bufferScene, bufferCamera);
@@ -105,61 +105,73 @@ export const Fluid = ({
         for (let i = splatStack.length - 1; i >= 0; i--) {
             const { mouseX, mouseY, velocityX, velocityY } = splatStack[i];
 
-            setShaderMaterial('splat');
-            setUniforms('splat', 'uTarget', FBOs.velocity.read.texture);
-            setUniforms('splat', 'uPointer', new Vector2(mouseX, mouseY));
-            setUniforms('splat', 'uColor', new Vector3(velocityX, velocityY, 10.0));
-            setUniforms('splat', 'uRadius', radius / 100.0);
-            setRenderTarget('velocity');
-            setUniforms('splat', 'uTarget', FBOs.density.read.texture);
-            setRenderTarget('density');
+            setShaderMaterial("splat");
+            setUniforms("splat", "uTarget", FBOs.velocity.read.texture);
+            setUniforms("splat", "uPointer", new Vector2(mouseX, mouseY));
+            setUniforms(
+                "splat",
+                "uColor",
+                new Vector3(velocityX, velocityY, 10.0),
+            );
+            setUniforms("splat", "uRadius", radius / 100.0);
+            setRenderTarget("velocity");
+            setUniforms("splat", "uTarget", FBOs.density.read.texture);
+            setRenderTarget("density");
 
             splatStack.pop();
         }
 
-        setShaderMaterial('curl');
-        setUniforms('curl', 'uVelocity', FBOs.velocity.read.texture);
-        setRenderTarget('curl');
+        setShaderMaterial("curl");
+        setUniforms("curl", "uVelocity", FBOs.velocity.read.texture);
+        setRenderTarget("curl");
 
-        setShaderMaterial('vorticity');
-        setUniforms('vorticity', 'uVelocity', FBOs.velocity.read.texture);
-        setUniforms('vorticity', 'uCurl', FBOs.curl.texture);
-        setUniforms('vorticity', 'uCurlValue', curl);
-        setRenderTarget('velocity');
+        setShaderMaterial("vorticity");
+        setUniforms("vorticity", "uVelocity", FBOs.velocity.read.texture);
+        setUniforms("vorticity", "uCurl", FBOs.curl.texture);
+        setUniforms("vorticity", "uCurlValue", curl);
+        setRenderTarget("velocity");
 
-        setShaderMaterial('divergence');
-        setUniforms('divergence', 'uVelocity', FBOs.velocity.read.texture);
-        setRenderTarget('divergence');
+        setShaderMaterial("divergence");
+        setUniforms("divergence", "uVelocity", FBOs.velocity.read.texture);
+        setRenderTarget("divergence");
 
-        setShaderMaterial('clear');
-        setUniforms('clear', 'uTexture', FBOs.pressure.read.texture);
-        setUniforms('clear', 'uClearValue', pressure);
-        setRenderTarget('pressure');
+        setShaderMaterial("clear");
+        setUniforms("clear", "uTexture", FBOs.pressure.read.texture);
+        setUniforms("clear", "uClearValue", pressure);
+        setRenderTarget("pressure");
 
-        setShaderMaterial('pressure');
-        setUniforms('pressure', 'uDivergence', FBOs.divergence.texture);
+        setShaderMaterial("pressure");
+        setUniforms("pressure", "uDivergence", FBOs.divergence.texture);
 
         for (let i = 0; i < swirl; i++) {
-            setUniforms('pressure', 'uPressure', FBOs.pressure.read.texture);
-            setRenderTarget('pressure');
+            setUniforms("pressure", "uPressure", FBOs.pressure.read.texture);
+            setRenderTarget("pressure");
         }
 
-        setShaderMaterial('gradientSubstract');
-        setUniforms('gradientSubstract', 'uPressure', FBOs.pressure.read.texture);
-        setUniforms('gradientSubstract', 'uVelocity', FBOs.velocity.read.texture);
-        setRenderTarget('velocity');
+        setShaderMaterial("gradientSubstract");
+        setUniforms(
+            "gradientSubstract",
+            "uPressure",
+            FBOs.pressure.read.texture,
+        );
+        setUniforms(
+            "gradientSubstract",
+            "uVelocity",
+            FBOs.velocity.read.texture,
+        );
+        setRenderTarget("velocity");
 
-        setShaderMaterial('advection');
-        setUniforms('advection', 'uVelocity', FBOs.velocity.read.texture);
-        setUniforms('advection', 'uSource', FBOs.velocity.read.texture);
-        setUniforms('advection', 'uDissipation', velocityDissipation);
+        setShaderMaterial("advection");
+        setUniforms("advection", "uVelocity", FBOs.velocity.read.texture);
+        setUniforms("advection", "uSource", FBOs.velocity.read.texture);
+        setUniforms("advection", "uDissipation", velocityDissipation);
 
-        setRenderTarget('velocity');
-        setUniforms('advection', 'uVelocity', FBOs.velocity.read.texture);
-        setUniforms('advection', 'uSource', FBOs.density.read.texture);
-        setUniforms('advection', 'uDissipation', densityDissipation);
+        setRenderTarget("velocity");
+        setUniforms("advection", "uVelocity", FBOs.velocity.read.texture);
+        setUniforms("advection", "uSource", FBOs.density.read.texture);
+        setUniforms("advection", "uDissipation", densityDissipation);
 
-        setRenderTarget('density');
+        setRenderTarget("density");
 
         gl.setRenderTarget(null);
         gl.clear();
@@ -171,7 +183,8 @@ export const Fluid = ({
                 <mesh
                     ref={meshRef}
                     onPointerMove={onPointerMove}
-                    scale={[size.width, size.height, 1]}>
+                    scale={[size.width, size.height, 1]}
+                >
                     <planeGeometry args={[2, 2, 10, 10]} />
                 </mesh>,
                 bufferScene,
