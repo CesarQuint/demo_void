@@ -42,7 +42,7 @@ const ImageThree: React.FC<ImageProps> = ({
         handleResize();
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
-    }, [size.width, size.height]);
+    }, [size.width, size.height, camera]);
 
     useEffect(() => {
         if (texture?.image instanceof HTMLVideoElement) {
