@@ -17,44 +17,41 @@ interface VideoSource {
 
 const SOURCES: { home: VideoSource; about: VideoSource } = {
     home: {
-        source: "https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/videos/voidxr-demo-eyecandy-home.mp4",
-        thumbnail:
-            "https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/videos/voidxr-demo-eyecandy-home-short.mp4",
-        sourceMobile:
-            "https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/thumbnails/VOIDXR%20DEMO%20EYECANDY%20Thumbnail%20movil.png",
-        thumbnailMobile:
-            "https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/videos/voidxr-demo-eyecandy-home-mobile.mp4",
+        source: "/videos/voidxr-demo-eyecandy-home.mp4",
+        thumbnail: "/videos/voidxr-demo-eyecandy-home-short.mp4",
+        sourceMobile: "/videos/voidxr-demo-eyecandy-home-mobile.mp4",
+        thumbnailMobile: "/videos/voidxr-demo-eyecandy-home-mobile.mp4",
     },
     about: {
-        source: "https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/videos/voidxr-demo-processes.mp4",
-        thumbnail:
-            "https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/videos/voidxr-demo-procesos-short.mp4",
-        sourceMobile:
-            "https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/videos/voidxr-demo-processes.mp4",
-        thumbnailMobile:
-            "https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/videos/voidxr-demo-procesos-short.mp4",
+        source: "/videos/voidxr-demo-processes.mp4",
+        thumbnail: "/videos/voidxr-demo-procesos-short.mp4",
+        sourceMobile: "/videos/voidxr-demo-processes.mp4",
+        thumbnailMobile: "/videos/voidxr-demo-procesos-short.mp4",
     },
 };
 
 const VideoDispatcher = ({ section }: VideoDispatcherProps) => {
+    const BASE_URL = process.env.NEXT_PUBLIC_VIDEO_SOURCES_BASE_URL;
     const windowStatus = useWindow();
     const [isWideWindow, setIsWideWindow] = useState(false);
+
     useEffect(() => {
         setIsWideWindow(
             windowStatus.innerWidth >= 428 && windowStatus.innerWidth !== 0,
         );
     }, [windowStatus.innerWidth]);
+
     return (
         <div>
             {isWideWindow ? (
                 <ThreedVideoDistortion
-                    source={SOURCES[section].source}
-                    thumbnail={SOURCES[section].thumbnail}
+                    source={BASE_URL + SOURCES[section].source}
+                    thumbnail={BASE_URL + SOURCES[section].thumbnail}
                 />
             ) : (
                 <VideoHover
-                    source={SOURCES[section].sourceMobile}
-                    thumbnail={SOURCES[section].thumbnailMobile}
+                    source={BASE_URL + SOURCES[section].sourceMobile}
+                    thumbnail={BASE_URL + SOURCES[section].thumbnailMobile}
                 />
             )}
         </div>
