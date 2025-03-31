@@ -60,7 +60,7 @@ const ImageThree: React.FC<ImageProps> = ({
                 u_fade: { value: isPlaying },
                 u_radius: { value: 30.0 },
                 u_size: {
-                    value: new Vector2(size.width - 500, size.height - 500),
+                    value: new Vector2(dimensions.width, dimensions.height),
                 },
             },
             vertexShader: `
@@ -104,8 +104,8 @@ const ImageThree: React.FC<ImageProps> = ({
             `,
         });
     }, [
-        size.width,
-        size.height,
+        dimensions.width,
+        dimensions.height,
         texture,
         isPlaying,
         thumbnailTexture,
