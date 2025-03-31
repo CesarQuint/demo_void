@@ -96,7 +96,9 @@ const ImageThree: React.FC<ImageProps> = ({
                     if (distance > 0.0) discard;
 
                     vec4 videoColor = texture2D(u_texture, vUv);
-                    vec4 thumbnailColor = mix(vec4(0.0, 0.0, 0.0, 0.0), texture2D(u_thumbnailTexture, vUv), u_hasThumbnail);
+                    vec4 thumbnailColor = mix(vec4(0.0, 0.0, 0.0, 0.0),
+                                              texture2D(u_thumbnailTexture, vUv),
+                                              u_hasThumbnail);
                     vec4 color = mix(thumbnailColor, videoColor, u_fade);
                     color.rgb = pow(color.rgb, vec3(2.2));
                     gl_FragColor = color;
