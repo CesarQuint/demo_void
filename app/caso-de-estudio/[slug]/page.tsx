@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import {
     getProjectDetails,
     getProjectsByCategory,
-} from "../../Strapi/RestAPI/ProjectsProvider";
+} from "./../../Strapi/RestAPI/ProjectsProvider";
 import ProjectCaseStudy from "../../components/projects/ProjectCaseStudy";
 
 export default async function Page({ params }: { params: { slug: string } }) {

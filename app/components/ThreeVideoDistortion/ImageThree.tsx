@@ -42,7 +42,7 @@ const ImageThree: React.FC<ImageProps> = ({
         handleResize();
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
-    }, [size.width, size.height]);
+    }, [size.width, size.height, camera]);
 
     useEffect(() => {
         if (texture?.image instanceof HTMLVideoElement) {
@@ -60,7 +60,7 @@ const ImageThree: React.FC<ImageProps> = ({
                 u_fade: { value: isPlaying },
                 u_radius: { value: 30.0 },
                 u_size: {
-                    value: new Vector2(size.width - 500, size.height - 500),
+                    value: new Vector2(dimensions.width, dimensions.height),
                 },
             },
             vertexShader: `
@@ -96,7 +96,9 @@ const ImageThree: React.FC<ImageProps> = ({
                     if (distance > 0.0) discard;
 
                     vec4 videoColor = texture2D(u_texture, vUv);
-                    vec4 thumbnailColor = mix(vec4(0.0, 0.0, 0.0, 0.0), texture2D(u_thumbnailTexture, vUv), u_hasThumbnail);
+                    vec4 thumbnailColor = mix(vec4(0.0, 0.0, 0.0, 0.0),
+                                              texture2D(u_thumbnailTexture, vUv),
+                                              u_hasThumbnail);
                     vec4 color = mix(thumbnailColor, videoColor, u_fade);
                     color.rgb = pow(color.rgb, vec3(2.2));
                     gl_FragColor = color;
@@ -104,8 +106,8 @@ const ImageThree: React.FC<ImageProps> = ({
             `,
         });
     }, [
-        size.width,
-        size.height,
+        dimensions.width,
+        dimensions.height,
         texture,
         isPlaying,
         thumbnailTexture,

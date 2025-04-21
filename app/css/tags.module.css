@@ -112,9 +112,11 @@
         color: #101010;
         padding: 3vh 6vh;
     }
+
     .tag {
         padding: 2rem 3.5rem;
         flex-flow: row;
+        width: 100%;
     }
 
     .right_content {
