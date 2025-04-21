@@ -65,17 +65,8 @@ export const ProjectElementImage = (props: {
     loadHook?: () => void;
     data: { title: string; url: string; slug: string };
 }) => {
-    const { setNavigationEvent } = useNavigation();
     return (
-        <div
-            className={s.wrapper}
-            onClick={() =>
-                setNavigationEvent({
-                    state: true,
-                    href: "/projects/" + props.data.slug,
-                })
-            }
-        >
+        <div className={s.wrapper}>
             <Image
                 onLoad={() => props.loadHook && props.loadHook()}
                 style={{ objectFit: "cover" }}
@@ -124,7 +115,7 @@ export const ProjectElement = (props: {
         <div
             onClick={() => {
                 setNavigationEvent({
-                    href: `/projects/${props.data.project.attributes.slug}`,
+                    href: `/caso-de-estudio/${props.data.project.attributes.slug}`,
                     state: true,
                 });
             }}
