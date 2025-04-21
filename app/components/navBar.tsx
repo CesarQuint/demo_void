@@ -169,9 +169,9 @@ const NavBar = () => {
                             <TypedLink
                                 viewAnimate={true}
                                 hoverAnimate={false}
-                                href="/projects"
+                                href="/proyectos/todo"
                                 onClick={(e) => {
-                                    goTo(e, "/projects");
+                                    goTo(e, "/proyectos/todo");
                                 }}
                             >
                                 Proyectos
@@ -197,11 +197,11 @@ const NavBar = () => {
                         El Estudio
                     </TypedLink>
                     <TypedLink
-                        href="/about"
+                        href="/proyectos/todo"
                         viewAnimate={true}
                         hoverAnimate={false}
                         onClick={(e) => {
-                            goTo(e, "/projects");
+                            goTo(e, "/proyectos/todo");
                         }}
                     >
                         Proyectos
