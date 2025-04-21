@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import {
     motion,
@@ -16,6 +16,7 @@ import { usePathname } from "next/navigation";
 import { useNavigation } from "../../utils/navigationContext";
 
 import { Category } from "../../Strapi/interfaces/Entities/Category";
+import { Project } from "@/app/Strapi/interfaces/Entities/Project";
 
 const ProjectsSectionView = dynamic(() => import("./ProjectsSectionView"), {
     ssr: false,
@@ -30,14 +31,19 @@ const transitionSpringPhysics: Spring = {
     damping: 2,
 };
 
-export function ProjectsView(props: { data: { categories: Category[] } }) {
+export function ProjectsView(props: {
+    data: {
+        currentCategory: string;
+        categories: Category[];
+        projects: Project[];
+    };
+}) {
     const [isPresent, safeToRemove] = usePresence();
     const [scope2] = useAnimate();
     const [scope3] = useAnimate();
     const pathname = usePathname();
     const { navigationEvent } = useNavigation();
     const router = useRouter();
-    const [state, setState] = useState<boolean>(false);
 
     useEffect(() => {
         const sequence: AnimationSequence = [
@@ -116,12 +122,9 @@ export function ProjectsView(props: { data: { categories: Category[] } }) {
                 transition={transitionSpringPhysics}
                 className="courtain"
             />
-            <ProjectsSectionView
-                data={props.data}
-                loadState={() => setState(!state)}
-            />
+            <ProjectsSectionView data={props.data} />
             <PreFooterLink href="/about" text="CONOCENOS" />
-            {state && <Footer />}
+            <Footer />
         </motion.div>
     );
 }

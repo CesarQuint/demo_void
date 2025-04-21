@@ -3,7 +3,7 @@ import Image from "next/image";
 
 import Splitting from "splitting";
 import { motion } from "framer-motion";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { useNavigation } from "../../utils/navigationContext";
 
 import { gsap } from "gsap";
@@ -21,19 +21,16 @@ import {
     ProjectElementCaption,
 } from "../Home/ProjectImages";
 
-import {
-    getProjectsByCategory,
-    getProjectsData,
-} from "../../Strapi/RestAPI/ProjectsProvider";
-
 const CHARS = "!#$%&*+,-:;<=>@^_abcdefghijklmnopqrstuvwxyz";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const TAB_ICONS = {
-    ACTIVE: "https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/icons/check_circle_filled.svg",
+    ACTIVE:
+        process.env.NEXT_PUBLIC_STRAPI_MEDIA_URL +
+        "/icons/check_circle_filled.svg",
     INACTIVE:
-        "https://voidxr-digital-assets.nyc3.cdn.digitaloceanspaces.com/icons/check_circle.svg",
+        process.env.NEXT_PUBLIC_STRAPI_MEDIA_URL + "/icons/check_circle.svg",
 };
 
 const CategoryStateIcon = ({ active }: { active: boolean }) => (
@@ -61,58 +58,65 @@ const CategoryTab = ({
 
 const CategoryTabs = ({
     activeIndex,
-    setActive,
     data,
 }: {
     activeIndex: number;
-    setActive: (idx: number) => void;
     data: { categories: Category[] };
-}) => (
-    <>
-        <TypedLink
-            href="/proyectos"
-            onClick={(e) => (e.preventDefault(), setActive(-1))}
-        >
-            <div className={[styles.all, styles.tab].join(" ")}>
-                <CategoryStateIcon active={activeIndex === -1} />
-                {"todo".toUpperCase()}
-            </div>
-        </TypedLink>
+}) => {
+    const { setNavigationEvent } = useNavigation();
 
-        {data.categories.map((category, idx) => (
+    return (
+        <>
             <TypedLink
-                key={idx}
-                href={"/proyectos/" + category.attributes.slug}
-                onClick={(e) => (e.preventDefault(), setActive(idx))}
+                href={`/proyectos`}
+                onClick={(e) => {
+                    e.preventDefault();
+                    setNavigationEvent({
+                        state: false,
+                        href: `/proyectos/todo`,
+                    });
+                }}
             >
-                <CategoryTab active={idx === activeIndex} data={{ category }} />
+                <div className={[styles.all, styles.tab].join(" ")}>
+                    <CategoryStateIcon active={activeIndex === -1} />
+                    {"todo".toUpperCase()}
+                </div>
             </TypedLink>
-        ))}
-    </>
-);
+
+            {data.categories.map((category, idx) => (
+                <TypedLink
+                    key={idx}
+                    href={`/proyectos/${data.categories[idx].attributes.slug}`}
+                    onClick={(e) => {
+                        e.preventDefault();
+                        setNavigationEvent({
+                            state: false,
+                            href: `/proyectos/${data.categories[idx].attributes.slug}`,
+                        });
+                    }}
+                >
+                    <CategoryTab
+                        active={idx === activeIndex}
+                        data={{ category }}
+                    />
+                </TypedLink>
+            ))}
+        </>
+    );
+};
 
 export default function ProjectsSectionView(props: {
-    data: { categories: Category[] };
-    loadState: () => void;
+    data: {
+        currentCategory: string;
+        categories: Category[];
+        projects: Project[];
+    };
 }) {
     const container = useRef<HTMLDivElement>(null);
     const scrollContainer = useRef<HTMLDivElement>(null);
     const imgContainer = useRef<HTMLElement[]>([]);
     const [imgLoaded, setImageLoaded] = useState(false);
-    const [activeIconIndex, setActiveIconIndex] = useState(-1);
-    const [projects, setProjects] = useState<Project[]>([]);
     const { setNavigationEvent } = useNavigation();
-
-    useEffect(() => {
-        Promise.resolve(
-            activeIconIndex === -1
-                ? getProjectsData()
-                : getProjectsByCategory({
-                      slug: props.data.categories[activeIconIndex].attributes
-                          .slug,
-                  }),
-        ).then((res) => (setProjects(res.data), props.loadState()));
-    }, [activeIconIndex]);
 
     useGSAP(
         () => {
@@ -303,8 +307,11 @@ export default function ProjectsSectionView(props: {
             <motion.section className={styles.nav_container}>
                 <motion.nav className={styles.selector}>
                     <CategoryTabs
-                        activeIndex={activeIconIndex}
-                        setActive={setActiveIconIndex}
+                        activeIndex={
+                            props.data.categories
+                                .map((category) => category.attributes.slug)
+                                .indexOf(props.data.currentCategory) ?? -1
+                        }
                         data={{ categories: props.data.categories }}
                     />
                 </motion.nav>
@@ -312,11 +319,11 @@ export default function ProjectsSectionView(props: {
             <motion.div ref={container}>
                 <motion.section className={`${styles.project_wrapper}`}>
                     <div className={styles.scrollView} ref={scrollContainer}>
-                        {projects.map((project, i) => (
+                        {props.data.projects.map((project, i) => (
                             <div
                                 onClick={(e) => {
                                     goTo(
-                                        `/projects/${project.attributes.slug}`,
+                                        `/caso-de-estudio/${project.attributes.slug}`,
                                     );
                                 }}
                                 className={styles.imgBox}
