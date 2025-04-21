@@ -17,11 +17,13 @@ import Welcome from "../components/About/Welcome";
 import Manifest from "../components/About/Manifest";
 import Process from "../components/About/Process";
 import Services from "../components/About/Services";
-import Footer from "../components/footer";
 import PreFooterLink from "../components/PreFooterLink";
 import VideoDispatcher from "../components/Home/VideoDispatcher";
 import { Category } from "@/app/Strapi/interfaces/Entities/Category";
 import { Project } from "../Strapi/interfaces/Entities/Project";
+import dynamic from "next/dynamic";
+
+const Footer = dynamic(() => import("../components/footer"), { ssr: false });
 
 type Props = {
     projects: Project[];
